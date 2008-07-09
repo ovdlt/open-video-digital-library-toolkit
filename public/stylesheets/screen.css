@@ -1,0 +1,1073 @@
+/*	============================================================
+
+	Open Video Cataloging Tool Default Screen CSS
+	Last Edited: 02/16/07 by Brian Talbot
+	Last Change: Added Form elements
+
+	Sections are as follows:
+	
+	+General
+	+Header
+	+Navigation
+	+Content
+	+Forms
+	+Footer
+
+	============================================================ */
+
+
+
+	
+/* =========================================================== */
+/* +Clearing Everything */
+
+* {
+	border: 0;
+	margin: 0;
+	padding: 0;
+	}
+	
+
+/* =========================================================== */
+/* +General */
+
+html {
+	height: 100%; /* Needed for Footer Stick */
+	}
+
+body {
+	background: #fafafa url(../images/backgrounds/body-default.jpg) 0 0 repeat-x;
+	color: #333;
+	font-size: 62.5%;
+	font-family: "helvetica neue" ,helvetica, "lucida grande", verdana, sans-serif;
+	height: 100%; /* Needed for Footer Stick */
+	margin: 0 60px;
+	}
+	
+#page {
+	font-size: 1.2em;
+	}
+	
+#container {
+	margin: 0 auto;
+	min-height: 100%; /* Needed for Footer Stick */
+	position: relative; /* Needed for Footer Stick */
+	width: 900px;
+	}
+
+* html #container {
+	height: 100%; /* Needed for Footer Stick */
+	}
+	
+a:link, a:visited {
+	border-bottom: 1px solid #60acda;
+	color: #60acda;
+	padding: 0 0 1px 0;
+	text-decoration: none;
+	}
+	
+a:hover, a:active {
+	background-color: #cdeafb !important;
+	border-bottom: 1px solid #457ea1;
+	color: #457ea1;
+	text-decoration: none;
+	}
+
+.flash_notice {
+	color: green;
+	font-weight: bold;
+	}	
+
+/* =========================================================== */
+/* +Header */
+
+#header {
+	height: 107px;
+	}
+	
+#header h1 {
+	color: #fff;
+	float: left;
+	font-size: 2.0em;
+	margin: 45px 50px 0 0;	
+	}
+	
+#header p {
+	float: right;
+	margin: 48px 0 0 0;
+	
+	}
+	
+#header p .highlight {
+	background-color: #686d71;
+	color: #b1d6ed;
+	font-weight: normal;
+	margin: 0;
+	padding: 10px 15px;
+	}
+
+
+/* --------- Sign Up, Login and Logout Buttons --------- */
+
+#header a.button {
+	border: 3px solid #b1d6ed;
+	background: #60acda url(../images/backgrounds/button-default.jpg) 0 bottom repeat-x;
+	color: #fff;
+	font-size: 0.8em;
+	font-weight: bold;
+	margin: 0 1px 0 3px;
+	padding: 8px !important;
+	text-decoration: none;
+	text-transform: uppercase;
+	}
+	
+#header a.button:link, #header a.button:visited { color: #fff; }
+#header a.button:hover, #header a.button:active { color: #b1d6ed;	text-decoration: underline; }
+
+
+/* =========================================================== */
+/* +Navigation */
+
+
+/* --------- Global Navigation aka "navigationGlobal" --------- */
+
+#navigationGlobal {
+	float:left;
+	font-size: 1.3em;
+    height: 43px;
+    line-height:normal;
+    margin: -1px 0 30px 0;
+    overflow: hidden;
+    width:100%;
+	}
+
+#navigationGlobal ul {
+	list-style: none;
+	margin: 0;
+	}
+	
+#navigationGlobal li {
+	display: inline;
+	margin: 0;
+	padding: 0;
+	}
+
+#navigationGlobal a {
+	float: left;
+	background: transparent url(../images/backgrounds/navigationGlobalA-default.jpg) no-repeat left top;
+	border: none;
+	margin: 0 5px 0 0;
+	padding: 0 0 0 4px;
+	text-decoration: none;
+	}
+
+ #navigationGlobal a span {
+	float: left;
+	font-weight: bold;
+	display: block;
+	background: transparent url(../images/backgrounds/navigationGlobalB-default.jpg) no-repeat right top;
+	color: #b3b3b3;
+	padding: 12px 16px 12px 14px;
+	}
+
+#navigationGlobal a:hover span { background-position: 100% -84px; color: #000; font-weight: bold; padding-bottom: 12px !important; border-bottom: 1px solid #fafafa; }
+
+#navigationGlobal a:hover {  background-color: transparent !important; background-position: 0% -84px;  padding-bottom: 12px !important; border-bottom: 1px solid #fafafa; }
+
+
+
+/* --------- Global Navigation: Section Specific Elements  --------- */
+
+/* for the home page */
+body#home #navigationGlobal a#navigationGlobal01 span, body#home #navigationGlobal a#navigationGlobal01 { background-position: 0% -84px;  padding-bottom: 12px !important; color: #000; border-bottom: 1px solid #fafafa;}
+
+/* for the curator pages */
+body#curator #navigationGlobal a#navigationGlobal02 span, body#curator #navigationGlobal a#navigationGlobal02 { background-position: 0% -84px;  padding-bottom: 12px !important; color: #000; border-bottom: 1px solid #fafafa; }
+
+/* for the admin pages */
+body#admin #navigationGlobal a#navigationGlobal03 span, body#admin #navigationGlobal a#navigationGlobal03 { background-position: 0% -84px;  padding-bottom: 12px !important; color: #000; border-bottom: 1px solid #fafafa; }
+
+
+/* --------- Global Navigation: Section Specific Elements  --------- */
+
+/* for the home page */
+body#home #navigationGlobal a#navigationGlobal01 span, body#home #navigationGlobal a#navigationGlobal01 { background-position: 0% -84px;  padding-bottom: 0; color: #000; border-bottom: 1px solid #fafafa;}
+
+/* for the curator pages */
+body#curator #navigationGlobal a#navigationGlobal02 span, body#curator #navigationGlobal a#navigationGlobal02 { background-position: 0% -84px;  padding-bottom: 0; color: #000; border-bottom: 1px solid #fafafa; }
+
+/* for the admin pages */
+body#admin #navigationGlobal a#navigationGlobal03 span, body#admin #navigationGlobal a#navigationGlobal03 { background-position: 0% -84px;  padding-bottom: 0; color: #000; border-bottom: 1px solid #fafafa; }
+
+
+
+/* --------- Secondary Navigation aka "navigationSecondary" --------- */
+
+#navigationSecondary {
+	background: transparent url(../images/backgrounds/navigationSecondary.gif) repeat-x 0 50%;
+	font-size: 1.2em;
+	margin: 0 0 10px 0 !important;
+	text-align: center;
+	border: 1px solid #fafafa;
+	}
+
+#navigationSecondary ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	}
+
+#navigationSecondary ul li {
+	background: none;
+	display: inline;	
+	margin: 0;
+	padding: 0;
+	}
+
+#navigationSecondary ul li a {
+	background: #fafafa url(../images/backgrounds/navigationSecondary-default.jpg) 0 bottom repeat-x;
+	border: 2px solid #c8c8c8;
+	color: #969696;
+	font-weight: bold;
+	margin: 0 -4px 0 0;
+	padding: 12px 15px;
+	}
+
+#navigationSecondary ul li a:hover {
+	color: #60acda;
+	background: transparent url(../images/backgrounds/navigationSecondary-over.jpg) 0 bottom repeat-x;
+	border: 2px solid #60acda;
+	}
+
+	
+	
+/* --------- Tertiary (Level 3) Navigation aka "navigation_tabs" --------- */
+
+#navigation_tabs {
+	font-size: 0.90em;
+    line-height:normal;
+	margin: 0 !important;
+	padding: 0 !important;
+    overflow: hidden;
+    width:100%;
+	}
+
+#navigation_tabs ul {
+	display: block;
+	list-style: none;
+	}
+	
+#navigation_tabs #navlist li {
+	display: inline;
+	margin: 0;
+	padding: 0;
+	}
+
+#navigation_tabs #navlist a {
+	float: left;
+	background: transparent url(../images/backgrounds/navigationTertiaryA-default.gif) no-repeat left top;
+	border: none;
+	margin: 0 2px 0 0;
+	padding: 0 0 0 5px;
+	text-decoration: none;
+	}
+
+#navigation_tabs a span {
+ 	background: transparent url(../images/backgrounds/navigationTertiaryB-default.gif) no-repeat right top;
+	color: #2b7aaf;
+	display: block;
+	float: left;
+	font-weight: bold;
+	padding: 12px 14px 12px 10px;
+	}
+
+#navigation_tabs #navlist a:hover span { background-color: transparent; background-position: 100% -58px; color: #fff; }
+
+#navigation_tabs #navlist a:hover {  background-color: transparent; background-position: 0% -58px; color: #fff; }
+
+
+/* --------- Tertiary (Level 3) Navigation aka "navigationTertiary" --------- */
+
+#navigationTertiary {
+	font-size: 0.90em;
+    line-height:normal;
+	margin: 0 !important;
+	padding: 0 !important;
+    overflow: hidden;
+    width:100%;
+	}
+
+#navigationTertiary ul {
+	display: block;
+	list-style: none;
+	}
+	
+#navigationTertiary #navlist li {
+	display: inline;
+	margin: 0;
+	padding: 0;
+	}
+
+#navigationTertiary #navlist a {
+	float: left;
+	background: transparent url(../images/backgrounds/navigationTertiaryA-default.gif) no-repeat left top;
+	border: none;
+	margin: 0 2px 0 0;
+	padding: 0 0 0 3px;
+	text-decoration: none;
+	}
+
+ #navigationTertiary a span {
+ 	background: transparent url(../images/backgrounds/navigationTertiaryB-default.gif) no-repeat right top;
+	color: #2b7aaf;
+	display: block;
+	float: left;
+	font-weight: bold;
+	padding: 12px 10px 12px 8px;
+	}
+
+#navigationTertiary a:hover span { background-color: transparent; background-position: 100% -58px; color: #fff; }
+
+#navigationTertiary a:hover {  background-color: transparent; background-position: 0% -58px; color: #fff; }
+
+
+
+/* --------- Tertiary Navigation: Section Specific Elements  --------- */
+
+/* for the "General Information" page */
+body.generalInformation #navigation_tabs #navlist a#navigation_tabs01 span { background-color: transparent; background-position: 100% -58px; color: #fff; }
+
+body.generalInformation #navigation_tabs #navlist a#navigation_tabs01 { background-color: transparent; background-position: 0% -58px; color: #fff; }
+
+
+/* for the "Reponsible Entities" page */
+body.responsibleEntities #navigation_tabs #navlist a#navigation_tabs02 span { background-color: transparent; background-position: 100% -58px; color: #fff; }
+
+body.responsibleEntities #navigation_tabs #navlist a#navigation_tabs02 { background-color: transparent; background-position: 0% -58px; color: #fff; }
+
+
+/* for the "Dates" page */
+body.dates #navigation_tabs #navlist a#navigation_tabs03 span { background-color: transparent; background-position: 100% -58px; color: #fff; }
+
+body.dates #navigation_tabs #navlist a#navigation_tabs03 { background-color: transparent; background-position: 0% -58px; color: #fff; }
+
+
+/* for the "Chapters" page */
+body.chapters #navigation_tabs #navlist a#navigation_tabs04 span { background-color: transparent; background-position: 100% -58px; color: #fff; }
+
+body.chapters #navigation_tabs #navlist a#navigation_tabs04 { background-color: transparent; background-position: 0% -58px; color: #fff; }
+
+
+/* for the "Descriptors" page */
+body.descriptors #navigation_tabs #navlist a#navigation_tabs05 span { background-color: transparent; background-position: 100% -58px; color: #fff; }
+
+body.descriptors #navigation_tabs #navlist a#navigation_tabs05 { background-color: transparent; background-position: 0% -58px; color: #fff; }
+
+
+/* for the "Collections" page */
+body.collections #navigation_tabs #navlist a#navigation_tabs06 span { background-color: transparent; background-position: 100% -58px; color: #fff; }
+
+body.collections #navigation_tabs #navlist a#navigation_tabs06 { background-color: transparent; background-position: 0% -58px; color: #fff; }
+
+
+/* for the "Digital Files" page */
+body.digitalFiles #navigation_tabs #navlist a#navigation_tabs07 span { background-color: transparent; background-position: 100% -58px; color: #fff; }
+
+body.digitalFiles #navigation_tabs #navlist a#navigation_tabs07 { background-color: transparent; background-position: 0% -58px; color: #fff; }
+
+
+/* for the "Related Videos" page */
+body.relatedVideos #navigation_tabs #navlist a#navigation_tabs07 span { background-color: transparent; background-position: 100% -58px; color: #fff; }
+
+body.relatedVideos #navigation_tabs #navlist a#navigation_tabs07 { background-color: transparent; background-position: 0% -58px; color: #fff; }
+
+
+/* --------- Tertiary Navigation: Collection Administration Section Specific Elements  --------- */
+
+/* for the "Home" page */
+body.home #navigationTertiary #navlist a#navigationTertiary01 span { background-color: transparent; background-position: 100% -58px; color: #fff; }
+
+body.home #navigationTertiary #navlist a#navigationTertiary01 { background-color: transparent; background-position: 0% -58px; color: #fff; }
+
+
+/* for the "Data Types" page */
+body.dateTypes #navigationTertiary #navlist a#navigationTertiary02 span { background-color: transparent; background-position: 100% -58px; color: #fff; }
+
+body.dateTypes #navigationTertiary #navlist a#navigationTertiary02 { background-color: transparent; background-position: 0% -58px; color: #fff; }
+
+
+/* for the "Roles" page */
+body.roles #navigationTertiary #navlist a#navigationTertiary03 span { background-color: transparent; background-position: 100% -58px; color: #fff; }
+
+body.roles #navigationTertiary #navlist a#navigationTertiary03 { background-color: transparent; background-position: 0% -58px; color: #fff; }
+
+
+/* for the "Descriptor Types" page */
+body.descriptorTypes #navigationTertiary #navlist a#navigationTertiary04 span { background-color: transparent; background-position: 100% -58px; color: #fff; }
+
+body.descriptorTypes #navigationTertiary #navlist a#navigationTertiary04 { background-color: transparent; background-position: 0% -58px; color: #fff; }
+
+
+/* for the "Collection Types" page */
+body.collectionTypes #navigationTertiary #navlist a#navigationTertiary05 span { background-color: transparent; background-position: 100% -58px; color: #fff; }
+
+body.collectionTypes #navigationTertiary #navlist a#navigationTertiary05 { background-color: transparent; background-position: 0% -58px; color: #fff; }
+
+
+/* for the "Digital File Types" page */
+body.digitalFileTypes #navigationTertiary #navlist a#navigationTertiary06 span { background-color: transparent; background-position: 100% -58px; color: #fff; }
+
+body.digitalFileTypes #navigationTertiary #navlist a#navigationTertiary06 { background-color: transparent; background-position: 0% -58px; color: #fff; }
+
+
+/* for the "Rights Statements" page */
+body.rightsStatements #navigationTertiary #navlist a#navigationTertiary07 span { background-color: transparent; background-position: 100% -58px; color: #fff; }
+
+body.rightsStatements #navigationTertiary #navlist a#navigationTertiary07 { background-color: transparent; background-position: 0% -58px; color: #fff; }
+
+
+/* for the "Video Relation Types" page */
+body.videoRelationTypes #navigationTertiary #navlist a#navigationTertiary08 span { background-color: transparent; background-position: 100% -58px; color: #fff; }
+
+body.videoRelationTypes #navigationTertiary #navlist a#navigationTertiary08 { background-color: transparent; background-position: 0% -58px; color: #fff; }
+
+/* for the "Format Types" page */
+body.formatTypes #navigationTertiary #navlist a#navigationTertiary09 span { background-color: transparent; background-position: 100% -58px; color: #fff; }
+
+body.formatTypes #navigationTertiary #navlist a#navigationTertiary09 { background-color: transparent; background-position: 0% -58px; color: #fff; }
+
+
+
+/* --------------------------------------------------------- */
+#tab_1_content{
+}
+
+/* --------------------------------------------------------- */
+#tab_2_content{
+}
+
+/* --------------------------------------------------------- */
+#tab_3_content{
+}
+
+/* --------------------------------------------------------- */
+#tab_4_content{
+}
+
+/* --------------------------------------------------------- */
+#tab_5_content{
+}
+
+/* --------------------------------------------------------- */
+#tab_6_content{
+}
+
+/* --------------------------------------------------------- */
+#tab_7_content{
+}
+
+/* --------------------------------------------------------- */
+#tab_8_content{
+}
+
+
+
+/* =========================================================== */
+/* +Content */
+
+#contentA {
+	font-size: 1.1em;
+	line-height: 19px;
+	}
+
+/* Main Page Heading */
+#contentA h1 {
+	border-bottom: 4px double #ccc;
+	color: #000;
+	font-size: 2.0em;
+	margin: 0 0 15px 0;
+	padding: 0 0 10px 0;
+	}
+
+#contentA h3 {
+	margin: 0px 0 10px 0 !important;
+	}
+	   
+#contentA p.subtitle {
+	color: #c1c1c1;
+	font-size: 0.4em;
+	font-weight: normal;
+	display: block;
+	float: right;
+	margin: -10px 0 0 0;
+	text-transform: uppercase;
+	}
+	
+#contentA h2 {
+	color: #60acda;
+	font-size: 1.6em;
+	font-weight: normal;
+	margin: 10px 0;
+	padding: 0;
+	}
+	
+#contentA p {
+	margin: 0 0 20px 0;
+	}
+	
+#contentA ul {
+	margin: 25px 0;
+	}
+
+	
+
+/* --------- Tabular Specific Elements  --------- */	
+
+table {
+	border: 3px solid #b1d6ed;
+	border-collapse: collapse;
+	margin: 0;
+	width: 100%;
+	}
+	
+table caption {
+	display: none;
+	}
+	
+table td {
+	border: 1px dotted #9abacd;
+	font-size: 0.95em;
+	padding: 8px;
+	}
+
+table td a { font-weight: bold; border-bottom: none !important; }
+	
+table td a:hover, table td a:active { 
+	background-color: transparent !important;
+	}
+	
+table td a.viewVideo {
+	background-image: url(../images/icons/view.gif);
+	background-position: 8px 0px;
+	background-repeat: no-repeat;
+	padding-left: 30px !important;
+	}
+	
+table td a.editVideo {
+	background-image: url(../images/icons/edit.gif);
+	background-position: 8px 0px;
+	background-repeat: no-repeat;
+	padding-left: 30px !important;
+	}
+	
+table td a.deleteVideo, span.delete {
+	background-image: url(../images/icons/delete.gif);
+	background-position: 8px 0px;
+	background-repeat: no-repeat;
+	padding-left: 30px !important;
+	}
+
+table th {
+	background: transparent url(../images/backgrounds/table-th-default.jpg) 0 bottom repeat-x; 
+	border-right: 3px solid #b1d6ed;
+	border-bottom: 3px solid #b1d6ed;
+	color: #9ec1d7;
+	font-size: 0.9em;
+	font-weight: normal;
+	padding: 5px 10px;
+	text-align: left;
+	text-transform: uppercase;
+	}
+		
+table th .sort {
+	display: inline;
+	left: 15px;
+	padding: 5px 0 0 0;
+	position: relative;
+	top: 3px;
+	}
+		
+table th .sort a.ascending, table th a.descending {
+	background-color: transparent !important;
+	border: none !important;
+	padding: 0 !important;
+	}
+		
+table tr:hover td {
+	background: transparent url(../images/backgrounds/table-tr-over.jpg) 0 bottom repeat-x; 
+	}
+	
+	
+
+/* --------- Pagination  --------- */
+
+.pagination, .numbers {
+	font-size: 0.9em;
+	text-transform: uppercase;
+	width: 50%;	
+	}
+	
+.pagination { float: left; }
+
+.numbers {
+	float: right;
+	text-align: right;
+	}
+	
+.numbers p, .numbers ul { float: right; }
+
+.numbers p {
+	margin: 0 10px 0 0 !important;
+	}
+
+.numbers ul {
+	list-style: none;
+	position: relative;
+	top: -25px;
+	}
+	
+.numbers ul li {
+	display: inline;
+	margin: 0;
+	padding: 0;
+	}
+
+.numbers ul li a {
+	background-color: #add3ea;
+	border: 2px solid #d5e8f3;
+	color: #fff;
+	padding: 3px 5px;
+	}
+	
+.numbers ul li a:hover, .numbers ul li a:active {
+	background-color: #60acda !important;
+	}
+	
+.numbers ul li a.current, .numbers ul li a.current:hover, .numbers ul li a.current:active {
+	background-color: #999 !important;
+	border: 2px solid #ccc !important;
+	color: #333 !important;
+	}
+
+
+
+/* --------- Homepage Specific Elements  --------- */
+	
+body#home table td {
+	width: 40%;
+	}
+
+
+
+/* --------- Curator's Area Specific Elements  --------- */
+
+body.currentVideos #navigationSecondary ul li a#navigationSecondary01 {
+	color: #60acda;
+	background: transparent url(../images/backgrounds/navigationSecondary-over.jpg) 0 bottom repeat-x;
+	border: 2px solid #60acda;
+	}
+	
+body.addVideo #navigationSecondary ul li a#navigationSecondary02 {
+	color: #60acda;
+	background: transparent url(../images/backgrounds/navigationSecondary-over.jpg) 0 bottom repeat-x;
+	border: 2px solid #60acda;
+	}
+
+body#curator table {
+	margin: 0 0 15px 0;
+	}
+	
+body#curator table tr td.actions {
+	width: 28%;
+	}
+
+body#curator table tr td.title {
+	width: 35%;
+	}
+
+
+/* --------- Collection Adminstration Content Specific Elements  --------- */
+
+body#admin #contentA h3 {
+	margin: 50px 0 5px 0 !important;
+	}
+
+
+/* --------- Editing/Adding A Video Specific Elements  --------- */
+
+#contentA-A {
+	border: 5px solid #73aed3;
+	padding: 30px 50px 30px 30px;
+	}
+	
+h2.edit, h2.add {
+	margin-top: 30px !important;
+	}
+
+h2.add {
+	background-image: url(../images/icons/plus.gif);
+	background-position: 8px 3px;
+	background-repeat: no-repeat;
+	padding-left: 30px !important;
+	}
+	
+h2.edit, span.edit {
+	background-image: url(../images/icons/edit.gif);
+	background-position: 4px 2px;
+	background-repeat: no-repeat;
+	padding-left: 30px !important;
+	}
+
+a.add, p.add {
+	background-color: #f2f2f2 !important; 
+	background-image: url(../images/icons/plus.gif);
+	background-position: 8px 12px;
+	background-repeat: no-repeat;
+	border: 1px solid #4c96c4;
+	display: block;
+	padding: 10px 0 10px 30px;
+	text-decoration: none;
+	}
+
+a.edit, p.edit {
+	background-color: #f2f2f2 !important; 
+	background-image: url(../images/icons/edit.gif);
+	background-position: 8px 12px;
+	background-repeat: no-repeat;
+	border: 1px solid #4c96c4;
+	display: block;
+	padding: 10px 0 10px 30px;
+	text-decoration: none;
+	}
+
+/* --------- Viewing A Video Specific Elements  --------- */
+
+.leftside {
+	float: left;
+	width: 60%;
+	}
+
+.rightside {
+	float: right;
+	width: 30%;
+	}
+
+.leftside dt { 
+	padding: 10px 0 0 0;
+	}  
+
+.rightside dt { 
+	padding: 10px 0 0 0;
+	}  
+
+.view_fields {
+	margin-top: 10px !important;
+	}
+
+.view_fields td.label {
+	font-weight: bold;
+	margin: 15px 0 3px 0;
+	text-align: right;
+	}
+
+.view_fields td.value {
+	text-align: left;
+	}
+ 
+#media_view_area {
+	padding: 10px 0 10px 0px;
+	text-align: center;   
+}   
+/* =========================================================== */
+/* +Forms */
+
+fieldset {
+	border: 2px solid #ddd;
+	padding: 0 15px 20px 22px; 
+	margin-bottom: 15px;
+	width: 95%;	
+	}
+
+legend {
+	color: #ccc;
+	font-size: 1.2em;
+	font-weight: bold;
+	margin: 0;
+	padding: 0 7px;
+	}
+
+label {
+	color: #73aed3;
+	
+	margin: 0 0 0 0;
+	}
+
+label.required {
+	font-weight: bold;
+	}
+
+input, textarea, select {
+	border: 1px solid #999;
+	padding: 3px;
+	}
+	
+input#save, input#clear {
+	border: none;
+	}
+
+select {
+	margin-bottom: 10px;
+	padding: 3px;
+	}
+
+option {
+	padding-right: 15px;
+	}
+			
+form dt {
+	clear: both;
+	float: left;
+	margin-top: 15px;
+	width: 15%;
+	}
+	
+form dd {
+	float:left;
+	margin: 15px 0 0.5em 0;
+	width: 30%;
+	}
+
+form dl.overhead {
+	margin-top: 10px !important;
+	}
+
+form dl.overhead dt, form dl.overhead dd {
+	display: block;
+	margin: 15px 0 3px 0;
+	float: none;
+	width: 100%;
+	}
+
+form dl.overhead dd {
+	margin: 0;
+	}	
+
+form div.add {
+	background-color: #eee;
+	border-bottom: 2px solid #ccc;
+	border-top: 2px solid #ccc;
+	padding: 10px 30px;
+	}
+
+form div.add p {
+	margin: 10px 0 !important;
+	}
+
+form .leftie {
+	float: left;
+	width: 45%;
+	}
+	
+form .rightie {
+	float: right;
+	width: 45%;
+	}
+
+form .errors {
+	color: #c33;
+	font-weight: bold;
+	}
+
+form .tip {
+	color: #999;
+	display: block;
+	font-size: 10px;
+	margin: 3px 0 10px 0;
+	}
+	
+	
+
+
+
+/* =========================================================== */
+/* +Footer */
+
+#footer {
+	line-height: 20px;
+	margin: 40px auto; /* Needed for Footer Stick */
+	position: relative; /* Needed for Footer Stick */
+	width: 900px;
+	}
+	
+#footer ul a:link, #footer ul a:visited, #footer .copyright a:link, #footer copyright a:visited {
+	border-bottom: 1px solid #999;
+	color: #999;
+	font-weight: bold;
+	padding: 0 0 1px 0;
+	}
+
+#footer ul a:hover, #footer ul a:active, #footer .copyright a:hover, #footer .copright a:active {
+	border-bottom: 1px solid #000;
+	background: #ccc !important;
+	color: #000;
+	font-weight: bold;
+	padding: 0 0 1px 0;
+	}
+	
+#footer h2 {
+	color: #60acda;
+	font-size: 1.6em;
+	font-weight: normal;
+	margin: 10px 0;
+	padding: 0;
+	}
+
+#footer p {
+	border-bottom: 4px double #ccc;
+	padding: 0 0 30px 0;
+	}
+	
+#footer ul {
+	color: #999;
+	float: left;
+	list-style: none;
+	margin: 10px 0 30px 0;
+	width: 50%;
+	}
+	
+#footer ul li {
+	float: left;
+	margin: 0 10px 0 0;
+	}
+
+#footer .copyright {
+	color: #999;
+	border: none;
+	float: right;
+	margin: 10px 0 30px 0;
+	padding: 0;
+	}
+	
+	
+/* =========================================================== */
+/* +Floats and Positioning */
+
+.width100 { width: 100%; }
+.width80 { width: 80%; }
+.width60 { width: 60%; }
+.width45 { width: 45%; }
+.width40 { width: 40%; } 
+.width20 { width: 20%; }
+
+.rightie {
+	float: right;
+	margin: 0 0 30px 30px;
+	}
+
+.leftie {
+	float: left;
+	margin: 0 30px 30px 0;
+	}
+	
+
+
+/* =========================================================== */
+/* +Miscellaneous */
+
+
+.bold {
+	font-weight: bold;
+	}
+
+/* Thanks to http://www.positioniseverything.net/easyclearing.html */	
+.clearfix:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+	}
+
+.clear {
+	background: transparent;
+	clear: both;
+	font: 1px/1px verdana, arial, helvetica, sans-serif;
+	margin: 0 !important;
+	padding: 0 !important;
+	}
+
+.hide {
+	position: absolute;
+	left: -9999px;
+	width: 9999px;
+	font-size: 1px;
+	line-height: 0px;
+	margin: 0;
+	padding: 0;
+	}
+	
+.highlight {
+	background-color: #fde8c0;
+	font-weight: bold;
+	margin: 0 3px;
+	padding: 4px 6px;
+	}
+	
+.lastEdited {
+	color: #999;
+	font-size: 0.9em;
+	margin: 10px 0 0 0 !important;
+	}
+	
+/* Icons and Callouts */ 
+
+a.addVideo {
+	background-image: url(../images/icons/plus.gif);
+	background-position: 8px 7px;
+	background-repeat: no-repeat;
+	padding-left: 30px !important;
+	}
+
+a.viewVideo {
+	background-image: url(../images/icons/glass.gif);
+	background-position: 8px 7px;
+	background-repeat: no-repeat;
+	padding-left: 30px !important;
+	}
+	
+a.editAdministration {
+	background-image: url(../images/icons/cog.gif);
+	background-position: 8px 7px;
+	background-repeat: no-repeat;
+	padding-left: 30px !important;
+	}
+
+.callout {
+	background-color: #ededed !important;
+	border: none !important;
+	display: block;
+	color: #457ea1 !important;
+	font-weight: bold;
+	margin: 0 0 3px 0;
+	padding: 5px !important;
+	}
+
+.nobullets {
+	list-style: none;
+	}
+
+.withbullets {
+	list-style: disc;
+	padding-left: 10px;
+	}
+
+.withbullets li {
+	padding-bottom: 5px;
+	}
+	    
+table a.icon {
+	border: none;
+	margin: 0 13px 0 0;
+	padding: 0 0 0 30px;
+	}
+	
