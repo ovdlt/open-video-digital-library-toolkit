@@ -20,3 +20,10 @@ vendor/plugins/rspec_rails:
   branch: master
   squash: true
   remote: git://github.com/dchelimsky/rspec-rails.git
+vendor/plugins/aasm: 
+  local_branch: braid/git/vendor/plugins/aasm/master
+  type: git
+  revision: 
+  branch: master
+  squash: true
+  remote: git://github.com/rubyist/aasm.git
