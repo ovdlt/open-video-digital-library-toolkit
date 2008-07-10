@@ -1,2 +1,4 @@
-%h1 ovdlt
-= current_user.login
+%h1 files
+%ul
+- @files.each do |file|
+  %li= file

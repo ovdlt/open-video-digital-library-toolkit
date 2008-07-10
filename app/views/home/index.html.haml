@@ -2,6 +2,8 @@
 - if logged_in?
   Logged in as
   %b= current_user.login
+  = link_to 'see the files', '/files'
+  or
   = link_to 'logout', '/logout'
 - else
   = link_to 'singup', '/signup'
