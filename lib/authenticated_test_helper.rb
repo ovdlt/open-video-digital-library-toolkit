@@ -16,5 +16,5 @@ module AuthenticatedTestHelper
       :to_xml => "User-in-XML", :to_json => "User-in-JSON", 
       :errors => [])
     user
-  end  
+  end
 end
