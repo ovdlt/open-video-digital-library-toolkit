@@ -8,3 +8,5 @@ require 'rake/testtask'
 require 'rake/rdoctask'
 
 require 'tasks/rails'
+Rake::Task[:default].prerequisites.clear
+task :default => :spec
