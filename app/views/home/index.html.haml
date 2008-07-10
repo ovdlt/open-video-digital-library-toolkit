@@ -1,0 +1,9 @@
+%h1 Open Video Digital Library Toolkit
+- if logged_in?
+  Logged in as
+  %b= current_user.login
+  = link_to 'logout', '/logout'
+- else
+  = link_to 'singup', '/signup'
+  or
+  = link_to 'log in', '/login'
