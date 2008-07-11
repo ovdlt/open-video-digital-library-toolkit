@@ -8,32 +8,20 @@ end
 
 describe Video, ".list_videos" do
   before(:all) do
-    @video = File.open("#{Video::VIDEO_DIR}/funny_video.fla", "w") { |f| f << "some stuff" }
+    @video = File.open(File.join(Video::VIDEO_DIR, "funny_video.fla"), "w") { |f| f << "some stuff" }
     @video_list = Video.list_videos
-    @video_item = @video_list.select{|v| v[:filename] == "funny_video"}.first
+    @video_item = @video_list.select{|v| v.path =~ /funny_video/}.first
   end
   
-  it "should return an array of hashes" do
+  it "should return an array of Files" do
     @video_list.should       be_instance_of(Array)
-    @video_list.first.should be_instance_of(Hash)
-  end
-  
-  it "should know the filename" do
-    @video_item[:filename].should == "funny_video"
-  end
-  
-  it "should know the type" do
-    @video_item[:type].should == ".fla"
-  end
-  
-  it "should know the size" do
-    @video_item[:size].should == 10
+    @video_list.first.should be_instance_of(File)
   end
   
   it "should put directories first" do
-    @video_list.first[:type].should be_blank
-    @video_list.last[:type].should_not be_blank
-    @video_list.partition {|file| file[:type].blank? }.flatten.should == @video_list
+    @video_list.first.stat.should be_directory
+    @video_list.last.stat.should_not be_directory
+    @video_list.partition {|file| file.stat.directory? }.flatten.should == @video_list
   end
   
   after(:all) do
