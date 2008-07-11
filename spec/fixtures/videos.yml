@@ -1,7 +1,5 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
-# one:
-#   column: value
-#
-# two:
-#   column: value
+our_mr_sun:
+  title: Our Mr. Sun
+  sentence: One entry in a series of films produced to make science accessible to the masses--especially children--this film describes the sun in scientific but entertaining terms.
+  filename: our_mr_sun.mp4
+  size: <%= 261.megabytes %>

@@ -5,4 +5,8 @@ class Video < ActiveRecord::Base
     list = Dir.glob("#{VIDEO_DIR}/*").map { |filename| File.new(filename) }
     list.partition { |file| File.directory?(file) }.flatten
   end
+  
+  def path
+    File.join(VIDEO_DIR, self.filename)
+  end
 end

@@ -28,3 +28,9 @@ describe Video, ".list_videos" do
     File.delete @video.path
   end
 end
+
+describe Video do
+  it "should be able to tell you its full path" do
+    videos(:our_mr_sun).path.should == File.join(Video::VIDEO_DIR, videos(:our_mr_sun).filename)
+  end
+end
