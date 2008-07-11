@@ -1,4 +1,8 @@
 %h1 Videos
 %ul
-- @files.each do |file|
-  %li= file
+- @videos.each do |video|
+  %li
+    - if video[:type].blank?
+      = "Directory: #{video[:filename]}"
+    - else
+      = "#{video[:filename]}#{video[:type]}: #{video[:size]} bytes"

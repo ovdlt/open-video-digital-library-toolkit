@@ -1,5 +1,5 @@
 class VideosController < ApplicationController
   def index
-    @files = Dir.new('files').entries.reject{|file| file =~ /^\./ }
+    @videos = Video.list_videos
   end
 end
