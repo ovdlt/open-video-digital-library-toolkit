@@ -1,12 +1,14 @@
 %h1 Catalog File
-
-%dl
-  %dt Filename:
-  %dd=h @video.filename
-  
-  %dt Title:
-  %dd
-  
-  %dt Sentence:
-  %dd
+-form_for @video do |f|
+  %dl
+    %dt Filename:
+    %dd=h @video.basename
+    
+    %dt= f.label :title, "Title:"
+    %dd= f.text_field :title
+    
+    %dt= f.label :sentence, "Sentence:"
+    %dd= f.text_field :sentence
+  = hidden_field :video, :basename
+  = f.submit "Add video"
 

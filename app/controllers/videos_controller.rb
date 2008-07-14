@@ -6,7 +6,10 @@ class VideosController < ApplicationController
   def new
     @video = Video.new(:filename => params[:filename])
     render_missing unless @video.valid_path?
-    
+  end
+  
+  def create
+    render :text => params.inspect
   end
   
   private

@@ -10,7 +10,6 @@ describe Video, ".list_videos" do
   before(:all) do
     @video = File.open(File.join(Video::VIDEO_DIR, "funny_video.fla"), "w") { |f| f << "some stuff" }
     @video_list = Video.list_videos
-    @video_item = @video_list.select{|v| v.path =~ /funny_video/}.first
   end
   
   it "should return an array of Files" do
@@ -30,11 +29,19 @@ describe Video, ".list_videos" do
 end
 
 describe Video do
-  it "should be able to tell you its full path" do
-    videos(:our_mr_sun).path.should == File.join(Video::VIDEO_DIR, videos(:our_mr_sun).filename)
+  before(:all) do
+    @new_video = File.open(File.join(Video::VIDEO_DIR, "look_around_you.mov"), "w") { |f| f << "thanks ants. thants." }
+  end
+
+  after(:all) do
+    File.delete @new_video.path
+  end
+  
+  it "should be able to tell you the basename" do
+    video = Video.new(:filename => "look_around_you.mov")
+    video.basename.should == "look_around_you.mov"
   end
 end
-
 
 describe Video, "#valid_path?" do
   it "should return true if the file's path is in the videos directory" do

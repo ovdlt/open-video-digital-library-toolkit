@@ -28,9 +28,9 @@ describe VideosController do
     
     it "should assign @video to a new instance of Video with its filename prepopulated from the params" do
       assigns[:video].should_not be_nil
-      assigns[:video].should be_an_instance_of(Video
+      assigns[:video].should be_an_instance_of(Video)
       assigns[:video].should be_new_record
-      assigns[:video].filename.should == @filename
+      assigns[:video].filename.should == File.join(Video::VIDEO_DIR, @filename)
     end
   end
   
@@ -41,5 +41,13 @@ describe VideosController do
     end
   end
   
-  # describe "#new, when the filename parameter is invalid"
+  # describe "#new, when the filename parameter is invalid, eg: %0C"
+  
+  describe "#create" do
+    it "should fail if the path is not valid"
+    it "should fail if the video has already been added"
+    it "should set the flash if the title is missing"
+    it "should set the flash if the sentence is missing"
+    it "should create a video object if everything is valid"
+  end
 end

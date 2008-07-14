@@ -10,11 +10,14 @@ class Video < ActiveRecord::Base
     list.partition { |file| File.directory?(file) }.flatten
   end
   
-  def path
-    File.join(VIDEO_DIR, self.filename)
+  def basename
+    File.basename filename
   end
   
   def valid_path?
-    filename =~ /^#{Video::VIDEO_DIR}/
+    # filename =~ /^#{Video::VIDEO_DIR}/
+    video_path = Pathname.new VIDEO_DIR
+    Pathname.new(filename).ascend { |path| return true if path == video_path }
+    return false
   end
 end
