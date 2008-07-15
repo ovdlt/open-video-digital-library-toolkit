@@ -1,6 +1,7 @@
 class VideosController < ApplicationController
   def index
-    @videos = Video.list_videos
+    @videos = Video.find :all
+    @files  = Video.list_uncataloged_files
   end
   
   def new
@@ -9,7 +10,13 @@ class VideosController < ApplicationController
   end
   
   def create
-    render :text => params.inspect
+    @video = Video.new(:filename => params[:video][:filename], :title => params[:video][:title], :sentence => params[:video][:sentence])
+    if @video.save
+      flash[:notice] = "#{@video.filename} was added"
+      redirect_to videos_path
+    else
+      render :template => 'videos/new'
+    end
   end
   
   private

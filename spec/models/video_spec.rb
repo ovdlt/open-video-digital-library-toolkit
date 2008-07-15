@@ -6,25 +6,53 @@ describe Video, "::VIDEO_DIR" do
   end
 end
 
-describe Video, ".list_videos" do
+describe Video, "validations" do
+  before :each do
+    @video = videos(:our_mr_sun)
+  end
+  
+  it "the presence of a title" do
+    @video.should be_valid
+    @video.title = nil
+    @video.should_not be_valid
+  end
+  
+  it "the presence of a sentence" do
+    @video.should be_valid
+    @video.sentence = nil
+    @video.should_not be_valid
+  end
+  
+  it "a valid filename" do
+    @video.should be_valid
+    @video.filename = File.join("..", "..", "look_around_you.mp4")
+    @video.should_not be_valid
+  end
+end
+
+describe Video, ".list_uncataloged_files" do
   before(:all) do
-    @video = File.open(File.join(Video::VIDEO_DIR, "funny_video.fla"), "w") { |f| f << "some stuff" }
-    @video_list = Video.list_videos
-  end
-  
-  it "should return an array of Files" do
-    @video_list.should       be_instance_of(Array)
-    @video_list.first.should be_instance_of(File)
-  end
-  
-  it "should put directories first" do
-    @video_list.first.stat.should be_directory
-    @video_list.last.stat.should_not be_directory
-    @video_list.partition {|file| file.stat.directory? }.flatten.should == @video_list
+    @our_mr_sun = create_temp_video("our_mr_sun.mp4")
+    @file_list = Video.list_uncataloged_files
   end
   
   after(:all) do
-    File.delete @video.path
+    File.delete @our_mr_sun.path
+  end
+  
+  it "should return an array of Files" do
+    @file_list.should       be_instance_of(Array)
+    @file_list.first.should be_instance_of(File)
+  end
+  
+  it "should put directories first" do
+    @file_list.first.stat.should be_directory
+    @file_list.last.stat.should_not be_directory
+    @file_list.partition {|file| file.stat.directory? }.flatten.should == @file_list
+  end
+  
+  it "should not include files that have already been cataloged" do
+    @file_list.any? {|file| file.path == @our_mr_sun.path }.should be_false
   end
 end
 
@@ -37,9 +65,9 @@ describe Video do
     File.delete @new_video.path
   end
   
-  it "should be able to tell you the basename" do
+  it "should be able to tell you the path" do
     video = Video.new(:filename => "look_around_you.mov")
-    video.basename.should == "look_around_you.mov"
+    video.path.should == File.join(Video::VIDEO_DIR, "look_around_you.mov")
   end
 end
 
@@ -55,21 +83,25 @@ describe Video, "#valid_path?" do
   end
 end
 
-describe Video, "filename=" do
-  it "should the video dir to the path" do
-    video = Video.new
-    video.filename = ''
-    video.filename.should == Video::VIDEO_DIR
-  end
-
-  it "should sanitize the path by expanding the file name to the absolute pathname" do
-    video = Video.new
-    video.filename = File.join("..", "app", "..", "spec", "..")
-    video.filename.should == RAILS_ROOT
+describe Video, "#before_save" do
+  it "should set the size of the file when saving a new file" do
+    file = File.open(File.join(Video::VIDEO_DIR, "look_around_you.mov"), "w") { |f| f << "thanks ants. thants." }
+    video = Video.new(:filename => "look_around_you.mov", :sentence => "bless you ants. blants.", :title => "look around youlook around youlook around you")
+    
+    video.size.should be_nil
+    video.save
+    video.size.should == File.size(file.path)
+    
+    File.delete file.path
   end
   
-  it "should also work when set with new attributes" do
-    video = Video.new(:filename => File.join("..", "app", "..", "spec", ".."))
-    video.filename.should == RAILS_ROOT
+  it "should set the size of the file when updating a file" do
+    video = videos(:our_mr_sun)
+    file = File.open(File.join(Video::VIDEO_DIR, video.filename), "w") { |f| f << "what"*10 }
+    new_size = 40
+    video.size.should_not == new_size
+    video.save
+    video.size.should == new_size
+    File.delete file.path
   end
 end

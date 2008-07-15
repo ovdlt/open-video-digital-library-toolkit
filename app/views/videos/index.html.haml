@@ -1,5 +1,19 @@
+=h flash[:notice]
 %h1 Videos
+%table
+  %thead
+    %tr
+      %th Title
+      %th Sentence
+      %th Size
+  %tbody
+    - @videos.each do |video|
+      %tr
+        %td=h video.title
+        %td=h video.sentence
+        %td=h video.size
 
+%h1 Uncataloged Files
 %table
   %thead
     %tr
@@ -7,9 +21,9 @@
       %th Type
       %th Size
   %tbody
-    - @videos.each do |video|
+    - @files.each do |file|
       %tr
-        %td=h File.basename(video.path)
-        %td=h File.extname(video.path)
-        %td= file_size(video)
-        %td= link_to_add_video(video)
+        %td=h File.basename(file.path)
+        %td=h File.extname(file.path)
+        %td= file_size(file)
+        %td= link_to_add_video(file)
