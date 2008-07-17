@@ -1,4 +1,5 @@
-<h1>Sign up as a new user</h1>
+<fieldset>
+<legend>Sign up as a new user</legend>
 <% @user.password = @user.password_confirmation = nil %>
 
 <%= error_messages_for :user %>
@@ -14,6 +15,6 @@
 
 <p><label for="password_confirmation">Confirm Password</label><br/>
 <%= f.password_field :password_confirmation %></p>
-
+</fieldset>
 <p><%= submit_tag 'Sign up' %></p>
 <% end -%>

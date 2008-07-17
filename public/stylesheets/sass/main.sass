@@ -1,2 +1,38 @@
+*
+  :border 0
+  :padding 0
+  :margin 0
+
 body
-  :background-color purple
+  :background #fafafa url(../images/backgrounds/body-default.jpg) 0 0 repeat-x
+  :color #333
+  :font
+    :family "helvetica neue", helvetica, "lucida grande", verdana, sans-serif
+    :size 62.5%
+
+#page
+  :font-size 1.2em
+
+#container
+  :margin 0 auto
+  :min-height 100%
+  :width 900px
+  :position relative
+
+a
+  :text-decoration none
+  :padding 0px 0px 1px 0px
+  &:visited, &:link
+    :border-bottom 1px solid #60acda
+    :color #60acda
+  &:hover, &:active
+    :background-color #cdeafb
+    :border-bottom 1px solid #457ea1
+    :color #457ea1
+
+@import header.sass
+@import navigation.sass
+@import content.sass
+@import tables.sass
+@import forms.sass
+@import clearfix.sass
