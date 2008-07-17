@@ -8,24 +8,30 @@ end
 
 describe Video, "validations" do
   before :each do
+    File.stub!(:exists?).and_return(true)
     @video = videos(:our_mr_sun)
   end
   
-  it "the presence of a title" do
+  it "should require the presence of a title" do
     @video.should be_valid
     @video.title = nil
     @video.should_not be_valid
   end
   
-  it "the presence of a sentence" do
+  it "should require the presence of a sentence" do
     @video.should be_valid
     @video.sentence = nil
     @video.should_not be_valid
   end
   
-  it "a valid filename" do
+  it "should require a valid filename (i.e. a file that exists in the blessed video directory)" do
     @video.should be_valid
     @video.filename = File.join("..", "..", "look_around_you.mp4")
+    @video.should_not be_valid
+  end
+  
+  it "should require that the filename correspond to a file on disk" do
+    File.stub!(:exists?).with(@video.path).and_return(false)
     @video.should_not be_valid
   end
 end
@@ -34,10 +40,6 @@ describe Video, ".list_uncataloged_files" do
   before(:all) do
     @our_mr_sun = create_temp_video("our_mr_sun.mp4")
     @file_list = Video.list_uncataloged_files
-  end
-  
-  after(:all) do
-    File.delete @our_mr_sun.path
   end
   
   it "should return an array of Files" do
@@ -58,11 +60,7 @@ end
 
 describe Video do
   before(:all) do
-    @new_video = File.open(File.join(Video::VIDEO_DIR, "look_around_you.mov"), "w") { |f| f << "thanks ants. thants." }
-  end
-
-  after(:all) do
-    File.delete @new_video.path
+    create_temp_video("look_around_you.mov")
   end
   
   it "should be able to tell you the path" do
