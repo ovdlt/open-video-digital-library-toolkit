@@ -30,7 +30,7 @@ describe VideosController do
       assigns[:video].should_not be_nil
       assigns[:video].should be_an_instance_of(Video)
       assigns[:video].should be_new_record
-      assigns[:video].filename.should == File.join(Video::VIDEO_DIR, @filename)
+      assigns[:video].filename.should == @filename
     end
   end
   
@@ -43,11 +43,66 @@ describe VideosController do
   
   # describe "#new, when the filename parameter is invalid, eg: %0C"
   
-  describe "#create" do
-    it "should fail if the path is not valid"
-    it "should fail if the video has already been added"
-    it "should set the flash if the title is missing"
-    it "should set the flash if the sentence is missing"
-    it "should create a video object if everything is valid"
+  describe "#create with valid params" do
+    before(:all) do
+      create_temp_video("cute_with_chris.fla")
+    end
+    
+    def do_post
+      post :create, :video => {:filename => "cute_with_chris.fla", :title => "teen cult machine", :sentence => "all your dreams are dead"}
+    end
+    
+    it "should make a new video" do
+      lambda { do_post }.should change(Video, :count).by(1)
+    end
+    
+    it "should redirect to the videos index" do
+      do_post
+      response.should be_redirect
+      response.should redirect_to(videos_path)
+    end
+    
+    it "should set the flash" do
+      do_post
+      flash[:notice].should_not be_blank
+    end
+  end
+  
+  describe "#create when the file does not exist" do
+    before(:each) do
+      # note, no before(:all) this time
+      post :create, :video => {:filename => "this file is not there", :title => "teen cult machine", :sentence => "all your dreams are dead"}
+    end
+    
+    it "should not cause a 500 server error response" do
+      response.should_not be_error
+    end
+    
+    it "should display the new page with the fields populated and with errors" do
+      response.should be_success
+      response.body.should == "videos/new"
+      assigns[:video].errors.should_not be_empty
+    end
+  end
+  
+  describe "#create with invalid params" do
+    before(:all) do
+      create_temp_video("cute_with_chris.fla")
+    end
+    
+    def do_post
+      post :create, :video => {:filename => "cute_with_chris.fla", :title => "", :sentence => "all your dreams are dead"}
+    end
+    
+    it "should not make a new video" do
+      lambda { do_post }.should_not change(Video, :count)
+    end
+    
+    it "should display the new page with the fields populated and with errors" do
+      do_post
+      response.should be_success
+      response.body.should == "videos/new"
+      assigns[:video].errors.should_not be_empty
+    end
   end
 end

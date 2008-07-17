@@ -4,6 +4,7 @@ class Video < ActiveRecord::Base
   validates_presence_of :title
   validates_presence_of :sentence
   validate :must_have_valid_path
+  validate :must_exist_on_disk
   
   def self.list_uncataloged_files
     list = Dir.glob("#{VIDEO_DIR}/*").map { |filename| File.new(filename) }
@@ -28,5 +29,11 @@ class Video < ActiveRecord::Base
   
   def must_have_valid_path
     errors.add_to_base("The path must point to a valid file") unless valid_path?
+  end
+
+  def must_exist_on_disk
+    if valid_path?
+      errors.add_to_base("The file does not exist on disk") unless File.exists?(path)
+    end
   end
 end

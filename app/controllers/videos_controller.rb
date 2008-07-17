@@ -15,7 +15,7 @@ class VideosController < ApplicationController
       flash[:notice] = "#{@video.filename} was added"
       redirect_to videos_path
     else
-      render :template => 'videos/new'
+      render :action => 'new'
     end
   end
   
