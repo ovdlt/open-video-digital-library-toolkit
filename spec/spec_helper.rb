@@ -18,11 +18,13 @@ end
 
 def create_temp_video(filename, size=100)
   @files ||= []
-  unless @files.any? {|file| file.stat.basename == filename }
-    file = File.open(File.join(Video::VIDEO_DIR, filename), "w") { |f| f << "j"*size }
+  
+  unless @files.any? {|file| File.basename(file.path) == filename }
+    new_file = File.open(File.join(Video::VIDEO_DIR, filename), "w") { |f| f << "j"*size }
+    file = File.new(new_file.path) # because new_file is closed and we can't use it
     @files << file
+    return file
   end
-  file
 end
 
 def delete_temp_videos
