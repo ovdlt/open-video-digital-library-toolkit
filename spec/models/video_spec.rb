@@ -8,8 +8,7 @@ end
 
 describe Video, "validations" do
   before :each do
-    File.stub!(:exists?).and_return(true)
-    @video = videos(:our_mr_sun)
+    @video = Factory(:video)
   end
   
   it "should require the presence of a title" do
@@ -38,12 +37,23 @@ end
 
 describe Video, ".list_uncataloged_files" do
   before(:all) do
-    @our_mr_sun = create_temp_video("our_mr_sun.mp4")
+    create_temp_video("the_darjeeling_limited.avi")
+    @our_mr_sun = Factory(:video)
+    
+    new_dir_path = File.join(Video::VIDEO_DIR, "a brand new directory")
+    Dir.mkdir(new_dir_path)
+    @directory = Dir.new(new_dir_path)
+    
     @file_list = Video.list_uncataloged_files
   end
   
+  after(:all) do
+    Dir.rmdir @directory.path
+  end
+  
   it "should return an array of Files" do
-    @file_list.should       be_instance_of(Array)
+    @file_list.should_not be_empty
+    @file_list.should be_instance_of(Array)
     @file_list.first.should be_instance_of(File)
   end
   
@@ -94,12 +104,11 @@ describe Video, "#before_save" do
   end
   
   it "should set the size of the file when updating a file" do
-    video = videos(:our_mr_sun)
+    video = Factory(:video)
     file = File.open(File.join(Video::VIDEO_DIR, video.filename), "w") { |f| f << "what"*10 }
     new_size = 40
     video.size.should_not == new_size
     video.save
     video.size.should == new_size
-    File.delete file.path
   end
 end

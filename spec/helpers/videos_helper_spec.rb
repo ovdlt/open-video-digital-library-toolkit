@@ -16,12 +16,13 @@ end
 
 describe VideosHelper, "#link_to_add_video(file)" do
   before(:each) do
-    create_temp_video(videos(:our_mr_sun).filename)
+    @our_mr_sun = Factory(:video)
     @video = create_temp_video("l_is_for_labour")
   end
   
   it "should return nil if the file is already a cataloged video (by file path)" do
-    helper.link_to_add_video(File.new(videos(:our_mr_sun).path)).should be_nil
+    file = File.new(@our_mr_sun.path)
+    helper.link_to_add_video(file).should be_nil
   end
   
   it "should return a link to /videos/new if the file is not already cataloged" do
