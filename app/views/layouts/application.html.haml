@@ -1,0 +1,17 @@
+%html
+  %head
+    / %meta{"http-equiv" => "refresh", "content" => "1"}
+    %title Open Video Digital Library Toolkit
+    = stylesheet_link_tag :all
+  %body
+    #page
+      #container
+        #header
+          %h1 Your Collection's Name
+        #navigation
+          %ul
+            %li= link_to "<span>home</span>", "/"
+          %ul
+            %li= link_to "<span>videos</span>", "/videos"
+        #content
+          = yield

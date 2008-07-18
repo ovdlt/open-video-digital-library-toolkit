@@ -23,7 +23,8 @@
   %tbody
     - @files.each do |file|
       %tr
-        %td=h File.basename(file.path)
+        %td
+          =h File.basename(file.path)
+          =link_to_add_video(file)
         %td=h File.extname(file.path)
         %td= file_size(file)
-        %td= link_to_add_video(file)

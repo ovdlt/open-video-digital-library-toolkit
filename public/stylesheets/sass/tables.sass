@@ -1,0 +1,31 @@
+!border_color = #b1d6ed
+
+table
+  :border 3px solid
+    :color = !border_color
+    :collapse collapse
+  :margin-bottom 20px
+  :width 100%
+  
+  td
+    :border 1px dotted #9abacd
+    :font-size 0.95em
+    a
+      :font-weight bold
+      :border-bottom none !important
+      &:hover, &:active
+        :background-color transparent
+  
+  th
+    :background transparent url(../images/backgrounds/table-th-default.jpg) 0 bottom repeat-x
+    :border 3px solid
+      :color = !border_color
+    :color #9ec1d7
+    :font
+      :size 0.9em
+      :weight normal
+    :padding 5px 10px
+    :text
+      :align left
+      :transform uppercase
+    

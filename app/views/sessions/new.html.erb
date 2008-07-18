@@ -1,4 +1,5 @@
-<h1>Log In</h1>
+<fieldset>
+<legend>Log In</legend>
 
 <% form_tag session_path do -%>
 <p><label for="login">Login</label><br/>
@@ -11,6 +12,6 @@
 <p><label for="remember_me">Remember me:</label>
 <%= check_box_tag 'remember_me', '1', @remember_me %></p>
 -->
-
+</fieldset>
 <p><%= submit_tag 'Log in' %></p>
 <% end -%>
