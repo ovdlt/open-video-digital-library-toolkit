@@ -1,5 +1,5 @@
 class Video < ActiveRecord::Base
-  VIDEO_DIR = "#{RAILS_ROOT}/videos"
+  VIDEO_DIR = ::VIDEO_DIR
   
   validates_presence_of :title
   validates_presence_of :sentence
@@ -21,7 +21,6 @@ class Video < ActiveRecord::Base
   end
   
   def valid_path?
-    # filename =~ /^#{Video::VIDEO_DIR}/
     video_path = Pathname.new VIDEO_DIR
     Pathname.new(path).ascend { |path| return true if path == video_path }
     return false

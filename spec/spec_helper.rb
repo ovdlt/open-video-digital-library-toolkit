@@ -14,21 +14,16 @@ Spec::Runner.configure do |config|
   
   config.global_fixtures = :all
   
-  config.after(:all) { delete_temp_videos }
+  config.after(:suite) { delete_temp_videos }
 end
 
 def create_temp_video(filename, size=100)
-  @files ||= []
-  
-  unless @files.any? {|file| File.basename(file.path) == filename }
-    new_file = File.open(File.join(Video::VIDEO_DIR, filename), "w") { |f| f << "j"*size }
-    file = File.new(new_file.path) # because new_file is closed and we can't use it
-    @files << file
-    return file
-  end
+  path = File.join(VIDEO_DIR, filename)
+  File.delete(path) if File.exists?(path)
+  new_file = File.open(path, "w") { |f| f << "j"*size }
+  return File.new(path)
 end
 
 def delete_temp_videos
-  @files.each { |file| File.delete(file.path) } if @files
-  @files = []
+  Dir.glob("#{VIDEO_DIR}/*").map { |filename| File.delete(filename) }
 end
