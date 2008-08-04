@@ -13,16 +13,13 @@ end
 module Spec
   class << self
     def run?
-      @run || rspec_options.examples_run?
+      Runner.options.examples_run?
     end
 
     def run
       return true if run?
-      result = rspec_options.run_examples
-      @run = true
-      result
+      Runner.options.run_examples
     end
-    attr_writer :run
     
     def exit?
       !Object.const_defined?(:Test) || Test::Unit.run?
