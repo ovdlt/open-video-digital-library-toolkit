@@ -1,6 +1,5 @@
 %html
   %head
-    / %meta{"http-equiv" => "refresh", "content" => "1"}
     %title Open Video Digital Library Toolkit
     = stylesheet_link_tag :all
   %body
@@ -14,4 +13,8 @@
           %ul
             %li= link_to "<span>videos</span>", "/videos"
         #content
+          - [:notice, :error].each do |type|
+            - unless flash[type].blank?
+              %div{:class => "flash #{type} clearfix"}
+                = flash[type]
           = yield
