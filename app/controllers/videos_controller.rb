@@ -1,4 +1,6 @@
 class VideosController < ApplicationController
+  before_filter :find_video, :only => [:update, :edit, :destroy]
+  
   def index
     @videos = Video.find :all
     @files  = Video.list_uncataloged_files
@@ -29,7 +31,6 @@ class VideosController < ApplicationController
   end
   
   def update
-    @video = Video.find(params[:id])
     if params[:video].include?(:filename) && (params[:video][:filename] != @video.filename)
       render_bad_request 
       return
@@ -42,7 +43,22 @@ class VideosController < ApplicationController
     end
   end
   
+  def destroy
+    @video.destroy
+    flash[:notice] = "#{@video.title} was deleted"
+    redirect_to videos_path
+  end
+  
   private
+  def find_video
+    @video = Video.find_by_id(params[:id])
+    if @video.nil?
+      flash[:error] = "Video could not be found"
+      redirect_to videos_path and return
+    end
+    @video
+  end
+  
   def render_missing
     render :nothing => true, :status => interpret_status(404)
   end

@@ -124,7 +124,7 @@ describe VideosController do
   describe "#update with valid params" do
     before(:each) do
       @video = Factory(:video)
-      post :update, :id => @video.id, :video => {:title => "new title"}
+      put :update, :id => @video.id, :video => {:title => "new title"}
     end
     
     it "should should be a redirect to the index" do
@@ -144,7 +144,7 @@ describe VideosController do
   describe "#update with invalid params" do
     before(:each) do
       @video = Factory(:video)
-      post :update, :id => @video.id, :video => {:title => ""}
+      put :update, :id => @video.id, :video => {:title => ""}
     end
     
     it "should render the form again" do
@@ -165,16 +165,54 @@ describe VideosController do
     it "should not allow the file name to be changed" do
       video = Factory(:video)
       create_temp_video("new_filename")
-      post :update, :id => video.id, :video => {:filename => "new_filename"}
+      put :update, :id => video.id, :video => {:filename => "new_filename"}
       
       response.code.should == "400"
     end
     
     it "should not allow a nil filename" do
       video = Factory(:video)
-      post :update, :id => video.id, :video => {:filename => nil}
+      put :update, :id => video.id, :video => {:filename => nil}
       
       response.code.should == "400"
+    end
+  end
+  
+  describe "#destroy with valid params" do
+    before(:each) do
+      @video = Factory(:video)
+    end
+    
+    def do_delete
+      delete :destroy, :id => @video.id
+    end
+    
+    it "should delete the video" do
+      lambda{ do_delete }.should change(Video, :count).by(-1)
+    end
+    
+    it "should redirect to the videos page" do
+      do_delete
+      response.should redirect_to(videos_path)
+    end
+    
+    it "should set the flash" do
+      do_delete
+      flash[:notice].should_not be_nil
+    end
+  end
+  
+  describe "#destroy with invalid params" do
+    before(:each) do
+      delete :destroy, :id => 0
+    end
+    
+    it "should redirect to the videos page" do
+      response.should redirect_to(videos_path)
+    end
+    
+    it "should set the flash" do
+      flash[:error].should_not be_nil
     end
   end
 end

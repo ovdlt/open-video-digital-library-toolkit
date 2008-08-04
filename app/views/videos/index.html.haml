@@ -13,7 +13,9 @@
         %td=h video.title
         %td=h video.sentence
         %td=h video.size
-        %td= link_to(image_tag('/images/icons/edit.gif') + " Edit", edit_video_path(video))
+        %td
+          = link_to(image_tag('/images/icons/edit.gif') + " Edit", edit_video_path(video))
+          = link_to(image_tag('/images/icons/delete.gif') + " Delete", video_path(video), :method => :delete)
 
 %h1 Uncataloged Files
 %table
