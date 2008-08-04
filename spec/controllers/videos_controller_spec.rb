@@ -80,7 +80,7 @@ describe VideosController do
     
     it "should display the new page with the fields populated and with errors" do
       response.should be_success
-      response.body.should == "videos/new"
+      response.body.should == "videos/form"
       assigns[:video].errors.should_not be_empty
     end
   end
@@ -101,8 +101,80 @@ describe VideosController do
     it "should display the new page with the fields populated and with errors" do
       do_post
       response.should be_success
-      response.body.should == "videos/new"
+      response.body.should == "videos/form"
       assigns[:video].errors.should_not be_empty
+    end
+  end
+  
+  describe "#edit" do
+    before(:each) do
+      @video = Factory(:video)
+      get :edit, :id => @video.id
+    end
+    
+    it "should assign @video with the video" do
+      assigns[:video].should == @video
+    end
+    
+    it "should render the form" do
+      response.body.should == "videos/form"
+    end
+  end
+  
+  describe "#update with valid params" do
+    before(:each) do
+      @video = Factory(:video)
+      post :update, :id => @video.id, :video => {:title => "new title"}
+    end
+    
+    it "should should be a redirect to the index" do
+      response.should redirect_to(videos_path)
+    end
+    
+    it "should update the video" do
+      @video.reload
+      @video.title.should == "new title"
+    end
+    
+    it "should set the flash" do
+      flash[:notice].should_not be_blank
+    end
+  end
+  
+  describe "#update with invalid params" do
+    before(:each) do
+      @video = Factory(:video)
+      post :update, :id => @video.id, :video => {:title => ""}
+    end
+    
+    it "should render the form again" do
+      response.should render_template("videos/form")
+    end
+    
+    it "should assign the video to @video" do
+      assigns[:video].title.should == ""
+      assigns[:video].id.should == @video.id
+    end
+    
+    it "should have errors on @video" do
+      assigns[:video].errors.should_not be_empty
+    end
+  end
+  
+  describe "#update when the filename changes" do
+    it "should not allow the file name to be changed" do
+      video = Factory(:video)
+      create_temp_video("new_filename")
+      post :update, :id => video.id, :video => {:filename => "new_filename"}
+      
+      response.code.should == "400"
+    end
+    
+    it "should not allow a nil filename" do
+      video = Factory(:video)
+      post :update, :id => video.id, :video => {:filename => nil}
+      
+      response.code.should == "400"
     end
   end
 end
