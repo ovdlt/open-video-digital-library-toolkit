@@ -1,4 +1,12 @@
 class ControllerSpecController < ActionController::Base
+  before_filter :raise_error, :only => :action_with_skipped_before_filter
+  
+  def raise_error
+    raise "from a before filter"
+  end
+  
+  skip_before_filter :raise_error
+  
   if ['edge','2.0.0'].include?(ENV['RSPEC_RAILS_VERSION'])
     set_view_path [File.join(File.dirname(__FILE__), "..", "views")]
   else
@@ -74,5 +82,14 @@ class ControllerSpecController < ActionController::Base
                             :partial => 'non_existent_partial'
     end
   end
+  
+  def action_with_skipped_before_filter
+    render :text => ""
+  end
 end
 
+class ControllerInheritingFromApplicationControllerController < ApplicationController
+  def action_with_inherited_before_filter
+    render :text => ""
+  end
+end
