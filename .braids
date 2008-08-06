@@ -1,11 +1,4 @@
 --- 
-vendor/plugins/restful-authentication: 
-  local_branch: braid/git/vendor/plugins/restful-authentication/master
-  type: git
-  revision: 
-  branch: master
-  squash: true
-  remote: git://github.com/technoweenie/restful-authentication.git
 vendor/plugins/rspec: 
   local_branch: braid/git/vendor/plugins/rspec/master
   type: git
@@ -20,6 +13,13 @@ vendor/plugins/rspec_rails:
   branch: master
   squash: true
   remote: git://github.com/dchelimsky/rspec-rails.git
+vendor/plugins/restful_authentication: 
+  local_branch: braid/git/vendor/plugins/restful-authentication/master
+  type: git
+  revision: 
+  branch: master
+  squash: true
+  remote: git://github.com/technoweenie/restful-authentication.git
 vendor/plugins/aasm: 
   local_branch: braid/git/vendor/plugins/aasm/master
   type: git
