@@ -1,0 +1,7 @@
+smparkes:
+  id: 1
+  login: smparkes
+  name: Steven Parkes
+  state: active
+  salt: <%= salt = User::make_token %>
+  crypted_password: <%= User::password_digest("ovdlt4smparkes",salt) %>
