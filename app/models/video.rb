@@ -27,12 +27,14 @@ class Video < ActiveRecord::Base
   end
   
   def must_have_valid_path
-    errors.add_to_base("The path must point to a valid file") unless valid_path?
+    errors.add_to_base("The path must point to a valid file") \
+      if !valid_path?
   end
 
   def must_exist_on_disk
     if valid_path?
-      errors.add_to_base("The file does not exist on disk") unless File.exists?(path)
+      errors.add_to_base("The file does not exist on disk") \
+        if !File.exists?(path)
     end
   end
 end

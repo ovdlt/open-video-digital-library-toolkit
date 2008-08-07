@@ -21,7 +21,7 @@ ActionController::Routing::Routes.draw do |map|
                       :controller => 'users',
                       :action => 'reset_password'
     
-  map.resources :videos
+  map.resources :videos, :collection => { :recent => :get }
   
   map.resource :session
   
