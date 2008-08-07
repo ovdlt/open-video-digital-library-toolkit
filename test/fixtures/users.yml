@@ -1,0 +1,26 @@
+geisler:
+  id: 1
+  login: geisler
+  email: geisler@ischool.utexas.edu
+  name: Gary Geisler
+  state: active
+  salt: <%= salt = User::make_token %>
+  crypted_password: <%= User::password_digest("ovdlt4geisler",salt) %>
+
+moses:
+  id: 2
+  login: moses
+  email: moses@collaborativedrug.com
+  name: Moses Hohman
+  state: active
+  salt: <%= salt = User::make_token %>
+  crypted_password: <%= User::password_digest("ovdlt4moses",salt) %>
+
+smparkes:
+  id: 3
+  login: smparkes
+  email: smparkes@smparkes.net
+  name: Steven Parkes
+  state: active
+  salt: <%= salt = User::make_token %>
+  crypted_password: <%= User::password_digest("ovdlt4smparkes",salt) %>

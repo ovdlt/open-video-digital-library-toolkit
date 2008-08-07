@@ -1,12 +1,29 @@
+- title ||= Library.title
 %html
   %head
-    %title Open Video Digital Library Toolkit
+    %title= title
     = stylesheet_link_tag :all
   %body
     #page
+      - if Library.logo_url
+        #logo
+          = image_tag Library.logo_url
       #container
         #header
-          %h1 Your Collection's Name
+          .login
+            - if logged_in?
+              .logout
+                .button= link_to "LOGOUT", logout_path
+              .user
+                You're logged in as
+                %span.login= h current_user.login
+            - else
+              .login
+                .button= link_to "LOGIN", login_path
+              .register
+                .button= link_to "REGISTER", signup_path
+          .title= title
+          .subtitle= Library.subtitle
         #navigation
           %ul
             %li= link_to "<span>home</span>", "/"

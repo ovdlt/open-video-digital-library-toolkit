@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe User do
@@ -127,7 +128,8 @@ describe User do
   end
 
   it 'resets password' do
-    users(:quentin).update_attributes(:password => 'new password', :password_confirmation => 'new password')
+    users(:quentin).update_attributes(:password => 'new password',
+                                      :password_confirmation => 'new password')
     User.authenticate('quentin', 'new password').should == users(:quentin)
   end
 
