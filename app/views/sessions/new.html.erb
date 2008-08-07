@@ -6,7 +6,9 @@
 <%= text_field_tag 'login', @login %></p>
 
 <p><label for="password">Password</label><br/>
-<%= password_field_tag 'password', nil %></p>
+<%= password_field_tag 'password', nil %>
+<%= link_to 'Forgot Password', forgot_password_path %>
+</p>
 
 <!-- Uncomment this if you want this functionality
 <p><label for="remember_me">Remember me:</label>
