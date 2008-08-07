@@ -37,5 +37,14 @@ describe Library do
     end
   end
 
+  describe ".logo_url" do
+    it "should return the logo_url of some library record" do
+      t = "a title"
+      s = "a logo_url"
+      Library.create! :title => t, :logo_url => s
+      Library.logo_url.should == s
+    end
+  end
+
 end
 
