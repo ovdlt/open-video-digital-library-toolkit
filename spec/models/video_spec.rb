@@ -54,6 +54,7 @@ describe Video, ".list_uncataloged_files" do
   end
   
   after(:all) do
+    @our_mr_sun.destroy
     Dir.rmdir @directory.path
   end
   
