@@ -1,3 +1,15 @@
 genre:
   id: 1
   title: Genre
+
+language:
+  id: 2
+  title: Language
+
+geo:
+  id: 3
+  title: Geographic Region
+
+color:
+  id: 4
+  title: Color

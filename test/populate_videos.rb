@@ -17,6 +17,13 @@ end
 
 (Video.find :all ).each { |v| v.destroy }
 
+if ARGV[0] != "FORCE"
+  puts "must give FORCE as first argument since this script wipes all the videos"
+  exit -1  
+end
+
+ARGV.shift
+
 ( ARGV[0] || 64 ).to_i.times do
   v = Factory(:video)
   types.each do |type|
