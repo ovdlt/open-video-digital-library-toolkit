@@ -1,0 +1,21 @@
+<VirtualHost *:80>
+  ServerName myhost.mydomain.org
+  DocumentRoot /path/to/rails/root/public
+  Include /etc/apache2/vhosts.d/deflate.conf
+  RailsBaseURI /
+  # The maximum number of Ruby on Rails application instances that may be simultaneously active. 
+  # A larger number results in higher memory usage, but improved ability to handle concurrent HTTP clients. 
+  # normally 1 to 10. (1 for each 50mb ram)
+  RailsMaxPoolSize 1
+  # The maximum number of seconds that a Ruby on Rails application instance may be idle.
+  # That is, if an application instance hasn't done anything after the given number of seconds,
+  # then it will be shutdown in order to conserve memory. ( 1 hour)
+  RailsPoolIdleTime 3600
+  RailsEnv 'development'
+  <Directory /path/to/rails/root/public>
+    Options FollowSymLinks
+    AllowOverride None
+    Order allow,deny
+    Allow from all
+    </Directory>
+</VirtualHost>
