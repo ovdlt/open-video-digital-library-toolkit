@@ -1,4 +1,7 @@
 class Video < ActiveRecord::Base
+
+  has_and_belongs_to_many :descriptors
+
   VIDEO_DIR = ::VIDEO_DIR
   
   validates_presence_of :title
@@ -6,6 +9,7 @@ class Video < ActiveRecord::Base
   validates_uniqueness_of :filename
   validate :must_have_valid_path
   validate :must_exist_on_disk
+  validate :descriptors_must_be_unique
   
   def self.list_uncataloged_files
     list = Dir.glob("#{VIDEO_DIR}/*").map { |filename| File.new(filename) }
@@ -14,7 +18,7 @@ class Video < ActiveRecord::Base
   end
   
   def before_save
-    self.size = File.size(path)
+    self.size ||= File.size(path)
   end
   
   def path
@@ -29,6 +33,8 @@ class Video < ActiveRecord::Base
     return false
   end
   
+  private
+
   def must_have_valid_path
     errors.add_to_base("The path must point to a valid file") \
       if !valid_path?
@@ -40,4 +46,11 @@ class Video < ActiveRecord::Base
         if !File.exists?(path)
     end
   end
+
+  def descriptors_must_be_unique
+    # NB: the join table is generally updated before this gets run
+    errors.add( :descriptors, "Duplicate descriptors not allowed" ) \
+      if descriptors.uniq != descriptors
+  end
+
 end

@@ -10,9 +10,20 @@ require File.expand_path(File.join(File.dirname($0),"..","spec","video_helper"))
 types = DescriptorType.find( :all ).to_a
 values = []
 types.each do |type|
-  values[type.id] = type.descriptor_values.to_a
+  values[type.id] = type.descriptors.to_a
 end
 
+# DANGEROUS!
+
+(Video.find :all ).each { |v| v.destroy }
+
 ( ARGV[0] || 64 ).to_i.times do
-  Factory(:video)
+  v = Factory(:video)
+  types.each do |type|
+    v.descriptors << values[type.id][ rand(values[type.id].size) ]
+  end
+  v.save!
+
+  puts v.to_yaml
+  
 end

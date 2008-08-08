@@ -7,6 +7,7 @@ describe Video, "::VIDEO_DIR" do
 end
 
 describe Video, "validations" do
+
   before :each do
     @video = Factory(:video)
   end
@@ -114,8 +115,37 @@ describe Video, "#before_save" do
     video = Factory(:video)
     file = File.open(File.join(Video::VIDEO_DIR, video.filename), "w") { |f| f << "what"*10 }
     new_size = 40
+    # Currently, size has to be nulled for this to work ... room for improvment?
+    video.size = nil
     video.size.should_not == new_size
     video.save
     video.size.should == new_size
   end
+end
+
+describe Video, "descriptors" do
+
+  before :each do
+    @video = Factory(:video)
+    @type = DescriptorType.create! :title => "some descriptor"
+    @value = Descriptor.create! :descriptor_type => @type,
+                                 :text => "some descriptor"
+  end
+
+  it "should start as an empty set" do
+    @video.descriptors.should == []
+  end
+
+  it "should allow descriptors to be added" do
+    @video.descriptors << @value
+    @video.should be_valid
+    @video.save.should be_true
+  end
+
+  it "should require they be unique" do
+    @video.descriptors << @value
+    # the join table  so no chance for the validation to run
+    lambda { @video.descriptors << @value }.should raise_error
+  end
+
 end

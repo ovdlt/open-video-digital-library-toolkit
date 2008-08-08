@@ -1,18 +1,18 @@
-class CreateDescriptorValues < ActiveRecord::Migration
+class CreateDescriptors < ActiveRecord::Migration
   def self.up
-    create_table :descriptor_values do |t|
+    create_table :descriptors do |t|
       t.column :descriptor_type_id, :int, :null => false
       t.column :text, :string, :null => false
       t.timestamps
     end
 
-    add_index :descriptor_values,
+    add_index :descriptors,
               [ :descriptor_type_id, :text ],
               :unique => true
 
   end
 
   def self.down
-    drop_table :descriptor_values
+    drop_table :descriptors
   end
 end
