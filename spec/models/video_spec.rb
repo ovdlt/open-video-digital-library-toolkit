@@ -17,6 +17,12 @@ describe Video, "validations" do
     @video.should_not be_valid
   end
   
+  it "should reject duplicate videos with the same file" do
+    @video.should be_valid
+    @other = Video.new @video.attributes
+    @other.should_not be_valid
+  end
+  
   it "should require the presence of a sentence" do
     @video.should be_valid
     @video.sentence = nil

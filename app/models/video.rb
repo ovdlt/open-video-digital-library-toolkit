@@ -3,6 +3,7 @@ class Video < ActiveRecord::Base
   
   validates_presence_of :title
   validates_presence_of :sentence
+  validates_uniqueness_of :filename
   validate :must_have_valid_path
   validate :must_exist_on_disk
   
@@ -21,8 +22,10 @@ class Video < ActiveRecord::Base
   end
   
   def valid_path?
-    video_path = Pathname.new VIDEO_DIR
-    Pathname.new(path).ascend { |path| return true if path == video_path }
+    video_path = Pathname.new File.expand_path(VIDEO_DIR)
+    Pathname.new(File.expand_path(path)).ascend do |path|
+      return true if path == video_path
+    end
     return false
   end
   

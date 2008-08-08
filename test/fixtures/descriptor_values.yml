@@ -1,0 +1,24 @@
+documentary:
+  id: 1
+  descriptor_type_id: 1
+  text: Documentary
+
+corporate:
+  id: 2
+  descriptor_type_id: 1
+  text: Corporate
+
+historical:
+  id: 3
+  descriptor_type_id: 1
+  text: Historical
+
+ephemeral:
+  id: 4
+  descriptor_type_id: 1
+  text: Ephemeral
+
+lecture:
+  id: 5
+  descriptor_type_id: 1
+  text: Lecture
