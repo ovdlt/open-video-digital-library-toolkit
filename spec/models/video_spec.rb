@@ -149,3 +149,12 @@ describe Video, "descriptors" do
   end
 
 end
+
+describe Video, ".recent" do
+  fixtures :videos
+
+  it "should return the most recent video (shortcut for .find ...)" do
+    Video.recent[0].should == ( Video.find :first, :order => "created_at" )
+  end
+
+end

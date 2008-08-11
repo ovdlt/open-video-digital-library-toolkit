@@ -5,7 +5,8 @@
     .videos
       - DescriptorType.each do |type|
         .axis
-          .link= link_to "all #{h type.title.pluralize}&nbsp;>>", "#"
+          .link= link_to "all #{h type.title.pluralize}&nbsp;>>", |
+                          descriptor_type_videos_path( type ) |
           - type.descriptors.each_with_index do |descriptor,i|
             - break if i > 3
             .video

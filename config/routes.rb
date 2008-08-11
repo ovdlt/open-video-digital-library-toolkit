@@ -22,6 +22,15 @@ ActionController::Routing::Routes.draw do |map|
                       :action => 'reset_password'
     
   map.resources :videos, :collection => { :recent => :get }
+
+
+  map.resources :descriptors do |descriptor|
+    descriptor.resources :videos
+  end
+  
+  map.resources :descriptor_types do |descriptor_type|
+    descriptor_type.resources :videos
+  end
   
   map.resource :session
   

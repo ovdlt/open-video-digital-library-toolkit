@@ -47,8 +47,10 @@ describe Descriptor do
       
       videos = Video.find :all,
                            :order =>  "created_at",
-                           :joins => "join descriptors_videos dv on dv.video_id = videos.id",
-                           :conditions => [ "dv.descriptor_id = ?", descriptor.id ]
+                           :joins => "join descriptors_videos dv " +
+                                     "on dv.video_id = videos.id",
+                           :conditions => [ "dv.descriptor_id = ?",
+                                            descriptor.id ]
 
       found = descriptor.most_recent
 

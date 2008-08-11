@@ -5,5 +5,5 @@
       %ul
         - type.descriptors.each do |descriptor|
           %li
-            = link_to descriptor.text, "#"
+            = link_to descriptor.text, descriptor_videos_path( descriptor )
             %span.count= "[#{descriptor.videos.size}]"
