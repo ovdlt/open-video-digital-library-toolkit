@@ -2,6 +2,9 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Library do
   before(:each) do
+
+    ( Library.find :all ).each { |library| library.destroy }
+
     @valid_attributes = {
       :title => "Library title",
       :subtitle => "about a library"
