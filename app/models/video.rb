@@ -33,6 +33,14 @@ class Video < ActiveRecord::Base
     return false
   end
   
+  def self.recent number = nil
+    options = { :order => "created_at" }
+    if number
+      options[:limit] = number
+    end
+    self.find :all, options
+  end
+
   private
 
   def must_have_valid_path

@@ -1,3 +1,19 @@
 .category
-  .title Browse Videos
-  .content.last Some Content
+  .title.block Browse Videos
+  .content.block.last
+    = render :partial => "axes"
+    .videos
+      - DescriptorType.each do |type|
+        .axis
+          .link= link_to "all #{h type.title.pluralize}&nbsp;>>", "#"
+          - type.descriptors.each_with_index do |descriptor,i|
+            - break if i > 3
+            .video
+              - v = descriptor.most_recent
+              .image
+              .text
+                = h v.title
+                %br
+                = link_to "more in<br />#{h descriptor.text}", "#"
+          .clear
+    .clear

@@ -1,0 +1,27 @@
+video1:
+  id: 1
+  title: From Stump to Ship
+  sentence: Depicts the year-round activities of the Machias Lumber Company on the Machias River in Washington County, Maine.
+  filename: 1200%20H.mov
+  size: 10.22
+  created_at: 2008-08-11
+  updated_at: 2008-08-11
+
+video2:
+  id: 2
+  title: Maine's TV Time Machine
+  sentence: Placeholder description for the Maine's TV Time Machine video.
+  filename: 1461.0003%20H.mov
+  size: 84.79
+  created_at: 2008-08-11
+  updated_at: 2008-08-11
+
+video3:
+  id: 3
+  title: Charles S. Clark - home movies
+  sentence: Children on swing carousel, 2 Dancers & MC on stage, man walks past.
+  filename: 1488.0020%20H.mov
+  size: 11.17
+  created_at: 2008-08-11
+  updated_at: 2008-08-11
+
