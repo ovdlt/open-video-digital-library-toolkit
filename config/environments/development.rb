@@ -14,6 +14,7 @@ config.action_view.debug_rjs                         = true
 config.action_controller.perform_caching             = false
 config.action_controller.perform_caching             = true
 
+
 # Don't care if the mailer can't send
 config.action_mailer.raise_delivery_errors = false
 VIDEO_DIR = File.join(RAILS_ROOT, 'videos')

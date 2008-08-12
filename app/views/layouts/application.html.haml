@@ -4,7 +4,7 @@
 %html
   %head
     %title= title
-    = stylesheet_link_tag :all
+    = stylesheet_link_tag :all, :cache => "cache/all"
   %body
     #page
       - if Library.logo_url

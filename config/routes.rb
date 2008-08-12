@@ -21,7 +21,8 @@ ActionController::Routing::Routes.draw do |map|
                       :controller => 'users',
                       :action => 'reset_password'
     
-  map.resources :videos, :collection => { :recent => :get }
+  map.resources :videos, :collection => { :recent => :get,
+                                          :manage => :get }
 
 
   map.resources :descriptors do |descriptor|

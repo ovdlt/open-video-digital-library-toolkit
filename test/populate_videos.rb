@@ -24,8 +24,11 @@ end
 
 ARGV.shift
 
+years = (1850..2008).to_a
+
 ( ARGV[0] || 64 ).to_i.times do
   v = Factory(:video)
+  v.year = years[rand(years.size)]
   types.each do |type|
     v.descriptors << values[type.id][ rand(values[type.id].size) ]
   end

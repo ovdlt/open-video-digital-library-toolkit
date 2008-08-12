@@ -1,14 +1,16 @@
 class VideosController < ApplicationController
   before_filter :find_video, :only => [:update, :edit, :destroy]
   
-  # FIX: page through database
+  # FIX: page through database, not by loading all videos and then paging
 
   def index
     @videos = nil
     if params[:descriptor_id]
-      @videos = Video.find :all,
-                           :joins => "join descriptors_videos dvs on dvs.video_id = videos.id",
-                           :conditions => [ "dvs.descriptor_id = ?", params[:descriptor_id] ]
+      @videos =
+        Video.find \
+          :all,
+          :joins => "join descriptors_videos dvs on dvs.video_id = videos.id",
+          :conditions => [ "dvs.descriptor_id = ?", params[:descriptor_id] ]
     else
       @videos = Video.find :all
     end
@@ -16,6 +18,11 @@ class VideosController < ApplicationController
     @files  = Video.list_uncataloged_files
   end
   
+  # FIX: this isn't tested seperately; might go away
+  def manage
+    index
+  end
+
   def new
     @video = Video.new(:filename => params[:filename])
     if @video.valid_path?
