@@ -11,7 +11,13 @@
       %dd= f.text_field :title
     
       %dt= f.label :sentence, "Sentence:"
-      %dd= f.text_field :sentence
+      %dd.sentence= f.text_field :sentence
+
+      = render :partial => "type", :collection => DescriptorType.find( :all ), |
+                                   :locals => { :f => f } |
+
+
+  = hidden_field_tag :descriptors_passed
   = hidden_field :video, :filename
   = f.submit "Save Video"
 

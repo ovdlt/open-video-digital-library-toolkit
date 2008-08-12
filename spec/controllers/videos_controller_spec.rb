@@ -178,6 +178,60 @@ describe VideosController do
     end
   end
   
+  describe "#update when descriptors change" do
+
+    fixtures :descriptor_types, :descriptors
+
+    before(:each) do
+      @video = Factory(:video)
+      @video.descriptors.should be_empty
+      @video.descriptors << Descriptor.find( :first )
+      @video.save!
+      @video.descriptors.should_not be_empty
+    end
+
+    it "should change descriptors as indicated" do
+      descriptor_ids = [ 1, 3, 5 ].sort
+      put :update, :id => @video.id,
+                   :"descriptor" => descriptor_ids
+      response.should redirect_to(videos_path)
+      @video.reload.descriptors.map( &:id ).sort.should == descriptor_ids
+      
+    end
+
+    it "should allow all descriptors to be removed" do
+      
+      put :update, :id => @video.id,
+                    :"descriptor" => []
+      response.should redirect_to(videos_path)
+      @video.reload.descriptors.should be_empty
+    end
+
+    it "should allow all descriptors to be removed via a special field" do
+      put :update, :id => @video.id,
+                    :"descriptors_passed" => true
+      response.should redirect_to(videos_path)
+      @video.reload.descriptors.should be_empty
+    end
+
+    it "should handle invalid descriptors" do
+      put :update, :id => @video.id,
+                    :"descriptor" => [ -1 ]
+      response.code.should == "400"
+    end
+
+    it "should handle bizzare descriptors" do
+      put :update, :id => @video.id,
+                    :"descriptor" => "foobar"
+      response.code.should == "400"
+
+      put :update, :id => @video.id,
+                    :"descriptor" => [ "foobar" ]
+      response.code.should == "400"
+    end
+
+  end
+
   describe "#destroy with valid params" do
     before(:each) do
       @video = Factory(:video)

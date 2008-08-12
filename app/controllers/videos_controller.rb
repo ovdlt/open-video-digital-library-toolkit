@@ -41,10 +41,29 @@ class VideosController < ApplicationController
   end
   
   def update
-    if params[:video].include?(:filename) && (params[:video][:filename] != @video.filename)
+    if params[:video] && params[:video].include?(:filename) && (params[:video][:filename] != @video.filename)
       render_bad_request 
       return
     end
+    
+    # This is so if all boxes are unchecked, we actually remove all
+    # descriptors
+
+    if params["descriptors_passed"] && !params["descriptor"]
+      params["descriptor"] = []
+    end
+
+    if params["descriptor"]
+      @video.descriptors = params["descriptor"].map do |d|
+        begin
+          Descriptor.find d.to_i
+        rescue ActiveRecord::RecordNotFound
+          render_bad_request 
+          return
+        end
+      end
+    end
+
     if @video.update_attributes(params[:video])
       flash[:notice] = "#{@video.filename} was updated"
       redirect_to videos_path
