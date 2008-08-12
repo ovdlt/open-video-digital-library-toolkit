@@ -12,6 +12,10 @@ class Descriptor < ActiveRecord::Base
 
   def most_recent
     # bad idea ... see above ...
+    # and don't know why the reload is necessary to get the
+    # time stamps: if the recode for paging doesn't get rid of the
+    # need for this code, track it down ...
+    videos.each &:reload
     ( videos.sort { |a,b| a.created_at - b.created_at } )[0]
   end
 

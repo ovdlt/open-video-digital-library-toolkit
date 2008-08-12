@@ -1,7 +1,11 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe VideosController do
+
   describe "#index" do
+
+    fixtures :descriptors, :descriptor_types, :descriptors_videos, :videos
+
     before(:each) do
       get :index
     end
@@ -14,6 +18,28 @@ describe VideosController do
     it "should return a successful response" do
       response.should be_success
     end
+
+    it "should set current from descriptor_type if given" do
+      type = DescriptorType.find :first
+      get :index, :descriptor_type_id => type.id
+      assigns[:current].should == type
+    end
+
+    it "should set current from descriptor if given" do
+      d = Descriptor.find :first
+      d.should_not be_nil
+      get :index, :descriptor_id => d.id
+      assigns[:current].should == d
+    end
+
+    it "should filter videos by descriptor if given" do
+      d = Descriptor.find :first
+      d.should_not be_nil
+      get :index, :descriptor_id => d.id
+      assigns[:videos].size.should > 0
+      assigns[:videos].size.should < Video.count
+    end
+
   end
   
   describe "#new, when the filename parameter is a valid filename with no directory information" do

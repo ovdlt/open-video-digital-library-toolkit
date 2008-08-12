@@ -1,0 +1,15 @@
+v1d1:
+  video_id: 1
+  descriptor_id: 1
+
+v1d2:
+  video_id: 1
+  descriptor_id: 2
+
+v2d1:
+  video_id: 2
+  descriptor_id: 1
+
+v3d3:
+  video_id: 3
+  descriptor_id: 3

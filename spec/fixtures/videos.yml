@@ -4,6 +4,8 @@ video1:
   sentence: Depicts the year-round activities of the Machias Lumber Company on the Machias River in Washington County, Maine.
   filename: 1200%20H.mov
   size: <%= 10.22.megabytes %>
+  year: 1920
+  created_at: <%=(Time.now - 1.day).to_s(:db)%>
 
 video2:
   id: 2
@@ -11,6 +13,8 @@ video2:
   sentence: Placeholder description for the Maine's TV Time Machine video.
   filename: 1461.0003%20H.mov
   size: <%= 84.79.megabytes %>
+  year: 1921
+  created_at: <%=Time.now.to_s(:db)%>
 
 video3:
   id: 3
@@ -18,4 +22,5 @@ video3:
   sentence: Children on swing carousel, 2 Dancers & MC on stage, man walks past.
   filename: 1488.0020%20H.mov
   size: <%= 11.17.megabytes %>
-
+  year: 1922
+  created_at: <%=Time.now.to_s(:db)%>

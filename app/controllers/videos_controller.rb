@@ -28,12 +28,12 @@ class VideosController < ApplicationController
       @videos = Video.find :all
     end
     
-    @files  = Video.list_uncataloged_files
   end
   
   # FIX: this isn't tested seperately; might go away
   def manage
     index
+    @files  = Video.list_uncataloged_files
   end
 
   def new

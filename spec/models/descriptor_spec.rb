@@ -38,10 +38,11 @@ describe Descriptor do
   describe "#most_recent" do
 
     fixtures :videos, :descriptors, :descriptor_types, :libraries
+    fixtures :descriptors_videos
 
     it "should return the most recent video for a descriptor" do
 
-      descriptor = Descriptor.find :first
+      descriptor = Descriptor.find 1
 
       descriptor.should_not be_nil
       
