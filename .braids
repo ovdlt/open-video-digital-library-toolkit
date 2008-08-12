@@ -20,6 +20,13 @@ vendor/rails:
   branch: master
   squash: true
   remote: git://github.com/rails/rails.git
+vendor/plugins/role_requirement: 
+  local_branch: braid/git/vendor/plugins/role-requirement/master
+  type: git
+  revision: 
+  branch: master
+  squash: true
+  remote: git://github.com/negonicrac/role_requirement.git
 vendor/gems/deprec: 
   local_branch: braid/git/vendor/gems/deprec/master
   type: git
