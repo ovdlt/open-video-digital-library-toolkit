@@ -1,0 +1,9 @@
+%dt.descriptor= "#{h type.title}:"
+%dd.descriptor
+  - type.descriptors.each do |descriptor|
+    .value
+      = check_box_tag "descriptor_#{descriptor.id}", |
+                      descriptor.id, |
+                      @video.descriptors.detect { |d| d.id == descriptor.id }, |
+                      :name => "descriptor[]" |
+      = label_tag "descriptor_#{descriptor.id}", h(descriptor.text)
