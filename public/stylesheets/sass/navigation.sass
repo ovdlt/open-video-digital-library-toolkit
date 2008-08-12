@@ -1,9 +1,8 @@
 #navigation
-  :clear both
+  :position absolute
   :font-size 1.3em
-  :height 42px
   :line-height normal
-  :margin -1px 0 30px 0
+  :bottom 0
   :overflow hidden
   :width 100%
   
@@ -36,8 +35,33 @@
 
 .navigate
 
-  :margin 1em
+  :font-size 1.5em
+
+  :margin-top 1em
+  :margin-bottom -2px
+
+  :width 100%
 
   .view
     :float left
-    :width 10%
+    :text-align center
+    :padding-top .2em
+    :padding-bottom .2em
+    :border-top 2px solid
+    :border-right 2px solid
+    :border-bottom 2px solid
+    :background #eee
+    :width 20%
+
+  .view.current
+    :border-bottom 2px solid white
+    :border-left 2px solid
+    :background #fff
+
+  .view.empty
+    :height 100%
+    :width 20%
+    :background #fff
+    :border-top 2px solid white
+    :border-right none
+    :border-bottom 2px solid

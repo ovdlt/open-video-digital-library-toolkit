@@ -1,9 +1,10 @@
 #content
+  :clear both
   :font-size 1.1em
   :line-height 19px
+  :padding-top 1em
   
   h1
-    :border-bottom 4px double #ccc
     :color black
     :font-size 2em
     :margin 0 0 15px 0
@@ -113,10 +114,65 @@
     :margin-left auto
     :margin-right auto
 
-.list
+#content .list
+  :float left
+  :width 68%
+  :margin-top 1em
+
+  h1
+    :background #ddd
+    :padding .5em .5em .5em .5em
+    :margin-right 2em
+
+  .form
+    :margin-bottom 1em
+
   .videos
+
+    :border 2px solid black
+
     .video
+
+      :border-bottom 1px solid black
+
+      :padding 1em
+
+      .image
+        :float left
+        :width 120px
+        :height 90px
+        :background #eee
+        :margin-right 1em
+
       .title
         :display inline
+        :font-size 1.2em
+        :font-weight bold
       .year
         :display inline
+        :font-size 1.2em
+        :font-weight bold
+
+#content .sidebar
+
+  :float right
+  :width 30%
+  :margin-top 1em
+  :font-size 1.6em
+
+  a
+    :border 0px none
+
+  .entry
+
+    .title
+      :font-weight bold
+      :padding-bottom .3em
+      :border-bottom 2px solid #ccc
+
+    ul
+      :margin-bottom 2em
+
+      li
+        :margin-top .2em
+        :margin-left 1em

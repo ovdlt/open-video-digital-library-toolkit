@@ -4,7 +4,9 @@ ActionController::Routing::Routes.draw do |map|
   map.register '/register', :controller => 'users', :action => 'create'
   map.signup '/signup', :controller => 'users', :action => 'new'
 
-  map.resources :users
+  map.resources :users do |users|
+    users.resources :favorites
+  end
 
   map.activate '/activate/:activation_code',
                :controller => 'users',
@@ -22,7 +24,9 @@ ActionController::Routing::Routes.draw do |map|
                       :action => 'reset_password'
     
   map.resources :videos, :collection => { :recent => :get,
-                                          :manage => :get }
+                                          :manage => :get,
+                                          :search => :get },
+                         :member => { :download => :get }
 
 
   map.resources :descriptors do |descriptor|

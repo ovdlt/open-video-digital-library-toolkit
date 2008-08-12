@@ -1,0 +1,9 @@
+.title= axis.title.pluralize
+%ul
+  %li= link_to_unless @current == axis, |
+                      "all", |
+                      descriptor_type_videos_path( axis ) |
+  - axis.descriptors.each do |descriptor|
+    %li= link_to_unless @current == descriptor, |
+                    descriptor.text, |
+                    descriptor_videos_path( descriptor ) |

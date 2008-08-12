@@ -1,22 +1,48 @@
-%h1 Search / Browse Results
-%h2
-  Your search returned
-  = @videos.size
-  results
-
-.navigate
-  .view List View
-  .view Title View
-  .view Image View  
-  .clear
-
 .list
+
+  %h1 Search / Browse Results
+
+  .form
+    - form_tag search_videos_path do |f|
+      = text_field_tag :query, params[:query], :size => 60
+      = submit_tag "Search"
+
+  %h2
+    Your search returned
+    = @videos.size
+    results
+
+  .navigate
+
+    .view.current List View
+    .view Tile View
+    .view Image View  
+    .clear
+
   .videos
     - @videos.each do |video|
       .video
+        .image
         .title=h video.title
         - if !video.year.blank?
           .year= "(#{h video.year})"
         .sentence=h video.sentence
-        .size=h video.size
-    
+        .menu
+          = link_to "View video details", video_path( video )
+          &nbsp;&bull;&nbsp;
+          = link_to "Add to favorites", user_favorites_path( video )
+          &nbsp;&bull;&nbsp;
+          = link_to "Download", download_video_path( video )
+
+.sidebar
+  .entry
+    - if @type
+      = render :partial => "shared/axis", :object => @type
+  .entry
+    .title Refine Results
+    %ul
+  .entry
+    .title Tools and Services
+    %ul
+
+.clear

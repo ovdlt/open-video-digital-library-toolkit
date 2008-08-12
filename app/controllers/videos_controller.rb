@@ -5,12 +5,25 @@ class VideosController < ApplicationController
 
   def index
     @videos = nil
+
+    # FIX:
+    # 1: number of videos selected depends on the format
+    # 2: paging through to the db
+
+    if params[:descriptor_type_id]
+      @current = @type = DescriptorType.find( params[:descriptor_type_id] )
+    end
+
     if params[:descriptor_id]
+      @current = @descriptor = Descriptor.find( params[:descriptor_id] )
+      @type = @descriptor.descriptor_type
+
       @videos =
         Video.find \
           :all,
           :joins => "join descriptors_videos dvs on dvs.video_id = videos.id",
           :conditions => [ "dvs.descriptor_id = ?", params[:descriptor_id] ]
+
     else
       @videos = Video.find :all
     end
