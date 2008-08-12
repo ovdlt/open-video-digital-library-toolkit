@@ -1,5 +1,4 @@
-rake db:create
-rake db:migrate
+config/database.yml
+config/initializers/site_key.rb
 
-env RAILS_ENV=test rake db:create
-rake db:test:prepare
+rake tmp:assets:clear
