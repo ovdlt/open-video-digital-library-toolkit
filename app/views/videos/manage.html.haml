@@ -1,0 +1,33 @@
+%h1 Videos
+%table
+  %thead
+    %tr
+      %th Title
+      %th Sentence
+      %th Size
+      %th Actions
+  %tbody
+    - @videos.each do |video|
+      %tr
+        %td=h video.title
+        %td=h video.sentence
+        %td=h video.size
+        %td
+          = link_to(image_tag('/images/icons/edit.gif') + " Edit", edit_video_path(video))
+          = link_to(image_tag('/images/icons/delete.gif') + " Delete", video_path(video), :method => :delete)
+
+%h1 Uncataloged Files
+%table
+  %thead
+    %tr
+      %th Filename
+      %th Type
+      %th Size
+  %tbody
+    - @files.each do |file|
+      %tr
+        %td
+          =h File.basename(file.path)
+          =link_to_add_video(file)
+        %td=h File.extname(file.path)
+        %td= file_size(file)
