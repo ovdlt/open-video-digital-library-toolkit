@@ -1,0 +1,13 @@
+.category
+  .title.block Recent Videos
+  .content.block
+    .videos
+      - Video.recent(4).each do |video|
+        .video
+          .image
+          .text
+            .title= h video.title
+            .description= h video.sentence
+    .clear
+  .footer.block.last= link_to "See more recent videos >>", recent_videos_path
+= render :partial => "browse"

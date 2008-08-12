@@ -1,8 +1,18 @@
 class VideosController < ApplicationController
   before_filter :find_video, :only => [:update, :edit, :destroy]
   
+  # FIX: page through database
+
   def index
-    @videos = Video.find :all
+    @videos = nil
+    if params[:descriptor_id]
+      @videos = Video.find :all,
+                           :joins => "join descriptors_videos dvs on dvs.video_id = videos.id",
+                           :conditions => [ "dvs.descriptor_id = ?", params[:descriptor_id] ]
+    else
+      @videos = Video.find :all
+    end
+    
     @files  = Video.list_uncataloged_files
   end
   

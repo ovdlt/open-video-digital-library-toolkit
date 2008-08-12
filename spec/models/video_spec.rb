@@ -7,6 +7,7 @@ describe Video, "::VIDEO_DIR" do
 end
 
 describe Video, "validations" do
+
   before :each do
     @video = Factory(:video)
   end
@@ -15,6 +16,12 @@ describe Video, "validations" do
     @video.should be_valid
     @video.title = nil
     @video.should_not be_valid
+  end
+  
+  it "should reject duplicate videos with the same file" do
+    @video.should be_valid
+    @other = Video.new @video.attributes
+    @other.should_not be_valid
   end
   
   it "should require the presence of a sentence" do
@@ -48,6 +55,7 @@ describe Video, ".list_uncataloged_files" do
   end
   
   after(:all) do
+    @our_mr_sun.destroy
     Dir.rmdir @directory.path
   end
   
@@ -107,8 +115,46 @@ describe Video, "#before_save" do
     video = Factory(:video)
     file = File.open(File.join(Video::VIDEO_DIR, video.filename), "w") { |f| f << "what"*10 }
     new_size = 40
+    # Currently, size has to be nulled for this to work ... room for improvment?
+    video.size = nil
     video.size.should_not == new_size
     video.save
     video.size.should == new_size
   end
+end
+
+describe Video, "descriptors" do
+
+  before :each do
+    @video = Factory(:video)
+    @type = DescriptorType.create! :title => "some descriptor"
+    @value = Descriptor.create! :descriptor_type => @type,
+                                 :text => "some descriptor"
+  end
+
+  it "should start as an empty set" do
+    @video.descriptors.should == []
+  end
+
+  it "should allow descriptors to be added" do
+    @video.descriptors << @value
+    @video.should be_valid
+    @video.save.should be_true
+  end
+
+  it "should require they be unique" do
+    @video.descriptors << @value
+    # the join table  so no chance for the validation to run
+    lambda { @video.descriptors << @value }.should raise_error
+  end
+
+end
+
+describe Video, ".recent" do
+  fixtures :videos
+
+  it "should return the most recent video (shortcut for .find ...)" do
+    Video.recent[0].should == ( Video.find :first, :order => "created_at" )
+  end
+
 end

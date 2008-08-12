@@ -7,6 +7,9 @@ class CreateVideos < ActiveRecord::Migration
       t.integer :size,     :null => false
       t.timestamps
     end
+
+    add_index :videos, :filename, :unique => true
+
   end
 
   def self.down

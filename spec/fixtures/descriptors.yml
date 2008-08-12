@@ -1,0 +1,89 @@
+documentary:
+  id: 1
+  descriptor_type_id: 1
+  text: Documentary
+
+corporate:
+  id: 2
+  descriptor_type_id: 1
+  text: Corporate
+
+historical:
+  id: 3
+  descriptor_type_id: 1
+  text: Historical
+
+ephemeral:
+  id: 4
+  descriptor_type_id: 1
+  text: Ephemeral
+
+lecture:
+  id: 5
+  descriptor_type_id: 1
+  text: Lecture
+
+spanish:
+  id: 6
+  descriptor_type_id: 2
+  text: Spanish
+
+french:
+  id: 7
+  descriptor_type_id: 2
+  text: French
+
+italian:
+  id: 8
+  descriptor_type_id: 2
+  text: Italian
+
+english:
+  id: 9
+  descriptor_type_id: 2
+  text: English
+
+japanese:
+  id: 10
+  descriptor_type_id: 2
+  text: Japanese
+
+north_america:
+  id: 11
+  descriptor_type_id: 3
+  text: North America
+
+africa:
+  id: 12
+  descriptor_type_id: 3
+  text: Africa
+
+europe:
+  id: 13
+  descriptor_type_id: 3
+  text: Europe
+
+central_america:
+  id: 14
+  descriptor_type_id: 3
+  text: Central America
+
+south_america:
+  id: 15
+  descriptor_type_id: 3
+  text: South America
+
+color:
+  id: 16
+  descriptor_type_id: 4
+  text: Color
+
+blank_and_white:
+  id: 17
+  descriptor_type_id: 4
+  text: Black and White
+
+colorized:
+  id: 18
+  descriptor_type_id: 4
+  text: Colorized

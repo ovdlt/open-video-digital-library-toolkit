@@ -1,3 +1,5 @@
+require 'faker'
+
 Factory.sequence :filename do |n|
   filename = "temp_video_#{n}.mov"
   create_temp_video filename
@@ -5,8 +7,8 @@ Factory.sequence :filename do |n|
 end
 
 Factory.define :video do |v|
-  v.title    "Our Mr. Sun"
-  v.filename { Factory.next :filename }
-  v.sentence "This film describes the sun in scientific but entertaining terms."
-  v.size     261.megabytes
+  v.title       { ( Faker::Lorem.words.sort { rand } ).join(" ").capitalize }
+  v.filename    { Factory.next :filename }
+  v.sentence    { (( Faker::Lorem.words( 15 ).sort { rand } ).join(" ")+".").capitalize }
+  v.size        { rand(16.megabytes) }
 end

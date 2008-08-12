@@ -1,6 +1,7 @@
 ENV["RAILS_ENV"] = "test"
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 require File.expand_path(File.dirname(__FILE__) + '/factories')
+require File.expand_path(File.dirname(__FILE__) + '/video_helper')
 require 'spec'
 require 'spec/rails'
 
@@ -15,15 +16,4 @@ Spec::Runner.configure do |config|
   config.global_fixtures = :all
   
   config.after(:suite) { delete_temp_videos }
-end
-
-def create_temp_video(filename, size=100)
-  path = File.join(VIDEO_DIR, filename)
-  File.delete(path) if File.exists?(path)
-  new_file = File.open(path, "w") { |f| f << "j"*size }
-  return File.new(path)
-end
-
-def delete_temp_videos
-  Dir.glob("#{VIDEO_DIR}/*").map { |filename| File.delete(filename) }
 end
