@@ -9,18 +9,6 @@
     #page
       #container
         #header
-          .login_logout
-            - if logged_in?
-              .logout
-                .button= link_to "LOGOUT", logout_path
-              .user
-                You're logged in as
-                %span.login= h current_user.login
-            - else
-              .login
-                .button= link_to "LOGIN", login_path
-              .register
-                .button= link_to "REGISTER", signup_path
           - if Library.logo_url
             #logo
               = image_tag Library.logo_url
@@ -37,6 +25,18 @@
                   %li= link_to "<span>Curator's Area</span>", "/videos/manage"
                 %ul
                   %li= link_to "<span>Collection Administration</span>", "/library"
+          .login_logout
+            - if logged_in?
+              .logout
+                .button= link_to "LOGOUT", logout_path
+              .user
+                You're logged in as
+                %span.login= h current_user.login
+            - else
+              .login
+                .button= link_to "LOGIN", login_path
+              .register
+                .button= link_to "REGISTER", signup_path
         #content
           - [:notice, :error].each do |type|
             - unless flash[type].blank?
