@@ -54,6 +54,10 @@ namespace :deploy do
     put database_configuration, "#{deploy_to}/#{shared_dir}/config/database.yml"
   end
 
+  after 'deploy:symlink', :roles => :app do
+    run "ln -nfs #{shared_path}/config/initializers/site_keys.rb #{release_path}/config/initializers/site_keys.rb"
+  end
+
 end
 
 SRC_PACKAGES[:ruby] = {
