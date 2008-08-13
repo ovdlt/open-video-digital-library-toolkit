@@ -41,6 +41,10 @@ class Video < ActiveRecord::Base
     self.find :all, options
   end
 
+  def self.per_page
+    10
+  end
+
   private
 
   def must_have_valid_path

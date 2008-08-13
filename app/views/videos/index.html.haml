@@ -3,14 +3,12 @@
   %h1 Search / Browse Results
 
   .form
-    - form_tag search_videos_path do |f|
+    - form_tag search_videos_path do
       = text_field_tag :query, params[:query], :size => 60
       = submit_tag "Search"
 
-  %h2
-    Your search returned
-    = @videos.size
-    results
+  .pagination_info
+    = page_entries_info @videos
 
   .navigate
 
@@ -34,6 +32,9 @@
           &nbsp;&bull;&nbsp;
           = link_to "Download", download_video_path( video )
 
+  .pagination
+    = will_paginate @videos
+
 .sidebar
   .entry
     - if @type
@@ -41,8 +42,10 @@
   .entry
     .title Refine Results
     %ul
+      %li Genre: select one
   .entry
     .title Tools and Services
     %ul
+      %li Save this search
 
 .clear

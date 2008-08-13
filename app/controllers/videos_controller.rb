@@ -4,14 +4,10 @@ class VideosController < ApplicationController
   
   require_role "admin", :for_all_except => [ :index, :show ]
 
-  # FIX: page through database, not by loading all videos and then paging
-
   def index
     @videos = nil
 
-    # FIX:
-    # 1: number of videos selected depends on the format
-    # 2: paging through to the db
+    # FIX: number of videos selected depends on the format
 
     if params[:descriptor_type_id]
       @current = @type = DescriptorType.find( params[:descriptor_type_id] )
@@ -22,13 +18,16 @@ class VideosController < ApplicationController
       @type = @descriptor.descriptor_type
 
       @videos =
-        Video.find \
+        Video.paginate \
           :all,
+          :page => params[:page],
           :joins => "join descriptors_videos dvs on dvs.video_id = videos.id",
           :conditions => [ "dvs.descriptor_id = ?", params[:descriptor_id] ]
 
     else
-      @videos = Video.find :all
+      @videos = Video.paginate :all,
+                                :page => params[:page],
+                                :order => "created_at DESC"
     end
     
   end
