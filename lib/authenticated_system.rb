@@ -62,6 +62,7 @@ module AuthenticatedSystem
     # to access the requested action.  For example, a popup window might
     # simply close itself.
     def access_denied
+      p "a_d"
       respond_to do |format|
         format.html do
           store_location

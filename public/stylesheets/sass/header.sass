@@ -2,11 +2,13 @@
 
   :width 100%
   :margin 25px 50px 0px 0px
+  :position relative
 
   .content
     :float left
     :position relative
     :height 124px
+    :width 80%
 
   #logo
     :float left
@@ -29,16 +31,21 @@
     :font-size 1.3em
     :font-style italic
 
-  .login .user
+  .login_logout
+    :position absolute
+    :right 0
+    :top 0
+    :width 100%
+
+  .login_logout .user
     :float right
     :background-color #686d71
     :color #b1d6ed
     :font-weight normal
     :margin 0
     :padding 10px 15px
-    
 
-  .login .user .login
+  .login_logout .user .login
     :font-weight bold
 
   .button a:link, .button a:visited
