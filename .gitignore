@@ -7,3 +7,4 @@
 /config/initializers/site_keys.rb
 /config/database.yml
 /public/stylesheets/*.css
+/coverage
