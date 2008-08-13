@@ -1,6 +1,9 @@
 class VideosController < ApplicationController
+
   before_filter :find_video, :only => [:update, :edit, :destroy]
   
+  require_role "admin", :for_all_except => [ :index, :show ]
+
   # FIX: page through database, not by loading all videos and then paging
 
   def index

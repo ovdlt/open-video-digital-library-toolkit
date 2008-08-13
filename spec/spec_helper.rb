@@ -17,3 +17,13 @@ Spec::Runner.configure do |config|
   
   config.after(:suite) { delete_temp_videos }
 end
+
+include AuthenticatedSystem
+
+def login_as_mock_user
+  self.current_user = mock_user
+end
+
+def login_as_admin
+  self.current_user = User.find( :all ).detect { |u| u.has_role? "admin" }
+end

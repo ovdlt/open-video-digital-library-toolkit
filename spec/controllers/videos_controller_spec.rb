@@ -44,6 +44,7 @@ describe VideosController do
   
   describe "#new, when the filename parameter is a valid filename with no directory information" do
     before(:each) do
+      login_as_admin
       @filename = "a_great_video.mov"
       get :new, :filename => @filename
     end
@@ -62,6 +63,7 @@ describe VideosController do
   
   describe "#new, when the filename parameter refers to a file outside the videos directory" do    
     it "should return a 404" do
+      login_as_admin
       get :new, :filename => '../README.md'
       response.should be_missing
     end
@@ -74,6 +76,10 @@ describe VideosController do
       create_temp_video("cute_with_chris.fla")
     end
     
+    before(:each) do
+      login_as_admin
+    end
+
     def do_post
       post :create, :video => {:filename => "cute_with_chris.fla", :title => "teen cult machine", :sentence => "all your dreams are dead"}
     end
@@ -97,6 +103,7 @@ describe VideosController do
   describe "#create when the file does not exist" do
     before(:each) do
       # note, no before(:all) this time
+      login_as_admin
       post :create, :video => {:filename => "this file is not there", :title => "teen cult machine", :sentence => "all your dreams are dead"}
     end
     
@@ -117,6 +124,7 @@ describe VideosController do
     end
     
     def do_post
+      login_as_admin
       post :create, :video => {:filename => "cute_with_chris.fla", :title => "", :sentence => "all your dreams are dead"}
     end
     
@@ -134,6 +142,7 @@ describe VideosController do
   
   describe "#edit" do
     before(:each) do
+      login_as_admin
       @video = Factory(:video)
       get :edit, :id => @video.id
     end
@@ -149,6 +158,7 @@ describe VideosController do
   
   describe "#update with valid params" do
     before(:each) do
+      login_as_admin
       @video = Factory(:video)
       put :update, :id => @video.id, :video => {:title => "new title"}
     end
@@ -169,6 +179,7 @@ describe VideosController do
   
   describe "#update with invalid params" do
     before(:each) do
+      login_as_admin
       @video = Factory(:video)
       put :update, :id => @video.id, :video => {:title => ""}
     end
@@ -189,6 +200,7 @@ describe VideosController do
   
   describe "#update when the filename changes" do
     it "should not allow the file name to be changed" do
+      login_as_admin
       video = Factory(:video)
       create_temp_video("new_filename")
       put :update, :id => video.id, :video => {:filename => "new_filename"}
@@ -197,6 +209,7 @@ describe VideosController do
     end
     
     it "should not allow a nil filename" do
+      login_as_admin
       video = Factory(:video)
       put :update, :id => video.id, :video => {:filename => nil}
       
@@ -209,6 +222,7 @@ describe VideosController do
     fixtures :descriptor_types, :descriptors
 
     before(:each) do
+      login_as_admin
       @video = Factory(:video)
       @video.descriptors.should be_empty
       @video.descriptors << Descriptor.find( :first )
@@ -260,6 +274,7 @@ describe VideosController do
 
   describe "#destroy with valid params" do
     before(:each) do
+      login_as_admin
       @video = Factory(:video)
     end
     
