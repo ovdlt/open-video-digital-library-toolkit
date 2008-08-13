@@ -12,8 +12,8 @@ describe VideosController do
     
     it "should assign @videos" do
       assigns[:videos].should_not be_nil
-      ( Array === assigns[:videos] or
-       WillPaginate::Collection === assigns[:videos] ).should be_true
+      # this works whether we are an array or a WillPaginate::Collection
+      ( Array === assigns[:videos] ).should be_true
     end
     
     it "should return a successful response" do
