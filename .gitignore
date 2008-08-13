@@ -8,3 +8,4 @@
 /config/database.yml
 /public/stylesheets/*.css
 /coverage
+/videos/*
