@@ -1,0 +1,10 @@
+--- 
+user: mongrel_ovdlt
+group: app_ovdlt
+cwd: /opt/apps/ovdlt/current
+log_file: /opt/apps/ovdlt/shared/log/mongrel.log
+port: "8000"
+environment: production
+address: 127.0.0.1
+pid_file: /opt/apps/ovdlt/shared/pids/mongrel.pid
+servers: 2

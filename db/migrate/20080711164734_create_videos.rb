@@ -2,6 +2,7 @@ class CreateVideos < ActiveRecord::Migration
   def self.up
     create_table :videos do |t|
       t.string  :title,    :limit => 50, :null => false
+
       t.string  :year,     :limit => 4, :null => true
       t.string  :sentence, :limit => 400
       t.string  :filename, :limit => 100, :null => false

@@ -1,0 +1,51 @@
+#!/bin/bash
+#
+# Copyright (c) 2007 Bradley Taylor, bradley@railsmachine.com
+#
+# thin       Startup script for thin Ruby servers.
+#
+# chkconfig: - 85 15
+#              
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local:/usr/local/sbin:/usr/local/bin
+CONF_DIR=/etc/thin
+PID_DIR=/var/run/thin
+
+EVENT=1
+
+RETVAL=0
+
+# Gracefully exit if the controller is missing.
+which thin >/dev/null || exit 0
+
+# Go no further if config directory is missing.
+[ -d "$CONF_DIR" ] || exit 0
+
+case "$1" in
+    start)
+      # Create pid directory
+      mkdir -p $PID_DIR
+      # chown $USER:$USER $PID_DIR
+
+      thin start -c $CONF_DIR
+      RETVAL=$?
+  ;;
+    stop)
+      thin stop -c $CONF_DIR
+      RETVAL=$?
+  ;;
+    restart)
+      thin restart -c $CONF_DIR
+      RETVAL=$?
+  ;;
+    status)
+      thin status -c $CONF_DIR
+      RETVAL=$?
+  ;;
+    *)
+      echo "Usage: thin {start|stop|restart|status}"
+      exit 1
+  ;;
+esac      
+
+exit $RETVAL
