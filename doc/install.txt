@@ -66,6 +66,6 @@ site_keys.rb
 faker
 .gemrc
 
+/videos
+
 <<<  
-
-

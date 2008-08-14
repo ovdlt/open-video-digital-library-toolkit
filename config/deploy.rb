@@ -6,10 +6,9 @@ set :database_yml_in_scm, false
 set :application, "ovdlt"
 set :domain, "ovdlt.smparkes.net"
 set :repository, "git://github.com/ovdlt/open-video-digital-library-toolkit.git"
-# set :gems_for_project, %w(dr_nic_magic_models swiftiply) # list of gems to be installed
 set :gems_for_project, %w(haml thoughtbot-factory_girl)
+set :shared_dirs, [ "videos" ]
 
-# Update these if you're not running everything on one host.
 role :app, domain
 role :web, domain
 role :db,  domain, :primary => true
