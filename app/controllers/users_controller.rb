@@ -125,6 +125,14 @@ class UsersController < ApplicationController
       flash.now[:error] = "Can't find that email; sorry"
       @email = email
       render :action => "forgot_password"
+    elsif user.state == "pending"
+      new_password = random_password
+      user.password = new_password
+      user.password_confirmation = new_password
+      user.save!
+      UserMailer.deliver_signup_notification(user)
+      flash[:notice] = "You have not yet activated your account.  We're sending you another email with an activation link and a new password."
+      redirect_to login_path
     else
       new_password = random_password
       user.password = new_password

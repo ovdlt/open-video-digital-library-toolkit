@@ -65,7 +65,7 @@ smparkes:
 smparkes_guest:
   id: 7
   login: smparkes_guest
-  email: smparkes@smparkes.net
+  email: smparkes_guest@smparkes.net
   name: Steven Parkes (Guest)
   state: active
   salt: <%= salt = User::make_token %>
