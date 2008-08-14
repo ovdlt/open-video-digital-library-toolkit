@@ -3,13 +3,6 @@ module ActiveSupport
     class MemoryStore < Store
       def initialize
         @data = {}
-        @mutex = Mutex.new
-      end
-
-      def fetch(key, options = {})
-        @mutex.synchronize do
-          super
-        end
       end
 
       def read(name, options = nil)
@@ -23,27 +16,18 @@ module ActiveSupport
       end
 
       def delete(name, options = nil)
+        super
         @data.delete(name)
       end
 
       def delete_matched(matcher, options = nil)
+        super
         @data.delete_if { |k,v| k =~ matcher }
       end
 
       def exist?(name,options = nil)
+        super
         @data.has_key?(name)
-      end
-
-      def increment(key, amount = 1)
-        @mutex.synchronize do
-          super
-        end
-      end
-
-      def decrement(key, amount = 1)
-        @mutex.synchronize do
-          super
-        end
       end
 
       def clear

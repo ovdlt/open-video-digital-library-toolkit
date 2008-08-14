@@ -1,14 +1,4 @@
 class Module
-  # Returns the name of the module containing this one.
-  #
-  #   p M::N.parent_name # => "M"
-  def parent_name
-    unless defined? @parent_name
-      @parent_name = name =~ /::[^:]+\Z/ ? $`.freeze : nil
-    end
-    @parent_name
-  end
-
   # Returns the module which contains this one according to its name.
   #
   #   module M
@@ -26,7 +16,8 @@ class Module
   #   p Module.new.parent # => Object
   #
   def parent
-    parent_name ? parent_name.constantize : Object
+    parent_name = name.split('::')[0..-2] * '::'
+    parent_name.empty? ? Object : parent_name.constantize
   end
 
   # Returns all the parents of this module according to its name, ordered from
@@ -44,12 +35,10 @@ class Module
   #
   def parents
     parents = []
-    if parent_name
-      parts = parent_name.split('::')
-      until parts.empty?
-        parents << (parts * '::').constantize
-        parts.pop
-      end
+    parts = name.split('::')[0..-2]
+    until parts.empty?
+      parents << (parts * '::').constantize
+      parts.pop
     end
     parents << Object unless parents.include? Object
     parents
@@ -81,6 +70,6 @@ class Module
   # Returns the names of the constants defined locally rather than the
   # constants themselves. See <tt>local_constants</tt>.
   def local_constant_names
-    local_constants.map { |c| c.to_s }
+    local_constants.map(&:to_s)
   end
 end

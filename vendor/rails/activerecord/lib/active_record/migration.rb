@@ -238,22 +238,6 @@ module ActiveRecord
   # lower than the current schema version: when migrating up, those
   # never-applied "interleaved" migrations will be automatically applied, and
   # when migrating down, never-applied "interleaved" migrations will be skipped.
-  # 
-  # == Timestamped Migrations
-  #
-  # By default, Rails generates migrations that look like:
-  #
-  #    20080717013526_your_migration_name.rb
-  #
-  # The prefix is a generation timestamp (in UTC).
-  #
-  # If you'd prefer to use numeric prefixes, you can turn timestamped migrations
-  # off by setting:
-  #
-  #    config.active_record.timestamped_migrations = false
-  # 
-  # In environment.rb.
-  #
   class Migration
     @@verbose = true
     cattr_accessor :verbose
@@ -349,27 +333,6 @@ module ActiveRecord
     end
   end
 
-  # MigrationProxy is used to defer loading of the actual migration classes
-  # until they are needed
-  class MigrationProxy
-
-    attr_accessor :name, :version, :filename
-
-    delegate :migrate, :announce, :write, :to=>:migration
-
-    private
-
-      def migration
-        @migration ||= load_migration
-      end
-
-      def load_migration
-        load(filename)
-        name.constantize
-      end
-
-  end
-
   class Migrator#:nodoc:
     class << self
       def migrate(migrations_path, target_version = nil)
@@ -436,10 +399,7 @@ module ActiveRecord
     def run
       target = migrations.detect { |m| m.version == @target_version }
       raise UnknownMigrationVersionError.new(@target_version) if target.nil?
-      unless (up? && migrated.include?(target.version.to_i)) || (down? && !migrated.include?(target.version.to_i))
-        target.migrate(@direction)
-        record_version_state_after_migrating(target.version)
-      end
+      target.migrate(@direction)
     end
 
     def migrate
@@ -458,7 +418,7 @@ module ActiveRecord
       runnable.pop if down? && !target.nil?
       
       runnable.each do |migration|
-        Base.logger.info "Migrating to #{migration.name} (#{migration.version})"
+        Base.logger.info "Migrating to #{migration} (#{migration.version})"
 
         # On our way up, we skip migrating the ones we've already migrated
         # On our way down, we skip reverting the ones we've never migrated
@@ -491,10 +451,11 @@ module ActiveRecord
             raise DuplicateMigrationNameError.new(name.camelize) 
           end
           
-          klasses << returning(MigrationProxy.new) do |migration|
-            migration.name     = name.camelize
-            migration.version  = version
-            migration.filename = file
+          load(file)
+          
+          klasses << returning(name.camelize.constantize) do |klass|
+            class << klass; attr_accessor :version end
+            klass.version = version
           end
         end
         

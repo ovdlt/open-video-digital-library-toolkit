@@ -2,18 +2,15 @@ require "cases/helper"
 require 'models/post'
 require 'models/person'
 require 'models/reader'
-require 'models/comment'
 
 class HasManyThroughAssociationsTest < ActiveRecord::TestCase
-  fixtures :posts, :readers, :people, :comments
+  fixtures :posts, :readers, :people
 
   def test_associate_existing
     assert_queries(2) { posts(:thinking);people(:david) }
-
-    posts(:thinking).people
-
+    
     assert_queries(1) do
-      posts(:thinking).people << people(:david)
+       posts(:thinking).people << people(:david)
     end
     
     assert_queries(1) do
@@ -189,11 +186,5 @@ class HasManyThroughAssociationsTest < ActiveRecord::TestCase
 
     post.people_with_callbacks.clear
     assert_equal (%w(Michael David Julian Roger) * 2).sort, log.last(8).collect(&:last).sort
-  end
-
-  def test_dynamic_find_should_respect_association_include
-    # SQL error in sort clause if :include is not included
-    # due to Unknown column 'comments.id'
-    assert Person.find(1).posts_with_comments_sorted_by_comment_id.find_by_title('Welcome to the weblog')
   end
 end

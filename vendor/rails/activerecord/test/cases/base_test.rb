@@ -19,7 +19,6 @@ require 'models/warehouse_thing'
 require 'rexml/document'
 
 class Category < ActiveRecord::Base; end
-class Categorization < ActiveRecord::Base; end
 class Smarts < ActiveRecord::Base; end
 class CreditCard < ActiveRecord::Base
   class PinNumber < ActiveRecord::Base
@@ -76,7 +75,7 @@ class TopicWithProtectedContentAndAccessibleAuthorName < ActiveRecord::Base
 end
 
 class BasicsTest < ActiveRecord::TestCase
-  fixtures :topics, :companies, :developers, :projects, :computers, :accounts, :minimalistics, 'warehouse-things', :authors, :categorizations, :categories
+  fixtures :topics, :companies, :developers, :projects, :computers, :accounts, :minimalistics, 'warehouse-things', :authors
 
   def test_table_exists
     assert !NonExistentTable.table_exists?
@@ -131,22 +130,22 @@ class BasicsTest < ActiveRecord::TestCase
 
   def test_read_attributes_before_type_cast
     category = Category.new({:name=>"Test categoty", :type => nil})
-    category_attrs = {"name"=>"Test categoty", "type" => nil, "categorizations_count" => nil}
+    category_attrs = {"name"=>"Test categoty", "type" => nil}
     assert_equal category_attrs , category.attributes_before_type_cast
   end
-
+  
   if current_adapter?(:MysqlAdapter)
     def test_read_attributes_before_type_cast_on_boolean
       bool = Booleantest.create({ "value" => false })
       assert_equal 0, bool.attributes_before_type_cast["value"]
     end
   end
-
+  
   def test_read_attributes_before_type_cast_on_datetime
     developer = Developer.find(:first)
     assert_equal developer.created_at.to_s(:db) , developer.attributes_before_type_cast["created_at"]
   end
-
+  
   def test_hash_content
     topic = Topic.new
     topic.content = { "one" => 1, "two" => 2 }
@@ -252,7 +251,7 @@ class BasicsTest < ActiveRecord::TestCase
     topic = Topic.create("title" => "New Topic")
     topicReloaded = Topic.find(topic.id)
     assert_equal(topic, topicReloaded)
-  end
+  end  
 
   def test_create_through_factory_with_block
     topic = Topic.create("title" => "New Topic") do |t|
@@ -577,7 +576,7 @@ class BasicsTest < ActiveRecord::TestCase
   def test_destroy_all
     original_count = Topic.count
     topics_by_mary = Topic.count(:conditions => mary = "author_name = 'Mary'")
-
+    
     Topic.destroy_all mary
     assert_equal original_count - topics_by_mary, Topic.count
   end
@@ -613,22 +612,6 @@ class BasicsTest < ActiveRecord::TestCase
 
     Topic.decrement_counter("replies_count", 2)
     assert_equal -2, Topic.find(2).replies_count
-  end
-
-  def test_update_counter
-    category = Category.first
-    assert_nil category.categorizations_count
-    assert_equal 2, category.categorizations.count
-
-    Category.update_counters(category.id, "categorizations_count" => category.categorizations.count)
-    category.reload
-    assert_not_nil category.categorizations_count
-    assert_equal 2, category.categorizations_count
-
-    Category.update_counters(category.id, "categorizations_count" => category.categorizations.count)
-    category.reload
-    assert_not_nil category.categorizations_count
-    assert_equal 4, category.categorizations_count
   end
 
   def test_update_all
@@ -682,7 +665,7 @@ class BasicsTest < ActiveRecord::TestCase
 
   def test_delete_all
     assert Topic.count > 0
-
+    
     assert_equal Topic.count, Topic.delete_all
   end
 
@@ -904,14 +887,6 @@ class BasicsTest < ActiveRecord::TestCase
     assert_nil keyboard.id
   end
 
-  def test_mass_assigning_invalid_attribute
-    firm = Firm.new
-
-    assert_raises(ActiveRecord::UnknownAttributeError) do
-      firm.attributes = { "id" => 5, "type" => "Client", "i_dont_even_exist" => 20 }
-    end
-  end
-
   def test_mass_assignment_protection_on_defaults
     firm = Firm.new
     firm.attributes = { "id" => 5, "type" => "Client" }
@@ -995,7 +970,7 @@ class BasicsTest < ActiveRecord::TestCase
     topic.attributes = attributes
     assert_equal Time.local(2004, 6, 24, 16, 24, 0), topic.written_on
   end
-
+  
   def test_multiparameter_attributes_on_time_with_old_date
     attributes = {
       "written_on(1i)" => "1850", "written_on(2i)" => "6", "written_on(3i)" => "24",
@@ -1023,7 +998,7 @@ class BasicsTest < ActiveRecord::TestCase
   def test_multiparameter_attributes_on_time_with_time_zone_aware_attributes
     ActiveRecord::Base.time_zone_aware_attributes = true
     ActiveRecord::Base.default_timezone = :utc
-    Time.zone = ActiveSupport::TimeZone[-28800]
+    Time.zone = TimeZone[-28800]
     attributes = {
       "written_on(1i)" => "2004", "written_on(2i)" => "6", "written_on(3i)" => "24",
       "written_on(4i)" => "16", "written_on(5i)" => "24", "written_on(6i)" => "00"
@@ -1041,7 +1016,7 @@ class BasicsTest < ActiveRecord::TestCase
 
   def test_multiparameter_attributes_on_time_with_time_zone_aware_attributes_false
     ActiveRecord::Base.time_zone_aware_attributes = false
-    Time.zone = ActiveSupport::TimeZone[-28800]
+    Time.zone = TimeZone[-28800]
     attributes = {
       "written_on(1i)" => "2004", "written_on(2i)" => "6", "written_on(3i)" => "24",
       "written_on(4i)" => "16", "written_on(5i)" => "24", "written_on(6i)" => "00"
@@ -1057,7 +1032,7 @@ class BasicsTest < ActiveRecord::TestCase
   def test_multiparameter_attributes_on_time_with_skip_time_zone_conversion_for_attributes
     ActiveRecord::Base.time_zone_aware_attributes = true
     ActiveRecord::Base.default_timezone = :utc
-    Time.zone = ActiveSupport::TimeZone[-28800]
+    Time.zone = TimeZone[-28800]
     Topic.skip_time_zone_conversion_for_attributes = [:written_on]
     attributes = {
       "written_on(1i)" => "2004", "written_on(2i)" => "6", "written_on(3i)" => "24",
@@ -1358,12 +1333,6 @@ class BasicsTest < ActiveRecord::TestCase
     myobj = MyObject.new('value1', 'value2')
     topic = Topic.create("content" => myobj)
     Topic.serialize("content", MyObject)
-    assert_equal(myobj, topic.content)
-  end
-
-  def test_serialized_time_attribute
-    myobj = Time.local(2008,1,1,1,0)
-    topic = Topic.create("content" => myobj).reload
     assert_equal(myobj, topic.content)
   end
 
@@ -1678,7 +1647,7 @@ class BasicsTest < ActiveRecord::TestCase
     last  = Developer.find :last
     assert_equal last, Developer.find(:first, :order => 'id desc')
   end
-
+  
   def test_last
     assert_equal Developer.find(:first, :order => 'id desc'), Developer.last
   end
@@ -1686,7 +1655,7 @@ class BasicsTest < ActiveRecord::TestCase
   def test_all_with_conditions
     assert_equal Developer.find(:all, :order => 'id desc'), Developer.all(:order => 'id desc')
   end
-
+  
   def test_find_ordered_last
     last  = Developer.find :last, :order => 'developers.salary ASC'
     assert_equal last, Developer.find(:all, :order => 'developers.salary ASC').last
@@ -1701,14 +1670,14 @@ class BasicsTest < ActiveRecord::TestCase
     last  = Developer.find :last, :order => 'developers.name, developers.salary DESC'
     assert_equal last, Developer.find(:all, :order => 'developers.name, developers.salary DESC').last
   end
-
+  
   def test_find_scoped_ordered_last
     last_developer = Developer.with_scope(:find => { :order => 'developers.salary ASC' }) do
       Developer.find(:last)
     end
     assert_equal last_developer, Developer.find(:all, :order => 'developers.salary ASC').last
   end
-
+  
   def test_abstract_class
     assert !ActiveRecord::Base.abstract_class?
     assert LoosePerson.abstract_class?

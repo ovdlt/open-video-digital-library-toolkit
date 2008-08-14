@@ -1,5 +1,3 @@
-require 'active_support/ordered_hash'
-
 module Enumerable
   # Ruby 1.8.7 introduces group_by, but the result isn't ordered. Override it.
   remove_method(:group_by) if [].respond_to?(:group_by) && RUBY_VERSION < '1.9'
@@ -20,19 +18,10 @@ module Enumerable
   #   "2006-02-24 -> Transcript, Transcript"
   #   "2006-02-23 -> Transcript"
   def group_by
-    assoc = ActiveSupport::OrderedHash.new
-
-    each do |element|
-      key = yield(element)
-
-      if assoc.has_key?(key)
-        assoc[key] << element
-      else
-        assoc[key] = [element]
-      end
+    inject ActiveSupport::OrderedHash.new do |grouped, element|
+      (grouped[yield(element)] ||= []) << element
+      grouped
     end
-
-    assoc
   end unless [].respond_to?(:group_by)
 
   # Calculates a sum from the elements. Examples:
@@ -76,12 +65,5 @@ module Enumerable
       accum[yield(elem)] = elem
       accum
     end
-  end
-  
-  # Returns true if the collection has more than 1 element. Functionally equivalent to collection.size > 1.
-  # Works with a block too ala any?, so people.many? { |p| p.age > 26 } # => returns true if more than 1 person is over 26.
-  def many?(&block)
-    size = block_given? ? select(&block).size : self.size
-    size > 1
   end
 end

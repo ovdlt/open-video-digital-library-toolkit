@@ -216,7 +216,7 @@ module ActionMailer #:nodoc:
   #   * <tt>:domain</tt> - If you need to specify a HELO domain, you can do it here.
   #   * <tt>:user_name</tt> - If your mail server requires authentication, set the username in this setting.
   #   * <tt>:password</tt> - If your mail server requires authentication, set the password in this setting.
-  #   * <tt>:authentication</tt> - If your mail server requires authentication, you need to specify the authentication type here.
+  #   * <tt>:authentication</tt> - If your mail server requires authentication, you need to specify the authentication type here. 
   #     This is a symbol and one of <tt>:plain</tt>, <tt>:login</tt>, <tt>:cram_md5</tt>.
   #
   # * <tt>sendmail_settings</tt> - Allows you to override options for the <tt>:sendmail</tt> delivery method.
@@ -233,10 +233,10 @@ module ActionMailer #:nodoc:
   # * <tt>deliveries</tt> - Keeps an array of all the emails sent out through the Action Mailer with <tt>delivery_method :test</tt>. Most useful
   #   for unit and functional testing.
   #
-  # * <tt>default_charset</tt> - The default charset used for the body and to encode the subject. Defaults to UTF-8. You can also
+  # * <tt>default_charset</tt> - The default charset used for the body and to encode the subject. Defaults to UTF-8. You can also 
   #   pick a different charset from inside a method with +charset+.
   # * <tt>default_content_type</tt> - The default content type used for the main part of the message. Defaults to "text/plain". You
-  #   can also pick a different content type from inside a method with +content_type+.
+  #   can also pick a different content type from inside a method with +content_type+. 
   # * <tt>default_mime_version</tt> - The default mime version used for the message. Defaults to <tt>1.0</tt>. You
   #   can also pick a different value from inside a method with +mime_version+.
   # * <tt>default_implicit_parts_order</tt> - When a message is built implicitly (i.e. multiple parts are assembled from templates
@@ -250,8 +250,11 @@ module ActionMailer #:nodoc:
 
     private_class_method :new #:nodoc:
 
-    class_inheritable_accessor :view_paths
+    class_inheritable_accessor :template_root
     cattr_accessor :logger
+
+    cattr_accessor :template_extensions
+    @@template_extensions = ['erb', 'builder', 'rhtml', 'rxml']
 
     @@smtp_settings = {
       :address        => "localhost",
@@ -411,18 +414,20 @@ module ActionMailer #:nodoc:
         new.deliver!(mail)
       end
 
+      # Register a template extension so mailer templates written in a
+      # templating language other than rhtml or rxml are supported.
+      # To use this, include in your template-language plugin's init
+      # code or on a per-application basis, this can be invoked from
+      # <tt>config/environment.rb</tt>:
+      #
+      #   ActionMailer::Base.register_template_extension('haml')
       def register_template_extension(extension)
-        ActiveSupport::Deprecation.warn(
-          "ActionMailer::Base.register_template_extension has been deprecated." +
-          "Use ActionView::Base.register_template_extension instead", caller)
-      end
-
-      def template_root
-        self.view_paths && self.view_paths.first
+        template_extensions << extension
       end
 
       def template_root=(root)
-        self.view_paths = ActionView::Base.process_view_paths(root)
+        write_inheritable_attribute(:template_root, root)
+        ActionView::TemplateFinder.process_view_paths(root)
       end
     end
 
@@ -447,18 +452,16 @@ module ActionMailer #:nodoc:
         # "the_template_file.text.html.erb", etc.). Only do this if parts
         # have not already been specified manually.
         if @parts.empty?
-          Dir.glob("#{template_path}/#{@template}.*").each do |path|
-            template = template_root["#{mailer_name}/#{File.basename(path)}"]
-
-            # Skip unless template has a multipart format
-            next unless template.multipart?
-
-            @parts << Part.new(
-              :content_type => template.content_type,
-              :disposition => "inline",
-              :charset => charset,
-              :body => render_message(template, @body)
-            )
+          templates = Dir.glob("#{template_path}/#{@template}.*")
+          templates.each do |path|
+            basename = File.basename(path)
+            template_regex = Regexp.new("^([^\\\.]+)\\\.([^\\\.]+\\\.[^\\\.]+)\\\.(" + template_extensions.join('|') + ")$")
+            next unless md = template_regex.match(basename)
+            template_name = basename
+            content_type = md.captures[1].gsub('.', '/')
+            @parts << Part.new(:content_type => content_type,
+              :disposition => "inline", :charset => charset,
+              :body => render_message(template_name, @body))
           end
           unless @parts.empty?
             @content_type = "multipart/alternative"
@@ -470,8 +473,9 @@ module ActionMailer #:nodoc:
         # also render a "normal" template (without the content type). If a
         # normal template exists (or if there were no implicit parts) we render
         # it.
-        template = template_root["#{mailer_name}/#{@template}"]
-        @body = render_message(@template, @body) if template
+        template_exists = @parts.empty?
+        template_exists ||= Dir.glob("#{template_path}/#{@template}.*").any? { |i| File.basename(i).split(".").length == 2 }
+        @body = render_message(@template, @body) if template_exists
 
         # Finally, if there are other message parts and a textual body exists,
         # we shift it onto the front of the parts and set the body to nil (so
@@ -531,18 +535,10 @@ module ActionMailer #:nodoc:
 
       def render(opts)
         body = opts.delete(:body)
-        if opts[:file] && (opts[:file] !~ /\// && !opts[:file].respond_to?(:render))
+        if opts[:file] && opts[:file] !~ /\//
           opts[:file] = "#{mailer_name}/#{opts[:file]}"
         end
         initialize_template_class(body).render(opts)
-      end
-
-      def template_root
-        self.class.template_root
-      end
-
-      def template_root=(root)
-        self.class.template_root = root
       end
 
       def template_path
@@ -550,7 +546,7 @@ module ActionMailer #:nodoc:
       end
 
       def initialize_template_class(assigns)
-        ActionView::Base.new(view_paths, assigns, self)
+        ActionView::Base.new([template_root], assigns, self)
       end
 
       def sort_parts(parts, order = [])

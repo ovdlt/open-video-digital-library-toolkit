@@ -5,10 +5,9 @@ require 'fileutils'
 module ActiveRecord
   class Base
     class << self
-      attr_accessor :pluralize_table_names, :timestamped_migrations
+      attr_accessor :pluralize_table_names
     end
     self.pluralize_table_names = true
-    self.timestamped_migrations = true
   end
 
   module ConnectionAdapters
@@ -227,7 +226,7 @@ class GeneratorTestCase < Test::Unit::TestCase
     end
   end
 
-  # Asserts that the given fixtures YAML file was generated.
+  # Asserts that the given fixtures yaml file was generated.
   # It takes a fixture name without the <tt>.yml</tt> part.
   # The parsed YAML tree is passed to a block.
   def assert_generated_fixtures_for(name)

@@ -28,16 +28,18 @@ module Backoffice
 end
 
 class ResourcesTest < Test::Unit::TestCase
+  
+  
   # The assertions in these tests are incompatible with the hash method
   # optimisation.  This could indicate user level problems
   def setup
     ActionController::Base.optimise_named_routes = false
   end
-
-  def teardown
+  
+  def tear_down
     ActionController::Base.optimise_named_routes = true
   end
-
+  
   def test_should_arrange_actions
     resource = ActionController::Resources::Resource.new(:messages,
       :collection => { :rss => :get, :reorder => :post, :csv => :post },
@@ -157,14 +159,14 @@ class ResourcesTest < Test::Unit::TestCase
 
   def test_with_collection_actions_and_name_prefix
     actions = { 'a' => :get, 'b' => :put, 'c' => :post, 'd' => :delete }
-
+  
     with_restful_routing :messages, :path_prefix => '/threads/:thread_id', :name_prefix => "thread_", :collection => actions do
       assert_restful_routes_for :messages, :path_prefix => 'threads/1/', :name_prefix => 'thread_', :options => { :thread_id => '1' } do |options|
         actions.each do |action, method|
           assert_recognizes(options.merge(:action => action), :path => "/threads/1/messages/#{action}", :method => method)
         end
       end
-
+  
       assert_restful_named_routes_for :messages, :path_prefix => 'threads/1/', :name_prefix => 'thread_', :options => { :thread_id => '1' } do |options|
         actions.keys.each do |action|
           assert_named_route "/threads/1/messages/#{action}", "#{action}_thread_messages_path", :action => action
@@ -175,14 +177,14 @@ class ResourcesTest < Test::Unit::TestCase
 
   def test_with_collection_action_and_name_prefix_and_formatted
     actions = { 'a' => :get, 'b' => :put, 'c' => :post, 'd' => :delete }
-
+  
     with_restful_routing :messages, :path_prefix => '/threads/:thread_id', :name_prefix => "thread_", :collection => actions do
       assert_restful_routes_for :messages, :path_prefix => 'threads/1/', :name_prefix => 'thread_', :options => { :thread_id => '1' } do |options|
         actions.each do |action, method|
           assert_recognizes(options.merge(:action => action, :format => 'xml'), :path => "/threads/1/messages/#{action}.xml", :method => method)
         end
       end
-
+  
       assert_restful_named_routes_for :messages, :path_prefix => 'threads/1/', :name_prefix => 'thread_', :options => { :thread_id => '1' } do |options|
         actions.keys.each do |action|
           assert_named_route "/threads/1/messages/#{action}.xml", "formatted_#{action}_thread_messages_path", :action => action, :format => 'xml'
@@ -277,7 +279,7 @@ class ResourcesTest < Test::Unit::TestCase
       end
     end
   end
-
+  
   def test_with_new_action_with_name_prefix
     with_restful_routing :messages, :new => { :preview => :post }, :path_prefix => '/threads/:thread_id', :name_prefix => 'thread_' do
       preview_options = {:action => 'preview', :thread_id => '1'}
@@ -291,7 +293,7 @@ class ResourcesTest < Test::Unit::TestCase
       end
     end
   end
-
+  
   def test_with_formatted_new_action_with_name_prefix
     with_restful_routing :messages, :new => { :preview => :post }, :path_prefix => '/threads/:thread_id', :name_prefix => 'thread_' do
       preview_options = {:action => 'preview', :thread_id => '1', :format => 'xml'}
@@ -305,7 +307,7 @@ class ResourcesTest < Test::Unit::TestCase
       end
     end
   end
-
+  
   def test_override_new_method
     with_restful_routing :messages do
       assert_restful_routes_for :messages do |options|
@@ -516,35 +518,15 @@ class ResourcesTest < Test::Unit::TestCase
     end
   end
 
-  def test_should_not_allow_invalid_head_method_for_member_routes
-    with_routing do |set|
-      set.draw do |map|
-        assert_raises(ArgumentError) do
-          map.resources :messages, :member => {:something => :head}
-        end
-      end
-    end
-  end
-
-  def test_should_not_allow_invalid_http_methods_for_member_routes
-    with_routing do |set|
-      set.draw do |map|
-        assert_raises(ArgumentError) do
-          map.resources :messages, :member => {:something => :invalid}
-        end
-      end
-    end
-  end
-
   def test_resource_action_separator
     with_routing do |set|
       set.draw do |map|
         map.resources :messages, :collection => {:search => :get}, :new => {:preview => :any}, :name_prefix => 'thread_', :path_prefix => '/threads/:thread_id'
         map.resource :account, :member => {:login => :get}, :new => {:preview => :any}, :name_prefix => 'admin_', :path_prefix => '/admin'
       end
-
+      
       action_separator = ActionController::Base.resource_action_separator
-
+      
       assert_simply_restful_for :messages, :name_prefix => 'thread_', :path_prefix => 'threads/1/', :options => { :thread_id => '1' }
       assert_named_route "/threads/1/messages#{action_separator}search", "search_thread_messages_path", {}
       assert_named_route "/threads/1/messages/new", "new_thread_message_path", {}
@@ -641,7 +623,7 @@ class ResourcesTest < Test::Unit::TestCase
       assert_simply_restful_for :products, :controller => "backoffice/products"
     end
   end
-
+  
   def test_nested_resources_using_namespace
     with_routing do |set|
       set.draw do |map|
@@ -813,7 +795,7 @@ class ResourcesTest < Test::Unit::TestCase
 
       yield options[:options] if block_given?
     end
-
+    
     def assert_singleton_routes_for(singleton_name, options = {})
       options[:options] ||= {}
       options[:options][:controller] = options[:controller] || singleton_name.to_s.pluralize
@@ -873,7 +855,7 @@ class ResourcesTest < Test::Unit::TestCase
       actual =  @controller.send(route, options) rescue $!.class.name
       assert_equal expected, actual, "Error on route: #{route}(#{options.inspect})"
     end
-
+    
     def assert_resource_methods(expected, resource, action_method, method)
       assert_equal expected.length, resource.send("#{action_method}_methods")[method].size, "#{resource.send("#{action_method}_methods")[method].inspect}"
       expected.each do |action|

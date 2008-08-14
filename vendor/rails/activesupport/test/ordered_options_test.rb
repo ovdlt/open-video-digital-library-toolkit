@@ -2,7 +2,7 @@ require 'abstract_unit'
 
 class OrderedOptionsTest < Test::Unit::TestCase
   def test_usage
-    a = ActiveSupport::OrderedOptions.new
+    a = OrderedOptions.new
 
     assert_nil a[:not_set]
 
@@ -20,7 +20,7 @@ class OrderedOptionsTest < Test::Unit::TestCase
   end
 
   def test_looping
-    a = ActiveSupport::OrderedOptions.new
+    a = OrderedOptions.new
 
     a[:allow_concurreny] = true
     a["else_where"] = 56
@@ -34,7 +34,7 @@ class OrderedOptionsTest < Test::Unit::TestCase
   end
 
   def test_method_access
-    a = ActiveSupport::OrderedOptions.new
+    a = OrderedOptions.new
 
     assert_nil a.not_set
 

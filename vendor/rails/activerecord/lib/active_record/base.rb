@@ -6,7 +6,7 @@ module ActiveRecord #:nodoc:
   class ActiveRecordError < StandardError
   end
 
-  # Raised when the single-table inheritance mechanism fails to locate the subclass
+  # Raised when the single-table inheritance mechanism failes to locate the subclass
   # (for example due to improper usage of column that +inheritance_column+ points to).
   class SubclassNotFound < ActiveRecordError #:nodoc:
   end
@@ -83,33 +83,8 @@ module ActiveRecord #:nodoc:
   class ReadOnlyRecord < ActiveRecordError
   end
 
-  # ActiveRecord::Transactions::ClassMethods.transaction uses this exception
-  # to distinguish a deliberate rollback from other exceptional situations.
-  # Normally, raising an exception will cause the +transaction+ method to rollback
-  # the database transaction *and* pass on the exception. But if you raise an
-  # ActiveRecord::Rollback exception, then the database transaction will be rolled back,
-  # without passing on the exception.
-  #
-  # For example, you could do this in your controller to rollback a transaction:
-  #
-  #   class BooksController < ActionController::Base
-  #     def create
-  #       Book.transaction do
-  #         book = Book.new(params[:book])
-  #         book.save!
-  #         if today_is_friday?
-  #           # The system must fail on Friday so that our support department
-  #           # won't be out of job. We silently rollback this transaction
-  #           # without telling the user.
-  #           raise ActiveRecord::Rollback, "Call tech support!"
-  #         end
-  #       end
-  #       # ActiveRecord::Rollback is the only exception that won't be passed on
-  #       # by ActiveRecord::Base.transaction, so this line will still be reached
-  #       # even on Friday.
-  #       redirect_to root_url
-  #     end
-  #   end
+  # Used by Active Record transaction mechanism to distinguish rollback from other exceptional situations.
+  # You can use it to roll your transaction back explicitly in the block passed to +transaction+ method.
   class Rollback < ActiveRecordError
   end
 
@@ -122,11 +97,7 @@ module ActiveRecord #:nodoc:
   class MissingAttributeError < NoMethodError
   end
 
-  # Raised when unknown attributes are supplied via mass assignment.
-  class UnknownAttributeError < NoMethodError
-  end
-
-  # Raised when an error occurred while doing a mass assignment to an attribute through the
+  # Raised when an error occured while doing a mass assignment to an attribute through the
   # <tt>attributes=</tt> method. The exception has an +attribute+ property that is the name of the
   # offending attribute.
   class AttributeAssignmentError < ActiveRecordError
@@ -300,7 +271,7 @@ module ActiveRecord #:nodoc:
   #   # Now 'Bob' exist and is an 'admin'
   #   User.find_or_create_by_name('Bob', :age => 40) { |u| u.admin = true }
   #
-  # Use the <tt>find_or_initialize_by_</tt> finder if you want to return a new record without saving it first. Protected attributes won't be set unless they are given in a block. For example:
+  # Use the <tt>find_or_initialize_by_</tt> finder if you want to return a new record without saving it first. Protected attributes won't be setted unless they are given in a block. For example:
   #
   #   # No 'Winter' tag exists
   #   winter = Tag.find_or_initialize_by_name("Winter")
@@ -401,7 +372,7 @@ module ActiveRecord #:nodoc:
     def self.reset_subclasses #:nodoc:
       nonreloadables = []
       subclasses.each do |klass|
-        unless ActiveSupport::Dependencies.autoloaded? klass
+        unless Dependencies.autoloaded? klass
           nonreloadables << klass
           next
         end
@@ -467,10 +438,6 @@ module ActiveRecord #:nodoc:
     # adapters for, e.g., your development and test environments.
     cattr_accessor :schema_format , :instance_writer => false
     @@schema_format = :ruby
-
-    # Specify whether or not to use timestamps for migration numbers
-    cattr_accessor :timestamped_migrations , :instance_writer => false
-    @@timestamped_migrations = true
 
     # Determine whether to store the full constant name including namespace when using STI
     superclass_delegating_accessor :store_full_sti_class
@@ -757,7 +724,8 @@ module ActiveRecord #:nodoc:
       # ==== Attributes
       #
       # * +updates+ - A String of column and value pairs that will be set on any records that match conditions.
-      # * +conditions+ - An SQL fragment like "administrator = 1" or [ "user_name = ?", username ]. See conditions in the intro for more info.
+      # * +conditions+ - An SQL fragment like "administrator = 1" or [ "user_name = ?", username ].
+      #   See conditions in the intro for more info.
       # * +options+ - Additional options are <tt>:limit</tt> and/or <tt>:order</tt>, see the examples for usage.
       #
       # ==== Examples
@@ -860,7 +828,7 @@ module ActiveRecord #:nodoc:
       def update_counters(id, counters)
         updates = counters.inject([]) { |list, (counter_name, increment)|
           sign = increment < 0 ? "-" : "+"
-          list << "#{connection.quote_column_name(counter_name)} = COALESCE(#{connection.quote_column_name(counter_name)}, 0) #{sign} #{increment.abs}"
+          list << "#{connection.quote_column_name(counter_name)} = #{connection.quote_column_name(counter_name)} #{sign} #{increment.abs}"
         }.join(", ")
         update_all(updates, "#{connection.quote_column_name(primary_key)} = #{quote_value(id)}")
       end
@@ -1329,20 +1297,6 @@ module ActiveRecord #:nodoc:
         store_full_sti_class ? name : name.demodulize
       end
 
-      # Merges conditions so that the result is a valid +condition+
-      def merge_conditions(*conditions)
-        segments = []
-
-        conditions.each do |condition|
-          unless condition.blank?
-            sql = sanitize_sql(condition)
-            segments << sql unless sql.blank?
-          end
-        end
-
-        "(#{segments.join(') AND (')})" unless segments.empty?
-      end
-
       private
         def find_initial(options)
           options.update(:limit => 1)
@@ -1511,7 +1465,7 @@ module ActiveRecord #:nodoc:
 
         def construct_finder_sql(options)
           scope = scope(:find)
-          sql  = "SELECT #{options[:select] || (scope && scope[:select]) || ((options[:joins] || (scope && scope[:joins])) && quoted_table_name + '.*') || '*'} "
+          sql  = "SELECT #{options[:select] || (scope && scope[:select]) || (options[:joins] && quoted_table_name + '.*') || '*'} "
           sql << "FROM #{(scope && scope[:from]) || options[:from] || quoted_table_name} "
 
           add_joins!(sql, options, scope)
@@ -1528,6 +1482,20 @@ module ActiveRecord #:nodoc:
         # Merges includes so that the result is a valid +include+
         def merge_includes(first, second)
          (safe_to_array(first) + safe_to_array(second)).uniq
+        end
+
+        # Merges conditions so that the result is a valid +condition+
+        def merge_conditions(*conditions)
+          segments = []
+
+          conditions.each do |condition|
+            unless condition.blank?
+              sql = sanitize_sql(condition)
+              segments << sql unless sql.blank?
+            end
+          end
+
+          "(#{segments.join(') AND (')})" unless segments.empty?
         end
 
         # Object#to_a is deprecated, though it does have the desired behavior
@@ -1935,12 +1903,10 @@ module ActiveRecord #:nodoc:
         # MyApp::Business::Account would appear as MyApp::Business::AccountSubclass.
         def compute_type(type_name)
           modularized_name = type_name_with_module(type_name)
-          silence_warnings do
-            begin
-              class_eval(modularized_name, __FILE__, __LINE__)
-            rescue NameError
-              class_eval(type_name, __FILE__, __LINE__)
-            end
+          begin
+            class_eval(modularized_name, __FILE__, __LINE__)
+          rescue NameError
+            class_eval(type_name, __FILE__, __LINE__)
           end
         end
 
@@ -2031,28 +1997,24 @@ module ActiveRecord #:nodoc:
         #     # => "age BETWEEN 13 AND 18"
         #   { 'other_records.id' => 7 }
         #     # => "`other_records`.`id` = 7"
-        #   { :other_records => { :id => 7 } }
-        #     # => "`other_records`.`id` = 7"
         # And for value objects on a composed_of relationship:
         #   { :address => Address.new("123 abc st.", "chicago") }
         #     # => "address_street='123 abc st.' and address_city='chicago'"
-        def sanitize_sql_hash_for_conditions(attrs, table_name = quoted_table_name)
+        def sanitize_sql_hash_for_conditions(attrs)
           attrs = expand_hash_conditions_for_aggregates(attrs)
 
           conditions = attrs.map do |attr, value|
-            unless value.is_a?(Hash)
-              attr = attr.to_s
+            attr = attr.to_s
 
-              # Extract table name from qualified attribute names.
-              if attr.include?('.')
-                table_name, attr = attr.split('.', 2)
-                table_name = connection.quote_table_name(table_name)
-              end
-
-              "#{table_name}.#{connection.quote_column_name(attr)} #{attribute_condition(value)}"
+            # Extract table name from qualified attribute names.
+            if attr.include?('.')
+              table_name, attr = attr.split('.', 2)
+              table_name = connection.quote_table_name(table_name)
             else
-              sanitize_sql_hash_for_conditions(value, connection.quote_table_name(attr.to_s))
+              table_name = quoted_table_name
             end
+
+            "#{table_name}.#{connection.quote_column_name(attr)} #{attribute_condition(value)}"
           end.join(' AND ')
 
           replace_bind_variables(conditions, expand_range_bind_variables(attrs.values))
@@ -2091,10 +2053,9 @@ module ActiveRecord #:nodoc:
         end
 
         def replace_named_bind_variables(statement, bind_vars) #:nodoc:
-          statement.gsub(/(:?):([a-zA-Z]\w*)/) do
-            if $1 == ':' # skip postgresql casts
-              $& # return the whole match
-            elsif bind_vars.include?(match = $2.to_sym)
+          statement.gsub(/:([a-zA-Z]\w*)/) do
+            match = $1.to_sym
+            if bind_vars.include?(match)
               quote_bound_value(bind_vars[match])
             else
               raise PreparedStatementInvalid, "missing value for :#{match} in #{statement}"
@@ -2103,20 +2064,13 @@ module ActiveRecord #:nodoc:
         end
 
         def expand_range_bind_variables(bind_vars) #:nodoc:
-          expanded = []
-
-          bind_vars.each do |var|
-            next if var.is_a?(Hash)
-
+          bind_vars.sum do |var|
             if var.is_a?(Range)
-              expanded << var.first
-              expanded << var.last
+              [var.first, var.last]
             else
-              expanded << var
+              [var]
             end
           end
-
-          expanded
         end
 
         def quote_bound_value(value) #:nodoc:
@@ -2208,11 +2162,11 @@ module ActiveRecord #:nodoc:
       def cache_key
         case
         when new_record?
-          "#{self.class.model_name.cache_key}/new"
-        when timestamp = self[:updated_at]
-          "#{self.class.model_name.cache_key}/#{id}-#{timestamp.to_s(:number)}"
+          "#{self.class.name.tableize}/new"
+        when self[:updated_at]
+          "#{self.class.name.tableize}/#{id}-#{updated_at.to_s(:number)}"
         else
-          "#{self.class.model_name.cache_key}/#{id}"
+          "#{self.class.name.tableize}/#{id}"
         end
       end
 
@@ -2293,12 +2247,12 @@ module ActiveRecord #:nodoc:
         end
       end
 
-      # Updates a single attribute and saves the record without going through the normal validation procedure.
-      # This is especially useful for boolean flags on existing records. The regular +update_attribute+ method
-      # in Base is replaced with this when the validations module is mixed in, which it is by default.
+      # Updates a single attribute and saves the record. This is especially useful for boolean flags on existing records.
+      # Note: This method is overwritten by the Validation module that'll make sure that updates made with this method
+      # aren't subjected to validation checks. Hence, attributes can be updated even if the full object isn't valid.
       def update_attribute(name, value)
         send(name.to_s + '=', value)
-        save(false)
+        save
       end
 
       # Updates all the attributes from the passed-in Hash and saves the record. If the object is invalid, the saving will
@@ -2404,11 +2358,7 @@ module ActiveRecord #:nodoc:
         attributes = remove_attributes_protected_from_mass_assignment(attributes) if guard_protected_attributes
 
         attributes.each do |k, v|
-          if k.include?("(")
-            multi_parameter_attributes << [ k, v ]
-          else
-            respond_to?(:"#{k}=") ? send(:"#{k}=", v) : raise(UnknownAttributeError, "unknown attribute: #{k}")
-          end
+          k.include?("(") ? multi_parameter_attributes << [ k, v ] : send(k + "=", v)
         end
 
         assign_multiparameter_attributes(multi_parameter_attributes)
@@ -2594,7 +2544,7 @@ module ActiveRecord #:nodoc:
         removed_attributes = attributes.keys - safe_attributes.keys
 
         if removed_attributes.any?
-          log_protected_attribute_removal(removed_attributes)
+          logger.debug "WARNING: Can't mass-assign these protected attributes: #{removed_attributes.join(', ')}"
         end
 
         safe_attributes
@@ -2607,10 +2557,6 @@ module ActiveRecord #:nodoc:
         else
           attributes
         end
-      end
-
-      def log_protected_attribute_removal(*attributes)
-        logger.debug "WARNING: Can't mass-assign these protected attributes: #{attributes.join(', ')}"
       end
 
       # The primary key and inheritance column can never be set by mass-assignment for security reasons.
@@ -2626,15 +2572,8 @@ module ActiveRecord #:nodoc:
         quoted = {}
         connection = self.class.connection
         attribute_names.each do |name|
-          if (column = column_for_attribute(name)) && (include_primary_key || !column.primary)
-            value = read_attribute(name)
-
-            # We need explicit to_yaml because quote() does not properly convert Time/Date fields to YAML.
-            if value && self.class.serialized_attributes.has_key?(name) && (value.acts_like?(:date) || value.acts_like?(:time))
-              value = value.to_yaml
-            end
-
-            quoted[name] = connection.quote(value, column)
+          if column = column_for_attribute(name)
+            quoted[name] = connection.quote(read_attribute(name), column) unless !include_primary_key && column.primary
           end
         end
         include_readonly_attributes ? quoted : remove_readonly_attributes(quoted)

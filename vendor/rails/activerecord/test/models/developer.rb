@@ -56,8 +56,7 @@ class Developer < ActiveRecord::Base
 end
 
 class AuditLog < ActiveRecord::Base
-  belongs_to :developer, :validate => true
-  belongs_to :unvalidated_developer, :class_name => 'Developer'
+  belongs_to :developer
 end
 
 DeveloperSalary = Struct.new(:amount)

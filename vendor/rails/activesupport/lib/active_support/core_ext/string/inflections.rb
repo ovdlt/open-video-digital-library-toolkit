@@ -24,8 +24,8 @@ module ActiveSupport #:nodoc:
         #
         #   "posts".singularize            # => "post"
         #   "octopi".singularize           # => "octopus"
-        #   "sheep".singularize            # => "sheep"
-        #   "word".singularize             # => "word"
+        #   "sheep".singluarize            # => "sheep"
+        #   "word".singluarize             # => "word"
         #   "the blue mailmen".singularize # => "the blue mailman"
         #   "CamelOctopi".singularize      # => "CamelOctopus"
         def singularize

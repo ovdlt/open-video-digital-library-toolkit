@@ -1,5 +1,4 @@
 require 'date'
-require 'set'
 require 'bigdecimal'
 require 'bigdecimal/util'
 
@@ -7,8 +6,6 @@ module ActiveRecord
   module ConnectionAdapters #:nodoc:
     # An abstract definition of a column in a table.
     class Column
-      TRUE_VALUES = [true, 1, '1', 't', 'T', 'true', 'TRUE'].to_set
-
       module Format
         ISO_DATE = /\A(\d{4})-(\d\d)-(\d\d)\z/
         ISO_DATETIME = /\A(\d{4})-(\d\d)-(\d\d) (\d\d):(\d\d):(\d\d)(\.\d+)?\z/
@@ -33,11 +30,11 @@ module ActiveRecord
       end
 
       def text?
-        type == :string || type == :text
+        [:string, :text].include? type
       end
 
       def number?
-        type == :integer || type == :float || type == :decimal
+        [:float, :integer, :decimal].include? type
       end
 
       # Returns the Ruby class that corresponds to the abstract data type.
@@ -138,7 +135,11 @@ module ActiveRecord
 
         # convert something to a boolean
         def value_to_boolean(value)
-          TRUE_VALUES.include?(value)
+          if value == true || value == false
+            value
+          else
+            %w(true t 1).include?(value.to_s.downcase)
+          end
         end
 
         # convert something to a BigDecimal
@@ -256,10 +257,7 @@ module ActiveRecord
 
       def to_sql
         column_sql = "#{base.quote_column_name(name)} #{sql_type}"
-        column_options = {}
-        column_options[:null] = null unless null.nil?
-        column_options[:default] = default unless default.nil?
-        add_column_options!(column_sql, column_options) unless type.to_sym == :primary_key
+        add_column_options!(column_sql, :null => null, :default => default) unless type.to_sym == :primary_key
         column_sql
       end
       alias to_s :to_sql
@@ -306,7 +304,8 @@ module ActiveRecord
       #
       # Available options are (none of these exists by default):
       # * <tt>:limit</tt> -
-      #   Requests a maximum column length. This is number of characters for <tt>:string</tt> and <tt>:text</tt> columns and number of bytes for :binary and :integer columns.
+      #   Requests a maximum column length (<tt>:string</tt>, <tt>:text</tt>,
+      #   <tt>:binary</tt> or <tt>:integer</tt> columns only)
       # * <tt>:default</tt> -
       #   The column's default value. Use nil for NULL.
       # * <tt>:null</tt> -

@@ -14,10 +14,10 @@ module ActionController
   #
   # === The Different Methods and their Usage
   #
-  # [+GET+]     Requests for a resource, no saving or editing of a resource should occur in a GET request
-  # [+POST+]    Creation of resources
-  # [+PUT+]     Editing of attributes on a resource
-  # [+DELETE+]  Deletion of a resource
+  # +GET+     Requests for a resource, no saving or editing of a resource should occur in a GET request
+  # +POST+    Creation of resources
+  # +PUT+     Editing of attributes on a resource
+  # +DELETE+  Deletion of a resource
   #
   # === Examples
   #
@@ -72,7 +72,7 @@ module ActionController
       end
 
       def conditions
-        @conditions ||= @options[:conditions] || {}
+        @conditions = @options[:conditions] || {}
       end
 
       def path
@@ -80,9 +80,9 @@ module ActionController
       end
 
       def new_path
-        new_action   = self.options[:path_names][:new] if self.options[:path_names]
+        new_action = self.options[:path_names][:new] if self.options[:path_names]
         new_action ||= Base.resources_path_names[:new]
-        @new_path  ||= "#{path}/#{new_action}"
+        @new_path ||= "#{path}/#{new_action}"
       end
 
       def member_path
@@ -296,10 +296,6 @@ module ActionController
     #     article_comments_url(:article_id => @article)
     #     article_comment_url(:article_id => @article, :id => @comment)
     #
-    #   If you don't want to load all objects from the database you might want to use the <tt>article_id</tt> directly:
-    #
-    #     articles_comments_url(@comment.article_id, @comment)
-    #
     # * <tt>:name_prefix</tt> - Define a prefix for all generated routes, usually ending in an underscore.
     #   Use this if you have named routes that may clash.
     #
@@ -307,13 +303,13 @@ module ActionController
     #     map.resources :tags, :path_prefix => '/toys/:toy_id',   :name_prefix => 'toy_'
     #
     # You may also use <tt>:name_prefix</tt> to override the generic named routes in a nested resource:
-    #
+    # 
     #   map.resources :articles do |article|
     #     article.resources :comments, :name_prefix => nil
-    #   end
-    #
+    #   end 
+    # 
     # This will yield named resources like so:
-    #
+    # 
     #   comments_url(@article)
     #   comment_url(@article, @comment)
     #
@@ -481,7 +477,8 @@ module ActionController
         resource.collection_methods.each do |method, actions|
           actions.each do |action|
             action_options = action_options_for(action, resource, method)
-            map_named_routes(map, "#{action}_#{resource.name_prefix}#{resource.plural}", "#{resource.path}#{resource.action_separator}#{action}", action_options)
+            map.named_route("#{action}_#{resource.name_prefix}#{resource.plural}", "#{resource.path}#{resource.action_separator}#{action}", action_options)
+            map.named_route("formatted_#{action}_#{resource.name_prefix}#{resource.plural}", "#{resource.path}#{resource.action_separator}#{action}.:format", action_options)
           end
         end
       end
@@ -494,15 +491,18 @@ module ActionController
           index_route_name << "_index"
         end
 
-        map_named_routes(map, index_route_name, resource.path, index_action_options)
+        map.named_route(index_route_name, resource.path, index_action_options)
+        map.named_route("formatted_#{index_route_name}", "#{resource.path}.:format", index_action_options)
 
         create_action_options = action_options_for("create", resource)
-        map_unnamed_routes(map, resource.path, create_action_options)
+        map.connect(resource.path, create_action_options)
+        map.connect("#{resource.path}.:format", create_action_options)
       end
 
       def map_default_singleton_actions(map, resource)
         create_action_options = action_options_for("create", resource)
-        map_unnamed_routes(map, resource.path, create_action_options)
+        map.connect(resource.path, create_action_options)
+        map.connect("#{resource.path}.:format", create_action_options)
       end
 
       def map_new_actions(map, resource)
@@ -510,9 +510,11 @@ module ActionController
           actions.each do |action|
             action_options = action_options_for(action, resource, method)
             if action == :new
-              map_named_routes(map, "new_#{resource.name_prefix}#{resource.singular}", resource.new_path, action_options)
+              map.named_route("new_#{resource.name_prefix}#{resource.singular}", resource.new_path, action_options)
+              map.named_route("formatted_new_#{resource.name_prefix}#{resource.singular}", "#{resource.new_path}.:format", action_options)
             else
-              map_named_routes(map, "#{action}_new_#{resource.name_prefix}#{resource.singular}", "#{resource.new_path}#{resource.action_separator}#{action}", action_options)
+              map.named_route("#{action}_new_#{resource.name_prefix}#{resource.singular}", "#{resource.new_path}#{resource.action_separator}#{action}", action_options)
+              map.named_route("formatted_#{action}_new_#{resource.name_prefix}#{resource.singular}", "#{resource.new_path}#{resource.action_separator}#{action}.:format", action_options)
             end
           end
         end
@@ -526,28 +528,22 @@ module ActionController
             action_path = resource.options[:path_names][action] if resource.options[:path_names].is_a?(Hash)
             action_path ||= Base.resources_path_names[action] || action
 
-            map_named_routes(map, "#{action}_#{resource.name_prefix}#{resource.singular}", "#{resource.member_path}#{resource.action_separator}#{action_path}", action_options)
+            map.named_route("#{action}_#{resource.name_prefix}#{resource.singular}", "#{resource.member_path}#{resource.action_separator}#{action_path}", action_options)
+            map.named_route("formatted_#{action}_#{resource.name_prefix}#{resource.singular}", "#{resource.member_path}#{resource.action_separator}#{action_path}.:format",action_options)
           end
         end
 
         show_action_options = action_options_for("show", resource)
-        map_named_routes(map, "#{resource.name_prefix}#{resource.singular}", resource.member_path, show_action_options)
+        map.named_route("#{resource.name_prefix}#{resource.singular}", resource.member_path, show_action_options)
+        map.named_route("formatted_#{resource.name_prefix}#{resource.singular}", "#{resource.member_path}.:format", show_action_options)
 
         update_action_options = action_options_for("update", resource)
-        map_unnamed_routes(map, resource.member_path, update_action_options)
+        map.connect(resource.member_path, update_action_options)
+        map.connect("#{resource.member_path}.:format", update_action_options)
 
         destroy_action_options = action_options_for("destroy", resource)
-        map_unnamed_routes(map, resource.member_path, destroy_action_options)
-      end
-
-      def map_unnamed_routes(map, path_without_format, options)
-        map.connect(path_without_format, options)
-        map.connect("#{path_without_format}.:format", options)
-      end
-
-      def map_named_routes(map, name, path_without_format, options)
-        map.named_route(name, path_without_format, options)
-        map.named_route("formatted_#{name}", "#{path_without_format}.:format", options)
+        map.connect(resource.member_path, destroy_action_options)
+        map.connect("#{resource.member_path}.:format", destroy_action_options)
       end
 
       def add_conditions_for(conditions, method)
@@ -559,7 +555,6 @@ module ActionController
       def action_options_for(action, resource, method = nil)
         default_options = { :action => action.to_s }
         require_id = !resource.kind_of?(SingletonResource)
-
         case default_options[:action]
           when "index", "new"; default_options.merge(add_conditions_for(resource.conditions, method || :get)).merge(resource.requirements)
           when "create";       default_options.merge(add_conditions_for(resource.conditions, method || :post)).merge(resource.requirements)

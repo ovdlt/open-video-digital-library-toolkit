@@ -82,7 +82,6 @@ module ActiveRecord
       #   expected_options = { :conditions => { :colored => 'red' } }
       #   assert_equal expected_options, Shirt.colored('red').proxy_options
       def named_scope(name, options = {}, &block)
-        name = name.to_sym
         scopes[name] = lambda do |parent_scope, *args|
           Scope.new(parent_scope, case options
             when Hash
@@ -103,7 +102,7 @@ module ActiveRecord
       attr_reader :proxy_scope, :proxy_options
 
       [].methods.each do |m|
-        unless m =~ /(^__|^nil\?|^send|^object_id$|class|extend|find|count|sum|average|maximum|minimum|paginate|first|last|empty?|any?|respond_to?)/
+        unless m =~ /(^__|^nil\?|^send|^object_id$|class|extend|find|count|sum|average|maximum|minimum|paginate|first|last|empty?)/
           delegate m, :to => :proxy_found
         end
       end
@@ -140,18 +139,6 @@ module ActiveRecord
         @found ? @found.empty? : count.zero?
       end
 
-      def respond_to?(method)
-        super || @proxy_scope.respond_to?(method)
-      end
-
-      def any?
-        if block_given?
-          proxy_found.any? { |*block_args| yield(*block_args) }
-        else
-          !empty?
-        end
-      end
-
       protected
       def proxy_found
         @found || load_found
@@ -162,8 +149,7 @@ module ActiveRecord
         if scopes.include?(method)
           scopes[method].call(self, *args)
         else
-          with_scope :find => proxy_options, :create => proxy_options[:conditions].is_a?(Hash) ?  proxy_options[:conditions] : {} do
-            method = :new if method == :build
+          with_scope :find => proxy_options do
             proxy_scope.send(method, *args, &block)
           end
         end

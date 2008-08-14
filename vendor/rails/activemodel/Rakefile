@@ -1,24 +1,16 @@
 #!/usr/bin/env ruby
+$LOAD_PATH << File.join(File.dirname(__FILE__), 'vendor', 'rspec', 'lib')
 require 'rake'
-require 'rake/testtask'
+require 'spec/rake/spectask'
 require 'rake/rdoctask'
 
-task :default => :test
-
-Rake::TestTask.new do |t| 
-  t.libs << "test"
-  t.pattern = 'test/**/*_test.rb'
-  t.verbose = true
-  t.warning = true
-end
-
 # Generate the RDoc documentation
-Rake::RDocTask.new do |rdoc|
+Rake::RDocTask.new { |rdoc|
   rdoc.rdoc_dir = 'doc'
   rdoc.title    = "Active Model"
   rdoc.options << '--line-numbers' << '--inline-source' << '-A cattr_accessor=object'
   rdoc.options << '--charset' << 'utf-8'
-  rdoc.template = ENV['template'] ? "#{ENV['template']}.rb" : '../doc/template/horo'
+  rdoc.template = "#{ENV['template']}.rb" if ENV['template']
   rdoc.rdoc_files.include('README', 'CHANGES')
   rdoc.rdoc_files.include('lib/**/*.rb')
-end
+}

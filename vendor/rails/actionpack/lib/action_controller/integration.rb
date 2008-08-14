@@ -1,9 +1,8 @@
-require 'active_support/test_case'
-require 'action_controller/dispatcher'
-require 'action_controller/test_process'
-
 require 'stringio'
 require 'uri'
+
+require 'action_controller/dispatcher'
+require 'action_controller/test_process'
 
 module ActionController
   module Integration #:nodoc:
@@ -101,7 +100,7 @@ module ActionController
         @https = flag
       end
 
-      # Return +true+ if the session is mimicking a secure HTTPS request.
+      # Return +true+ if the session is mimicing a secure HTTPS request.
       #
       #   if session.https?
       #     ...
@@ -165,19 +164,11 @@ module ActionController
         status/100 == 3
       end
 
-      # Performs a GET request with the given parameters.
-      #
-      # - +path+: The URI (as a String) on which you want to perform a GET request.
-      # - +parameters+: The HTTP parameters that you want to pass. This may be +nil+,
-      #   a Hash, or a String that is appropriately encoded
-      #   (<tt>application/x-www-form-urlencoded</tt> or <tt>multipart/form-data</tt>).
-      # - +headers+: Additional HTTP headers to pass, as a Hash. The keys will
-      #   automatically be upcased, with the prefix 'HTTP_' added if needed.
-      #
-      # This method returns an AbstractResponse object, which one can use to inspect
-      # the details of the response. Furthermore, if this method was called from an
-      # ActionController::IntegrationTest object, then that object's <tt>@response</tt>
-      # instance variable will point to the same response object.
+      # Performs a GET request with the given parameters. The parameters may
+      # be +nil+, a Hash, or a string that is appropriately encoded
+      # (<tt>application/x-www-form-urlencoded</tt> or <tt>multipart/form-data</tt>).
+      # The headers should be a hash. The keys will automatically be upcased, with the
+      # prefix 'HTTP_' added if needed.
       #
       # You can also perform POST, PUT, DELETE, and HEAD requests with +post+,
       # +put+, +delete+, and +head+.
@@ -507,7 +498,7 @@ EOF
       # Delegate unhandled messages to the current session instance.
       def method_missing(sym, *args, &block)
         reset! unless @integration_session
-        returning @integration_session.__send__(sym, *args, &block) do
+        returning @integration_session.send!(sym, *args, &block) do
           copy_session_variables!
         end
       end
@@ -589,7 +580,7 @@ EOF
   #         end
   #       end
   #   end
-  class IntegrationTest < ActiveSupport::TestCase
+  class IntegrationTest < Test::Unit::TestCase
     include Integration::Runner
 
     # Work around a bug in test/unit caused by the default test being named
