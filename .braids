@@ -1,4 +1,11 @@
 --- 
+rails: 
+  local_branch: braid/git/rails/master
+  type: git
+  revision: 71528b1825ce5184b23d09f923cb72f4073ce8ed
+  branch: master
+  squash: true
+  remote: git://github.com/rails/rails.git
 vendor/plugins/rspec: 
   local_branch: braid/git/vendor/plugins/rspec/master
   type: git
@@ -13,13 +20,6 @@ vendor/plugins/rspec_rails:
   branch: master
   squash: true
   remote: git://github.com/dchelimsky/rspec-rails.git
-vendor/plugins/role_requirement: 
-  local_branch: braid/git/vendor/plugins/role-requirement/master
-  type: git
-  revision: 
-  branch: master
-  squash: true
-  remote: git://github.com/negonicrac/role_requirement.git
 vendor/gems/deprec: 
   local_branch: braid/git/vendor/gems/deprec/master
   type: git
@@ -27,6 +27,13 @@ vendor/gems/deprec:
   branch: master
   squash: true
   remote: git://github.com/mbailey/deprec.git
+vendor/plugins/role_requirement: 
+  local_branch: braid/git/vendor/plugins/role-requirement/master
+  type: git
+  revision: 
+  branch: master
+  squash: true
+  remote: git://github.com/negonicrac/role_requirement.git
 vendor/plugins/exception_notification: 
   local_branch: braid/git/vendor/plugins/exception-notification/master
   type: git
