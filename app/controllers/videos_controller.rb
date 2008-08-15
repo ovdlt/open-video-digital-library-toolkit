@@ -5,6 +5,7 @@ class VideosController < ApplicationController
   require_role "admin", :for_all_except => [ :index, :show ]
 
   def index
+
     @videos = nil
 
     # FIX: number of videos selected depends on the format
@@ -13,23 +14,60 @@ class VideosController < ApplicationController
       @current = @type = DescriptorType.find( params[:descriptor_type_id] )
     end
 
+    conditions = [ [], [] ]
+    joins = []
+    order = "videos.created_at desc"
+    options = { :page => params[:page] }
+    select = [ "distinct videos.*" ]
+    select = [ "videos.*" ]
+
+    @path = videos_path
+
+    if !params[:query].blank?
+      # FIX: check for safety ...
+      p = params[:query].gsub(/\\/, '\&\&').gsub(/'/, "''") 
+      p = ( p.split(/\s+/).map { |v| "+" + v } ).join(" ")
+      
+      select <<
+        "match ( vfs.title, vfs.sentence, vfs.year ) against ( '#{p}' ) as r"
+      joins << "video_fulltexts vfs"
+
+      conditions[0] <<
+        "(match ( vfs.title, vfs.sentence, vfs.year ) against ( '#{p}' in boolean mode ))"
+      conditions[0] << "(videos.id = vfs.video_id)"
+      order = "r desc"
+    end
+
     if params[:descriptor_id]
+
       @current = @descriptor = Descriptor.find( params[:descriptor_id] )
       @type = @descriptor.descriptor_type
+      @path = descriptor_videos_path( @descriptor )
 
-      @videos =
-        Video.paginate \
-          :all,
-          :page => params[:page],
-          :joins => "join descriptors_videos dvs on dvs.video_id = videos.id",
-          :conditions => [ "dvs.descriptor_id = ?", params[:descriptor_id] ]
-
-    else
-      @videos = Video.paginate :all,
-                                :page => params[:page],
-                                :order => "created_at DESC"
+      joins << "descriptors_videos dvs"
+      
+      conditions[0] << "(videos.id = dvs.video_id)"
+      
+      conditions[0] << "(dvs.descriptor_id = ?)"
+      conditions[1] << params[:descriptor_id]
+      
     end
     
+    options[:order] = order
+
+    if joins != []
+      options[:joins] = "join " + joins.join(", ")
+    end
+
+    if conditions != [ [], [] ]
+      options[:conditions] =
+        [ "(" + conditions[0].join("AND") + ")", conditions[1] ]
+    end
+
+    options[:select] = select.join(", ")
+
+    @videos = Video.paginate :all, options
+
   end
   
   # FIX: this isn't tested seperately; might go away

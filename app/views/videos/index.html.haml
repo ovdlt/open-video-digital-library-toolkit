@@ -3,7 +3,7 @@
   %h1 Search / Browse Results
 
   .form
-    - form_tag search_videos_path do
+    - form_tag @path, :method => :get do
       = text_field_tag :query, params[:query], :size => 60
       = submit_tag "Search"
 

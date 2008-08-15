@@ -24,8 +24,7 @@ ActionController::Routing::Routes.draw do |map|
                       :action => 'reset_password'
     
   map.resources :videos, :collection => { :recent => :get,
-                                          :manage => :get,
-                                          :search => :get },
+                                          :manage => :get },
                          :member => { :download => :get }
 
 

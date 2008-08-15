@@ -2,6 +2,29 @@ class Video < ActiveRecord::Base
 
   has_and_belongs_to_many :descriptors
 
+  after_save do |video|
+    begin
+      vf = VideoFulltext.find_by_video_id video.id
+      if vf == nil
+        vf = VideoFulltext.new :video_id => video.id
+      end
+      vf.title = video.title
+      vf.year = video.year
+      vf.sentence = video.sentence
+      vf.save
+    end
+  end
+
+  after_destroy do |video|
+    begin
+      vf = VideoFulltext.find_by_video_id video.id
+      if vf
+        vf.destroy
+        # connection.execute "delete from video_fulltexts where video_id = #{video.id}"
+      end
+    end
+  end
+
   VIDEO_DIR = ::VIDEO_DIR
   
   validates_presence_of :title
