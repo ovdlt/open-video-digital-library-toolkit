@@ -165,7 +165,7 @@ describe VideosController do
     end
     
     it "should should be a redirect to the index" do
-      response.should redirect_to(videos_path)
+      response.should redirect_to(video_path(@video.id))
     end
     
     it "should update the video" do
@@ -235,7 +235,7 @@ describe VideosController do
       descriptor_ids = [ 1, 3, 5 ].sort
       put :update, :id => @video.id,
                    :"descriptor" => descriptor_ids
-      response.should redirect_to(videos_path)
+      response.should redirect_to(video_path(@video.id))
       @video.reload.descriptors.map( &:id ).sort.should == descriptor_ids
       
     end
@@ -244,14 +244,14 @@ describe VideosController do
       
       put :update, :id => @video.id,
                     :"descriptor" => []
-      response.should redirect_to(videos_path)
+      response.should redirect_to(video_path(@video.id))
       @video.reload.descriptors.should be_empty
     end
 
     it "should allow all descriptors to be removed via a special field" do
       put :update, :id => @video.id,
                     :"descriptors_passed" => true
-      response.should redirect_to(videos_path)
+      response.should redirect_to(video_path(@video.id))
       @video.reload.descriptors.should be_empty
     end
 
