@@ -1,4 +1,7 @@
 #content
+  a
+    :border-bottom 0px none
+
   :clear both
   :font-size 1.1em
   :line-height 19px
@@ -20,19 +23,22 @@
 
   .block
     :border 2px solid
-    :padding 0.5em
+    :padding-left 0.5em
+    :padding-top .5em
+    :padding-bottom 0.5em
+    :padding-right .5em
     :border-bottom none
 
   .title
     :font-weight bold
     :line-height 1em
-    :background #00FFFF
+    :background #B0C4DE
 
   .footer
     :font-weight bold
     :font-size 0.8em
     :font-style italic
-    :background #00FFFF
+    :background #B0C4DE
     
     a:link, a:visited
       :text-decoration none
@@ -49,10 +55,9 @@
   .axes
     :font-size 0.8em
     :float left
-    :width 200px
-    :margin-right 1em
+    :width 20%
 
-    a:link, a:hover, a:visited, a:active
+    a
       :border-style none
       :text-decoration none
 
@@ -72,9 +77,15 @@
       li
         :margin-left 1em
 
+      li.all
+        :margin-left 2em
+        :font-size 0.9em
+        :font-style italic
+        :list-style none
+
   .videos .axis
     :float left
-    :width 650px
+    :width 100%
 
     a:link, a:hover, a:visited, a:active
       :border-style none
@@ -90,6 +101,10 @@
   .clear
     :clear both
 
+.category .videos
+  :float right          
+  :width 78%
+
 .category .videos .video
 
   :float left
@@ -98,7 +113,7 @@
   :line-height 1em
   :text-align center
   :margin-bottom 1em
-  :margin-right 1em
+  :margin-right 0em
 
   .title
     :background white
@@ -110,9 +125,10 @@
   .image
     :height 100px
     :width 120px
-    :border 1px solid
+    :border 0px none
     :margin-left auto
     :margin-right auto
+    :background #eee
 
 #content .list
   :float left
@@ -309,3 +325,9 @@
           .value
             :float right
             :width 70%
+
+.featured .videos
+  :width 100%
+
+.videos
+  :padding-top .5em

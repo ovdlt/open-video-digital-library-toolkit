@@ -69,11 +69,13 @@ class Video < ActiveRecord::Base
   end
 
   def descriptor_types
-    ( descriptors.map &:descriptor_type ).uniq
+    ( descriptors.map &:descriptor_type ).uniq.
+      sort { |a,b| a.priority - b.priority }
   end
 
   def descriptors_by_type type
-    descriptors.select { |d| d.descriptor_type == type }
+    descriptors.select { |d| d.descriptor_type == type }.
+      sort { |a,b| a.priority - b.priority }
   end
 
   private

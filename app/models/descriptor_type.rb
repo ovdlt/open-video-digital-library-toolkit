@@ -6,7 +6,11 @@ class DescriptorType < ActiveRecord::Base
   validates_uniqueness_of :title
 
   def self.each &block
-    ( self.find :all ).each { |type| yield type }
+    ( self.find :all, :order => "priority asc" ).each { |type| yield type }
+  end
+
+  def descriptors_sorted
+    descriptors.sort { |a,b| a.priority - b.priority }
   end
 
 end

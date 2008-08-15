@@ -3,7 +3,10 @@
     .axis
       .title= type.title
       %ul
-        - type.descriptors.each do |descriptor|
+        - type.descriptors_sorted.each do |descriptor|
           %li
             = link_to descriptor.text, descriptor_videos_path( descriptor )
             %span.count= "[#{descriptor.videos.size}]"
+        %li.all
+          = link_to "All #{type.title.pluralize} >>", |
+                    descriptor_type_videos_path( type ) |

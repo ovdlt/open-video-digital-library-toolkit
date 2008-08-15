@@ -1,12 +1,12 @@
-.category
+.category.featured
   .title.block Recent Videos
   .content.block
     .videos
-      - Video.recent(4).each do |video|
+      - Video.recent(5).each do |video|
         .video
-          .image
+          .image= link_to "image", video_path( video.id )
           .text
-            .title= h video.title
+            .title= link_to h(video.title), video_path( video.id )
             .description= h video.sentence
     .clear
   .footer.block.last= link_to "See more recent videos >>", recent_videos_path

@@ -3,12 +3,15 @@ class CreateDescriptors < ActiveRecord::Migration
     create_table :descriptors do |t|
       t.column :descriptor_type_id, :int, :null => false
       t.column :text, :string, :null => false
+      t.column :priority, :int
       t.timestamps
     end
 
     add_index :descriptors,
               [ :descriptor_type_id, :text ],
               :unique => true
+
+    add_index :descriptors, [ :priority, :text ]
 
   end
 
