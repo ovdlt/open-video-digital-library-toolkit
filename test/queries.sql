@@ -66,3 +66,8 @@ SELECT count(distinct videos.*, match ( vfs.title, vfs.sentence, vfs.year ) agai
 
 select video_id, match ( year ) against ( "1929" ) from video_fulltexts;
 
+SELECT videos.*, match ( vfs.title, vfs.sentence, vfs.year ) against ( 'et' ) as r FROM `videos` join video_fulltexts vfs, descriptors_videos dvs WHERE (((match ( vfs.title, vfs.sentence, vfs.year ) against ( '+et' in boolean mode ))AND(videos.id = vfs.video_id)AND(videos.id = dvs.video_id)AND(dvs.descriptor_id = '2'))) ORDER BY r desc LIMIT 0, 10
+
+select video_id, match ( title, sentence, year ) against ( "1929" ) from video_fulltexts;
+
+select video_id from video_fulltexts where  match ( title, sentence, year ) against ( "et" );

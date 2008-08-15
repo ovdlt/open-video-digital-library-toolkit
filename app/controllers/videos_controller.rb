@@ -25,12 +25,14 @@ class VideosController < ApplicationController
 
     if !params[:query].blank?
       # FIX: check for safety ...
+
       p = params[:query].gsub(/\\/, '\&\&').gsub(/'/, "''") 
-      p = ( p.split(/\s+/).map { |v| "+" + v } ).join(" ")
       
       select <<
         "match ( vfs.title, vfs.sentence, vfs.year ) against ( '#{p}' ) as r"
       joins << "video_fulltexts vfs"
+
+      p = ( p.split(/\s+/).map { |v| "+" + v } ).join(" ")
 
       conditions[0] <<
         "(match ( vfs.title, vfs.sentence, vfs.year ) against ( '#{p}' in boolean mode ))"
