@@ -4,6 +4,14 @@ class VideosController < ApplicationController
   
   require_role "admin", :for_all_except => [ :index, :show ]
 
+  def show
+    @video = Video.find( params[:id] ) if params[:id]
+    if !@video
+      render_missing
+      return
+    end
+  end
+
   def index
 
     @videos = nil
@@ -128,7 +136,7 @@ class VideosController < ApplicationController
 
     if @video.update_attributes(params[:video])
       flash[:notice] = "#{@video.filename} was updated"
-      redirect_to videos_path
+      redirect_to video_path( @video )
     else
       render :action => 'form'
     end

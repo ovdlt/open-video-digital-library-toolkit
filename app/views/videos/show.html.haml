@@ -1,0 +1,76 @@
+- video ||= @video
+.details
+
+  %h1.title= h video.title
+
+  .body
+
+    .image
+    .sentence= video.sentence
+
+    .navigate
+
+      .view.first.current Details
+      .view Fast Forward
+      .view Excerpt
+      .view.last Storyboard
+
+      .clear
+
+    .downloads
+
+      .legend Download
+
+      .list
+
+        / - video.files.each do |file|
+
+        .download
+
+          &diams;
+          .format QuickTime
+          &loz;
+          .size 10.80MB
+
+        .download
+
+          &diams;
+          .format MPEG-4
+          &loz;
+          .size 17.22MB
+
+      .clear
+
+    .details
+
+      .legend Video Details
+
+      .list
+
+        - video.descriptor_types.each do |type|
+
+          .detail
+            - descriptors = video.descriptors_by_type( type )
+            .type= ( descriptors.size > 1 ? type.title.pluralize : |
+                                             type.title ) + ":" |
+            - descriptors.each do |descriptor|
+              .value= descriptor.text
+            .clear
+
+    .clear
+
+.sidebar
+  .entry
+    .title Related Videos
+    %ul
+      %li Something here
+  .entry
+    .title Tools and Services
+    %ul
+      - if current_user and current_user.has_role? "admin"
+        %li= link_to "Edit catalog data", edit_video_path( video )
+      %li Save this video to a playlist
+      %li Print this page
+      %li E-mail this video page
+
+.clear

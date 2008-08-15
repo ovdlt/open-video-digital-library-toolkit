@@ -68,6 +68,14 @@ class Video < ActiveRecord::Base
     10
   end
 
+  def descriptor_types
+    ( descriptors.map &:descriptor_type ).uniq
+  end
+
+  def descriptors_by_type type
+    descriptors.select { |d| d.descriptor_type == type }
+  end
+
   private
 
   def must_have_valid_path
