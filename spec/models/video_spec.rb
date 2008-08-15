@@ -158,3 +158,53 @@ describe Video, ".recent" do
   end
 
 end
+
+describe Video do
+
+  describe "fulltext" do
+
+    before(:each) do
+      @string = "just_for_this_test"
+      @video = Factory.build :video, :sentence => @string
+    end
+
+    it "should insert into FT table on save" do
+      @video.id.should be_nil
+      ( Video.search :query => @string ).should be_empty
+      @video.save!
+      ( Video.search :query => @string )[0].should == @video
+    end
+
+    it "should delete from FT table on destroy" do
+      @video.save!
+      ( Video.search :query => @string )[0].should == @video
+      @video.destroy
+      ( Video.search :query => @string ).should be_empty
+    end
+
+    it "should update FT table on update" do
+      @video.save!
+      ( Video.search :query => @string )[0].should == @video
+      @new_string = "isnt_the_same"
+      @video.sentence = @new_string
+      @video.save!
+      ( Video.search :query => @string ).should be_empty
+      ( Video.search :query => @new_string )[0].should == @video
+    end
+
+    it "should normall not return a pagination object" do
+      @video.save!
+      ( WillPaginate::Collection ===
+        ( Video.search :query => @string ) ).should be_false
+    end
+
+    it "should normall not return a pagination object" do
+      @video.save!
+      ( WillPaginate::Collection ===
+        ( Video.search :query => @string, :method => :paginate ) ).
+        should be_true
+    end
+
+  end
+
+end
