@@ -2,6 +2,17 @@ class Video < ActiveRecord::Base
 
   has_and_belongs_to_many :descriptors
 
+  validates_presence_of :title
+  validates_presence_of :sentence
+  validates_uniqueness_of :filename
+  validate :must_have_valid_path
+  validate :must_exist_on_disk
+  validate :descriptors_must_be_unique
+  
+  before_save do |video|
+    video.size ||= File.size(video.path)
+  end
+  
   after_save do |video|
     begin
       vf = VideoFulltext.find_by_video_id video.id
@@ -20,28 +31,16 @@ class Video < ActiveRecord::Base
       vf = VideoFulltext.find_by_video_id video.id
       if vf
         vf.destroy
-        # connection.execute "delete from video_fulltexts where video_id = #{video.id}"
       end
     end
   end
 
   VIDEO_DIR = ::VIDEO_DIR
   
-  validates_presence_of :title
-  validates_presence_of :sentence
-  validates_uniqueness_of :filename
-  validate :must_have_valid_path
-  validate :must_exist_on_disk
-  validate :descriptors_must_be_unique
-  
   def self.list_uncataloged_files
     list = Dir.glob("#{VIDEO_DIR}/*").map { |filename| File.new(filename) }
     list.reject! {|file| Video.exists?(:filename => File.basename(file.path)) }
     list.partition { |file| File.directory?(file) }.flatten!
-  end
-  
-  def before_save
-    self.size ||= File.size(path)
   end
   
   def path
@@ -56,12 +55,8 @@ class Video < ActiveRecord::Base
     return false
   end
   
-  def self.recent number = nil
-    options = { :order => "created_at" }
-    if number
-      options[:limit] = number
-    end
-    self.find :all, options
+  def self.recent
+    self.find :all, :order => "created_at"
   end
 
   def self.per_page

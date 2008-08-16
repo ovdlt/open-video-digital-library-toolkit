@@ -152,11 +152,9 @@ end
 
 describe Video, ".recent" do
   fixtures :videos
-
   it "should return the most recent video (shortcut for .find ...)" do
     Video.recent[0].should == ( Video.find :first, :order => "created_at" )
   end
-
 end
 
 describe Video do
@@ -192,19 +190,54 @@ describe Video do
       ( Video.search :query => @new_string )[0].should == @video
     end
 
-    it "should normall not return a pagination object" do
+    it "should normal not return a pagination object" do
       @video.save!
       ( WillPaginate::Collection ===
         ( Video.search :query => @string ) ).should be_false
     end
 
-    it "should normall not return a pagination object" do
+    it "should normal not return a pagination object" do
       @video.save!
       ( WillPaginate::Collection ===
         ( Video.search :query => @string, :method => :paginate ) ).
         should be_true
     end
 
+  end
+
+  describe "descriptors/type recall and sorting" do
+
+    before(:each) do
+      @video = Factory(:video)
+      @dts = [ DescriptorType.create!( :title => "a", :priority => 2 ),
+               DescriptorType.create!( :title => "b", :priority => 1 ),
+               DescriptorType.create!( :title => "c", :priority => 3 ),
+               DescriptorType.create!( :title => "d", :priority => 4 ) ]
+      @dss = [ Descriptor.create!( :descriptor_type => @dts[0],
+                                    :text => "aa", :priority => 2 ),
+               Descriptor.create!( :descriptor_type => @dts[0],
+                                    :text => "ab", :priority => 1 ),
+               Descriptor.create!( :descriptor_type => @dts[0],
+                                    :text => "ac", :priority => 3 ),
+               Descriptor.create!( :descriptor_type => @dts[1],
+                                    :text => "ba", :priority => 1 ),
+               Descriptor.create!( :descriptor_type => @dts[2],
+                                    :text => "ba", :priority => 1 ) ]
+      @video.descriptors = @dss
+      @video.save!
+    end
+
+    it "should return all the types for a video in pri order" do
+      @video.descriptor_types.should == [ @dts[1], @dts[0], @dts[2] ]
+    end
+    
+    it "should return all the descriptors for a video in pri order" do
+      @video.descriptors_by_type( @dts[0] ).
+        should == [ @dss[1], @dss[0], @dss[2] ]
+      @video.descriptors_by_type( @dts[1] ).should == [ @dss[3] ]
+      @video.descriptors_by_type( @dts[2] ).should == [ @dss[4] ]
+    end
+    
   end
 
 end
