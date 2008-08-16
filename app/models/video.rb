@@ -55,8 +55,12 @@ class Video < ActiveRecord::Base
     return false
   end
   
-  def self.recent
-    self.find :all, :order => "created_at"
+  def self.recent number = nil
+    options = { :order => "created_at" }
+    if number
+      options[:limit] = number
+    end
+    self.find :all, options
   end
 
   def self.per_page
