@@ -1,9 +1,9 @@
-.list
+.hitlist
 
   %h1 Search / Browse Results
 
   .form
-    - form_tag @path, :method => :get do
+    - form_tag @path.call({}), :method => :get do
       = text_field_tag :query, params[:query], :size => 60
       = submit_tag "Search"
 
@@ -12,25 +12,18 @@
 
   .navigate
 
-    .view.current List View
-    .view Tile View
-    .view Image View  
+    .view.first
+      %div{current(:list)}= link_to_format :list
+    .view
+      %div{current(:tile)}= link_to_format :tile
+    .view
+      %div{current(:image)}= link_to_format :image
     .clear
 
-  .videos
-    - @videos.each do |video|
-      .video
-        .image
-        .title=h video.title
-        - if !video.year.blank?
-          .year= "(#{h video.year})"
-        .sentence=h video.sentence
-        .menu
-          = link_to "View video details", video_path( video )
-          &nbsp;&bull;&nbsp;
-          = link_to "Add to favorites", user_favorites_path( video )
-          &nbsp;&bull;&nbsp;
-          = link_to "Download", download_video_path( video )
+  %div{:class => "videos #{page_format.to_s}"}
+    = render :partial => page_format.to_s, :collection => @videos
+
+    .clear
 
   .pagination
     = will_paginate @videos

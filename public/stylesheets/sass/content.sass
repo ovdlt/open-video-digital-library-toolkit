@@ -130,7 +130,7 @@
     :margin-right auto
     :background #eee
 
-#content .list
+#content .hitlist
   :float left
   :width 68%
   :margin-top 1em
@@ -158,7 +158,75 @@
     a
       :border 0 none
 
-  .videos
+  .videos.list
+
+    :border-left 2px solid black
+    :border-right 2px solid black
+    :border-top 2px solid black
+    :border-bottom 1px solid black
+
+    .video
+
+      :border-bottom 1px solid black
+
+      :padding 1em
+
+      .image
+        :float left
+        :width 120px
+        :height 90px
+        :background #eee
+        :margin-right 1em
+
+      .title
+        :display inline
+        :font-size 1.2em
+        :font-weight bold
+      .year
+        :display inline
+        :font-size 1.2em
+        :font-weight bold
+
+  .videos.tile
+
+    :border-left 2px solid black
+    :border-right 2px solid black
+    :border-top 2px solid black
+    :border-bottom 1px solid black
+    :padding-top 1em
+    :padding-left 4px
+
+    .video
+
+      :float left
+      :width 148px
+      :height 160px
+      :font-size .8em
+      :line-height 1.1em
+
+      .text
+        :text-align center
+
+      li
+        :margin-left 2em
+
+      .image
+        :width 120px
+        :height 90px
+        :background #eee
+        :margin-left auto
+        :margin-right auto
+        :margin-top .2em
+        :margin-bottom .2em
+
+      .title
+        :display inline
+        :font-weight bold
+      .year
+        :display inline
+        :font-weight bold
+
+  .videos.listy
 
     :border-left 2px solid black
     :border-right 2px solid black
@@ -278,7 +346,7 @@
         :font-size 1.5em
         :margin 1em
 
-      .list
+      .download_list
         :margin-top 1em
         :margin-bottom 1em
 
@@ -305,7 +373,198 @@
         :border-bottom 1px dashed black
         :padding-bottom .2em
 
-      .list
+      .detail_list
+
+        :margin-left 1em
+        :margin-top 0
+        :margin-bottom 1em
+        :width 100%
+
+        .detail
+          :font-size 1.2em
+          :margin-top 1em
+
+          .type
+            :font-weight bold
+            :float left
+            :width 30%
+
+          .value
+            :float right
+            :width 70%
+
+  .videos.tile
+
+    :border-left 2px solid black
+    :border-right 2px solid black
+    :border-top 2px solid black
+    :border-bottom 1px solid black
+
+    .video
+
+      :border-bottom 1px solid black
+
+      :padding 1em
+
+      .image
+        :float left
+        :width 120px
+        :height 90px
+        :background #eee
+        :margin-right 1em
+
+      .title
+        :display inline
+        :font-size 11.2em
+        :font-weight bold
+      .year
+        :display inline
+        :font-size 1.2em
+        :font-weight bold
+
+  .videos.listy
+
+    .video
+
+      :border-bottom 1px solid black
+
+      :padding 1em
+
+      .image
+        :float left
+        :width 120px
+        :height 90px
+        :background #eee
+        :margin-right 1em
+
+      .title
+        :display inline
+        :font-size 1.2em
+        :font-weight bold
+      .year
+        :display inline
+        :font-size 1.2em
+        :font-weight bold
+
+#content .sidebar
+
+  :float right
+  :width 30%
+  :margin-top 1em
+  :font-size 1.6em
+
+  a
+    :border 0px none
+
+  .entry
+
+    .title
+      :font-weight bold
+      :padding-bottom .3em
+      :border-bottom 2px solid #ccc
+
+    ul
+      :margin-bottom 2em
+
+      li
+        :margin-top .2em
+        :margin-left 1em
+
+
+#content .details
+  :float left
+  :width 68%
+  :margin-top 1em
+
+  .title
+    :background #ddd
+    :padding .5em .5em .5em .5em
+
+  .body
+
+    :border-left 2px solid black
+    :border-right 2px solid black
+    :border-top 2px solid black
+    :border-bottom 1px solid black
+
+    .image
+      :float left
+      :width 200px
+      :height 150px
+      :background #eee
+      :margin 1em
+
+    .sentence
+      :margin 1em
+      :font-size 1.4em
+
+    .navigate
+
+      :clear both
+
+      :margin-left auto
+      :margin-right auto
+      :width 657px
+
+      .view
+        :border-right 1px solid #aaa
+        :border-top 1px solid #aaa
+        :border-bottom 1px solid #aaa
+        :padding-left .5em
+        :padding-right .5em
+      
+      .view.first
+        :border-left 0px none
+    
+      .view.last
+        :border-right 0px none
+    
+      .view.current
+        :border-bottom 1px none
+
+    .downloads
+
+      :border-top 2px solid #888
+      :border-bottom 2px solid #888
+      :margin-top 1em
+      :margin-bottom 1em
+      :background #ddd
+    
+      .legend
+        :float left
+        :width 20%
+        :font-weight bold
+        :font-size 1.5em
+        :margin 1em
+
+      .download_list
+        :margin-top 1em
+        :margin-bottom 1em
+
+        .download
+          :float right
+          :font-size 1.2em
+          :width 100%
+
+          .format
+            :display inline
+
+          .size
+            :display inline
+        
+    .details
+
+      :margin-left 1em
+      :margin-top 0
+      :width 90%
+
+      .legend
+        :font-weight bold
+        :font-size 1.4em
+        :border-bottom 1px dashed black
+        :padding-bottom .2em
+
+      .detail_list
 
         :margin-left 1em
         :margin-top 0

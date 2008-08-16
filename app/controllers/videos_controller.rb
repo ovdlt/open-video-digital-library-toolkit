@@ -12,6 +12,12 @@ class VideosController < ApplicationController
     end
   end
 
+  def per_page
+    return 10 if params[:list_format].nil?
+    return 16 if params[:list_format] == "tile"
+    return 36 if params[:list_format] == "image"
+  end
+
   def index
 
     # FIX: number of videos selected depends on the format
@@ -20,16 +26,19 @@ class VideosController < ApplicationController
       @current = @type = DescriptorType.find( params[:descriptor_type_id] )
     end
 
-    @path = videos_path
+    @path = lambda { |opts| videos_path( opts ) }
     
     if params[:descriptor_id]
       @current = @descriptor = Descriptor.find( params[:descriptor_id] )
       @type = @descriptor.descriptor_type
-      @path = descriptor_videos_path( @descriptor )
+      @path = lambda do |opts|
+        descriptor_videos_path( @descriptor, opts )
+      end
     end
     
     @videos = Video.search :method => :paginate,
                             :page => params[:page],
+                            :per_page => per_page,
                             :query => params[:query],
                             :descriptor_id => params[:descriptor_id]
 
