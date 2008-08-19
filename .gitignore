@@ -3,7 +3,6 @@
 .DS_Store
 /doc/api
 /doc/app
-/db/schema.rb
 /config/initializers/site_keys.rb
 /config/database.yml
 /public/stylesheets/*.css
