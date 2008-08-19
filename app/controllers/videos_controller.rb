@@ -10,6 +10,8 @@ class VideosController < ApplicationController
       render_missing
       return
     end
+    @path = lambda { |opts| opts == {} ? video_path( @video ) \
+                                       : video_path( @video, opts ) }
   end
 
   def per_page

@@ -11,13 +11,13 @@
     .navigate
 
       .view.first
-        .current Details
+        %div{current(:details)}= link_to_details :details
       .view
-        %div Fast Forward
+        %div{current(:fastforward)}= link_to_details :fastforward
       .view
-        %div Excerpt
+        %div{current(:excerpt)}= link_to_details :excerpt
       .view.last
-        %div Storyboard
+        %div{current(:storyboard)}= link_to_details :storyboard
 
       .clear
 

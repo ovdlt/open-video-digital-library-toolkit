@@ -281,117 +281,6 @@
 
 
 #content .details
-  :float left
-  :width 68%
-  :margin-top 1em
-
-  .title
-    :background #ddd
-    :padding .5em .5em .5em .5em
-
-  .body
-
-    :border-left 2px solid black
-    :border-right 2px solid black
-    :border-top 2px solid black
-    :border-bottom 1px solid black
-
-    .image
-      :float left
-      :width 200px
-      :height 150px
-      :background #eee
-      :margin 1em
-
-    .sentence
-      :margin 1em
-      :font-size 1.4em
-
-    .navigate
-
-      :clear both
-
-      :margin-left auto
-      :margin-right auto
-      :width 657px
-
-      .view
-        :border-right 1px solid #aaa
-        :border-top 1px solid #aaa
-        :border-bottom 1px solid #aaa
-        :padding-left .5em
-        :padding-right .5em
-      
-      .view.first
-        :border-left 0px none
-    
-      .view.last
-        :border-right 0px none
-    
-      .view.current
-        :border-bottom 1px none
-
-    .downloads
-
-      :border-top 2px solid #888
-      :border-bottom 2px solid #888
-      :margin-top 1em
-      :margin-bottom 1em
-      :background #ddd
-    
-      .legend
-        :float left
-        :width 20%
-        :font-weight bold
-        :font-size 1.5em
-        :margin 1em
-
-      .download_list
-        :margin-top 1em
-        :margin-bottom 1em
-
-        .download
-          :float right
-          :font-size 1.2em
-          :width 100%
-
-          .format
-            :display inline
-
-          .size
-            :display inline
-        
-    .details
-
-      :margin-left 1em
-      :margin-top 0
-      :width 90%
-
-      .legend
-        :font-weight bold
-        :font-size 1.4em
-        :border-bottom 1px dashed black
-        :padding-bottom .2em
-
-      .detail_list
-
-        :margin-left 1em
-        :margin-top 0
-        :margin-bottom 1em
-        :width 100%
-
-        .detail
-          :font-size 1.2em
-          :margin-top 1em
-
-          .type
-            :font-weight bold
-            :float left
-            :width 30%
-
-          .value
-            :float right
-            :width 70%
 
   .videos.tile
 
@@ -502,25 +391,30 @@
 
       :clear both
 
-      :margin-left auto
-      :margin-right auto
-      :width 657px
+      :width 100%
 
       .view
-        :border-right 1px solid #aaa
-        :border-top 1px solid #aaa
-        :border-bottom 1px solid #aaa
-        :padding-left .5em
-        :padding-right .5em
+        div
+          :width 131px
+          :border-right 1px solid #aaa
+          :border-top 1px solid #aaa
+          :border-bottom 1px solid #aaa
+          :padding-left 10px
+          :padding-right 10px
       
       .view.first
-        :border-left 0px none
+        div
+          :border-left 0px none
     
       .view.last
-        :border-right 0px none
+        div
+          :padding-right 11px
+          :margin-right 0px
+          :border-right 0px none
     
       .view.current
-        :border-bottom 1px none
+        div
+          :border-bottom 1px none
 
     .downloads
 
@@ -544,7 +438,7 @@
         .download
           :float right
           :font-size 1.2em
-          :width 100%
+          :width 70%
 
           .format
             :display inline
@@ -564,7 +458,7 @@
         :border-bottom 1px dashed black
         :padding-bottom .2em
 
-      .detail_list
+      .details_list
 
         :margin-left 1em
         :margin-top 0

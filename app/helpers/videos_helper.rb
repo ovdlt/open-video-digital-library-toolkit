@@ -15,6 +15,10 @@ module VideosHelper
     ( params[:list_format] || :list ).to_sym
   end
 
+  def details_format
+    ( params[:details_format] || :details ).to_sym
+  end
+
   def current format
     if format == page_format
       {:class => "current"}
@@ -28,8 +32,18 @@ module VideosHelper
     if format == page_format
       "#{format.to_s.capitalize} View"
     else
-      o = { :list_format => format }
       link_to s, @path.call( format == :list ? {} : { :list_format => format })
+    end
+  end
+
+  def link_to_details details
+    s = "#{details.to_s.capitalize}"
+    if details == details_format
+      "#{details.to_s.capitalize}"
+    else
+      link_to s, @path.call( details == :details ?
+                                              {} :
+                                              { :details_format => details })
     end
   end
 
