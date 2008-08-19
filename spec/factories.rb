@@ -18,6 +18,7 @@ Factory.define :video do |v|
     end        
     if rand < 0.7
       v += " seventy"
+      v += " seven"
     end        
     v
   end  
