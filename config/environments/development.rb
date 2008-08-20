@@ -17,4 +17,4 @@ config.action_controller.perform_caching             = false
 
 # Don't care if the mailer can't send
 config.action_mailer.raise_delivery_errors = false
-VIDEO_DIR = File.join(RAILS_ROOT, 'videos')
+ASSET_DIR = File.join(RAILS_ROOT, 'assets')

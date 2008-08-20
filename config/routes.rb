@@ -25,7 +25,9 @@ ActionController::Routing::Routes.draw do |map|
     
   map.resources :videos, :collection => { :recent => :get,
                                           :manage => :get },
-                         :member => { :download => :get }
+                         :member => { :download => :get } do |videos|
+    videos.resources :assets
+  end
 
 
   map.resources :descriptors do |descriptor|

@@ -58,7 +58,7 @@ describe VideosController do
       assigns[:video].should_not be_nil
       assigns[:video].should be_an_instance_of(Video)
       assigns[:video].should be_new_record
-      assigns[:video].filename.should == @filename
+      assigns[:video].assets[0].uri.should == "file:///" + @filename
     end
   end
   
@@ -74,7 +74,7 @@ describe VideosController do
   
   describe "#create with valid params" do
     before(:all) do
-      create_temp_video("cute_with_chris.fla")
+      create_temp_asset("cute_with_chris.fla")
     end
     
     before(:each) do
@@ -121,7 +121,7 @@ describe VideosController do
   
   describe "#create with invalid params" do
     before(:all) do
-      create_temp_video("cute_with_chris.fla")
+      create_temp_asset("cute_with_chris.fla")
     end
     
     def do_post
@@ -203,7 +203,7 @@ describe VideosController do
     it "should not allow the file name to be changed" do
       login_as_admin
       video = Factory(:video)
-      create_temp_video("new_filename")
+      create_temp_asset("new_filename")
       put :update, :id => video.id, :video => {:filename => "new_filename"}
       
       response.code.should == "400"
@@ -213,7 +213,6 @@ describe VideosController do
       login_as_admin
       video = Factory(:video)
       put :update, :id => video.id, :video => {:filename => nil}
-      
       response.code.should == "400"
     end
   end

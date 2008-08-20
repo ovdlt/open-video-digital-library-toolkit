@@ -23,4 +23,4 @@ config.action_mailer.delivery_method = :test
 
 require 'ruby-debug'
 
-VIDEO_DIR = File.join(RAILS_ROOT, 'spec/test_videos')
+ASSET_DIR = File.join(RAILS_ROOT, 'spec/test_assets')

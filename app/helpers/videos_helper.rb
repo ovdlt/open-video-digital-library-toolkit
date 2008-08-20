@@ -5,7 +5,7 @@ module VideosHelper
   end
   
   def link_to_add_video(file)
-    unless Video.exists?(:filename => File.basename(file.path)) ||
+    unless Asset.exists?(:uri => "file:///" + File.basename(file.path)) ||
         file.stat.directory?
       link_to("add", new_video_path(:filename => File.basename(file.path)))
     end

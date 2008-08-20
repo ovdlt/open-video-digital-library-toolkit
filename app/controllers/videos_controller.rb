@@ -49,12 +49,14 @@ class VideosController < ApplicationController
   # FIX: this isn't tested seperately; might go away
   def manage
     index
-    @files  = Video.list_uncataloged_files
+    @files  = Asset.list_uncataloged_files
   end
 
   def new
-    @video = Video.new(:filename => params[:filename])
-    if @video.valid_path?
+    @video = Video.new
+    @asset = Asset.new(:uri => "file:///" + params[:filename])
+    if @asset.valid_path?
+      @video.assets << @asset
       render :action => 'form'
     else
       render_missing
@@ -62,9 +64,23 @@ class VideosController < ApplicationController
   end
   
   def create
-    @video = Video.new(:filename => params[:video][:filename], :title => params[:video][:title], :sentence => params[:video][:sentence])
+    @video = Video.new(:title => params[:video][:title],
+                       :sentence => params[:video][:sentence])
+    @video.assets << Asset.new(:uri => "file:///" + params[:video][:filename])
+
+    if params["descriptor"]
+      @video.descriptors = params["descriptor"].map do |d|
+        begin
+          Descriptor.find d.to_i
+        rescue ActiveRecord::RecordNotFound
+          render_bad_request 
+          return
+        end
+      end
+    end
+
     if @video.save
-      flash[:notice] = "#{@video.filename} was added"
+      flash[:notice] = "#{@video.title} was added"
       redirect_to videos_path
     else
       render :action => 'form'
@@ -77,7 +93,10 @@ class VideosController < ApplicationController
   end
   
   def update
-    if params[:video] && params[:video].include?(:filename) && (params[:video][:filename] != @video.filename)
+    if params[:video] &&
+       params[:video].include?(:filename) &&
+       ( params[:video][:filename].nil? or
+         ( "file:///" + params[:video][:filename] != @video.assets[0].uri ) )
       render_bad_request 
       return
     end
@@ -101,7 +120,7 @@ class VideosController < ApplicationController
     end
 
     if @video.update_attributes(params[:video])
-      flash[:notice] = "#{@video.filename} was updated"
+      flash[:notice] = "#{@video.title} was updated"
       redirect_to video_path( @video )
     else
       render :action => 'form'

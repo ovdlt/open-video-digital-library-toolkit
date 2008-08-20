@@ -27,21 +27,16 @@
 
       .download_list
 
-        / - video.files.each do |file|
+        - video.assets.each do |asset|
+        
+        = debug( video.assets )
 
-        .download
+          .download
 
-          &diams;
-          .format QuickTime
-          &loz;
-          .size 10.80MB
-
-        .download
-
-          &diams;
-          .format MPEG-4
-          &loz;
-          .size 17.22MB
+            &diams;
+            .format= asset.asset_format
+            &loz;
+            .size= number_to_human_size(asset.size)
 
       .clear
 

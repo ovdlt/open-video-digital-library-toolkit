@@ -5,7 +5,7 @@
     %dl
       %dt
         %label Filename:
-      %dd=h @video.filename
+      %dd=h @video.assets[0].filename
     
       %dt= f.label :title, "Title:"
       %dd= f.text_field :title
@@ -18,5 +18,6 @@
 
 
   = hidden_field_tag :descriptors_passed
-  = hidden_field :video, :filename
+  = hidden_field_tag "video_filename", @video.assets[0].filename, |
+                     :name => "video[filename]" |
   = f.submit "Save Video"

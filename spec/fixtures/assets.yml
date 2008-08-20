@@ -1,0 +1,14 @@
+asset1:
+  id: 1
+  uri: file:///1200%20H.mov
+  size: <%= 10.22.megabytes %>
+
+asset2:
+  id: 2
+  uri: file:///1461.0003%20H.mov
+  size: <%= 84.79.megabytes %>
+
+asset3:
+  id: 3
+  uri: file:///1488.0020%20H.mov
+  size: <%= 11.17.megabytes %>

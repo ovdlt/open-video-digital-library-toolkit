@@ -5,12 +5,8 @@ class CreateVideos < ActiveRecord::Migration
       t.string  :title,    :limit => 50, :null => false
       t.string  :year,     :limit => 4, :null => true
       t.string  :sentence, :limit => 400
-      t.string  :filename, :limit => 100, :null => false
-      t.integer :size,     :null => false
       t.timestamps
     end
-
-    add_index :videos, :filename, :unique => true
 
     create_table :video_fulltexts do |t|
       t.integer :video_id, :null => false

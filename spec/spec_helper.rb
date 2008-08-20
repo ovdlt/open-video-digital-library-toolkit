@@ -2,6 +2,7 @@ ENV["RAILS_ENV"] = "test"
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 require File.expand_path(File.dirname(__FILE__) + '/factories')
 require File.expand_path(File.dirname(__FILE__) + '/video_helper')
+require File.expand_path(File.dirname(__FILE__) + '/asset_helper')
 require 'spec'
 require 'spec/rails'
 
@@ -15,7 +16,7 @@ Spec::Runner.configure do |config|
   
   config.global_fixtures = :all
   
-  config.after(:suite) { delete_temp_videos }
+  config.after(:suite) { delete_temp_assets }
 end
 
 include AuthenticatedSystem

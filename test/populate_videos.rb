@@ -1,11 +1,15 @@
 #!/usr/bin/env ruby
 unless $0 =~ /runner/
-  system("#{File.join(File.dirname(__FILE__),"..","script")}/runner", __FILE__, *ARGV )
+  system("#{File.join(File.dirname(__FILE__),"..","script")}/runner",
+         __FILE__, *ARGV )
   exit 0
 end
 
 require File.expand_path(File.join(File.dirname($0),"..","spec","factories"))
-require File.expand_path(File.join(File.dirname($0),"..","spec","video_helper"))
+require File.expand_path(File.join(File.dirname($0),"..","spec",
+                                   "video_helper"))
+require File.expand_path(File.join(File.dirname($0),"..","spec",
+                                   "asset_helper"))
 
 types = DescriptorType.find( :all ).to_a
 values = []
