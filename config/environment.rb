@@ -74,3 +74,10 @@ end
 ExceptionNotifier.exception_recipients = %w(smparkes@smparkes.net)
 ExceptionNotifier.sender_address = %("OVDLT Error" <ovdlt@ovdlt.org>)
 ExceptionNotifier.email_prefix = "[OVDLT] "
+
+ActionView::Helpers::AssetTagHelper.
+  register_javascript_include_default "jquery"
+ActionView::Helpers::AssetTagHelper.
+  register_javascript_include_default "jquery.form"
+ActionView::Helpers::AssetTagHelper.
+  register_javascript_include_default "jquery.ui.all"

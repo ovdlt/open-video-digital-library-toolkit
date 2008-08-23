@@ -5,6 +5,7 @@
   %head
     %title= title
     = stylesheet_link_tag :all, :cache => "cache/all"
+    = javascript_include_tag :all, :cache => "cache/all"
   %body
     #page
       #container
@@ -21,8 +22,6 @@
               %ul
                 %li= link_to "<span>videos</span>", "/videos"
               - if current_user && current_user.has_role?( "admin" )
-                %ul
-                  %li= link_to "<span>Curator's Area</span>", "/videos/manage"
                 %ul
                   %li= link_to "<span>Collection Administration</span>", "/library"
           .login_logout

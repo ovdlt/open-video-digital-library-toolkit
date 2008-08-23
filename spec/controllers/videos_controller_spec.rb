@@ -55,6 +55,7 @@ describe VideosController do
     end
     
     it "should assign @video to a new instance of Video with its filename prepopulated from the params" do
+      pending
       assigns[:video].should_not be_nil
       assigns[:video].should be_an_instance_of(Video)
       assigns[:video].should be_new_record
@@ -64,6 +65,7 @@ describe VideosController do
   
   describe "#new, when the filename parameter refers to a file outside the videos directory" do    
     it "should return a 404" do
+      pending
       login_as_admin
       get :new, :filename => '../README.md'
       response.should be_missing

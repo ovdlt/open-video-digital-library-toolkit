@@ -1,7 +1,7 @@
 class VideosController < ApplicationController
 
   before_filter :find_video, :only => [:update, :edit, :destroy]
-  
+
   require_role "admin", :for_all_except => [ :index, :show ]
 
   def show
@@ -47,12 +47,12 @@ class VideosController < ApplicationController
   end
   
   # FIX: this isn't tested seperately; might go away
-  def manage
+  def _manage
     index
     @files  = Asset.list_uncataloged_files
   end
 
-  def new
+  def _new
     @video = Video.new
     @asset = Asset.new(:uri => "file:///" + params[:filename])
     if @asset.valid_path?
@@ -63,6 +63,12 @@ class VideosController < ApplicationController
     end
   end
   
+  def new
+    @video = ( session["working_video"] ||= Video.new :title => "foobar" )
+    @video.id ||= 0
+    @object = @video
+  end
+
   def create
     @video = Video.new(:title => params[:video][:title],
                        :sentence => params[:video][:sentence])
@@ -133,7 +139,39 @@ class VideosController < ApplicationController
     redirect_to videos_path
   end
   
+  before_filter :handle_category,
+                :only => [ :general_information,
+                           :digital_files,
+                           :responsible_entities,
+                           :dates,
+                           :chapters,
+                           :descriptors,
+                           :collections,
+                           :related_videos ]
+  
   private
+
+  def handle_category
+    @video = nil
+    video_id = params[:video_id]
+    if !video_id.nil? and video_id != "0"
+      @video = Video.find video_id
+    end
+    @video ||= ( session["working_video"] ||= Video.new :title => "foobar" )
+    @video.id ||= 0
+    case request.method
+    when :get;
+      render :layout => false
+    when :post;
+      params[:video].each do |k,v|
+        @video[k] = v
+      end
+      render :nothing => true
+    else
+      render_bad_request
+    end
+  end
+
   def find_video
     @video = Video.find_by_id(params[:id])
     if @video.nil?
@@ -143,11 +181,4 @@ class VideosController < ApplicationController
     @video
   end
   
-  def render_missing
-    render :nothing => true, :status => interpret_status(404)
-  end
-  
-  def render_bad_request
-    render :nothing => true, :status => interpret_status(400)
-  end
 end

@@ -30,3 +30,73 @@ a
     :background-color #cdeafb
     :border-bottom 1px solid #457ea1
     :color #457ea1
+
+.ui-tabs-hide
+  :display none
+
+.ui-tabs-nav
+
+  li
+    :display inline
+    :margin 0
+    :padding 0
+    :font-weight bold
+    :font-size .9em
+
+    a:hover span
+      color: #FF9834
+
+    a:hover
+      background-position: 0% -42px
+
+    a:hover span
+      background-position: 100% -42px
+
+    a
+      float: left
+      background: url(/images/tableftG.gif) no-repeat left top
+      margin: 0
+      padding: 0 0 0 4px
+      text-decoration: none
+
+      span
+        float: left
+        display: block
+        background: url(/images/tabrightG.gif) no-repeat right top
+        padding: 5px 15px 4px 6px
+        color: #666
+
+  .ui-tabs-selected
+    a
+      :background-position 0% -42px
+
+      span
+        :background-position 100% -42px
+
+.tabs
+
+  ul
+    margin: 0
+    padding: 10px 10px 0 10px
+    list-style: none
+
+.ui-tabs-panel
+  :clear both
+
+.form
+  :clear both
+  :border 1px solid #ccc
+  :padding 1em
+  :margin-bottom 1em
+
+.library .tabs li a
+  :display block
+  :max-width 12%
+  :text-align center
+  :font-size .9em
+  :height 42px
+  :overflow hidden
+
+  span
+    :display block
+    :height 100%

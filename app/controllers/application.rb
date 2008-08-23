@@ -64,5 +64,12 @@ class ApplicationController < ActionController::Base
     @@prefix
   end
 
+  def render_missing
+    render :nothing => true, :status => interpret_status(404)
+  end
+  
+  def render_bad_request
+    render :nothing => true, :status => interpret_status(400)
+  end
 
 end

@@ -1,0 +1,19 @@
+- form_for @library, :url => general_information_library_path do |f|
+
+  .form
+    %fieldset
+
+      %legend Library Information
+      .label= f.label :library, "Title"
+      .title= f.text_field :title
+
+      .label= f.label :library, "Subtitle"
+      .title= f.text_field :subtitle
+
+      .label= f.label :library, "Logo URL"
+      .title= f.text_field :logo_url
+
+    .clear
+
+  = f.submit "Save"
+  = link_to "cancel", library_path

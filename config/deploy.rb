@@ -7,7 +7,7 @@ set :application, "ovdlt"
 set :domain, "ovdlt.smparkes.net"
 set :repository, "git://github.com/ovdlt/open-video-digital-library-toolkit.git"
 set :gems_for_project, %w(haml thoughtbot-factory_girl)
-set :shared_dirs, [ "videos" ]
+set :shared_dirs, [ "assets" ]
 
 role :app, domain
 role :web, domain

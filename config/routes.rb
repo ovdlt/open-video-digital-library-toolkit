@@ -23,9 +23,17 @@ ActionController::Routing::Routes.draw do |map|
                       :controller => 'users',
                       :action => 'reset_password'
     
-  map.resources :videos, :collection => { :recent => :get,
-                                          :manage => :get },
-                         :member => { :download => :get } do |videos|
+  map.resources :videos, :collection => { :recent => :get },
+                         :member => { :download => :get,
+                                      :general_information => :any,
+                                      :digital_files => :get,
+                                      :responsible_entities => :get,
+                                      :dates => :get,
+                                      :chapters => :get,
+                                      :descriptors => :get,
+                                      :collections => :get,
+                                      :related_videos => :get,
+                         } do |videos|
     videos.resources :assets
   end
 
@@ -38,6 +46,22 @@ ActionController::Routing::Routes.draw do |map|
     descriptor_type.resources :videos
   end
   
+  library_map = {}
+  [ :general_information,
+    :date_types,
+    :roles,
+    :descriptor_types,
+    :collections,
+    :digital_files,
+    :rights_statements,
+    :video_relation_types,
+    :format_types, ].each { |k| library_map[k] = :any }
+
+  map.resource :library,
+               :controller => :library,
+               :member => library_map
+                        
+
   map.resource :session
   
   map.root :controller => 'home'

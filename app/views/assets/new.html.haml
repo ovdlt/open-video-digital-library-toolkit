@@ -1,0 +1,16 @@
+- if @files.length > 0
+  %h1 Uncataloged Files
+  %table
+    %thead
+      %tr
+        %th Filename
+        %th Type
+        %th Size
+    %tbody
+      - @files.each do |file|
+        %tr
+          %td
+            =h File.basename(file.path)
+            =link_to_add_video(file)
+          %td=h File.extname(file.path)
+          %td= file_size(file)
