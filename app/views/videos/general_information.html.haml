@@ -1,15 +1,58 @@
 - form_for @video, :url => general_information_video_path( @video ) do |f|
 
   .form
-    %fieldset
-      %legend Title Information
-      .label= f.label :video, "Title of Video"
-      .title= f.text_field :title
 
-    %fieldset
-      %legend Description
-      .label= f.label :video, "Type"
-      .title= f.text_field :title
+    .column
+
+      %fieldset
+        %legend Title Information
+
+        .label= f.label :video, "Title of Video"
+        .title= f.text_field :title
+
+        .label= f.label :video, "Alternative Title of Video"
+        .title= f.text_field :title
+
+        .label= f.label :video, "Series Title of Video"
+        .title= f.text_field :title
+
+      %fieldset
+        %legend Participants
+
+        .label= f.label :video, "Creation Credits"
+        .title= f.text_field :title
+
+        .label= f.label :video, "Participation Credits"
+        .title= f.text_field :title
+
+
+      .clear
+    
+    .column
+
+      %fieldset
+        %legend Description
+
+        .label= f.label :video, "Type"
+        .title= f.text_field :title
+
+        .label= f.label :video, "Color"
+        .title= f.text_field :title
+
+        .label= f.label :video, "Sound"
+        .title= f.text_field :title
+
+        .label= f.label :video, "Duration"
+        .title= f.text_field :title
+
+        .label= f.label :video, "Auidence"
+        .title= f.text_field :title
+
+        .label= f.label :video, "Language"
+        .title= f.text_field :title
+
+        .label= f.label :video, "Language Notes"
+        .title= f.text_field :title
 
     .clear
 
