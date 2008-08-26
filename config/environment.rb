@@ -80,4 +80,6 @@ ActionView::Helpers::AssetTagHelper.
 ActionView::Helpers::AssetTagHelper.
   register_javascript_include_default "jquery.form"
 ActionView::Helpers::AssetTagHelper.
+  register_javascript_include_default "jquery.cookie"
+ActionView::Helpers::AssetTagHelper.
   register_javascript_include_default "jquery.ui.all"

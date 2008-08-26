@@ -3,4 +3,5 @@
   .form
     Not Yet Implemented
 
-  = f.submit "Create new video"
+  = render :partial => "/shared/create", :object => @video, |
+                                         :locals => { :f => f } |

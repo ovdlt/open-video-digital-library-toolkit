@@ -1,5 +1,8 @@
 %fieldset
   %legend New Video
+  - if !@video.errors.empty?
+    .flash.error
+      = error_messages_for :video
   .tabs
     %ul
       = tab_for :general_information

@@ -23,7 +23,8 @@ ActionController::Routing::Routes.draw do |map|
                       :controller => 'users',
                       :action => 'reset_password'
     
-  map.resources :videos, :collection => { :recent => :get },
+  map.resources :videos, :collection => { :recent => :get,
+                                          :cancel => :get },
                          :member => { :download => :get,
                                       :general_information => :any,
                                       :digital_files => :get,

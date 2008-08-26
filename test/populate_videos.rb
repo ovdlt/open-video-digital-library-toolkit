@@ -36,8 +36,10 @@ years = (1850..2008).to_a
   types.each do |type|
     v.descriptors << values[type.id][ rand(values[type.id].size) ]
   end
-  v.save!
-
-  puts v.to_yaml
-  
 end
+
+( ARGV[0] || 64 ).to_i.times do
+  Factory.next :filename
+end
+
+

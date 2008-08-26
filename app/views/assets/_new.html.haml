@@ -1,0 +1,19 @@
+- if (files = uncataloged_files(:paged => true)).length < 1
+  .div No uncataloged files
+- else
+  .div Uncataloged Files
+  .div= will_paginate files
+  %table
+    %thead
+      %tr
+        %th Filename
+        %th Type
+        %th Size
+    %tbody
+      - files.each do |file|
+        %tr
+          %td
+            =h File.basename(file.path)
+            =link_to_add_video(file)
+          %td=h File.extname(file.path)
+          %td= file_size(file)

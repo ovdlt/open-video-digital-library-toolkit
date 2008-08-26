@@ -1,6 +1,17 @@
-- form_for @video do |f|
+- form_for @video do |@f|
 
   .form
-    Not Yet Implemented
 
-  = f.submit "Create new video"
+    / = debug(@video)
+
+    .assets.current
+    - if @video.assets.size > 0
+      Current Assets
+    - else
+      No Current Assets
+
+    .assets.new
+      Add Assets
+      = render :partial => "/assets/new"
+
+  = @f.submit "Create new video"

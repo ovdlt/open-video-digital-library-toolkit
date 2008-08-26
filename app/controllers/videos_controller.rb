@@ -46,11 +46,11 @@ class VideosController < ApplicationController
 
   end
   
-  # FIX: this isn't tested seperately; might go away
-  def _manage
-    index
-    @files  = Asset.list_uncataloged_files
+  def cancel
+    session["working_video"] = nil
+    redirect_to videos_path
   end
+
 
   def _new
     @video = Video.new
@@ -70,9 +70,23 @@ class VideosController < ApplicationController
   end
 
   def create
-    @video = Video.new(:title => params[:video][:title],
-                       :sentence => params[:video][:sentence])
-    @video.assets << Asset.new(:uri => "file:///" + params[:video][:filename])
+    @video = nil
+    video_id = params[:video_id]
+    if !video_id.nil? and video_id != "0"
+      @video = Video.find video_id
+    end
+    @video ||= ( session["working_video"] ||= Video.new :title => "foobar" )
+    @video.id ||= 0
+
+    params[:video] and params[:video].each do |k,v|
+      @video[k] = v
+    end
+
+    if false
+      @video = Video.new(:title => params[:video][:title],
+                         :sentence => params[:video][:sentence])
+      @video.assets << Asset.new(:uri => "file:///" + params[:video][:filename])
+    end
 
     if params["descriptor"]
       @video.descriptors = params["descriptor"].map do |d|
@@ -85,12 +99,22 @@ class VideosController < ApplicationController
       end
     end
 
-    if @video.save
-      flash[:notice] = "#{@video.title} was added"
-      redirect_to videos_path
+    if params["commit"]
+      if @video.save
+        flash[:notice] = "#{@video.title} was added"
+        redirect_to videos_path
+      else
+        redirect_to new_video_path
+      end
     else
-      render :action => 'form'
+      if @video.save
+        render_nothing
+      else
+        p @video
+        render :partial => "/shared/errors", :object => @video, :status => interpret_status(400)
+      end
     end
+
   end
   
   def edit
@@ -166,7 +190,16 @@ class VideosController < ApplicationController
       params[:video].each do |k,v|
         @video[k] = v
       end
-      render :nothing => true
+      if params["commit"]
+        if  @video.save
+          flash[:notice] = "#{@video.title} was added"
+          redirect_to videos_path
+        else
+          redirect_to new_video_path
+        end
+      else
+        render :nothing => true
+      end
     else
       render_bad_request
     end

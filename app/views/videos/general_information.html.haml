@@ -56,5 +56,5 @@
 
     .clear
 
-  = f.submit "Create new video"
-  = link_to "cancel", videos_path
+  = render :partial => "/shared/create", :object => @video, |
+                                         :locals => { :f => f } |

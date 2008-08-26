@@ -1,6 +1,6 @@
 class Video < ActiveRecord::Base
 
-  has_many :assets
+  has_many :assets, :dependent => :destroy
 
   has_and_belongs_to_many :descriptors
 

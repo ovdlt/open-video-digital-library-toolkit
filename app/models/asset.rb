@@ -1,5 +1,7 @@
 class Asset < ActiveRecord::Base
 
+  belongs_to :video
+
   ASSET_DIR = ::ASSET_DIR
 
   validates_uniqueness_of :uri
@@ -14,6 +16,23 @@ class Asset < ActiveRecord::Base
     list = Dir.glob("#{ASSET_DIR}/*").map { |filename| File.new(filename) }
     list.reject! {|file| Asset.exists?(:uri => "file:///" + File.basename(file.path)) }
     list.partition { |file| File.directory?(file) }.flatten!
+  end
+  
+  def self.paginate_uncataloged_files params
+    list = list_uncataloged_files
+    perpage = params[:page_page] || "10"
+    pagenum = params[:page] || "1"
+
+    if !params[:page].nil?
+      a = (params[:page].to_i - 1) * perpage.to_i
+      b = a + (perpage.to_i-1)
+    else
+      a = 0
+      b = a + (perpage.to_i-1)
+    end
+    WillPaginate::Collection.new(pagenum,
+                                    perpage,
+                                    list.length.to_s).concat(list[a..b])
   end
   
   def valid_path?
