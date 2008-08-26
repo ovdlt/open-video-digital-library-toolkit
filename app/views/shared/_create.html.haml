@@ -1,7 +1,15 @@
 = f.submit( ( create.new_record? ? "Create " : "Save " ) + create.class.name )
 - if create.new_record?
+  = link_to "clear", self.send("clear_"+create.class.name.tableize+"_path")
   = link_to "cancel", self.send("cancel_"+create.class.name.tableize+"_path")
 - else
+
+  = link_to "reset", |
+           self.send( "reset_"+create.class.name.tableize.singularize+"_path", |
+                      create ) |
+
+  -
+  
   = link_to "cancel", |
            self.send( create.class.name.tableize.singularize+"_path", |
                       create ) |

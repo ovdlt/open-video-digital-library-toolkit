@@ -24,16 +24,18 @@ ActionController::Routing::Routes.draw do |map|
                       :action => 'reset_password'
     
   map.resources :videos, :collection => { :recent => :get,
-                                          :cancel => :get },
+                                          :cancel => :get,
+                                          :clear => :get },
                          :member => { :download => :get,
                                       :general_information => :any,
-                                      :digital_files => :get,
-                                      :responsible_entities => :get,
-                                      :dates => :get,
-                                      :chapters => :get,
-                                      :descriptors => :get,
-                                      :collections => :get,
-                                      :related_videos => :get,
+                                      :digital_files => :any,
+                                      :responsible_entities => :any,
+                                      :dates => :any,
+                                      :chapters => :any,
+                                      :descriptors => :any,
+                                      :collections => :any,
+                                      :related_videos => :any,
+                                      :reset => :get,
                          } do |videos|
 
     videos.resources :assets

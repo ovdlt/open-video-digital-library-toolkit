@@ -52,6 +52,17 @@ class VideosController < ApplicationController
   end
 
 
+  def clear
+    session["working_video"] = nil
+    redirect_to new_video_path
+  end
+
+  def reset
+    session["working_video"] = Video.find params[:id]
+    redirect_to edit_video_path( session["working_video"] )
+  end
+
+
   def _new
     @video = Video.new
     @asset = Asset.new(:uri => "file:///" + params[:filename])
@@ -61,10 +72,14 @@ class VideosController < ApplicationController
     else
       render_missing
     end
+
   end
   
   def new
-    @video = ( session["working_video"] ||= Video.new :title => "foobar" )
+    if !session["working_video"] or session["working_video"].id != 0
+      session["working_video"] = Video.new( :title => "foobar" )
+    end
+    @video = session["working_video"]
     @video.id ||= 0
     @object = @video
   end
