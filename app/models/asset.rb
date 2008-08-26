@@ -12,14 +12,28 @@ class Asset < ActiveRecord::Base
     asset.size ||= File.size(asset.path)
   end
   
-  def self.list_uncataloged_files
+  def self.list_uncataloged_files params
     list = Dir.glob("#{ASSET_DIR}/*").map { |filename| File.new(filename) }
-    list.reject! {|file| Asset.exists?(:uri => "file:///" + File.basename(file.path)) }
-    list.partition { |file| File.directory?(file) }.flatten!
+
+    q = params[:q]
+
+    list.reject! do |file|
+      p = File.basename(file.path).downcase
+      q and p.index( q ) == nil or
+      Asset.exists?(:uri => "file:///" + File.basename(file.path))
+    end
+
+    l = list.partition { |file| File.directory?(file) }.flatten!
+
+    if params[:limit]
+      l[0,params[:limit].to_i]
+    else
+      l
+    end
   end
   
   def self.paginate_uncataloged_files params
-    list = list_uncataloged_files
+    list = list_uncataloged_files params
     perpage = params[:page_page] || "10"
     pagenum = params[:page] || "1"
 

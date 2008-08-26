@@ -1,8 +1,6 @@
-- form_for @video do |@f|
+- form_for @video do |f|
 
   .form
-
-    / = debug(@video)
 
     .assets.current
     - if @video.assets.size > 0
@@ -14,4 +12,5 @@
       Add Assets
       = render :partial => "/assets/new"
 
-  = @f.submit "Create new video"
+  = render :partial => "/shared/create", :object => @video, |
+                                         :locals => { :f => f } |

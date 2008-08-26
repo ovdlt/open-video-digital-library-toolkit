@@ -35,8 +35,12 @@ ActionController::Routing::Routes.draw do |map|
                                       :collections => :get,
                                       :related_videos => :get,
                          } do |videos|
+
     videos.resources :assets
+
   end
+
+  map.resources :assets, :collection => { :uncataloged => :get }
 
 
   map.resources :descriptors do |descriptor|

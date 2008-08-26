@@ -1,5 +1,4 @@
 $.ui.tabs.defaults.spinner = false;
-/* $.ui.tabs.defaults.fx =  { opacity: 'toggle', duration: 10000 } */
 
 $(document).ready(function(){
 
@@ -12,10 +11,14 @@ $(document).ready(function(){
 
 
     $('.tabs').ajaxSuccess(function(){
+
         $('.tabs .pagination a').click(function(){
-            alert("click");
+            alert("not implemented (yet?)");
             return false;
         });
+
+        $("#uncatted").autocomplete("/assets/uncataloged");
+
     });
 
     $('.tabs').ajaxError(function(event,request,settings){

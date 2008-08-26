@@ -2,7 +2,9 @@
   .div No uncataloged files
 - else
   .div Uncataloged Files
-  .div= will_paginate files
+  .div
+    Search
+    = text_field_tag :uncatted
   %table
     %thead
       %tr
@@ -17,3 +19,4 @@
             =link_to_add_video(file)
           %td=h File.extname(file.path)
           %td= file_size(file)
+  .div= will_paginate files
