@@ -100,28 +100,35 @@ class VideosController < ApplicationController
     end
 
     if params["commit"]
+      was_new = @video.new_record?
       if @video.save
-        flash[:notice] = "#{@video.title} was added"
-        redirect_to videos_path
+        if was_new
+          flash[:notice] = "#{@video.title} was added"
+          session["working_video"] = nil
+          redirect_to videos_path
+        else
+          flash[:notice] = "#{@video.title} saved"
+          redirect_to video_path( @video )
+        end
       else
         redirect_to new_video_path
       end
     else
-      if @video.save
-        render_nothing
-      else
-        p @video
-        render :partial => "/shared/errors", :object => @video, :status => interpret_status(400)
-      end
+      render_nothing
     end
 
   end
   
-  def edit
+  def _edit
     @video = Video.find params[:id]
     render :action => 'form'
   end
   
+  def edit
+    @object = @video = Video.find( params[:id] )
+    render :action => 'new'
+  end
+
   def update
     if params[:video] &&
        params[:video].include?(:filename) &&
@@ -177,23 +184,37 @@ class VideosController < ApplicationController
 
   def handle_category
     @video = nil
-    video_id = params[:video_id]
+    video_id = params[:id]
     if !video_id.nil? and video_id != "0"
-      @video = Video.find video_id
+      if session["working_video"] and
+         session["working_video"].id == video_id.to_i
+        @video = session["working_video"]
+      else
+        session["working_video"] = @video = Video.find( video_id )
+      end
     end
     @video ||= ( session["working_video"] ||= Video.new :title => "foobar" )
     @video.id ||= 0
-    case request.method
-    when :get;
+    if request.method == :get
       render :layout => false
-    when :post;
+    elsif request.method == :put or request.method == :post
       params[:video].each do |k,v|
         @video[k] = v
       end
+      if @video.id == 0
+        @video.id = nil
+      end
       if params["commit"]
-        if  @video.save
-          flash[:notice] = "#{@video.title} was added"
-          redirect_to videos_path
+        was_new = @video.new_record?
+        if @video.save
+          if was_new
+            flash[:notice] = "#{@video.title} was added"
+            session["working_video"] = nil
+            redirect_to videos_path
+          else
+            flash[:notice] = "#{@video.title} saved"
+            redirect_to video_path( @video )
+          end
         else
           redirect_to new_video_path
         end

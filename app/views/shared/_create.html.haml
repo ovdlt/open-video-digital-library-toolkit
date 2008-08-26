@@ -1,2 +1,7 @@
-= f.submit "Create new " + create.class.name
-= link_to "cancel", self.send( "cancel_" + create.class.name.tableize + "_path" )
+= f.submit( ( create.new_record? ? "Create " : "Save " ) + create.class.name )
+- if create.new_record?
+  = link_to "cancel", self.send("cancel_"+create.class.name.tableize+"_path")
+- else
+  = link_to "cancel", |
+           self.send( create.class.name.tableize.singularize+"_path", |
+                      create ) |
