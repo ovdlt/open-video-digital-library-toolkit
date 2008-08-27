@@ -1,22 +1,23 @@
 - if (files = uncataloged_files(:paged => true)).length < 1
   .div No uncataloged files
 - else
-  .div Uncataloged Files
-  .div
-    Search
+  %fieldset
+    %legend Search for uncataloged assets
     = text_field_tag :uncatted
-  %table
-    %thead
-      %tr
-        %th Filename
-        %th Type
-        %th Size
-    %tbody
-      - files.each do |file|
+  %fieldset
+    %legend Browse uncataloged assets
+    %table
+      %thead
         %tr
-          %td
-            =h File.basename(file.path)
-            =link_to_add_video(file)
-          %td=h File.extname(file.path)
-          %td= file_size(file)
-  .div= will_paginate files
+          %th Filename
+          %th Type
+          %th Size
+      %tbody
+        - files.each do |file|
+          %tr
+            %td
+              = link_to_add_asset(@video,file)
+              = h file_base(file)
+            %td= h file_ext(file)
+            %td= file_size(file)
+    .div= will_paginate files

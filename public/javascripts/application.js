@@ -12,18 +12,17 @@ $(document).ready(function(){
 
     $('.tabs').ajaxSuccess(function(){
 
-        $('.tabs .pagination a').click(function(){
-            alert("not implemented (yet?)");
+        $('.tabs .pagination a').click(function(e){
+            var $tabs = $(".tabs > ul").tabs();
+            var selected = $tabs.data("selected.tabs");
+            $tabs.tabs( "url", selected, e.target.href ).
+                  tabs( "load", selected );
             return false;
         });
 
+
         $("#uncatted").autocomplete("/assets/uncataloged");
 
-    });
-
-    $('.tabs').ajaxError(function(event,request,settings){
-        /* $('.flash.errors') =  */
-        alert("bogus " + request.responseText);
     });
 
 });

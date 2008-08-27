@@ -2,15 +2,20 @@
 
   .form
 
-    .assets.current
-    - if @video.assets.size > 0
-      Current Assets
-    - else
-      No Current Assets
+    %fieldset
+      %legend Current Assets
+      .assets.current
+      - if @video.assets.size > 0
+        Current Assets
+      - else
+        No Current Assets
 
-    .assets.new
-      Add Assets
-      = render :partial => "/assets/new"
+    %fieldset
+      %legend Uncataloged Assets
+      .assets.new
+        = render :partial => "/assets/new"
+
+    .clear
 
   = render :partial => "/shared/create", :object => @video, |
                                          :locals => { :f => f } |

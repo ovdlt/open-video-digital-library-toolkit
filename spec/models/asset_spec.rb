@@ -41,7 +41,7 @@ describe Asset, ".list_uncataloged_files" do
     Dir.mkdir(new_dir_path)
     @directory = Dir.new(new_dir_path)
     
-    @file_list = Asset.list_uncataloged_files
+    @file_list = Asset.list_uncataloged_files( {} )
   end
   
   after(:all) do

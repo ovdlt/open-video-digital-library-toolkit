@@ -12,43 +12,91 @@ class Asset < ActiveRecord::Base
     asset.size ||= File.size(asset.path)
   end
   
-  def self.list_uncataloged_files params
-    list = Dir.glob("#{ASSET_DIR}/*").map { |filename| File.new(filename) }
+  class << self
 
-    q = params[:q]
+    def list_uncataloged_files params
+      return list_uncated( params )
+      list = Dir.glob("#{ASSET_DIR}/*").map { |filename| File.new(filename) }
 
-    list.reject! do |file|
-      p = File.basename(file.path).downcase
-      q and p.index( q ) == nil or
-      Asset.exists?(:uri => "file:///" + File.basename(file.path))
+      q = params[:q]
+
+      list.reject! do |file|
+        p = File.basename(file.path).downcase
+        q and p.index( q ) == nil or
+          Asset.exists?(:uri => "file:///" + File.basename(file.path))
+      end
+
+      l = list.partition { |file| File.directory?(file) }.flatten!
+
+      list_uncated params
+
+      if params[:limit]
+        l[0,params[:limit].to_i]
+      else
+        l
+      end
+    end
+    
+    def paginate_uncataloged_files params
+      list = list_uncataloged_files params
+      perpage = params[:page_page] || "10"
+      pagenum = params[:page] || "1"
+
+      if !params[:page].nil?
+        a = (params[:page].to_i - 1) * perpage.to_i
+        b = a + (perpage.to_i-1)
+      else
+        a = 0
+        b = a + (perpage.to_i-1)
+      end
+      WillPaginate::Collection.new(pagenum,
+                                   perpage,
+                                   list.length.to_s).concat(list[a..b])
+    end
+    
+    private
+    
+    def list_uncated params
+      list = list_dir params
+      options = { :select => "uri" }
+      if params[:q]
+        options.merge!( { :conditions => [ "uri like ?", params[:q] ] } )
+      end
+      assets = Asset.find :all, options
+      assets = assets.map { |a| a.uri }
+
+      # p "a", assets
+      # p "l", list_dir( params )
+      # p "x", ( list_dir( params ) - assets )
+      
+      a = ( list_dir( params ) - assets ).sort
+
+      if params[:limit]
+        a[0,params[:limit].to_i]
+      else
+        a
+      end
+      
     end
 
-    l = list.partition { |file| File.directory?(file) }.flatten!
+    def list_dir params
+      list = Dir.glob("#{ASSET_DIR}/*").map { |filename| File.new(filename) }
 
-    if params[:limit]
-      l[0,params[:limit].to_i]
-    else
-      l
+      q = params[:q]
+
+      list.reject! do |file|
+        p = File.basename(file.path).downcase
+        q and p.index( q ) == nil
+      end
+
+      l = list.partition { |file| File.directory?(file) }.flatten!
+
+      l.map { |f| "file:///" + File.basename(f.path) }
+
     end
+
   end
-  
-  def self.paginate_uncataloged_files params
-    list = list_uncataloged_files params
-    perpage = params[:page_page] || "10"
-    pagenum = params[:page] || "1"
 
-    if !params[:page].nil?
-      a = (params[:page].to_i - 1) * perpage.to_i
-      b = a + (perpage.to_i-1)
-    else
-      a = 0
-      b = a + (perpage.to_i-1)
-    end
-    WillPaginate::Collection.new(pagenum,
-                                    perpage,
-                                    list.length.to_s).concat(list[a..b])
-  end
-  
   def valid_path?
     video_path = Pathname.new File.expand_path(ASSET_DIR)
     Pathname.new(File.expand_path(path)).ascend do |path|

@@ -213,9 +213,25 @@ class VideosController < ApplicationController
     if request.method == :get
       render :layout => false
     elsif request.method == :put or request.method == :post
-      params[:video].each do |k,v|
+      params[:video] and params[:video].each do |k,v|
         @video[k] = v
       end
+
+      if params["descriptors_passed"] && !params["descriptor"]
+        params["descriptor"] = []
+      end
+
+      if params["descriptor"]
+        @video.descriptors = params["descriptor"].map do |d|
+          begin
+            Descriptor.find d.to_i
+          rescue ActiveRecord::RecordNotFound
+            render_bad_request 
+            return
+          end
+        end
+      end
+
       if @video.id == 0
         @video.id = nil
       end
