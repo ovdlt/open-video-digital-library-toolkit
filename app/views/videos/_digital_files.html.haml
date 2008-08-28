@@ -1,0 +1,21 @@
+- form_for @video do |f|
+
+  .form
+
+    %fieldset
+      %legend Current Assets
+      .assets.current
+      - if @video.assets.size > 0
+        Current Assets
+      - else
+        No Current Assets
+
+    %fieldset
+      %legend Uncataloged Assets
+      .assets.new
+        = render :partial => "/assets/new"
+
+    .clear
+
+  = render :partial => "/shared/create", :object => @video, |
+                                         :locals => { :f => f } |

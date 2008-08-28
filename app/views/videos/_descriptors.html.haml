@@ -1,0 +1,17 @@
+- form_for @video, :url => descriptors_video_path( @video ) do |f|
+
+  .form
+
+    %fieldset
+      %legend Descriptors
+
+      = hidden_field_tag :descriptors_passed
+      = render :partial => "type", :collection => |
+                                     DescriptorType.find( :all ), |
+                                   :locals => { :f => f } |
+
+    .clear
+
+  = render :partial => "/shared/create", :object => @video, |
+                                         :locals => { :f => f } |
+
