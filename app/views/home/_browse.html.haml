@@ -3,7 +3,7 @@
   .content.block.last
     = render :partial => "axes"
     .videos
-      - DescriptorType.each do |type|
+      - DescriptorType.sorted(1).each do |type|
         .axis
           - i = 0
           - type.descriptors_sorted.each do |descriptor|

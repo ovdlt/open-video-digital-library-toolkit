@@ -1,6 +1,6 @@
 class Video < ActiveRecord::Base
 
-  has_one :rights
+  belongs_to :rights
 
   has_many :assets, :dependent => :destroy
 
@@ -8,6 +8,7 @@ class Video < ActiveRecord::Base
 
   validates_presence_of :title
   validates_presence_of :sentence
+  validates_presence_of :rights_id, :message => "type must be selected"
 
   validate :descriptors_must_be_unique
   
@@ -17,9 +18,10 @@ class Video < ActiveRecord::Base
       if vf == nil
         vf = VideoFulltext.new :video_id => video.id
       end
-      vf.title = video.title
-      vf.year = video.year
-      vf.sentence = video.sentence
+      vf.text = [ video.title,
+                  video.sentence,
+                  video.abstract,
+                  video.donor ].join(" ")
       vf.save
     end
   end

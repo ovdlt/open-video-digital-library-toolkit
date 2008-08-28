@@ -6,7 +6,7 @@
   .body
 
     .image
-    .sentence= video.sentence
+    .sentence= h video.sentence
 
     .navigate
 
@@ -29,12 +29,10 @@
 
         - video.assets.each do |asset|
         
-        = debug( video.assets )
-
           .download
 
             &diams;
-            .format= asset.asset_format
+            .format= h asset.asset_format
             &loz;
             .size= number_to_human_size(asset.size)
 
@@ -50,11 +48,17 @@
 
           .detail
             - descriptors = video.descriptors_by_type( type )
-            .type= ( descriptors.size > 1 ? type.title.pluralize : |
-                                             type.title ) + ":" |
+            .type= h ( descriptors.size > 1 ? type.title.pluralize : |
+                                               type.title ) + ":" |
             - descriptors.each do |descriptor|
-              .value= descriptor.text
+              .value= h descriptor.text
             .clear
+
+      .details_list
+
+        %div= h video.rights_holder
+        %div= h video.rights.statement
+        %div= video.rights.html
 
     .clear
 

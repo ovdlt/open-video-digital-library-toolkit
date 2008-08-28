@@ -1,23 +1,19 @@
--form_for @video do |f|
+- form_for @video do |@f|
+
   %fieldset
-    %legend Catalog File
-    = f.error_messages
-    %dl
-      %dt
-        %label Filename:
-      %dd=h @video.assets[0].filename
-    
-      %dt= f.label :title, "Title:"
-      %dd= f.text_field :title
-    
-      %dt= f.label :sentence, "Sentence:"
-      %dd.sentence= f.text_field :sentence
 
-      = render :partial => "type", :collection => DescriptorType.find( :all ), |
-                                   :locals => { :f => f } |
+    / = debug(@video)
 
+    %legend
+      = @video.new_record? ? "New" : "Edit"
+      Video
+    - if !error_messages_for( :video ).blank?
+      .flash.error
+        = error_messages_for :video
+    .tabs
+      %ul
+        - tabs.each do |tab|
+          = tab_for tab
+      - tabs.each do |tab|
+        = div_for tab
 
-  = hidden_field_tag :descriptors_passed
-  = hidden_field_tag "video_filename", @video.assets[0].filename, |
-                     :name => "video[filename]" |
-  = f.submit "Save Video"

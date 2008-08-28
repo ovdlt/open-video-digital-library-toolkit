@@ -1,5 +1,5 @@
 .axes
-  - DescriptorType.each do |type|
+  - DescriptorType.sorted(1).each do |type|
     .axis
       .title= type.title
       %ul

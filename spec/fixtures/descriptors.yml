@@ -106,3 +106,16 @@ colorized:
   descriptor_type_id: 4
   priority: 3
   text: Colorized
+
+sound:
+  id: 19
+  descriptor_type_id: 5
+  priority: 1
+  text: Sound
+
+silent:
+  id: 20
+  descriptor_type_id: 5
+  priority: 2
+  text: Silent
+

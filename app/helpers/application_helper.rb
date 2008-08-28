@@ -1,29 +1,19 @@
 module ApplicationHelper
 
-  def tab_for field
-    render :partial => "/shared/tab", :object => field
-  end
-
-  def tab_path tab
-    if @object
-      send( [ tab.to_s,
-              "_",
-              controller.controller_name.singularize,
-              "_path" ].join("").to_sym, @object )
-    else
-      send( [ tab.to_s,
-              "_",
-              controller.controller_name.singularize,
-              "_path" ].join("").to_sym )
-    end
-  end
-
   def uncataloged_files options
     if options[:paged]
       @files_paged ||= Asset.paginate_uncataloged_files(params)
     else
       @files ||= Asset.list_uncataloged_files
     end
+  end
+
+  def int_to_duration v
+    return nil if v.nil?
+    h = v/3600
+    m = ( v % 3600 ) / 60
+    s = ( v % 3600 ) % 60
+    "%02d:%02d:%02d" % [ h, m, s ]
   end
 
 end

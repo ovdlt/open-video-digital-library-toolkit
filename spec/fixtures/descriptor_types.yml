@@ -17,3 +17,8 @@ color:
   id: 4
   priority: 4
   title: Color
+
+sound:
+  id: 5
+  priority: 0
+  title: Sound

@@ -1,5 +1,40 @@
 module VideosHelper
 
+  def tabs
+    [
+     :general_information,
+     :digital_files,
+     :responsible_entities,
+     :dates,
+     :chapters,
+     :descriptors,
+     :collections,
+     :related_videos,
+    ]
+  end
+
+  def tab_for field
+    render :partial => "/shared/tab", :object => field
+  end
+
+  def div_for field
+    render :partial => "/shared/div", :object => field
+  end
+
+  def tab_path tab
+    if @object
+      send( [ tab.to_s,
+              "_",
+              controller.controller_name.singularize,
+              "_path" ].join("").to_sym, @object )
+    else
+      send( [ tab.to_s,
+              "_",
+              controller.controller_name.singularize,
+              "_path" ].join("").to_sym )
+    end
+  end
+
   def file_size(file)
     file = File.new( File.join( Asset::ASSET_DIR, file[8,file.length] ) )
     number_to_human_size(file.stat.size) if File.file?(file)

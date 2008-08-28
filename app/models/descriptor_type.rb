@@ -5,8 +5,12 @@ class DescriptorType < ActiveRecord::Base
   validates_presence_of :title
   validates_uniqueness_of :title
 
-  def self.each &block
-    ( self.find :all, :order => "priority asc" ).each { |type| yield type }
+  def self.sorted min = nil
+    options = { :order => "priority asc" }
+    if !min.nil?
+      options.merge! :conditions => [ "priority >= ?", min ]
+    end
+    self.find :all, options
   end
 
   def descriptors_sorted

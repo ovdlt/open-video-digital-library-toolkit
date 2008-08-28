@@ -4,6 +4,7 @@ $(document).ready(function(){
 
     $(".tabs > ul").tabs({ cookie: { expires: null } });
 
+    /*
     $('.ui-tabs-nav').bind('tabsselect', function(event, ui) {
         $('.tabs form').ajaxSubmit({ async: false });
         return true;
@@ -24,6 +25,7 @@ $(document).ready(function(){
         $("#uncatted").autocomplete("/assets/uncataloged");
 
     });
+    */
 
 });
 

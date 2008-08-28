@@ -76,4 +76,14 @@ class ApplicationController < ActionController::Base
     render :nothing => true, :status => interpret_status(400)
   end
 
+  def duration_to_int value, object, key
+    return nil if value.blank?
+    if m = value.match( /^\s*(\d\d):(\d\d):(\d\d)\s*$/ )
+      return ((m[1].to_i*60)+m[2].to_i)*60+m[3].to_i
+    else
+      object.errors.add key, "#{value} is not a valid duration"
+      return nil
+    end
+  end
+
 end

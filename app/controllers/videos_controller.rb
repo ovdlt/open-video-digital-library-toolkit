@@ -2,7 +2,7 @@ class VideosController < ApplicationController
 
   before_filter :find_video, :only => [:update, :edit, :destroy]
 
-  require_role "admin", :for_all_except => [ :index, :show ]
+  # require_role "admin", :for_all_except => [ :index, :show ]
 
   def show
     @video = Video.find( params[:id] ) if params[:id]
@@ -47,19 +47,16 @@ class VideosController < ApplicationController
   end
   
   def cancel
-    session["working_video"] = nil
     redirect_to videos_path
   end
 
 
   def clear
-    session["working_video"] = nil
     redirect_to new_video_path
   end
 
   def reset
-    session["working_video"] = Video.find params[:id]
-    redirect_to edit_video_path( session["working_video"] )
+    redirect_to edit_video_path( params[:id] )
   end
 
 
@@ -76,37 +73,31 @@ class VideosController < ApplicationController
   end
   
   def new
-    if !session["working_video"] or session["working_video"].id != 0
-      session["working_video"] = Video.new( :title => "foobar" )
-    end
-    @video = session["working_video"]
-    @video.id ||= 0
-    @video.abstract = nil
-    @video.rights_holder = nil
-    @video.rights_id = nil
-    @video.donor = nil
-    @video.local_id = nil
-    @video.duration = nil
-    @object = @video
+    @video = @object = Video.new
+    render :action => "form"
   end
 
-  def _create
-    @video = nil
-    video_id = params[:video_id]
-    if !video_id.nil? and video_id != "0"
-      @video = Video.find video_id
-    end
-    @video ||= ( session["working_video"] ||= Video.new :title => "foobar" )
-    @video.id ||= 0
+  def create
+    @video = Video.new
+    _change
+  end
+
+  def update
+    @video = Video.find params[:id]
+    _change
+  end
+  
+  def _change
+
+    errors = false
 
     params[:video] and params[:video].each do |k,v|
-      @video[k] = v
-    end
-
-    if false
-      @video = Video.new(:title => params[:video][:title],
-                         :sentence => params[:video][:sentence])
-      @video.assets << Asset.new(:uri => "file:///" + params[:video][:filename])
+      case k.to_s
+      when "duration"
+        @video[k] = duration_to_int( v, @video, k )
+      else
+        @video[k] = v
+      end
     end
 
     if params["descriptor"]
@@ -120,24 +111,17 @@ class VideosController < ApplicationController
       end
     end
 
-    if params["commit"]
-      was_new = @video.new_record?
-      if @video.save
-        p "save okay"
-        if was_new
-          flash[:notice] = "#{@video.title} was added"
-          session["working_video"] = nil
-          redirect_to videos_path
-        else
-          flash[:notice] = "#{@video.title} saved"
-          redirect_to video_path( @video )
-        end
+    was_new = @video.new_record?
+    if !errors and @video.errors.empty? and @video.save
+      if was_new
+        flash[:notice] = "#{@video.title} was added"
+        redirect_to videos_path
       else
-        p "save not okay", @video
-        redirect_to new_video_path
+        flash[:notice] = "#{@video.title} saved"
+        redirect_to video_path( @video )
       end
     else
-      render_nothing
+      render :action => :form
     end
 
   end
@@ -149,10 +133,10 @@ class VideosController < ApplicationController
   
   def edit
     @object = @video = Video.find( params[:id] )
-    render :action => 'new'
+    render :action => :form
   end
 
-  def update
+  def _update
     if params[:video] &&
        params[:video].include?(:filename) &&
        ( params[:video][:filename].nil? or
@@ -183,7 +167,7 @@ class VideosController < ApplicationController
       flash[:notice] = "#{@video.title} was updated"
       redirect_to video_path( @video )
     else
-      render :action => 'form'
+      render :action => :form
     end
   end
   
