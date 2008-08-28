@@ -1,11 +1,11 @@
 %fieldset
 
-  / = debug(@video)
+  = debug(@video)
 
   %legend
     = @video.new_record? ? "New" : "Edit"
     Video
-  - if !@video.errors.empty?
+  - if !error_messages_for( :video ).blank?
     .flash.error
       = error_messages_for :video
   .tabs

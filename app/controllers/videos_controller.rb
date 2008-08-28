@@ -83,10 +83,14 @@ class VideosController < ApplicationController
     @video.id ||= 0
     @video.abstract = nil
     @video.rights_holder = nil
+    @video.rights_id = nil
+    @video.donor = nil
+    @video.local_id = nil
+    @video.duration = nil
     @object = @video
   end
 
-  def create
+  def _create
     @video = nil
     video_id = params[:video_id]
     if !video_id.nil? and video_id != "0"
@@ -119,6 +123,7 @@ class VideosController < ApplicationController
     if params["commit"]
       was_new = @video.new_record?
       if @video.save
+        p "save okay"
         if was_new
           flash[:notice] = "#{@video.title} was added"
           session["working_video"] = nil
@@ -128,6 +133,7 @@ class VideosController < ApplicationController
           redirect_to video_path( @video )
         end
       else
+        p "save not okay", @video
         redirect_to new_video_path
       end
     else
@@ -199,7 +205,7 @@ class VideosController < ApplicationController
   
   private
 
-  def handle_category
+  def find_video_for_cat
     @video = nil
     video_id = params[:id]
     if !video_id.nil? and video_id != "0"
@@ -212,9 +218,17 @@ class VideosController < ApplicationController
     end
     @video ||= ( session["working_video"] ||= Video.new :title => "foobar" )
     @video.id ||= 0
+  end
+
+  def handle_category
+
+    find_video_for_cat
+
     if request.method == :get
       render :layout => false
-    elsif request.method == :put or request.method == :post
+    elsif request.method == :put and !@video.new_record? or
+          request.method == :post and @video.new_record?
+
       params[:video] and params[:video].each do |k,v|
         @video[k] = v
       end
@@ -237,6 +251,7 @@ class VideosController < ApplicationController
       if @video.id == 0
         @video.id = nil
       end
+
       if params["commit"]
         was_new = @video.new_record?
         if @video.save

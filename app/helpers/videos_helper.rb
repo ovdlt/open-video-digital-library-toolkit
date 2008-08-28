@@ -48,4 +48,24 @@ module VideosHelper
     end
   end
 
+  def rights_options
+    options =
+      [ [ "Select from the following ...", nil,
+          { :disabled => true, :selected => @video.rights_id.nil? } ] ] +
+      ( Rights.find :all ).map do |r|
+        [ r.license,
+          r.id,
+          @video.rights_id == r.id ? { :selected => true  } : {} ]
+      end
+    ( options.map do |o|
+        "<option value='#{o[1]}' #{select_options(o[2])}>#{o[0]}</option>"
+    end ).join("\n")
+  end
+
+  private
+
+  def select_options hash
+    ( hash.map { |k,v| v ? "#{k}='#{k}'" : "" } ).join(" ")
+  end
+
 end

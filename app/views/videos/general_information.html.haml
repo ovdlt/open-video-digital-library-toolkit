@@ -8,26 +8,16 @@
         %legend Title Information
 
         .label= f.label :video, "Title of Video"
-        .title= f.text_field :title
+        %div= f.text_field :title, :size => 50
 
       %fieldset
         %legend Content Summary
 
         .label= f.label :sentence, "Sentence Summary"
-        .title= f.text_field :sentence
+        %div= f.text_area :sentence, :cols => 38, :rows => 2
 
         .label= f.label :abstract
-        .title= f.text_field :abstract
-
-
-      %fieldset
-        %legend Rights
-
-        .label= f.label :rights_holder, "Rights Holder"
-        .title= f.text_field :rights_holder
-
-        .label= f.label :rights, "Type of Rights"
-        .title= f.select :rights_id, Rights.select_options
+        %div= f.text_area :abstract, :cols => 38, :rows => 6
 
 
     .column
@@ -35,26 +25,30 @@
       %fieldset
         %legend Description
 
-        .label= f.label :video, "Type"
-        .title= f.text_field :title
+        .label= f.label :duration
+        %div= f.text_field :duration
 
-        .label= f.label :video, "Color"
-        .title= f.text_field :title
+      %fieldset
+        %legend Local Reference
 
-        .label= f.label :video, "Sound"
-        .title= f.text_field :title
+        .label= f.label :local_id
+        %div= f.text_field :local_id
 
-        .label= f.label :video, "Duration"
-        .title= f.text_field :title
+        .label= f.label :donor
+        %div= f.text_area :donor, :cols => 38, :rows => 2
 
-        .label= f.label :video, "Auidence"
-        .title= f.text_field :title
+    .full_width
 
-        .label= f.label :video, "Language"
-        .title= f.text_field :title
+      %fieldset
+        %legend Rights
 
-        .label= f.label :video, "Language Notes"
-        .title= f.text_field :title
+        .label= f.label :rights_holder, "Rights Holder"
+        %div= f.text_field :rights_holder
+
+        .label= f.label :rights, "Type of Rights"
+        %div
+          %select{:name=>"video[rights_id]"}
+            = rights_options
 
     .clear
 
