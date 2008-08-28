@@ -81,6 +81,8 @@ class VideosController < ApplicationController
     end
     @video = session["working_video"]
     @video.id ||= 0
+    @video.abstract = nil
+    @video.rights_holder = nil
     @object = @video
   end
 

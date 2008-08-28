@@ -5,13 +5,13 @@
 
       %legend Library Information
       .label= f.label :library, "Title"
-      .title= f.text_field :title
+      .title= f.text_field :title, :size => 50
 
       .label= f.label :library, "Subtitle"
-      .title= f.text_field :subtitle
+      .title= f.text_field :subtitle, :size => 80
 
       .label= f.label :library, "Logo URL"
-      .title= f.text_field :logo_url
+      .title= f.text_field :logo_url, :size => 80, :maxlength => 255
 
     .clear
 

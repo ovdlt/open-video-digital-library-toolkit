@@ -18,9 +18,9 @@
             .subtitle= Library.subtitle
             #navigation
               %ul
-                %li= link_to "<span>home</span>", "/"
+                %li= link_to "<span>Home</span>", "/"
               %ul
-                %li= link_to "<span>videos</span>", "/videos"
+                %li= link_to "<span>Videos</span>", "/videos"
               - if current_user && current_user.has_role?( "admin" )
                 %ul
                   %li= link_to "<span>Collection Administration</span>", "/library"

@@ -10,30 +10,24 @@
         .label= f.label :video, "Title of Video"
         .title= f.text_field :title
 
-        .label= f.label :video, "Alternative Title of Video"
-        .title= f.text_field :title
-
-        .label= f.label :video, "Series Title of Video"
-        .title= f.text_field :title
-
       %fieldset
         %legend Content Summary
 
-        .label= f.label :video, "Sentence Summary"
+        .label= f.label :sentence, "Sentence Summary"
         .title= f.text_field :sentence
 
-        .label= f.label :video, "Abstract"
-        .title= f.text_field :title
+        .label= f.label :abstract
+        .title= f.text_field :abstract
 
 
       %fieldset
-        %legend Participants
+        %legend Rights
 
-        .label= f.label :video, "Creation Credits"
-        .title= f.text_field :title
+        .label= f.label :rights_holder, "Rights Holder"
+        .title= f.text_field :rights_holder
 
-        .label= f.label :video, "Participation Credits"
-        .title= f.text_field :title
+        .label= f.label :rights, "Type of Rights"
+        .title= f.select :rights_id, Rights.select_options
 
 
     .column
