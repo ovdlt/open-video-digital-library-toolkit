@@ -3,17 +3,20 @@
   .content.block.last
     = render :partial => "axes"
     .videos
-      - DescriptorType.sorted(1).each do |type|
+      - srand Time.parse("0:0").to_i
+      - shown = {}
+      - DescriptorType.browse do |type|
         .axis
           - i = 0
           - type.descriptors_sorted.each do |descriptor|
-            - v = descriptor.most_recent
+            - v = descriptor.random shown
             - if v
               .video
-                .image= link_to "image", video_path( v.id )
+                .image= link_to "image #{v.id}", video_path( v.id )
                 .text
                   .title= link_to h(v.title), video_path( v.id )
                   = link_to "more in<br />#{h descriptor.text}", "#"
               - i += 1
               - break if i > 4
+      - srand
     .clear

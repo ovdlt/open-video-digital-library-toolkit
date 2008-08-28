@@ -3,7 +3,8 @@ class CreateDescriptors < ActiveRecord::Migration
     create_table :descriptors do |t|
       t.column :descriptor_type_id, :int, :null => false
       t.column :text, :string, :null => false
-      t.column :priority, :int
+      t.column :priority, :int, :null => false, :default => 99999
+      t.column :browsable, :bool, :null => false, :default => false
       t.timestamps
     end
 

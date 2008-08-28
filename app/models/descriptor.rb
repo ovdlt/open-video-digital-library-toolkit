@@ -19,4 +19,21 @@ class Descriptor < ActiveRecord::Base
     ( videos.sort { |a,b| a.created_at - b.created_at } )[0]
   end
 
+  def random exclude = []
+    candidates = videos.map &:id
+    number = videos.count
+    tries = 0
+    v = nil
+    while tries < number
+      r = rand(number)
+      v = videos[r]
+      if !exclude[v.id]
+        exclude[v.id]= true
+        return v
+      end
+      tries += 1
+    end
+    return nil
+  end
+
 end
