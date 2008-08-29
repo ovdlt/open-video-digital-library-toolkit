@@ -6,10 +6,17 @@
     %fieldset
       %legend Current Assets
       .assets.current
-      - if @video.assets.size > 0
-        Current Assets
-      - else
-        No Current Assets
+        - if @video.assets.size > 0
+          %table
+            %thead
+              %tr
+                %th File name / URI
+                %th Type
+                %th Size
+            %tbody
+              = render :partial => "/assets/show", :collection => @video.assets
+        - else
+          %h2 No Current Assets
 
     %fieldset
       %legend Uncataloged Assets

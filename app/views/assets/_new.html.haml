@@ -16,8 +16,7 @@
         - files.each do |file|
           %tr
             %td
-              = link_to_add_asset(@video,file)
-              = h file_base(file)
+              = link_to( h(file_base file), new_video_asset_path( @video ) )
             %td= h file_ext(file)
             %td= file_size(file)
     .div= will_paginate files
