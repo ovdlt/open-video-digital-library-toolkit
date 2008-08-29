@@ -73,9 +73,9 @@ module VideosHelper
   end
 
   def link_to_details details
-    s = "#{details.to_s.capitalize}"
+    s = details.to_s.humanize.split.map(&:capitalize).join(" ")
     if details == details_format
-      "#{details.to_s.capitalize}"
+      s
     else
       link_to s, @path.call( details == :details ?
                                               {} :

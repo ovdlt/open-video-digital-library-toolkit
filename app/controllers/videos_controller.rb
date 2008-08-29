@@ -100,6 +100,10 @@ class VideosController < ApplicationController
       end
     end
 
+    if params["descriptors_passed"] && !params["descriptor"]
+      params["descriptor"] = []
+    end
+
     if params["descriptor"]
       @video.descriptors = params["descriptor"].map do |d|
         begin
