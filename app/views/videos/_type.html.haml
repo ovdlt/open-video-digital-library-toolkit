@@ -1,6 +1,6 @@
 %dt.descriptor= "#{h type.title}:"
 %dd.descriptor
-  - type.descriptors.each do |descriptor|
+  - type.descriptors_alphabetized.each do |descriptor|
     .value
       = check_box_tag "descriptor_#{descriptor.id}", |
                       descriptor.id, |

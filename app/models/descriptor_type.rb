@@ -11,8 +11,17 @@ class DescriptorType < ActiveRecord::Base
     ( self.find :all, options ).each &block
   end
 
-  def descriptors_sorted
-    descriptors.sort { |a,b| a.priority - b.priority }
+  def self.sorted
+    options = { :order => "priority asc" }
+    self.find :all, options
+  end
+
+  def descriptors_prioritized
+    descriptors.sort { |a,b| a.priority <=> b.priority }
+  end
+
+  def descriptors_alphabetized
+    descriptors.sort { |a,b| a.text <=> b.text }
   end
 
 end
