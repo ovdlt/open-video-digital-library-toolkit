@@ -17,3 +17,7 @@
       - tabs.each do |tab|
         = div_for tab
 
+    .clear
+
+    = render :partial => "/shared/create", :object => @video, |
+                                           :locals => { :f => @f } |

@@ -207,24 +207,6 @@ describe VideosController do
     end
   end
   
-  describe "#update when the filename changes" do
-    it "should not allow the file name to be changed" do
-      login_as_admin
-      video = Factory(:video)
-      create_temp_asset("new_filename")
-      put :update, :id => video.id, :video => {:filename => "new_filename"}
-      
-      response.code.should == "400"
-    end
-    
-    it "should not allow a nil filename" do
-      login_as_admin
-      video = Factory(:video)
-      put :update, :id => video.id, :video => {:filename => nil}
-      response.code.should == "400"
-    end
-  end
-  
   describe "#update when descriptors change" do
 
     fixtures :descriptor_types, :descriptors

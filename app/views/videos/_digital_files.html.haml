@@ -1,4 +1,5 @@
-- form_for @video do |f|
+- f = @f
+%div
 
   .form
 
@@ -16,6 +17,3 @@
         = render :partial => "/assets/new"
 
     .clear
-
-  = render :partial => "/shared/create", :object => @video, |
-                                         :locals => { :f => f } |
