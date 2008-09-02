@@ -56,6 +56,7 @@ namespace :deploy do
   after 'deploy:symlink', :roles => :app do
     run "ln -nfs #{shared_path}/config/initializers/site_keys.rb #{release_path}/config/initializers/site_keys.rb"
     run "chgrp -R #{mongrel_group} #{release_path}/public/stylesheets"
+    run "chgrp -R #{mongrel_group} #{release_path}/public/javascripts"
   end
 
 end
