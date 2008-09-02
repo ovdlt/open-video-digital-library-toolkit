@@ -26,10 +26,12 @@
       %tbody.page
     #asset_pager
     %script{:type=>"text/javascript"}
+      $(function(){
       $("div#asset_pager").paginate(
       = Asset.list_uncataloged_files(params).size
       ,
       = '"' + formatted_uncataloged_assets_path( :format => :json ) + '"'
       );
       $.load_assets(0);
+      });
     / .div= will_paginate files
