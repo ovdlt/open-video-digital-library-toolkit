@@ -1,0 +1,23 @@
+.assets.current
+  - if @video.assets.size > 0
+    .current.template
+      = render :partial => "/assets/show"
+      %script{:type=>"text/javascript"}
+        assets =
+        = @video.assets.to_json
+        ;
+    %table
+      %thead
+        %tr
+          %th File name / URI
+          %th Type
+          %th Size
+      %tbody.assets.ajax
+    %script{:type=>"text/javascript"}
+      $("tbody.assets.ajax").data("assets",
+      = assets_json
+      );
+  - else
+    %h2 No Current Assets
+.clear
+

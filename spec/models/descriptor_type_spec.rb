@@ -37,10 +37,10 @@ describe DescriptorType do
     d.save!
   end
 
-  describe ".each" do
+  describe ".sorted" do
     it "should return all the descriptor types (shortcut for find all)" do
       descriptors = []
-      DescriptorType.each { |d| descriptors << d }
+      DescriptorType.sorted.each { |d| descriptors << d }
       ( descriptors.sort { |a,b| a.id - b.id } ).
         should == (( DescriptorType.find :all ).sort { |a,b| a.id - b.id })
     end

@@ -72,7 +72,11 @@ class Asset < ActiveRecord::Base
       a = ( list_dir( params ) - assets ).sort
 
       if params[:limit]
-        a[0,params[:limit].to_i]
+        first = 0
+        if params[:page]
+          first = (params[:page].to_i)*params[:limit].to_i
+        end
+        a[first,params[:limit].to_i]
       else
         a
       end

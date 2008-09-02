@@ -1,26 +1,13 @@
 - f = @f
-%div
+.form
 
-  .form
+  %fieldset
+    %legend Current Assets
+    = div_for :current_assets
 
-    %fieldset
-      %legend Current Assets
-      .assets.current
-        - if @video.assets.size > 0
-          %table
-            %thead
-              %tr
-                %th File name / URI
-                %th Type
-                %th Size
-            %tbody
-              = render :partial => "/assets/show", :collection => @video.assets
-        - else
-          %h2 No Current Assets
+  %fieldset
+    %legend Uncataloged Assets
+    = div_for :uncataloged_assets
 
-    %fieldset
-      %legend Uncataloged Assets
-      .assets.new
-        = render :partial => "/assets/new"
+  .clear
 
-    .clear

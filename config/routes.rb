@@ -42,7 +42,7 @@ ActionController::Routing::Routes.draw do |map|
 
   end
 
-  map.resources :assets, :collection => { :uncataloged => :get }
+  map.resources :assets, :collection => { :uncataloged => :any }
 
 
   map.resources :descriptors do |descriptor|

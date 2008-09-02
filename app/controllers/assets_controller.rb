@@ -1,15 +1,11 @@
 class AssetsController < ApplicationController
 
-  require_role "admin", :for_all_except => []
+  require_role "admin"
 
   def _new
     @video = params["video_id"].to_i == 0 ? session["new_video"] \
                                           : Video.find( params["video_id"] )
-    p @video
     @files  = Asset.list_uncataloged_files params
-
-    
-
   end
 
   def uncataloged
@@ -19,13 +15,18 @@ class AssetsController < ApplicationController
       options[:limit] = params[:limit]
     end
 
-    assets = Asset.list_uncataloged_files params
+    if params[:page]
+      options[:page] = params[:page]
+    end
 
-    a = assets.map { |a| File.basename(a[8,a.length]) }
-    a.sort!
+    if params[:q]
+      options[:q] = params[:q]
+    end
 
-    render :text => ( a ).join(" ")
+    assets = Asset.list_uncataloged_files options
 
+    @assets = assets.map { |a| File.basename(a[8,a.length]) }
+    @assets.sort!
   end
 
   def create
@@ -37,8 +38,6 @@ class AssetsController < ApplicationController
     @video.id ||= 0
     
     @video.assets << Asset.new( :uri => "file:///" + params[:filename] )
-
-    p @video
 
     redirect_to new_video_path
   end

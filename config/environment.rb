@@ -85,3 +85,7 @@ ActionView::Helpers::AssetTagHelper.
   register_javascript_include_default "jquery.ui.all"
 ActionView::Helpers::AssetTagHelper.
   register_javascript_include_default "jquery.autocomplete"
+ActionView::Helpers::AssetTagHelper.
+  register_javascript_include_default "jquery.pagination"
+ActionView::Helpers::AssetTagHelper.
+  register_javascript_include_default "jquery.livequery"

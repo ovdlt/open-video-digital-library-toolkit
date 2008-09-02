@@ -6,8 +6,6 @@
     %fieldset
       %legend Descriptors
 
-      = hidden_field_tag :descriptors_passed
-      
       %dl
         = render :partial => "type", :collection => DescriptorType.sorted, |
                                      :locals => { :f => f } |

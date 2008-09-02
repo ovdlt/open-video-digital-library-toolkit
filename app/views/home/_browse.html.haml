@@ -8,7 +8,7 @@
       - DescriptorType.browse do |type|
         .axis
           - i = 0
-          - type.descriptors_sorted.each do |descriptor|
+          - type.descriptors_prioritized.each do |descriptor|
             - v = descriptor.random shown
             - if v
               .video

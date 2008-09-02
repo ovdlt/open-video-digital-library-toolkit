@@ -95,8 +95,18 @@ class VideosController < ApplicationController
       case k.to_s
       when "duration"
         @video[k] = duration_to_int( v, @video, k )
+      when "descriptors"
+        @video.descriptor_ids = v
+      when "assets"
+        @video.asset_ids = v.reject { |k,v| k == ":id:" }
       else
         @video[k] = v
+      end
+    end
+
+    if params[:new_assets]
+      params[:new_assets].each do |uri|
+        @video.assets << Asset.new( :uri => uri )
       end
     end
 

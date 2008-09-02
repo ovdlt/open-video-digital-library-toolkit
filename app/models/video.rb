@@ -80,13 +80,13 @@ class Video < ActiveRecord::Base
       p = options[:query].gsub(/\\/, '\&\&').gsub(/'/, "''") 
       
       select <<
-        "match ( vfs.title, vfs.sentence, vfs.year ) against ( '#{p}' ) as r"
+        "match ( vfs.text ) against ( '#{p}' ) as r"
       joins << "video_fulltexts vfs"
 
       p = ( p.split(/\s+/).map { |v| "+" + v } ).join(" ")
         
       conditions[0] <<
-        "( match ( vfs.title, vfs.sentence, vfs.year ) " +
+        "( match ( vfs.text ) " +
           "against ( '#{p}' in boolean mode ))"
       conditions[0] << "(videos.id = vfs.video_id)"
       options[:order] ||= "r desc"

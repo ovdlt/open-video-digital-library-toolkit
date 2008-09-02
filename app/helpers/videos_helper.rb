@@ -97,6 +97,20 @@ module VideosHelper
     end ).join("\n")
   end
 
+  def assets_json
+    result = @video.assets.map do |a|
+      hash = {}
+      [ :id, :uri, [ :size, :file_size ], :asset_format ].each do |field|
+        case field
+        when Symbol; hash[field] = a.send( field )
+        when Array; hash[field[0]] = send( field[1], a )
+        end
+      end
+      hash
+    end
+    result.to_json
+  end
+
   private
 
   def select_options hash

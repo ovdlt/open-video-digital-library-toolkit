@@ -1,0 +1,10 @@
+<%=
+  results = @assets.map do |a|
+    hash = {}
+    uri = hash[:uri] = "file:///"+a;
+    hash[:size] = file_size(uri);
+    hash[:asset_format] = file_ext(uri);
+    hash
+  end
+  results.to_json
+%>

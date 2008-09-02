@@ -1,4 +1,10 @@
-%tr
-  %td= link_to show.uri, edit_asset_path( show )
-  %td= show.asset_format
-  %td= number_to_human_size(show.size)
+%table
+  %tr
+    %td.input
+      = hidden_field_tag "video_assets_show_:id:", |
+                         ":id:", |
+                         :name => "video[assets][]" |
+      .delete.right= link_to "delete", "#"
+      = link_to "show.uri", edit_asset_path( ":id:" ), :class => "uri"
+    %td.format= "show.asset_format"
+    %td.size= "number_to_human_size(show.size)"
