@@ -2,12 +2,6 @@ class AssetsController < ApplicationController
 
   require_role "admin"
 
-  def _new
-    @video = params["video_id"].to_i == 0 ? session["new_video"] \
-                                          : Video.find( params["video_id"] )
-    @files  = Asset.uncataloged_files params
-  end
-
   def uncataloged
     options = { :limit => 10 }
     
@@ -29,7 +23,22 @@ class AssetsController < ApplicationController
     @assets.sort!
   end
 
-  def create
+  def show
+    @asset = Asset.find params[:id]
+    if @asset
+      redirect_to "/assets/" + @asset.relative_path
+    else
+      render_missing
+    end
+  end
+
+  def _new_
+    @video = params["video_id"].to_i == 0 ? session["new_video"] \
+                                          : Video.find( params["video_id"] )
+    @files  = Asset.uncataloged_files params
+  end
+
+ def _create_
     video_id = params[:video_id]
     if !video_id.nil? and video_id != "0"
       @video = Video.find video_id
