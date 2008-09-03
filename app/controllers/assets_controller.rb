@@ -1,6 +1,6 @@
 class AssetsController < ApplicationController
 
-  require_role "admin"
+  require_role [ :admin, :cataloger ], :for_all_except => [ :show ]
 
   def uncataloged
     options = { :limit => 10 }

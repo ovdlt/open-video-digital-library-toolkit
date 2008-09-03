@@ -39,7 +39,7 @@
   .entry
     .title Tools and Services
     %ul
-      - if current_user && current_user.has_role?( "admin" )
+      - if current_user && current_user.has_role?( [ :admin, :cataloger ] )
         %li= link_to "<span>Add new video</span>", "/videos/new"
       %li Save this search
 

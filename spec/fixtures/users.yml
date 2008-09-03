@@ -79,3 +79,12 @@ smparkes_guest:
   state: active
   salt: <%= salt = User::make_token %>
   crypted_password: <%= User::password_digest("ovdlt4smparkes",salt) %>
+
+cataloger:
+  id: 9
+  login: cataloger
+  email: smparkes_cataloger@smparkes.net
+  name: Cataloger
+  state: active
+  salt: <%= salt = User::make_token %>
+  crypted_password: <%= User::password_digest("ovdlt4cataloger",salt) %>

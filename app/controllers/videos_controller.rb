@@ -2,7 +2,7 @@ class VideosController < ApplicationController
 
   before_filter :find_video, :only => [:update, :edit, :destroy]
 
-  # require_role "admin", :for_all_except => [ :index, :show ]
+  require_role [ :admin, :cataloger], :for_all_except => [ :index, :show ]
 
   def show
     @video = Video.find( params[:id] ) if params[:id]
