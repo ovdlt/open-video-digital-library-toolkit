@@ -1,6 +1,8 @@
-- form_for @library, :url => general_information_library_path do |f|
+- f = @f
+%div
 
   .form
+
     %fieldset
 
       %legend Library Information
@@ -14,6 +16,3 @@
       .title= f.text_field :logo_url, :size => 80, :maxlength => 255
 
     .clear
-
-  = f.submit "Save"
-  = link_to "cancel", library_path

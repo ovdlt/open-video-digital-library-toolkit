@@ -1,6 +1,7 @@
 module VideosHelper
 
   def tabs
+    p "vids helpers"
     [
      :general_information,
      :digital_files,
@@ -11,14 +12,6 @@ module VideosHelper
      :collections,
      :related_videos,
     ]
-  end
-
-  def tab_for field
-    render :partial => "/shared/tab", :object => field
-  end
-
-  def div_for field
-    render :partial => "/shared/div", :object => field
   end
 
   def tab_path tab

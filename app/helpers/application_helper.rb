@@ -1,11 +1,11 @@
 module ApplicationHelper
 
-  def _uncataloged_files options
-    if options[:paged]
-      @files_paged ||= Asset.paginate_uncataloged_files(params)
-    else
-      @files ||= Asset.list_uncataloged_files
-    end
+  def tab_for field
+    render :partial => "/shared/tab", :object => field
+  end
+
+  def div_for field
+    render :partial => "/shared/div", :object => field
   end
 
 end

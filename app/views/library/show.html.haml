@@ -1,13 +1,13 @@
-%fieldset.library
-  %legend Collection Information
-  .tabs
-    %ul
-      = tab_for :general_information
-      = tab_for :date_types
-      = tab_for :roles
-      = tab_for :descriptor_types
-      = tab_for :collections
-      = tab_for :digital_files
-      = tab_for :rights_statements
-      = tab_for :video_relation_types
-      = tab_for :format_types
+- form_for :library, @library, :html => { :method => :put } do |@f|
+  %fieldset.library
+    %legend Collection Information
+    .tabs
+      %ul
+        - tabs.each do |tab|
+          = tab_for tab
+      - tabs.each do |tab|
+        = div_for tab
+    .clear
+
+    = @f.submit "Save"
+    = link_to "cancel", library_path

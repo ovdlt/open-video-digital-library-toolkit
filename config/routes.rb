@@ -27,14 +27,6 @@ ActionController::Routing::Routes.draw do |map|
                                           :cancel => :get,
                                           :clear => :get },
                          :member => { :download => :get,
-                                      :general_information => :any,
-                                      :digital_files => :any,
-                                      :responsible_entities => :any,
-                                      :dates => :any,
-                                      :chapters => :any,
-                                      :descriptors => :any,
-                                      :collections => :any,
-                                      :related_videos => :any,
                                       :reset => :get,
                          } do |videos|
 
@@ -53,21 +45,7 @@ ActionController::Routing::Routes.draw do |map|
     descriptor_type.resources :videos
   end
   
-  library_map = {}
-  [ :general_information,
-    :date_types,
-    :roles,
-    :descriptor_types,
-    :collections,
-    :digital_files,
-    :rights_statements,
-    :video_relation_types,
-    :format_types, ].each { |k| library_map[k] = :any }
-
-  map.resource :library,
-               :controller => :library,
-               :member => library_map
-                        
+  map.resource :library, :controller => :library
 
   map.resource :session
   
