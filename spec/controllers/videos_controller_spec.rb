@@ -76,9 +76,13 @@ describe VideosController do
   
   describe "#create with valid params" do
     before(:all) do
-      create_temp_asset("cute_with_chris.fla")
+      @file = create_temp_asset("cute_with_chris.fla")
     end
     
+    after(:all) do
+      File.unlink @file.path
+    end
+
     before(:each) do
       login_as_admin
     end
@@ -127,9 +131,13 @@ describe VideosController do
   
   describe "#create with invalid params" do
     before(:all) do
-      create_temp_asset("cute_with_chris.fla")
+      @file = create_temp_asset("cute_with_chris.fla")
     end
     
+    after(:all) do
+      File.unlink @file.path
+    end
+
     def do_post
       login_as_admin
       post :create, :video => {:filename => "cute_with_chris.fla", :title => "", :sentence => "all your dreams are dead"}
@@ -155,6 +163,10 @@ describe VideosController do
       get :edit, :id => @video.id
     end
     
+    after :each do
+      File.unlink @video.assets[0].absolute_path
+    end
+
     it "should assign @video with the video" do
       assigns[:video].should == @video
     end
@@ -172,6 +184,10 @@ describe VideosController do
       put :update, :id => @video.id, :video => {:title => "new title"}
     end
     
+    after :each do
+      File.unlink @video.assets[0].absolute_path
+    end
+
     it "should should be a redirect to the index" do
       response.should redirect_to(video_path(@video.id))
     end
@@ -193,6 +209,10 @@ describe VideosController do
       put :update, :id => @video.id, :video => {:title => ""}
     end
     
+    after :each do
+      File.unlink @video.assets[0].absolute_path
+    end
+
     it "should render the form again" do
       response.should render_template("videos/form")
     end
@@ -218,6 +238,10 @@ describe VideosController do
       @video.descriptors << Descriptor.find( :first )
       @video.save!
       @video.descriptors.should_not be_empty
+    end
+
+    after :each do
+      File.unlink @video.assets[0].absolute_path
     end
 
     it "should change descriptors as indicated" do
@@ -268,6 +292,10 @@ describe VideosController do
       @video = Factory(:video)
     end
     
+    after :each do
+      File.unlink @video.assets[0].absolute_path
+    end
+
     def do_delete
       delete :destroy, :id => @video.id
     end

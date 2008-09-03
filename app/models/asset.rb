@@ -3,13 +3,17 @@ class Asset < ActiveRecord::Base
   belongs_to :video
 
   ASSET_DIR = ::ASSET_DIR
+  ASSET_DIR_LENGTH = ASSET_DIR.length
+
+  FILE_PREFIX =  "file:///"
+  FILE_PREFIX_LENGTH = FILE_PREFIX.length
 
   validates_uniqueness_of :uri
   validate :must_have_valid_path
   validate :must_exist_on_disk
 
   before_save do |asset|
-    asset.size ||= File.size(asset.path)
+    asset.size ||= File.size(asset.absolute_path)
   end
   
   class << self
@@ -41,21 +45,40 @@ class Asset < ActiveRecord::Base
       
     end
 
-    private
+  private
 
     def list_dir params
-      list = Dir.glob("#{ASSET_DIR}/*").map { |filename| File.new(filename) }
 
-      q = params[:q]
-
-      list.reject! do |file|
-        p = File.basename(file.path).downcase
-        q and p.index( q ) == nil
+      list = Dir.glob("#{ASSET_DIR}/**/*").map do |filename|
+        File.directory?( filename ) ? [] : filename
       end
 
-      l = list.partition { |file| File.directory?(file) }.flatten!
+      list.flatten!
+      
+      list = list.map do |f|
+        if f.index(ASSET_DIR) == 0
+          f[ASSET_DIR_LENGTH+1,f.length]
+        else
+          []
+        end
+      end
 
-      l.map { |f| "file:///" + File.basename(f.path) }
+      list.flatten!
+
+      if ( q = params[:q] )
+        q = q.downcase
+        list.reject! do |file|
+          p = file.downcase
+          q = q.downcase
+          p.index( q ) == nil
+        end
+      end
+
+      list = list.map do |f|
+        FILE_PREFIX + f
+      end
+
+      list
 
     end
 
@@ -63,22 +86,19 @@ class Asset < ActiveRecord::Base
 
   def valid_path?
     video_path = Pathname.new File.expand_path(ASSET_DIR)
-    Pathname.new(File.expand_path(path)).ascend do |path|
+    Pathname.new(File.expand_path(absolute_path)).ascend do |path|
       return true if path == video_path
     end
     return false
   end
   
-  FILE_PREFIX =  "file:///"
-  FILE_PREFIX_LENGTH = FILE_PREFIX.length
-
-  def filename
-    raise ArgumentError if !uri.starts_with? FILE_PREFIX
-    uri[FILE_PREFIX_LENGTH,uri.length-FILE_PREFIX_LENGTH]
+  def absolute_path
+    File.expand_path(File.join(Asset::ASSET_DIR,relative_path))
   end
 
-  def path
-    File.expand_path(File.join(Asset::ASSET_DIR,filename))
+  def relative_path
+    raise ArgumentError if !uri.starts_with? FILE_PREFIX
+    uri[FILE_PREFIX_LENGTH,uri.length-FILE_PREFIX_LENGTH]
   end
 
   def encoding
@@ -87,8 +107,8 @@ class Asset < ActiveRecord::Base
 
   def asset_format
     encoding and encoding.text or begin
-      p = File.extname(path)
-      p[1...p.length].capitalize
+      p = File.extname(relative_path)
+      p[1...p.length].upcase
     end
   end
 
@@ -101,7 +121,7 @@ class Asset < ActiveRecord::Base
   def must_exist_on_disk
     if valid_path?
       errors.add_to_base("The file does not exist on disk") \
-        if !File.exists?(path)
+        if !File.exists?(absolute_path)
     end
   end
     

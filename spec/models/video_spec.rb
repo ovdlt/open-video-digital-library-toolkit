@@ -6,6 +6,10 @@ describe Video, "validations" do
     @video = Factory(:video)
   end
   
+  after :each do
+    File.unlink @video.assets[0].absolute_path
+  end
+
   it "should require the presence of a title" do
     @video.should be_valid
     @video.title = nil
@@ -27,6 +31,10 @@ describe Video, "descriptors" do
     @type = DescriptorType.create! :title => "some descriptor"
     @value = Descriptor.create! :descriptor_type => @type,
                                  :text => "some descriptor"
+  end
+
+  after :each do
+    File.unlink @video.assets[0].absolute_path
   end
 
   it "should start as an empty set" do
@@ -68,6 +76,10 @@ describe Video do
     before(:each) do
       @string = "just_for_this_test"
       @video = Factory.build :video, :sentence => @string
+    end
+
+    after :each do
+      File.unlink @video.assets[0].absolute_path
     end
 
     it "should insert into FT table on save" do
@@ -129,6 +141,10 @@ describe Video do
                                     :text => "ba", :priority => 1 ) ]
       @video.descriptors = @dss
       @video.save!
+    end
+
+    after :each do
+      File.unlink @video.assets[0].absolute_path
     end
 
     it "should return all the types for a video in pri order" do
