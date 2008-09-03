@@ -101,6 +101,10 @@ class Asset < ActiveRecord::Base
     uri[FILE_PREFIX_LENGTH,uri.length-FILE_PREFIX_LENGTH]
   end
 
+  def filename
+    File.basename(relative_path)
+  end
+
   def encoding
     nil
   end

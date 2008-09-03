@@ -208,6 +208,7 @@ describe Asset do
   end
 
   describe "paths" do
+
     it "should return a valid absolute/relative paths" do
       file = create_temp_asset("a_normal_asset.mov")
       asset = Asset.new(:uri => "file:///" + "a_normal_asset.mov")
@@ -216,6 +217,17 @@ describe Asset do
       File.stat(asset.absolute_path).should_not be_nil
       File.stat(File.join(Asset::ASSET_DIR,asset.relative_path)).
         should_not be_nil
+      File.unlink file.path
+    end
+
+    it "should return something simple for filename "+
+       "(for dsiplay and download)" do
+
+      file = create_temp_asset("a_normal_asset.mov")
+      asset = Asset.new(:uri => "file:///" + "a_normal_asset.mov")
+
+      asset.filename.should == "a_normal_asset.mov"
+
       File.unlink file.path
     end
   end

@@ -31,6 +31,9 @@
         
           .download
 
+
+            %a{:href => asset_path( asset  )}
+              = asset.filename
             &diams;
             .format= h asset.asset_format
             &loz;
