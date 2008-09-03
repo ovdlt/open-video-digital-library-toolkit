@@ -5,7 +5,7 @@ class AssetsController < ApplicationController
   def _new
     @video = params["video_id"].to_i == 0 ? session["new_video"] \
                                           : Video.find( params["video_id"] )
-    @files  = Asset.list_uncataloged_files params
+    @files  = Asset.uncataloged_files params
   end
 
   def uncataloged
@@ -23,7 +23,7 @@ class AssetsController < ApplicationController
       options[:q] = params[:q]
     end
 
-    assets = Asset.list_uncataloged_files options
+    assets = Asset.uncataloged_files options
 
     @assets = assets.map { |a| File.basename(a[8,a.length]) }
     @assets.sort!

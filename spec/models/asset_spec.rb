@@ -32,7 +32,7 @@ describe Asset, "validations" do
 
 end
 
-describe Asset, ".list_uncataloged_files" do
+describe Asset, ".uncataloged_files" do
   before(:all) do
     create_temp_asset("the_darjeeling_limited.avi")
     @our_mr_sun = Factory(:video).assets[0]
@@ -41,7 +41,7 @@ describe Asset, ".list_uncataloged_files" do
     Dir.mkdir(new_dir_path)
     @directory = Dir.new(new_dir_path)
     
-    @file_list = Asset.list_uncataloged_files( {} )
+    @file_list = Asset.uncataloged_files( {} )
   end
   
   after(:all) do

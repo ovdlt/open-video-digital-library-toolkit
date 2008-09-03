@@ -1,4 +1,4 @@
-- if (files = uncataloged_files(:paged => true)).length < 1
+- if (files = Asset.uncataloged_files(params).length) < 1
   .div No uncataloged files
 - else
   %fieldset
@@ -30,7 +30,7 @@
     %script{:type=>"text/javascript"}
       $(function(){
       $("div#asset_pager").paginate(
-      = Asset.list_uncataloged_files(params).size
+      = Asset.uncataloged_files({}).length
       ,
       = '"' + formatted_uncataloged_assets_path( :format => :json ) + '"'
       );

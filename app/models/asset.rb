@@ -13,8 +13,8 @@ class Asset < ActiveRecord::Base
   end
   
   class << self
-
-    def list_uncataloged_files params
+    
+    def _list_uncataloged_files params
       return list_uncated( params )
       list = Dir.glob("#{ASSET_DIR}/*").map { |filename| File.new(filename) }
 
@@ -37,7 +37,7 @@ class Asset < ActiveRecord::Base
       end
     end
     
-    def paginate_uncataloged_files params
+    def _paginate_uncataloged_files params
       list = list_uncataloged_files params
       perpage = params[:page_page] || "10"
       pagenum = params[:page] || "1"
@@ -54,9 +54,7 @@ class Asset < ActiveRecord::Base
                                    list.length.to_s).concat(list[a..b])
     end
     
-    private
-    
-    def list_uncated params
+    def uncataloged_files params
       list = list_dir params
       options = { :select => "uri" }
       if params[:q]
