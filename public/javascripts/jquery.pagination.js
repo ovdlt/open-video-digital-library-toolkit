@@ -7,7 +7,7 @@
  * @param {Object} opts Several options (see README for documentation)
  * @return {Object} jQuery Object
  */
-jQuery.fn.pagination = function(maxentries, opts){
+jQuery.fn.pagination = (function(maxentries, opts){
 	opts = jQuery.extend({
 		items_per_page:10,
 		num_display_entries:10,
@@ -161,6 +161,4 @@ jQuery.fn.pagination = function(maxentries, opts){
 		// When all initialisation is done, draw the links
 		drawLinks();
 	});
-}
-
-
+});
