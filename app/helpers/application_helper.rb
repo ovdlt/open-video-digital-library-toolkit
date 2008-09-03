@@ -1,5 +1,10 @@
 module ApplicationHelper
 
+  def _file_size(file)
+    file = File.new( File.join( Asset::ASSET_DIR, file[8,file.length] ) )
+    number_to_human_size(file.stat.size) if File.file?(file)
+  end
+  
   def uncataloged_files options
     if options[:paged]
       @files_paged ||= Asset.paginate_uncataloged_files(params)

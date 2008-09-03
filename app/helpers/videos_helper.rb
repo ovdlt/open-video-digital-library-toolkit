@@ -35,11 +35,6 @@ module VideosHelper
     end
   end
 
-  def file_size(file)
-    file = File.new( File.join( Asset::ASSET_DIR, file[8,file.length] ) )
-    number_to_human_size(file.stat.size) if File.file?(file)
-  end
-  
   def link_to_add_video(file)
     file = File.new( File.join( Asset::ASSET_DIR, file[8,file.length] ) )
     # unless Asset.exists?(:uri => "file:///" + File.basename(file.path)) ||
