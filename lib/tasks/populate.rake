@@ -38,6 +38,7 @@ namespace :db do
       types.each do |type|
         v.descriptors << values[type.id][ rand(values[type.id].size) ]
       end
+      v.save!
     end
 
     # generate uncatagorized files
