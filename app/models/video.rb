@@ -18,10 +18,14 @@ class Video < ActiveRecord::Base
       if vf == nil
         vf = VideoFulltext.new :video_id => video.id
       end
-      vf.text = [ video.title,
-                  video.sentence,
-                  video.abstract,
-                  video.donor ].join(" ")
+      texts = [ video.title,
+                video.sentence,
+                video.abstract,
+                video.donor ]
+
+      video.descriptors.each { |d| texts << d.text }
+
+      vf.text = texts.join(" ")
       vf.save
     end
   end
