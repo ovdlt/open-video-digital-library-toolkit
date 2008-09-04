@@ -4,9 +4,10 @@ ActionController::Routing::Routes.draw do |map|
   map.register '/register', :controller => 'users', :action => 'create'
   map.signup '/signup', :controller => 'users', :action => 'new'
 
-  map.resources :users do |users|
-    users.resources :favorites
-  end
+  map.resources :users
+
+  map.resources :saved_queries
+  map.resources :favorites
 
   map.activate '/activate/:activation_code',
                :controller => 'users',
@@ -46,8 +47,10 @@ ActionController::Routing::Routes.draw do |map|
   end
   
   map.resource :library, :controller => :library
+  map.resource :my, :controller => :my
 
   map.resource :session
+
   
   map.root :controller => 'home'
   

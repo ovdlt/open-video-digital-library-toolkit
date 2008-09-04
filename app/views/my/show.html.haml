@@ -1,0 +1,46 @@
+.my
+  .account
+    = h(current_user.login)
+    Account Information
+  .summary.box
+    .title
+      Account Summary for
+      = h(current_user.login)
+    .registered
+      Registered since:
+      = current_user.created_at.to_date.to_s(:long)
+    .viewed
+      Videos Viewed:
+      = 0
+    .favorites
+      Favorites:
+      = 0
+    .playlists
+      Playlists:
+      = 0
+    .subscriptions
+      Subscriptions:
+      = 0
+    .saved_searches
+      Saved searches:
+      = current_user.saved_queries.size
+  .searches.box
+    .title My Searches
+    - if current_user.saved_queries.size > 0
+      - current_user.saved_queries.each do |sq|
+        .search
+          %span.title Search:
+          %a{:href=>sq_path(sq)}
+            %span
+              - if !sq.query_string.blank?
+                = '"'+ h(sq.query_string) + '"'
+              - if sq.descriptor
+                in
+                = h sq.descriptor.descriptor_type.title
+                &mdash;
+                = h( sq.descriptor.text )
+          .controls
+            .delete
+              - form_tag saved_query_path(sq), :method => :delete do
+                = submit_tag "delete"
+           

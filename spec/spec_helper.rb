@@ -25,6 +25,25 @@ def login_as_mock_user
   self.current_user = mock_user
 end
 
+def login_as_user
+  self.current_user = User.find( :all ).detect do
+    |u| !u.has_role?( [:admin, :cataloger] )
+  end
+end
+
+def login_as_other_user
+  
+  self.current_user = User.find( :all ).detect do
+    |u| !u.has_role?( [:admin, :cataloger] ) and
+         u.id != current_user.id
+  end
+end
+
 def login_as_admin
   self.current_user = User.find( :all ).detect { |u| u.has_role? "admin" }
 end
+
+def logout
+  self.current_user = nil
+end
+

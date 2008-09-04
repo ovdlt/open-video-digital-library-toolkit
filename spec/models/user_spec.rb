@@ -2,12 +2,32 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe User do
+
+  describe "#saved_queries" do
+
+    it "should be empty to start" do
+      user = create_user
+      user.saved_queries.should be_empty
+    end
+
+    it "should allow queries to be added" do
+      user = create_user
+      user.saved_queries.build :query_string => "foo"
+      user.saved_queries << SavedQuery.new( :descriptor_id => 1 )
+      user.save.should be_true
+      user.saved_queries.size.should == 2
+    end
+
+  end
+
+
   describe 'being created' do
     before do
       @user = nil
       @creating_user = lambda do
         @user = create_user
-        violated "#{@user.errors.full_messages.to_sentence}" if @user.new_record?
+        violated "#{@user.errors.full_messages.to_sentence}" \
+          if @user.new_record?
       end
     end
     

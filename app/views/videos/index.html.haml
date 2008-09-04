@@ -6,6 +6,13 @@
     - form_tag @path.call({}), :method => :get do
       = text_field_tag :query, params[:query], :size => 60
       = submit_tag "Search"
+      - if params[:descriptor_id]
+        - descriptor = Descriptor.find( params[:descriptor_id] )
+        .search-within
+          In
+          = h(descriptor.descriptor_type.title)
+          &mdash;
+          = h(descriptor.text)
 
   .pagination_info
     = page_entries_info @videos
@@ -42,6 +49,11 @@
     %ul
       - if current_user && current_user.has_role?( [ :admin, :cataloger ] )
         %li= link_to "<span>Add new video</span>", "/videos/new"
-      %li Save this search
+      - if current_user and ( params[:descriptor_id] or params[:query] )
+        %li
+          - form_tag saved_queries_path, :method => :post do
+            = hidden_field_tag :descriptor_id, params[:descriptor_id]
+            = hidden_field_tag :query, params[:query]
+            = submit_tag "Save this search"
 
 .clear

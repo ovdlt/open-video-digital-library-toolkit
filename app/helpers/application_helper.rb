@@ -21,4 +21,20 @@ module ApplicationHelper
     number_to_human_size(file.stat.size) if File.file?(file)
   end
   
+  def sq_path sq
+    if sq.descriptor
+      if !sq.query_string.blank?
+        descriptor_videos_path( sq.descriptor, :query => sq.query_string )
+      else
+        descriptor_videos_path( sq.descriptor )
+      end
+    else
+      if !sq.query_string.blank?
+        videos_path( :query => sq.query_string )
+      else
+        videos_path
+      end
+    end
+  end
+
 end

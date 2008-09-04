@@ -7,26 +7,36 @@ describe Library do
 
     @valid_attributes = {
       :title => "Library title",
-      :subtitle => "about a library"
+      :subtitle => "about a library",
+      :my => "My Library",
     }
+
   end
 
   it "should create a new instance given valid attributes" do
     Library.create!(@valid_attributes)
   end
 
+  it "should reject a new instance without a my string" do
+    @valid_attributes.delete :my
+    ( Library.create @valid_attributes ).save.should be_false
+  end
+
   it "should reject a new instance without a title" do
-    ( Library.create :subtitle => "foo" ).save.should be_false
+    @valid_attributes.delete :title
+    ( Library.create @valid_attributes ).save.should be_false
   end
 
   it "should allow a new instance without a subtitle" do
-    ( Library.create :title => "foo" ).save.should be_true
+    @valid_attributes.delete :subtitle
+    ( Library.create @valid_attributes ).save.should be_true
   end
 
   describe ".title" do
     it "should return the title of some library record" do
       s = "a title"
-      Library.create! :title => s
+      my = "my title"
+      Library.create! :title => s, :my => my
       Library.title.should == s
     end
   end
@@ -35,7 +45,8 @@ describe Library do
     it "should return the subtitle of some library record" do
       t = "a title"
       s = "a subtitle"
-      Library.create! :title => t, :subtitle => s
+      my = "my title"
+      Library.create! :title => t, :subtitle => s, :my => my
       Library.subtitle.should == s
     end
   end
@@ -44,7 +55,8 @@ describe Library do
     it "should return the logo_url of some library record" do
       t = "a title"
       s = "a logo_url"
-      Library.create! :title => t, :logo_url => s
+      my = "my title"
+      Library.create! :title => t, :logo_url => s, :my => my
       Library.logo_url.should == s
     end
   end

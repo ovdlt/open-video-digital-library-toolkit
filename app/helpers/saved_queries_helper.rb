@@ -1,0 +1,2 @@
+module SavedQueriesHelper
+end
