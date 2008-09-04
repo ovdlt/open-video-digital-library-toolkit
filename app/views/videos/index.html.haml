@@ -10,20 +10,21 @@
   .pagination_info
     = page_entries_info @videos
 
-  .navigate
+  - if @videos.size > 0
+    .navigate
 
-    .view.first
-      %div{current(:list)}= link_to_format :list
-    .view
-      %div{current(:tile)}= link_to_format :tile
-    .view
-      %div{current(:image)}= link_to_format :image
-    .clear
+      .view.first
+        %div{current(:list)}= link_to_format :list
+      .view
+        %div{current(:tile)}= link_to_format :tile
+      .view
+        %div{current(:image)}= link_to_format :image
+      .clear
 
-  %div{:class => "videos #{page_format.to_s}"}
-    = render :partial => page_format.to_s, :collection => @videos
+    %div{:class => "videos #{page_format.to_s}"}
+      = render :partial => page_format.to_s, :collection => @videos
 
-    .clear
+      .clear
 
   .pagination
     = will_paginate @videos
