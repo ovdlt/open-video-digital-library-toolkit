@@ -1,0 +1,8 @@
+%h1
+  Collection:
+  = @collection.title
+- if !@collection.description.blank?
+  %h2
+    Description:
+    = @collection.description
+= render :partial => "videos", :object => @collection.videos

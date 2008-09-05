@@ -104,5 +104,16 @@ $(function(){
     });
 
 
+    $("form label.button").hover(function(){
+        $(this).addClass("pointer");
+    },function(){
+        $(this).removeClass("pointer");
+    })
+    /* Firefox doesn't need this but IE does */
+    .click(function(){
+        $("input",this).click();
+        return false;
+    });
+
 });
 

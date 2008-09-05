@@ -25,30 +25,19 @@ class AssetsController < ApplicationController
 
   def show
     @asset = Asset.find params[:id]
-    if @asset
-      redirect_to "/assets/" + @asset.relative_path
-    else
+    if !@asset
       render_missing
+      return
     end
-  end
 
-  def _new_
-    @video = params["video_id"].to_i == 0 ? session["new_video"] \
-                                          : Video.find( params["video_id"] )
-    @files  = Asset.uncataloged_files params
-  end
-
- def _create_
-    video_id = params[:video_id]
-    if !video_id.nil? and video_id != "0"
-      @video = Video.find video_id
+    if current_user and
+       current_user.downloads.videos.find_by_id(@asset.video_id).nil?
+      current_user.downloads.videos << @asset.video
+      current_user.downloads.save!
+      current_user.save!
     end
-    @video ||= ( session["working_video"] ||= Video.new :title => "foobar" )
-    @video.id ||= 0
-    
-    @video.assets << Asset.new( :uri => "file:///" + params[:filename] )
-
-    redirect_to new_video_path
+      
+    redirect_to "/assets/" + @asset.relative_path
   end
 
 end

@@ -1,0 +1,46 @@
+.video
+  .image
+  .video_details
+    .title=h video.title
+    - if !video.year.blank?
+      .year= "(#{h video.year})"
+    .sentence=h video.sentence
+    .menu
+      = link_to "View video details", video_path( video )
+      &nbsp;&bull;&nbsp;
+      - if current_user
+        - if current_user.favorites.video_ids.include? video.id
+          - form_tag favorite_path( video.id ), :method => :delete, |
+                                                :class => :inline do |
+            %label.button
+              Delete from favorites
+              = submit_tag "Delete from favorites", |
+                           :class => "inline hidden" |
+        - else
+          - form_tag favorites_path, :method => :post, :class => :inline do
+            = hidden_field_tag :video_id, video.id, :id => nil
+            %label.button
+              Add to favorites
+              = submit_tag "Add to favorites", :class => "inline hidden"
+        &nbsp;&bull;&nbsp;
+      = link_to "Download", download_video_path( video )
+  .video_descriptors
+    - browse_descriptors_and_types( video ).each do |dt|
+      .descriptor 
+        .type= "#{dt[0].title}:"
+        .values
+          - dt[1].each do |d|
+            .value= d.text
+      .clear
+    .descriptor 
+      .type Duration:
+      .values
+        .value= int_to_duration(video.duration)
+    .clear
+    .descriptor 
+      .type Views:
+      .values
+        .value= video.views
+    .clear
+
+  .clear

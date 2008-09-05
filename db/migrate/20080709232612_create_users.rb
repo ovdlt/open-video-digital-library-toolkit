@@ -1,3 +1,4 @@
+
 class CreateUsers < ActiveRecord::Migration
   def self.up
     create_table "users", :force => true do |t|
@@ -18,6 +19,10 @@ class CreateUsers < ActiveRecord::Migration
                                            :null => :no,
                                            :default => 'passive'
       t.column :deleted_at,                :datetime
+
+      t.integer :favorites_id, :null => true
+      t.integer :downloads_id, :null => true
+
     end
     add_index :users, :login, :unique => true
   end

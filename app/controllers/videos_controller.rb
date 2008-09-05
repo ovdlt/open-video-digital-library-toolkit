@@ -1,17 +1,36 @@
 class VideosController < ApplicationController
 
-  before_filter :find_video, :only => [:update, :edit, :destroy]
+  before_filter :find_video, :only => [:update,
+                                       :edit,
+                                       :destroy,
+                                       :show,
+                                       :download,
+                                      ]
 
   require_role [ :admin, :cataloger], :for_all_except => [ :index, :show ]
 
   def show
-    @video = Video.find( params[:id] ) if params[:id]
-    if !@video
+    @path = lambda { |opts| opts == {} ? video_path( @video ) \
+                                       : video_path( @video, opts ) }
+    @video.views += 1
+    @video.save
+  end
+
+  def download
+    @asset = @video.assets[0]
+    if !@asset
       render_missing
       return
     end
-    @path = lambda { |opts| opts == {} ? video_path( @video ) \
-                                       : video_path( @video, opts ) }
+
+    if current_user and
+       current_user.downloads.videos.find_by_id(@video.id).nil?
+      current_user.downloads.videos << @video
+      current_user.downloads.save!
+      current_user.save!
+    end
+      
+    redirect_to "/assets/" + @asset.relative_path
   end
 
   def per_page
@@ -276,9 +295,8 @@ class VideosController < ApplicationController
     @video = Video.find_by_id(params[:id])
     if @video.nil?
       flash[:error] = "Video could not be found"
-      redirect_to videos_path and return
+      redirect_to videos_path
     end
-    @video
   end
   
 end

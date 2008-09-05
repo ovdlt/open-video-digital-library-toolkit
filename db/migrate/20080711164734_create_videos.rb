@@ -9,6 +9,8 @@ class CreateVideos < ActiveRecord::Migration
       t.string  :rights_holder, :limit => 80,   :null => true
       t.integer :rights_id,                     :null => false
       t.integer :duration,                      :null => true
+
+      t.integer :views,                         :null => false, :default => 0
       t.string  :local_id,                      :null => true
       t.string  :donor,                         :null => true
       t.timestamps

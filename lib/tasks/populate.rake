@@ -38,6 +38,7 @@ namespace :db do
       types.each do |type|
         v.descriptors << values[type.id][ rand(values[type.id].size) ]
       end
+      v.duration = rand(3*60*60)
       v.save!
     end
 

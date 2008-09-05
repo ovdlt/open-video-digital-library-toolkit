@@ -3,8 +3,29 @@ require 'digest/sha1'
 class User < ActiveRecord::Base
   
   has_and_belongs_to_many :roles
+
   has_many :saved_queries
-  
+  has_many :collections
+
+  has_one :favorites, :class_name => "Collection", :dependent => :destroy
+  has_one :downloads, :class_name => "Collection", :dependent => :destroy
+
+  [ :favorites, :downloads ].each do |collection_name|
+    define_method collection_name do
+      collection = nil
+      if (self.send "#{collection_name}_id".to_sym).nil?
+        collection = Collection.create! :user_id => id,
+                                         :title => "#{login} #{collection_name}"
+        self.send "#{collection_name}_id=".to_sym, collection.id
+        # self.send "#{collection_name}=".to_sym, collection
+        save!
+      else
+        collection = Collection.find(self.send( "#{collection_name}_id"))
+      end
+      collection
+    end
+  end
+
   # has_role? simply needs to return true or false whether a user has
   # a role or not.  It may be a good idea to have "admin" roles return
   # true always
@@ -43,8 +64,6 @@ class User < ActiveRecord::Base
   # prevents a user from submitting a crafted form that bypasses activation
   # anything else you want your user to change should be added here.
   attr_accessible :login, :email, :name, :password, :password_confirmation
-
-
 
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
   #

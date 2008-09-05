@@ -1,0 +1,13 @@
+- if current_user.favorites.video_ids.include? alter_favorites.id
+  - form_tag favorite_path( alter_favorites.id ), :method => :delete, |
+                                       :class => :inline do |
+    %label.button
+      Delete from favorites
+      = submit_tag "Delete from favorites", |
+                   :class => "inline hidden" |
+- else
+  - form_tag favorites_path, :method => :post, :class => :inline do
+    = hidden_field_tag :video_id, alter_favorites.id, :id => nil
+    %label.button
+      Add to favorites
+      = submit_tag "Add to favorites", :class => "inline hidden"

@@ -6,6 +6,9 @@ class Video < ActiveRecord::Base
 
   has_and_belongs_to_many :descriptors
 
+  has_many :bookmarks, :dependent => :destroy
+  has_many :collections, :through => :bookmarks
+
   validates_presence_of :title
   validates_presence_of :sentence
   validates_presence_of :rights_id, :message => "type must be selected"

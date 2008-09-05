@@ -10,11 +10,11 @@
       Registered since:
       = current_user.created_at.to_date.to_s(:long)
     .viewed
-      Videos Viewed:
-      = 0
+      = link_to_if( (current_user.downloads.size > 0), "Videos viewed:", collection_path( current_user.downloads ) )
+      = current_user.downloads.size
     .favorites
-      Favorites:
-      = 0
+      = link_to_if( (current_user.favorites.size > 0), "Favorites:", collection_path( current_user.favorites ) )
+      = current_user.favorites.videos.size
     .playlists
       Playlists:
       = 0
@@ -25,7 +25,7 @@
       Saved searches:
       = current_user.saved_queries.size
   .searches.box
-    .title My Searches
+    .title Saved Searches
     - if current_user.saved_queries.size > 0
       - current_user.saved_queries.each do |sq|
         .search
@@ -42,5 +42,12 @@
           .controls
             .delete
               - form_tag saved_query_path(sq), :method => :delete do
-                = submit_tag "delete"
-           
+                %label.button
+                  delete
+                  = submit_tag "delete", :class => :hidden
+  - if current_user.favorites.videos.size > 0
+    .favorites.box
+      .title Favorites
+      = render :partial => "/collections/videos", :object => favorites_teaser
+      .all= link_to "View all favorites >>", |
+                     collection_path( current_user.favorites ) |

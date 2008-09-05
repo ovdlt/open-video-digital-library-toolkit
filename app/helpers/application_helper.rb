@@ -37,4 +37,19 @@ module ApplicationHelper
     end
   end
 
+  def browse_descriptors_and_types video
+    descriptors = video.descriptors
+    types = ( descriptors.map { |d| d.descriptor_type } ).uniq
+    types = DescriptorType.browse.select { |dt| types.include? dt }
+    types.map { |t| [ t, descriptors.select { |d| d.descriptor_type == t } ] }
+  end
+
+  def int_to_duration v
+    return nil if v.nil?
+    h = v/3600
+    m = ( v % 3600 ) / 60
+    s = ( v % 3600 ) % 60
+    "%02d:%02d:%02d" % [ h, m, s ]
+  end
+
 end

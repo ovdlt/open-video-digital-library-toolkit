@@ -54,6 +54,8 @@
           - form_tag saved_queries_path, :method => :post do
             = hidden_field_tag :descriptor_id, params[:descriptor_id]
             = hidden_field_tag :query, params[:query]
-            = submit_tag "Save this search"
+            %label.button
+              Save this search
+              = submit_tag "Save this search", :class => :hidden
 
 .clear

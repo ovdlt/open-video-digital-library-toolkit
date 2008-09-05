@@ -48,6 +48,7 @@ ActionController::Routing::Routes.draw do |map|
   
   map.resource :library, :controller => :library
   map.resource :my, :controller => :my
+  map.resources :collections
 
   map.resource :session
 

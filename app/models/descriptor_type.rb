@@ -8,7 +8,11 @@ class DescriptorType < ActiveRecord::Base
   def self.browse &block
     options = { :order => "priority asc",
                 :conditions => [ "browsable = true" ] }
-    ( self.find :all, options ).each &block
+    if block
+      ( self.find :all, options ).each &block
+    else
+      ( self.find :all, options )
+    end
   end
 
   def self.sorted
