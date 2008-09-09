@@ -1,8 +1,23 @@
-%h1
-  Collection:
-  = @collection.title
-- if !@collection.description.blank?
-  %h2
-    Description:
-    = @collection.description
+- collection = @collection
+.collection.page
+  .image
+    image
+  .details
+    .title= collection.title
+    .description= collection.description
+  .menu
+    .attribute
+      .legend Created on:
+      .right.value= collection.created_at.to_date.to_s(:medium)
+    .attribute
+      .legend Last updated:
+      .right.value= collection.updated_at.to_date.to_s(:medium)
+    .attribute
+      .legend Videos:
+      .value= collection.size
+    .attribute
+      .legend Views:
+      .value= collection.views
+  .clear
+
 = render :partial => "videos", :object => @collection.videos

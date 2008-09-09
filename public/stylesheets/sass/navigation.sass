@@ -3,7 +3,7 @@
   :font-size 1.3em
   :line-height normal
   :bottom 0
-  :overflow hidden
+  :overflow visible
   :width 100%
   
   ul
@@ -24,6 +24,7 @@
     :text-decoration none
   
     span
+      :height 1em
       :font-weight bold
       :display block
       :background transparent url(/images/backgrounds/navigation-b-default.jpg) no-repeat right top
@@ -39,6 +40,15 @@
       span
         :background-color #cdeafb
         :color #457ea1
+
+#navigation ul.tall
+  li
+    :margin-top -1.0em
+    :height 3.5em
+
+    span
+      :padding-top .5em
+      :height 2.2em
 
 .clear
   :clear both
@@ -71,3 +81,7 @@
   .view.first
     div
       :border-left 2px solid black
+
+
+#navigation ul li a span
+  :text-align center

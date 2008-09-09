@@ -1,0 +1,23 @@
+.collection
+  .image
+    image
+  .details
+    .title= collection.title
+    .attribute
+      .legend= collection.size
+      .value Videos
+    &diams;
+    .attribute
+      .legend Collection added:
+      .value= collection.created_at.to_date.to_s(:long)
+    &diams;
+    .attribute
+      .legend Last Updated:
+      .value= collection.updated_at.to_date.to_s(:long)
+    .description= collection.description
+    .menu
+      %div= link_to "View collection videos", collection_path( collection )
+      &diams;
+      %div= link_to "Subscribe to collection", |
+                    collection_path( collection, :format => "atom" ) |
+  .clear

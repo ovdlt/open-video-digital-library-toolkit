@@ -1,6 +1,32 @@
 class CollectionsController < ApplicationController
 
-  before_filter :find_and_verify_public_or_user
+  before_filter :find_and_verify_public_or_user,
+                :except => [ :library, :playlists ]
+
+  def library
+    user = User.find Library.collections_user_id;
+    @collections =
+      Collection.paginate :page => params[:page],
+                           :per_page => 5,
+                           :conditions => [ "user_id = ? and public is true",
+                                            user ]
+    @title = Library.collections_title
+    @subtitle =
+      "The #{Library.title} currently contains "+
+      "#{@collections.total_entries} collections"
+    render :action => :index
+  end
+
+  def playlists
+    user = User.find Library.collections_user_id;
+    @collections =
+      Collection.paginate :page => params[:page],
+                           :per_page => 5,
+                           :conditions => [ "user_id <> ? and public is true",
+                                            user ]
+    @title = Library.playlists_title
+    render :action => :index
+  end
 
   private
 
@@ -12,6 +38,9 @@ class CollectionsController < ApplicationController
       render_missing
     end
     
+    @collection.views += 1
+    @collection.save
+
   end
 
 end

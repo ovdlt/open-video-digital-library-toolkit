@@ -25,15 +25,23 @@
                      "<span>Home</span>", root_path |
               %ul
                 %li= link_to_unless VideosController === controller, |
-                     "<span>Videos</span>", "/videos" |
-              - if current_user && current_user.has_role?( "admin" )
-                %ul
-                  %li= link_to_unless LibraryController === controller, |
-                       "<span>Collection Administration</span>", "/library" |
+                     "<span>Videos</span>", videos_path |
+              %ul
+                %li= link_to_unless CollectionsController === controller && |
+                                    params[:action] == "library", |
+                     "<span>Collections</span>", library_collections_path |
+              %ul
+                %li= link_to_unless CollectionsController === controller && |
+                                    params[:action] == "playlists", |
+                     "<span>Playlists</span>", playlists_collections_path |
               - if current_user
                 %ul
                   %li= link_to_unless MyController === controller, |
                         "<span>#{my}</span>", my_path |
+              - if current_user && current_user.has_role?( "admin" )
+                %ul.tall
+                  %li= link_to_unless LibraryController === controller, |
+                       "<span>Collection<br />Administration</span>", "/library" |
 
           .login_logout
             - if logged_in?

@@ -48,11 +48,14 @@ ActionController::Routing::Routes.draw do |map|
   
   map.resource :library, :controller => :library
   map.resource :my, :controller => :my
-  map.resources :collections
+
+  map.resources :collections,
+                :collection => { :library => :get,
+                                 :playlists => :get,
+                               }
 
   map.resource :session
 
-  
   map.root :controller => 'home'
   
 end

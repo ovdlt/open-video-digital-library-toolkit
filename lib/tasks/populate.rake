@@ -31,7 +31,10 @@ namespace :db do
 
     years = (1850..2008).to_a
 
+    collections = Collection.find_all_by_user_id 10
+
     # generate videos
+
     number.times do
       v = Factory(:video)
       v.year = years[rand(years.size)]
@@ -39,6 +42,10 @@ namespace :db do
         v.descriptors << values[type.id][ rand(values[type.id].size) ]
       end
       v.duration = rand(3*60*60)
+
+      c = collections[rand(collections.size)]
+      c.videos << v
+      c.save!
       v.save!
     end
 

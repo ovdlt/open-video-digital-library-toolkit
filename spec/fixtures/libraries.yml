@@ -4,3 +4,6 @@ nhf:
   subtitle: a digital library for the Northeast Historic Film archives
   logo_url: http://www.oldfilm.org/themes/oldfilm/images/nhflogo.jpg
   my: My NHF
+  collections_user_id: 10
+  collections_title: NHF Special Collections
+  playlists_title: NHF Public Playlists

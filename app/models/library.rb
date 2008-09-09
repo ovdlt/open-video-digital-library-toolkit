@@ -18,5 +18,17 @@ class Library < ActiveRecord::Base
     ( self.find :first ).my
   end
 
+  def self.collections_user_id
+    ( self.find :first ).collections_user_id
+  end
+
+  def self.collections_title
+    ( self.find :first ).collections_title
+  end
+
+  def self.playlists_title
+    ( self.find :first ).playlists_title
+  end
+
 end
 

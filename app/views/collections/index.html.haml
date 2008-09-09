@@ -1,0 +1,13 @@
+.collections
+
+  .title= @title
+
+  .contents
+
+    - if @subtitle
+      .pagination_info= @subtitle
+
+    = render :partial => "collection", :collection => @collections
+
+    .pagination
+      = will_paginate @collections

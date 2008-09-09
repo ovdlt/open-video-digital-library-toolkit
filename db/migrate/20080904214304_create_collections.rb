@@ -4,6 +4,7 @@ class CreateCollections < ActiveRecord::Migration
       t.integer :user_id,       :null => false
       t.string  :title,         :null => false
       t.text    :description,   :null => true
+      t.integer :views,         :null => false, :default => 0
       t.boolean :public, :null => false, :default => false
       t.timestamps
     end

@@ -1,0 +1,107 @@
+<% require 'faker' %>
+
+id_1:
+  id: 1
+  user_id: 10
+  title:  <%= Faker::Lorem.words(8).join(" ") %>
+  description: <%= Faker::Lorem.sentences(3).join(" ") %>
+  public: true
+
+id-d_2:
+  id: 2
+  user_id: 10
+  title:  <%= Faker::Lorem.words(8).join(" ") %>
+  description: <%= Faker::Lorem.sentences(3).join(" ") %>
+  public: true
+
+id_3:
+  id: 3
+  user_id: 10
+  title:  <%= Faker::Lorem.words(8).join(" ") %>
+  description: <%= Faker::Lorem.sentences(3).join(" ") %>
+  public: true
+
+id_4:
+  id: 4
+  user_id: 10
+  title:  <%= Faker::Lorem.words(8).join(" ") %>
+  description: <%= Faker::Lorem.sentences(3).join(" ") %>
+  public: true
+
+id_5:
+  id: 5
+  user_id: 10
+  title:  <%= Faker::Lorem.words(8).join(" ") %>
+  description: <%= Faker::Lorem.sentences(3).join(" ") %>
+  public: true
+
+id_6:
+  id: 6
+  user_id: 10
+  title:  <%= Faker::Lorem.words(8).join(" ") %>
+  description: <%= Faker::Lorem.sentences(3).join(" ") %>
+  public: true
+
+id_7:
+  id: 7
+  user_id: 10
+  title:  <%= Faker::Lorem.words(8).join(" ") %>
+  description: <%= Faker::Lorem.sentences(3).join(" ") %>
+  public: true
+
+id_8:
+  id: 8
+  user_id: 10
+  title:  <%= Faker::Lorem.words(8).join(" ") %>
+  description: <%= Faker::Lorem.sentences(3).join(" ") %>
+  public: true
+
+id_9:
+  id: 9
+  user_id: 10
+  title:  <%= Faker::Lorem.words(8).join(" ") %>
+  description: <%= Faker::Lorem.sentences(3).join(" ") %>
+  public: true
+
+id_10:
+  id: 10
+  user_id: 10
+  title:  <%= Faker::Lorem.words(8).join(" ") %>
+  description: <%= Faker::Lorem.sentences(3).join(" ") %>
+  public: true
+
+id_11:
+  id: 11
+  user_id: 10
+  title:  <%= Faker::Lorem.words(8).join(" ") %>
+  description: <%= Faker::Lorem.sentences(3).join(" ") %>
+  public: true
+
+id_12:
+  id: 12
+  user_id: 10
+  title:  <%= Faker::Lorem.words(8).join(" ") %>
+  description: <%= Faker::Lorem.sentences(3).join(" ") %>
+  public: true
+
+id_13:
+  id: 13
+  user_id: 10
+  title:  <%= Faker::Lorem.words(8).join(" ") %>
+  description: <%= Faker::Lorem.sentences(3).join(" ") %>
+  public: true
+
+id_14:
+  id: 14
+  user_id: 10
+  title:  <%= Faker::Lorem.words(8).join(" ") %>
+  description: <%= Faker::Lorem.sentences(3).join(" ") %>
+  public: true
+
+id_15:
+  id: 15
+  user_id: 10
+  title:  <%= Faker::Lorem.words(8).join(" ") %>
+  description: <%= Faker::Lorem.sentences(3).join(" ") %>
+  public: true
+
