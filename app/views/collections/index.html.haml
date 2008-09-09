@@ -6,8 +6,10 @@
 
     - if @subtitle
       .pagination_info= @subtitle
+    - else
+      %div &nbsp;
 
-    = render :partial => "collection", :collection => @collections
+    = render :partial => partial, :collection => @collections
 
     .pagination
       = will_paginate @collections

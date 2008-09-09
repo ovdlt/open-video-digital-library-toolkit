@@ -50,7 +50,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :my, :controller => :my
 
   map.resources :collections,
-                :collection => { :library => :get,
+                :collection => { :collections => :get,
                                  :playlists => :get,
                                }
 

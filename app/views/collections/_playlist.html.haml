@@ -1,0 +1,28 @@
+- collection = playlist
+.playlist.collection
+  .image
+    image
+  .details
+    .title= h collection.title
+    .description= h collection.description
+    .menu
+      %div= link_to "View playlist", collection_path( collection )
+      &diams;
+      %div= link_to "Share playlist", mailto( collection )
+  .menu 
+    .attribute
+      .legend Created by:
+      .value= h((User.find_by_id collection.user_id).login)
+    .attribute
+      .legend Created on:
+      .value= collection.created_at.to_date.to_s(:medium)
+    .attribute
+      .legend Last Updated:
+      .value= collection.updated_at.to_date.to_s(:medium)
+    .attribute
+      .legend Videos:
+      .value= collection.size
+    .attribute
+      .legend Views:
+      .value= collection.views
+  .clear

@@ -28,8 +28,8 @@
                      "<span>Videos</span>", videos_path |
               %ul
                 %li= link_to_unless CollectionsController === controller && |
-                                    params[:action] == "library", |
-                     "<span>Collections</span>", library_collections_path |
+                                    params[:action] == "collections", |
+                     "<span>Collections</span>", collections_collections_path |
               %ul
                 %li= link_to_unless CollectionsController === controller && |
                                     params[:action] == "playlists", |
