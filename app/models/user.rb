@@ -26,8 +26,25 @@ class User < ActiveRecord::Base
     end
   end
 
+  # needs to move ...
+  def playlists params
+    options = { :conditions =>
+      [ "user_id = ? and id not in (#{favorites_id}, #{downloads_id})", id ] }
+    method = :find
+    if params
+      method = :paginate
+      options.merge!( { :page => params[:page], :per_page => 5 } )
+    end
+    Collection.send method, :all, options
+  end
+
+
   # has_role? simply needs to return true or false whether a user has
   # a role or not.  It may be a good idea to have "admin" roles return
+
+
+
+
   # true always
 
   def has_role?(role_in_question)

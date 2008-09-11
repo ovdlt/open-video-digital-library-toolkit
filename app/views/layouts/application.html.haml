@@ -60,4 +60,5 @@
             - unless flash[type].blank?
               %div{:class => "flash #{type} clearfix"}
                 = flash[type]
-          = yield
+          = begin; render :partial => "layouts/#{controller.controller_name}"; rescue ActionView::MissingTemplate; yield; end
+          /= yield

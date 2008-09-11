@@ -32,3 +32,49 @@ c1v7:
   id: 7
   video_id: 7
   collection_id: 1  
+
+c2v1:
+  id: 8
+  collection_id: 2  
+  video_id: 1
+
+c2v2:
+  id: 9
+  video_id: 2
+  collection_id: 2  
+
+c2v3:
+  id: 10
+  video_id: 3
+  collection_id: 2  
+
+c2v4:
+  id: 11
+  video_id: 4
+  collection_id: 2  
+
+c2v5:
+  id: 12
+  video_id: 5
+  collection_id: 2  
+
+c2v6:
+  id: 13
+  video_id: 6
+  collection_id: 2  
+
+c2v7:
+  id: 14
+  video_id: 7
+  collection_id: 2  
+
+c3v1:
+  id: 15
+  collection_id: 3
+  video_id: 1
+
+c3v2:
+  id: 16
+  video_id: 2
+  collection_id: 3  
+

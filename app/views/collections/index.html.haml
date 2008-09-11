@@ -9,7 +9,7 @@
     - else
       %div &nbsp;
 
-    = render :partial => partial, :collection => @collections
+    = render :partial => "collections/#{partial}", :collection => @collections
 
     .pagination
       = will_paginate @collections

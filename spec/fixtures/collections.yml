@@ -7,19 +7,19 @@ id_1:
   description: A collection of real (non-synthetic) videos
   public: true
 
-id-d_2:
+id_2:
   id: 2
-  user_id: 10
-  title:  <%= Faker::Lorem.words(8).map(&:capitalize).join(" ") %>
-  description: <%= Faker::Lorem.sentences(3).join(" ") %>
+  user_id: 6
+  title: I like real videos
+  description: "The only videos I like because the rest aren't real"
   public: true
 
 id_3:
   id: 3
-  user_id: 10
-  title:  <%= Faker::Lorem.words(8).map(&:capitalize).join(" ") %>
-  description: <%= Faker::Lorem.sentences(3).join(" ") %>
-  public: true
+  user_id: 6
+  title: I like real videos but I hide them
+  description: "The only videos I like because the rest aren't real"
+  public: false
 
 id_4:
   id: 4

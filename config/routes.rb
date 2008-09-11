@@ -47,7 +47,13 @@ ActionController::Routing::Routes.draw do |map|
   end
   
   map.resource :library, :controller => :library
-  map.resource :my, :controller => :my
+
+  map.resource :my, :controller => :my,
+                    :member => { :favorites => :get,
+                                 :account => :get,
+                                 :saved_searches => :get,
+                                 :downloaded_videos => :get,
+                                 :playlists => :get, }
 
   map.resources :collections,
                 :collection => { :collections => :get,

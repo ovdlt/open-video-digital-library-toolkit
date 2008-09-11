@@ -1,0 +1,16 @@
+#my-content
+  = yield
+#my-menu
+  %ul
+    %li
+      = link_to_action :favorites
+    %li
+      = link_to_action :saved_searches
+    %li
+      = link_to_action :playlists
+    %li
+      = link_to_action :downloaded_videos
+    %li
+      = link_to_action :account
+
+.clear

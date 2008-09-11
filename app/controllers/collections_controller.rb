@@ -40,6 +40,7 @@ class CollectionsController < ApplicationController
         (!@collection.public? and
          (!current_user or @collection.user_id != current_user.id))
       render_missing
+      return
     end
     
     @collection.views += 1
