@@ -4,6 +4,7 @@ video1:
   sentence: Depicts the year-round activities of the Machias Lumber Company on the Machias River in Washington County, Maine.
   year: 1920
   created_at: <%=(Time.now + 1.minute).to_s(:db)%>
+  updated_at: <%=(Time.now + 1.minute).to_s(:db)%>
   rights_id: 1
   duration: 7
 
@@ -13,6 +14,7 @@ video2:
   sentence: Placeholder description for the Maine's TV Time Machine video.
   year: 1921
   created_at: <%=(Time.now + 2.minutes).to_s(:db)%>
+  updated_at: <%=(Time.now + 2.minutes).to_s(:db)%>
   rights_id: 2
   duration: 7
 
@@ -22,6 +24,7 @@ video3:
   sentence: Children on swing
   year: 1922
   created_at: <%=(Time.now + 4.minutes).to_s(:db)%>
+  updated_at: <%=(Time.now + 4.minutes).to_s(:db)%>
   rights_id: 3
   duration: 7
 
@@ -31,6 +34,7 @@ video4:
   sentence: Horses are very interesting.
   year: 1901
   created_at: <%=(Time.now + 8.minutes).to_s(:db)%>
+  updated_at: <%=(Time.now + 8.minutes).to_s(:db)%>
   rights_id: 3
   duration: 6
 
@@ -40,6 +44,7 @@ video5:
   sentence: Ben shows you how to do dynamic queries.
   year: 1994
   created_at: <%=(Time.now + 16.minutes).to_s(:db)%>
+  updated_at: <%=(Time.now + 16.minutes).to_s(:db)%>
   rights_id: 3
   duration: 10
 
@@ -49,6 +54,7 @@ video6:
   sentence: NASA video showing how hurricanes are simulated.
   year: 1995
   created_at: <%=(Time.now + 32.minutes).to_s(:db)%>
+  updated_at: <%=(Time.now + 32.minutes).to_s(:db)%>
   rights_id: 3
   duration: 7
 
@@ -58,5 +64,6 @@ video7:
   sentence: USGS mapps of California
   year: 2001
   created_at: <%=(Time.now + 64.minutes).to_s(:db)%>
+  updated_at: <%=(Time.now + 64.minutes).to_s(:db)%>
   rights_id: 3
   duration: 7
