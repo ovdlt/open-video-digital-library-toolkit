@@ -1,5 +1,7 @@
 .video
   .image
+    %a{:href => video_path( list.id )}
+      %img{:src=>list.poster_path,:alt => "video #{list.id}"}
   .video_details
     .title=h list.title
     - if !list.year.blank?

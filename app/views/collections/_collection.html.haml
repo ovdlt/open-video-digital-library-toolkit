@@ -1,6 +1,7 @@
 .collection
   .image
-    image
+    - if p = collection.poster_path
+      %img{:src=>collection.poster_path,:alt => "sample image from collection"}
   .details
     .title= collection.title
     .attribute

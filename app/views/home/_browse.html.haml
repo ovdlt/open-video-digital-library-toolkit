@@ -12,7 +12,9 @@
             - v = descriptor.random shown
             - if v
               .video
-                .image= link_to "image #{v.id}", video_path( v.id )
+                .image
+                  %a{:href => video_path( v.id )}
+                    %img{:src=>v.poster_path,:alt => "video #{v.id}"}
                 .text
                   .title= link_to h(v.title), video_path( v.id )
                   = link_to "more in<br />#{h descriptor.text}", "#"

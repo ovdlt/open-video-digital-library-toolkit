@@ -1,0 +1,34 @@
+c1v1:
+  id: 1
+  collection_id: 1  
+  video_id: 1
+
+c1v2:
+  id: 2
+  video_id: 2
+  collection_id: 1  
+
+c1v3:
+  id: 3
+  video_id: 3
+  collection_id: 1  
+
+c1v4:
+  id: 4
+  video_id: 4
+  collection_id: 1  
+
+c1v5:
+  id: 5
+  video_id: 5
+  collection_id: 1  
+
+c1v6:
+  id: 6
+  video_id: 6
+  collection_id: 1  
+
+c1v7:
+  id: 7
+  video_id: 7
+  collection_id: 1  

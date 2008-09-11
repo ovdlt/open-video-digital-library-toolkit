@@ -127,6 +127,97 @@ class Video < ActiveRecord::Base
 
   end
 
+  def poster_path
+    @poster_path ||=
+      begin
+        paths = assets.map(&:relative_path)
+        paths = paths.map do |path|
+          Dir.glob("#{Asset::SURROGATE_DIR}/#{path}/stills/*_poster*")
+        end
+        paths.flatten!
+        if paths.size > 0
+          path = paths[0]
+          path[Asset::SURROGATE_PREFIX_LENGTH,path.length]
+        else
+          nil
+        end
+      end
+  end
+
+  def flash_path
+    @flash_path ||=
+      begin
+        paths = assets.map(&:relative_path)
+        paths = paths.map do |path|
+          Dir.glob("#{Asset::SURROGATE_DIR}/#{path}/flash/*")
+        end
+        paths.flatten!
+        if paths.size > 0
+          path = paths[0]
+          path[Asset::SURROGATE_PREFIX_LENGTH,path.length]
+        else
+          nil
+        end
+      end
+  end
+
+  def fast_forward_path
+    @fast_forward_path ||=
+      begin
+        paths = assets.map(&:relative_path)
+        paths = paths.map do |path|
+          Dir.glob("#{Asset::SURROGATE_DIR}/#{path}/fastforwards/*")
+        end
+        paths.flatten!
+        if paths.size > 0
+          path = paths[0]
+          path[Asset::SURROGATE_PREFIX_LENGTH,path.length]
+        else
+          nil
+        end
+      end
+  end
+
+  def excerpt_path
+    @excerpt_path ||=
+      begin
+        paths = assets.map(&:relative_path)
+        paths = paths.map do |path|
+          Dir.glob("#{Asset::SURROGATE_DIR}/#{path}/excerpts/*")
+        end
+        paths.flatten!
+        if paths.size > 0
+          path = paths[0]
+          path[Asset::SURROGATE_PREFIX_LENGTH,path.length]
+        else
+          nil
+        end
+      end
+  end
+
+  def storyboard
+    @storyboard ||=
+      begin
+        paths = assets.map(&:relative_path)
+        paths = paths.map do |path|
+          Dir.glob("#{Asset::SURROGATE_DIR}/#{path}/stills/*")
+        end
+        paths.flatten!
+        if paths.size > 0
+          paths = paths.map do |path|
+            path[Asset::SURROGATE_PREFIX_LENGTH,path.length]
+          end
+          paths.sort! do |a,b|
+            a.match( /_(\d+\.\d+)[._][^\/]*$/ )[1].to_f <=>
+            b.match( /_(\d+\.\d+)[._][^\/]*$/ )[1].to_f
+          end
+          paths
+        else
+          nil
+        end
+      end
+  end
+
   private
 
   def descriptors_must_be_unique

@@ -4,7 +4,9 @@
     .videos
       - Video.recent(5).each do |video|
         .video
-          .image= link_to "image", video_path( video.id )
+          .image
+            %a{:href => video_path( video.id )}
+              %img{:src=>video.poster_path,:alt => "video #{video.id}"}
           .text
             .title= link_to h(video.title), video_path( video.id )
             .description= h video.sentence

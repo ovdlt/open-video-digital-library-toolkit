@@ -1,2 +1,4 @@
 .video
   .image
+    %a{:href => video_path( image.id )}
+      %img{:src=>image.poster_path,:alt => "video #{image.id}"}

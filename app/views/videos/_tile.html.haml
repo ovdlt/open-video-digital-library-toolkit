@@ -1,5 +1,7 @@
 .video
   .image
+    %a{:href => video_path( tile.id )}
+      %img{:src=>tile.poster_path,:alt => "video #{tile.id}"}
   .text
     .title=h tile.title
     - if !tile.year.blank?

@@ -101,6 +101,14 @@ module VideosHelper
 
   private
 
+  def select_flash_path video
+    case params[:details_format]
+    when "fast_forward"; video.fast_forward_path
+    when "excerpt"; video.excerpt_path
+    else; video.flash_path
+    end
+  end
+
   def select_options hash
     ( hash.map { |k,v| v ? "#{k}='#{k}'" : "" } ).join(" ")
   end

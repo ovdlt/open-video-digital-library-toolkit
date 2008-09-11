@@ -7,4 +7,5 @@
 /config/database.yml
 /public/stylesheets/*.css
 /coverage
-/assets/*
+/public/assets/*
+/public/surrogates/*

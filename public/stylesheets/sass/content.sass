@@ -129,6 +129,12 @@
     :margin-left auto
     :margin-right auto
     :background #eee
+    :text-align center
+
+    img
+      :height 100px
+      :width 120px
+
 
 #content .hitlist
   :float left
@@ -176,7 +182,12 @@
         :width 120px
         :height 90px
         :background #eee
+        :text-align center
         :margin-right 1em
+
+        img
+          :width 120px
+          :height 90px
 
       .title
         :display inline
@@ -214,10 +225,15 @@
         :width 120px
         :height 90px
         :background #eee
+        :text-align center
         :margin-left auto
         :margin-right auto
         :margin-top .2em
         :margin-bottom .2em
+
+        img
+          :width 120px
+          :height 90px
 
       .title
         :display inline
@@ -226,7 +242,7 @@
         :display inline
         :font-weight bold
 
-  .videos.listy
+  .videos.image
 
     :border-left 2px solid black
     :border-right 2px solid black
@@ -235,24 +251,27 @@
 
     .video
 
-      :border-bottom 1px solid black
-
-      :padding 1em
+      :float left
+      :margin 0
+      :margin-left 4px
+      :margin-bottom 4px
 
       .image
-        :float left
-        :width 120px
-        :height 90px
+
+        :width 116px
+        :height 87px
         :background #eee
-        :margin-right 1em
+        :text-align center
+
+        img
+          :width 116px
+          :height 87px
 
       .title
         :display inline
-        :font-size 1.2em
         :font-weight bold
       .year
         :display inline
-        :font-size 1.2em
         :font-weight bold
 
 #content .sidebar
@@ -383,6 +402,13 @@
       :background #eee
       :margin 1em
 
+      object
+        :width 200px
+        :height 150px
+        embed
+          :width 200px
+          :height 150px
+      
     .sentence
       :margin 1em
       :font-size 1.4em

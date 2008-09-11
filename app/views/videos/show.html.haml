@@ -6,6 +6,21 @@
   .body
 
     .image
+
+      - if p = select_flash_path(video)
+
+        %p#flash
+
+        %script{:type => "text/javascript", :src=>"/javascripts/swfobject.js"}
+        %script{:type => "text/javascript"}
+          var s1 = new SWFObject('/player.swf','player','200','150','9');
+          s1.addParam('allowfullscreen','true');
+          s1.addParam('allowscriptaccess','always');
+          s1.addParam('flashvars',
+          = "'file=#{p}&image=#{video.poster_path}'"
+          );
+          s1.write('flash');
+        
     .sentence= h video.sentence
 
     .navigate
@@ -21,6 +36,18 @@
 
       .clear
 
+    - if params[:details_format] == "storyboard" and |
+         images = video.storyboard |
+      .storyboard
+        
+        - pp images
+
+        - images.each do |image|
+          .image
+            %img{:src=>image,:alt=>"storyboard image"}
+
+      .clear
+
     .downloads
 
       .legend Download
@@ -30,7 +57,6 @@
         - video.assets.each do |asset|
         
           .download
-
 
             %a{:href => asset_path( asset  )}
               = asset.filename

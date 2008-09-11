@@ -3,8 +3,8 @@
 id_1:
   id: 1
   user_id: 10
-  title:  <%= Faker::Lorem.words(8).map(&:capitalize).join(" ") %>
-  description: <%= Faker::Lorem.sentences(3).join(" ") %>
+  title: Real Videos
+  description: A collection of real (non-synthetic) videos
   public: true
 
 id-d_2:

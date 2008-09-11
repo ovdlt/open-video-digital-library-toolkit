@@ -3,21 +3,60 @@ video1:
   title: From Stump to Ship
   sentence: Depicts the year-round activities of the Machias Lumber Company on the Machias River in Washington County, Maine.
   year: 1920
-  created_at: <%=(Time.now - 1.day).to_s(:db)%>
+  created_at: <%=(Time.now + 1.minute).to_s(:db)%>
   rights_id: 1
+  duration: 7
 
 video2:
   id: 2
   title: Maine's TV Time Machine
   sentence: Placeholder description for the Maine's TV Time Machine video.
   year: 1921
-  created_at: <%=Time.now.to_s(:db)%>
+  created_at: <%=(Time.now + 2.minutes).to_s(:db)%>
   rights_id: 2
+  duration: 7
 
 video3:
   id: 3
   title: Charles S. Clark - home movies
-  sentence: Children on swing carousel, 2 Dancers & MC on stage, man walks past.
+  sentence: Children on swing
   year: 1922
-  created_at: <%=Time.now.to_s(:db)%>
+  created_at: <%=(Time.now + 4.minutes).to_s(:db)%>
   rights_id: 3
+  duration: 7
+
+video4:
+  id: 4
+  title: Mr. Ed Goes to town
+  sentence: Horses are very interesting.
+  year: 1901
+  created_at: <%=(Time.now + 8.minutes).to_s(:db)%>
+  rights_id: 3
+  duration: 6
+
+video5:
+  id: 5
+  title: Dynamic Queries Demo
+  sentence: Ben shows you how to do dynamic queries.
+  year: 1994
+  created_at: <%=(Time.now + 16.minutes).to_s(:db)%>
+  rights_id: 3
+  duration: 10
+
+video6:
+  id: 6
+  title: Hurricanes and Computer Simulation
+  sentence: NASA video showing how hurricanes are simulated.
+  year: 1995
+  created_at: <%=(Time.now + 32.minutes).to_s(:db)%>
+  rights_id: 3
+  duration: 7
+
+video7:
+  id: 7
+  title: USGS mapping
+  sentence: USGS mapps of California
+  year: 2001
+  created_at: <%=(Time.now + 64.minutes).to_s(:db)%>
+  rights_id: 3
+  duration: 7

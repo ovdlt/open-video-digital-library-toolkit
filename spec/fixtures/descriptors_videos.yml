@@ -13,3 +13,24 @@ v2d1:
 v3d3:
   video_id: 3
   descriptor_id: 3
+
+v4:
+  video_id: 4
+  descriptor_id: 9
+
+v5:
+  video_id: 5
+  descriptor_id: 16
+
+v6:
+  video_id: 6
+  descriptor_id: 19
+
+v7a:
+  video_id: 7
+  descriptor_id: 21
+
+v7b:
+  video_id: 7
+  descriptor_id: 10
+
