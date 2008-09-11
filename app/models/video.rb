@@ -43,7 +43,7 @@ class Video < ActiveRecord::Base
   end
 
   def self.recent number = nil
-    options = { :order => "created_at" }
+    options = { :order => "created_at desc" }
     if number
       options[:limit] = number
     end
