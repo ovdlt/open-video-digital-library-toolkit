@@ -6,7 +6,9 @@
         .video
           .image
             %a{:href => video_path( video.id )}
-              %img{:src=>video.poster_path,:alt => "video #{video.id}"}
+              - if poster_path = video.poster_path
+                %img{:src=>poster_path,:alt => "video #{video.id}"}
+          .clear
           .text
             .title= link_to h(video.title), video_path( video.id )
             .description= h video.sentence

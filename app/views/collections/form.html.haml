@@ -1,0 +1,49 @@
+- collection ||= @collection
+.collection.page
+  - form_for @collection do |f|
+    .image
+      - if p = collection.poster_path
+        %img{:src=>collection.poster_path,:alt => "sample image from collection"}
+    .details
+      .title
+        .label
+          Title:
+          = f.text_field :title, :size => 50
+      .description
+        .label
+          Description:
+          %div= f.text_area :description, :size => "50x4"
+
+      .clear
+      .public
+        .label
+          Privacy:
+          Public:
+          = f.radio_button :public, "true"
+          Private:
+          = f.radio_button :public, "false"
+
+      %div &nbsp;
+      .clear
+
+      %label
+        = submit_tag @collection.new_record? ? "Create" : "Save" 
+    
+    .menu
+      .attribute
+        .legend Created on:
+        .right.value= ca = collection.created_at and ca.to_date.to_s(:medium)
+      .attribute
+        .legend Last updated:
+        .right.value= ua = collection.updated_at and ua.to_date.to_s(:medium)
+      .attribute
+        .legend Videos:
+        .value= collection.size
+      .attribute
+        .legend Views:
+        .value= collection.views
+
+    .clear
+
+
+= render :partial => "collections/videos", :object => @collection.videos

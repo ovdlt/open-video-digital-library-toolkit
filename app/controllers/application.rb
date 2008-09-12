@@ -84,4 +84,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def login
+    current_user or redirect_to login_path
+  end
+
 end

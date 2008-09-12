@@ -11,19 +11,11 @@
       = link_to "View video details", video_path( video )
       &nbsp;&bull;&nbsp;
       - if current_user
-        - if current_user.favorites.video_ids.include? video.id
-          - form_tag favorite_path( video.id ), :method => :delete, |
-                                                :class => :inline do |
-            %label.button
-              Delete from favorites
-              = submit_tag "Delete from favorites", |
-                           :class => "inline hidden" |
-        - else
-          - form_tag favorites_path, :method => :post, :class => :inline do
-            = hidden_field_tag :video_id, video.id, :id => nil
-            %label.button
-              Add to favorites
-              = submit_tag "Add to favorites", :class => "inline hidden"
+        .actions
+          .action
+            = render :partial => "videos/alter_favorites", :object => video
+          .action
+            = render :partial => "videos/alter_playlist", :object => video
         &nbsp;&bull;&nbsp;
       = link_to "Download", download_video_path( video )
   .video_descriptors

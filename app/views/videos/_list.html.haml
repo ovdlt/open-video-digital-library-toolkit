@@ -1,7 +1,8 @@
 .video
   .image
     %a{:href => video_path( list.id )}
-      %img{:src=>list.poster_path,:alt => "video #{list.id}"}
+      -if poster_path = list.poster_path
+        %img{:src=>post_path,:alt => "video #{list.id}"}
   .video_details
     .title=h list.title
     - if !list.year.blank?
@@ -11,7 +12,11 @@
       = link_to "View video details", video_path( list )
       &nbsp;&bull;&nbsp;
       - if current_user
-        = render :partial => "alter_favorites", :object => list
+        .actions
+          .action
+            = render :partial => "alter_favorites", :object => list
+          .action
+            = render :partial => "add_to_playlist", :object => list
         &nbsp;&bull;&nbsp;
       = link_to "Download", download_video_path( list )
   .clear

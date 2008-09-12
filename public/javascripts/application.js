@@ -115,5 +115,10 @@ $(function(){
         return false;
     });
 
-});
+    $("div.bookmark.hidden").hide();
+    
+    $("label.button.playlist").click(function(){
+        $("div.bookmark.hidden",$(this).parents("form")).toggle();
+    });
 
+});

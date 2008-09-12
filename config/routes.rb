@@ -58,7 +58,9 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :collections,
                 :collection => { :collections => :get,
                                  :playlists => :get,
-                               }
+                               } do |collections|
+    collections.resources :bookmarks
+  end
 
   map.resource :session
 

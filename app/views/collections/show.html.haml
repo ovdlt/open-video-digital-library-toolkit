@@ -4,8 +4,18 @@
     - if p = collection.poster_path
       %img{:src=>collection.poster_path,:alt => "sample image from collection"}
   .details
-    .title= h collection.title
+    .title
+      - if current_user and current_user.id == collection.user_id
+        .right
+          = link_to "edit", edit_collection_path( collection )
+      = h collection.title
     .description= h collection.description
+    - if current_user and current_user.id == collection.user_id
+      .clear
+      .public
+        This playlist is 
+        = collection.public? ? "public." : "private."
+
   .menu
     .attribute
       .legend Created on:

@@ -1,0 +1,21 @@
+- video = alter_playlist
+- if @collection and @collection.video_ids.include? video.id
+  - form_tag collection_bookmark_path( @collection.id, :from_params ), |
+                                     :method => :delete, |
+                                     :class => :inline do |
+    = hidden_field_tag :video_id, video.id, :id => nil
+    %label.button
+      Delete from playlist
+      = submit_tag "Delete from playlist", |
+                   :class => "inline hidden" |
+- else
+  - form_tag collection_bookmarks_path(:from_params), :method => :post, :class => :inline do
+    = hidden_field_tag :video_id, video.id, :id => nil
+    %label.button.playlist
+      Add to playlist
+    .bookmark.hidden
+      %br
+      = select_tag "bookmark_into_id", bookmark_options(video), :id => nil
+      %label.button
+        Add
+        = submit_tag "Add", :class => "inline hidden"

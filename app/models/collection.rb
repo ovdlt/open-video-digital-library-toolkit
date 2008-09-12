@@ -1,5 +1,6 @@
 class Collection < ActiveRecord::Base
 
+  belongs_to :user
   has_many :bookmarks, :dependent => :destroy
   has_many :videos, :through => :bookmarks,
                     :order => "bookmarks.created_at desc"
