@@ -2,7 +2,7 @@
   .image
     %a{:href => video_path( list.id )}
       -if poster_path = list.poster_path
-        %img{:src=>post_path,:alt => "video #{list.id}"}
+        %img{:src=>poster_path,:alt => "video #{list.id}"}
   .video_details
     .title=h list.title
     - if !list.year.blank?
