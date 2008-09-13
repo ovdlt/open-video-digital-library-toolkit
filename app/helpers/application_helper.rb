@@ -58,12 +58,12 @@ module ApplicationHelper
   
   def mailto collection
     by = User.find_by_id(collection.user_id).login
-    subject = url_encode "Playlist entitled #{collection.title} by #{by}"
-    body = url_encode <<EOS
+    subject = url_encode( h( "Playlist entitled #{collection.title} by #{by}" ))
+    body = url_encode(h( <<EOS ))
 Playlist link: #{collection_url(collection)}
 Link to #{Library.title}: #{root_url}
 EOS
-    "mailto:?subject=#{subject}&body=#{body}"
+    "mailto:?subject=#{subject}&amp;body=#{body}"
   end
 
   def mail_video video
