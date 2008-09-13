@@ -55,10 +55,6 @@ class CollectionsController < ApplicationController
                            :per_page => 5,
                            :conditions => [ "user_id <> ? and public is true",
                                             user ]
-    @collections =
-      Collection.paginate :page => params[:page],
-                           :per_page => 5,
-                           :conditions => [ "public is true" ]
     @title = Library.playlists_title
     render :action => :index
   end
