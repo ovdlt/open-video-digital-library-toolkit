@@ -16,7 +16,7 @@
         %div{current(:image)}= link_to_format :image
       .clear
 
-    %div{:class => "videos #{page_format.to_s}"}
+    %div{:class => "videos #{class_from_format page_format}"}
       = render :partial => page_format.to_s, :collection => @videos
 
       .clear
@@ -34,7 +34,7 @@
   .entry
     .title Refine Results
     - form_tag @path.call({}), :method => :get do
-      = text_field_tag :query, params[:query], :size => 35
+      = text_field_tag :query, params[:query], :size => 35, :id => nil
       / = submit_tag "Search"
       - if params[:descriptor_id]
         - descriptor = Descriptor.find( params[:descriptor_id] )

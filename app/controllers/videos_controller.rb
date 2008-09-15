@@ -72,7 +72,7 @@ class VideosController < ApplicationController
       @current = @type = DescriptorType.find( params[:descriptor_type_id] )
     end
 
-    @path = lambda { |opts| videos_path( opts ) }
+    @path = lambda { |opts| recent_videos_path( opts ) }
     
     if params[:descriptor_id]
       @current = @descriptor = Descriptor.find( params[:descriptor_id] )

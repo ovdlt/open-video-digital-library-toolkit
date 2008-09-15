@@ -39,6 +39,13 @@ module VideosHelper
     ( params[:list_format] || :list ).to_sym
   end
 
+
+  # rework ... "image" class being used for too many things
+  def class_from_format format
+    s = format.to_s
+    s == "image" ? "images" : s
+  end
+
   def details_format
     ( params[:details_format] || :details ).to_sym
   end
