@@ -21,9 +21,6 @@
             .subtitle= Library.subtitle
             #navigation
               %ul
-                %li= link_to_unless HomeController === controller, |
-                     "<span>Home</span>", root_path |
-              %ul
                 %li= link_to_unless VideosController === controller, |
                      "<span>Videos</span>", videos_path |
               %ul

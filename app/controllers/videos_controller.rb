@@ -40,6 +40,16 @@ class VideosController < ApplicationController
   end
 
   def index
+    if params[:descriptor_id] or
+       params[:descriptor_type_id] or
+       params[:query]
+      search
+    else
+      render :template => "videos/recent"
+    end
+  end
+
+  def search
 
     # FIX: number of videos selected depends on the format
 
@@ -79,18 +89,6 @@ class VideosController < ApplicationController
   end
 
 
-  def _new
-    @video = Video.new
-    @asset = Asset.new(:uri => "file:///" + params[:filename])
-    if @asset.valid_path?
-      @video.assets << @asset
-      render :action => 'form'
-    else
-      render_missing
-    end
-
-  end
-  
   def new
     @video = @object = Video.new
     render :action => "form"
