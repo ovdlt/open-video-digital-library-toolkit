@@ -39,14 +39,29 @@ class VideosController < ApplicationController
     return 36 if params[:list_format] == "image"
   end
 
+  def recent
+    search
+  end
+
   def index
     if params[:descriptor_id] or
        params[:descriptor_type_id] or
        params[:query]
       search
     else
-      render :template => "videos/recent"
+      params[:style] = "recent"
+      home
     end
+  end
+
+  def home
+    case params[:style]
+    when "recent"
+    else
+      render_nothing
+      return
+    end
+    render :template => "videos/#{params[:style]}"
   end
 
   def search
@@ -72,6 +87,8 @@ class VideosController < ApplicationController
                             :per_page => per_page,
                             :query => params[:query],
                             :descriptor_id => params[:descriptor_id]
+
+    render :template => "videos/index"
 
   end
   

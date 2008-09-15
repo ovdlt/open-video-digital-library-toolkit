@@ -30,10 +30,11 @@ ActionController::Routing::Routes.draw do |map|
                          :member => { :download => :get,
                                       :reset => :get,
                          } do |videos|
-
     videos.resources :assets
-
   end
+
+  map.videos_home "/videos/home/:style", :controller => "videos",
+                                         :action => "home"
 
   map.resources :assets, :collection => { :uncataloged => :any }
 

@@ -97,6 +97,7 @@ class Video < ActiveRecord::Base
           "against ( '#{p}' in boolean mode ))"
       conditions[0] << "(videos.id = vfs.video_id)"
       options[:order] ||= "r desc"
+
     end
     options.delete :query
 
