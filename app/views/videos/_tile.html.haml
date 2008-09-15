@@ -1,12 +1,14 @@
+- video = tile
 .video
   .image
-    %a{:href => video_path( tile.id )}
-      %img{:src=>tile.poster_path,:alt => "video #{tile.id}"}
+    %a{:href => video_path( video.id )}
+      %img{:src=>video.poster_path,:alt => "video #{video.id}"}
   .text
-    .title=h tile.title
-    - if !tile.year.blank?
-      .year= "(#{h tile.year})"
+    .title=h video.title
+    - if !video.year.blank?
+      .year= "(#{h video.year})"
   %ul
-    %li= link_to "View video details", video_path( tile )
-    %li= link_to "Add to favorites", favorites_path
-    %li= link_to "Download", download_video_path( tile )
+    %li= link_to "View video details", video_path( video )
+    %li
+      = render :partial => "alter_favorites", :object => video
+    %li= link_to "Download", download_video_path( video )
