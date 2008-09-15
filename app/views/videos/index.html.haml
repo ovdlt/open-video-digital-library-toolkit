@@ -2,18 +2,6 @@
 
   %h1 Search / Browse Results
 
-  .form
-    - form_tag @path.call({}), :method => :get do
-      = text_field_tag :query, params[:query], :size => 60
-      = submit_tag "Search"
-      - if params[:descriptor_id]
-        - descriptor = Descriptor.find( params[:descriptor_id] )
-        .search-within
-          In
-          = h(descriptor.descriptor_type.title)
-          &mdash;
-          = h(descriptor.text)
-
   .pagination_info
     = page_entries_info @videos
 
@@ -45,6 +33,17 @@
       = render :partial => "shared/axis", :object => @type
   .entry
     .title Refine Results
+    - form_tag @path.call({}), :method => :get do
+      = text_field_tag :query, params[:query], :size => 35
+      / = submit_tag "Search"
+      - if params[:descriptor_id]
+        - descriptor = Descriptor.find( params[:descriptor_id] )
+        .search-within
+          In
+          = h(descriptor.descriptor_type.title)
+          &mdash;
+          = h(descriptor.text)
+
     %ul
       %li Genre: select one
   .entry
