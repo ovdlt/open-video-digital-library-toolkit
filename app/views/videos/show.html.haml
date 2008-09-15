@@ -93,6 +93,11 @@
 
 .sidebar
   .entry
+    %div= link_to "Browse all videos", videos_path
+    - if request.headers["HTTP_REFERER"]
+      %div= link_to "Back", request.headers["HTTP_REFERER"]
+  %br
+  .entry
     .title Related Videos
     %ul
       %li Something here
