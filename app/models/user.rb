@@ -26,6 +26,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def special_collection? c
+    c.id == favorites_id or c.id == downloads_id
+  end
+
   # needs to move ...
   def playlists params
     options = { :conditions =>

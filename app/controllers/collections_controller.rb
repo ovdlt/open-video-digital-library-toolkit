@@ -3,7 +3,9 @@ class CollectionsController < ApplicationController
   before_filter :find_and_verify_public_or_user,
                 :except => [ :collections, :playlists, :new, :create ]
 
-  before_filter :find_and_verify_user, :only => [ :edit, :update ]
+  before_filter :find_and_verify_user, :only => [ :edit,
+                                                  :update,
+                                                  :desroy ]
 
   before_filter :login, :only => [ :new, :create ]
 
@@ -26,7 +28,22 @@ class CollectionsController < ApplicationController
     render :template => "collections/form"
   end
 
+  def destroy
+    if current_user.favorites_id == @collection.id
+      current_user.favorites_id = nil
+      current_user.save!
+    elsif current_user.downloads_id == @collection.id
+      current_user.downloads_id = nil
+      current_user.save!
+    end
+    @collection.destroy
+    redirect_to my_url
+  end
+
   def update
+    if current_user.special_collection? @collection
+      params["collection"] and params["collection"].delete "title"
+    end
     if @collection.update_attributes params["collection"]
       redirect_to collection_path( @collection.id )
     else

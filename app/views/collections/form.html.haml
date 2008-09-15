@@ -8,7 +8,10 @@
       .title
         .label
           Title:
-          = f.text_field :title, :size => 50
+          - if current_user and !current_user.special_collection?( collection )
+            = f.text_field :title, :size => 50
+          - else
+            = collection.title
       .description
         .label
           Description:
