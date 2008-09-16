@@ -31,6 +31,7 @@ class CreateVideos < ActiveRecord::Migration
   end
 
   def self.down
+    drop_table :video_fulltexts
     drop_table :videos
   end
 end
