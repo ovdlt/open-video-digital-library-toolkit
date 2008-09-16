@@ -132,7 +132,7 @@ class VideosController < ApplicationController
       when "descriptors"
         @video.descriptor_ids = v
       when "assets"
-        @video.asset_ids = v.reject { |k,v| k == ":id:" }
+        @video.asset_ids = v.reject { |path| path == ":id:" }
       else
         @video[k] = v
       end

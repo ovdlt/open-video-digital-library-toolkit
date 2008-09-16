@@ -30,11 +30,12 @@ class Asset < ActiveRecord::Base
       options = { :select => "uri" }
 
       if params[:q]
-        options.merge!( { :conditions => [ "uri like ?", params[:q] ] } )
+        options.merge!( { :conditions => [ "uri like ?", "%#{params[:q]}%" ] } )
       end
 
       assets = Asset.find :all, options
       assets = assets.map { |a| a.uri }
+
 
       a = ( list_dir( params ) - assets ).sort
 
