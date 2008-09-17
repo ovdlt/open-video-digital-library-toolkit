@@ -1,6 +1,6 @@
 class DescriptorType < ActiveRecord::Base
 
-  has_many :descriptors
+  has_many :descriptors, :dependent => :destroy
 
   validates_presence_of :title
   validates_uniqueness_of :title

@@ -89,6 +89,7 @@ $(function(){
             input = $("td.input input", c);
             input.removeAttr("id");
             input.attr("name","new_assets[]");
+            input.attr("value",uri);
             a = $("a.uri", c);
             a.text(uri);
             $("td.format",c).text("");
@@ -119,6 +120,77 @@ $(function(){
     
     $("label.button.playlist").click(function(){
         $("div.bookmark.hidden",$(this).parents("form")).toggle();
+    });
+
+    $("div.display-edit div.edit").hide();
+
+    $("div.display-edit span.edit a").click(function(){
+        $("div.display, div.edit",$(this).parents("div.display-edit")[0]).toggle();
+        return false;
+    });
+
+    $("div.display-edit span.delete a").click(function(){
+        $($(this).parents("li.delete")[0]).remove();
+        return false;
+    });
+
+    $("div.new").hide();
+
+    $("div.dt.display-new a").click(function(){
+        top = $($(this).parents("li.new")[0])
+        cl = $("div.new > ul > li",top).clone();
+        dtn = top.data("dt_count")
+        if (dtn == null) {
+            dtn = 0;
+            top.data("dt_count",dtn);
+        }
+        dn = top.data("d_count")
+        if (dn == null) {
+            dn = 0;
+            top.data("d_count",dn);
+        }
+        $("div.dt input",cl).each(function(){
+            name = $(this).attr("name");
+            name = name.replace("[new_dt]","[new_dt_"+dtn+"]")
+            $(this).attr("name",name);
+
+            $("div.d input",cl).each(function(){
+                name = $(this).attr("name");
+                name = name.replace("[new_dt]","[new_dt_"+dtn+"]");
+                
+                name = name.replace("[new_d]","[new_d_"+dn+"]");
+                $(this).attr("name",name);
+                dn++;
+                top.data("d_count",dn);
+            });
+
+            dtn++;
+            top.data("dt_count",dtn);
+
+        });
+        top.before(cl);
+        $(".edit",cl).show();
+        return false;
+    });
+
+    $("div.d.display-new a").click(function(){
+        top = $($(this).parents("li.new")[0])
+        cl = $("div.new > ul > li",top).clone();
+        dn = top.data("d_count")
+        if (dn == null) {
+            dn = 0;
+            top.data("d_count",dn);
+        }
+        $("div.d input",cl).each(function(){
+            name = $(this).attr("name");
+            name = name.replace("[new_d]","[new_d_"+dn+"]");
+            $(this).attr("name",name);
+            dn++;
+            top.data("d_count",dn);
+        });
+        top.before(cl);
+        $(".edit",cl).show();
+        return false;
     });
 
 });

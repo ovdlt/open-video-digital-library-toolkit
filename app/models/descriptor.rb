@@ -1,9 +1,11 @@
 class Descriptor < ActiveRecord::Base
 
-  validates_presence_of :descriptor_type
   validates_presence_of :text
 
   belongs_to :descriptor_type
+
+  # validates_presence_of :descriptor_type
+  # can't(?) make this work but the db should catch it
 
   # Don't do this ... don't want to load all the videos everytime we
   # talk about this descriptor ...

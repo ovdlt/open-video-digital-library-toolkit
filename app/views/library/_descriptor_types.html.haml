@@ -1,5 +1,69 @@
 - f = @f
 %div
-
   .form
-    Not Yet Implemented
+    %ul
+      - DescriptorType.sorted.each do |dt|
+        %li.dt.delete
+          %div.dt.display-edit
+            .display
+              = dt.title
+              %span.edit= link_to "edit", ""
+            .edit
+              %label
+                Title:
+                = text_field_tag "descriptor_types[#{dt.id}][title]", |
+                                  dt.title, :id => nil |
+                %span.delete= link_to "delete", ""
+          %ul
+            - dt.descriptors_alphabetized.each do |d|
+              %li.delete
+                %div.d.display-edit
+                  .display
+                    = d.text
+                    %span.edit= link_to "edit", ""
+                  .edit
+                    %label
+                      Title:
+                      = text_field_tag "descriptor_types[#{dt.id}][descriptors][#{d.id}][text]", |
+                                        d.text, :id => nil |
+                    %span.delete= link_to "delete", ""
+            %li.d.new
+              %div.d.display-new
+                .display
+                  = link_to "Add new descriptor"
+                .new
+                  %ul
+                    %li.delete
+                      %div.d.display-edit
+                        .edit
+                          %label
+                            Title:
+                            = text_field_tag "descriptor_types[#{dt.id}][descriptors][new_d][text]", |
+                                              nil, :id => nil |
+                          %span.delete= link_to "delete", ""
+      %li.dt.new
+        %div.dt.display-new
+          .display
+            = link_to "Add new descriptor type"
+          .new
+            %ul
+              %li.dt.delete
+                %div.dt.display-edit
+                  .edit
+                    %label
+                      Title:
+                      = text_field_tag "descriptor_types[new_dt][title]", |
+                                        nil, :id => nil |
+                      %span.delete= link_to "delete", ""
+                %ul
+                  %li.delete
+                    %div.d.display-edit
+                      .edit
+                        %label
+                          Title:
+                          = text_field_tag "descriptor_types[new_dt][descriptors][new_d][text]", |
+                                            nil, :id => nil |
+                        %span.delete= link_to "delete", ""
+                  %li
+                    = link_to "Add new descriptor"
+    .clear
