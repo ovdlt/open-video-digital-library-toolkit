@@ -11,6 +11,7 @@
       .year= "(#{h video.year})"
   %ul
     %li= link_to "View video details", video_path( video )
-    %li
-      = render :partial => "alter_favorites", :object => video
+    - if current_user
+      %li
+        = render :partial => "alter_favorites", :object => video
     %li= link_to "Download", download_video_path( video )
