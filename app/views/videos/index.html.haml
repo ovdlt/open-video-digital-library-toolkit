@@ -46,18 +46,19 @@
 
     %ul
       %li Genre: select one
-  .entry
-    .title Tools and Services
-    %ul
-      - if current_user && current_user.has_role?( [ :admin, :cataloger ] )
-        %li= link_to "<span>Add new video</span>", "/videos/new"
-      - if current_user and ( params[:descriptor_id] or params[:query] )
-        %li
-          - form_tag saved_queries_path, :method => :post do
-            = hidden_field_tag :descriptor_id, params[:descriptor_id]
-            = hidden_field_tag :query, params[:query]
-            %label.button
-              Save this search
-              = submit_tag "Save this search", :class => :hidden
+  - if current_user
+    .entry
+      .title Tools and Services
+      %ul
+        - if current_user && current_user.has_role?( [ :admin, :cataloger ] )
+          %li= link_to "<span>Add new video</span>", "/videos/new"
+        - if current_user and ( params[:descriptor_id] or params[:query] )
+          %li
+            - form_tag saved_queries_path, :method => :post do
+              = hidden_field_tag :descriptor_id, params[:descriptor_id]
+              = hidden_field_tag :query, params[:query]
+              %label.button
+                Save this search
+                = submit_tag "Save this search", :class => :hidden
 
 .clear

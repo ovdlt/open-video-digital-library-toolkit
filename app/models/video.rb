@@ -77,7 +77,6 @@ class Video < ActiveRecord::Base
 
     conditions = [ [], [] ]
     joins = []
-    select = [ "distinct videos.*" ]
     select = [ "videos.*" ]
 
     if !options[:query].blank?
