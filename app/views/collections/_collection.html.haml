@@ -4,6 +4,11 @@
     - if p = collection.poster_path
       %img{:src=>collection.poster_path,:alt => "sample image from collection"}
   .details
+    - if owner = owner_text( collection ) and owner != "my"
+      .owned_by
+        Created by
+        .owner
+          = owner
     .title= collection.title
     .attribute.size
       .separator &bull;

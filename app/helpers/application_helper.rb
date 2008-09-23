@@ -100,8 +100,8 @@ EOS
     owner = nil
     if current_user and current_user.id == collection.user_id
       owner = "my"
-    else
-      collection.user.login
+    elsif collection.user_id != Library.collections_user_id
+      owner = collection.user.login
     end
     owner
   end
