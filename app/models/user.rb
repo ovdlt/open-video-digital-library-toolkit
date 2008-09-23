@@ -33,7 +33,7 @@ class User < ActiveRecord::Base
   # needs to move ...
   def playlists params
     options = { :conditions =>
-      [ "user_id = ? and id not in (#{favorites_id}, #{downloads_id})", id ] }
+      [ "user_id = ? and id not in (#{favorites.id}, #{downloads.id})", id ] }
     method = :find
     if params
       method = :paginate

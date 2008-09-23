@@ -1,0 +1,16 @@
+- collections = index
+.collections.index.partial
+
+  .title= title
+
+  .contents
+
+    - if subtitle
+      .pagination_info= subtitle
+    - else
+      %div &nbsp;
+
+    = render :partial => "collections/collection", :collection => collections
+
+    .pagination
+      = will_paginate collections

@@ -2,30 +2,11 @@
 
   %h1 Search / Browse Results
 
-  .pagination_info
-    = page_entries_info @videos
-
-  - if @videos.size > 0
-    .navigate
-
-      .view.first
-        %div{current(:list)}= link_to_format :list
-      .view
-        %div{current(:tile)}= link_to_format :tile
-      .view
-        %div{current(:image)}= link_to_format :image
-      .clear
-
-    %div{:class => "videos #{class_from_format page_format}"}
-      = render :partial => page_format.to_s, :collection => @videos
-
-      .clear
-
-  .pagination
-    = will_paginate @videos
+  = render :partial => "videos/index", :object => @videos
 
 .sidebar
   .entry
+    .title Other videos
     %ul
       %li= link_to "Browse all videos", videos_path
   .entry

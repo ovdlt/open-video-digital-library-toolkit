@@ -1,0 +1,26 @@
+- video = show
+.video
+  .image
+    %a{:href => video_path( video.id )}
+      -if poster_path = video.poster_path
+        %img{:src=>poster_path,:alt => "video #{video.id}"}
+  .details
+    .title
+      = link_to h(video.title), video_path( video.id )
+
+    - if !video.year.blank?
+      .year= "(#{h video.year})"
+
+    .sentence=h video.sentence
+    .menu
+      = link_to "View video details", video_path( video )
+      &nbsp;&bull;&nbsp;
+      - if current_user
+        .actions
+          .action
+            = render :partial => "videos/alter_favorites", :object => video
+          .action
+            = render :partial => "videos/add_to_playlist", :object => video
+        &nbsp;&bull;&nbsp;
+      = link_to "Download", download_video_path( video )
+  .clear

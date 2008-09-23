@@ -34,6 +34,7 @@ class VideosController < ApplicationController
   end
 
   def per_page
+    return 20
     return 10 if params[:list_format].nil?
     return 16 if params[:list_format] == "tile"
     return 36 if params[:list_format] == "image"

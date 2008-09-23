@@ -61,7 +61,7 @@ class CollectionsController < ApplicationController
     @title = Library.collections_title
     @subtitle =
       "The #{Library.title} currently contains "+
-      "#{@collections.total_entries} collections"
+      "#{@collections.total_entries} special collections"
     render :action => :index
   end
 
@@ -73,6 +73,9 @@ class CollectionsController < ApplicationController
                            :conditions => [ "user_id <> ? and public is true",
                                             user ]
     @title = Library.playlists_title
+    @subtitle =
+      "The #{Library.title} currently contains "+
+      "#{@collections.total_entries} public playlists"
     render :action => :index
   end
 
@@ -90,6 +93,9 @@ class CollectionsController < ApplicationController
     @collection.views += 1
     @collection.save
 
+    @videos = @collection.videos.paginate :page => params[:page],
+                                          :per_page => 20,
+                                          :order => "videos.created_at desc"
   end
 
   def find_and_verify_user

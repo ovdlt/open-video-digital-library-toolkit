@@ -1,0 +1,23 @@
+- videos = index
+.videos.list.partial
+
+  .pagination_info
+    = page_entries_info videos
+
+  - if videos.size > 0
+    .navigate
+      - [ :bg_thumbs, |
+          :text_only, |
+          :sm_thumbs, |
+          :sm_thumbs_only ].reverse.each do |format| |
+        .button{:class => "#{format} pointer"}
+          = image_tag "results_#{format}.gif"
+      .clear
+      
+    .list        
+      = render :partial => "videos/show", :collection => videos
+    .clear
+
+    .pagination
+      = will_paginate videos
+

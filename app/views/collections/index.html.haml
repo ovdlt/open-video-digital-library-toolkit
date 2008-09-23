@@ -1,15 +1,6 @@
-.collections
+.collections.index
+  = render :partial => "collections/index", :object => @collections, |
+           :locals => { :title => @title, |
+                        :subtitle => @subtitle } |
 
-  .title= @title
 
-  .contents
-
-    - if @subtitle
-      .pagination_info= @subtitle
-    - else
-      %div &nbsp;
-
-    = render :partial => "collections/#{partial}", :collection => @collections
-
-    .pagination
-      = will_paginate @collections

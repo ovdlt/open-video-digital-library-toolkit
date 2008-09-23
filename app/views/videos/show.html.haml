@@ -73,6 +73,16 @@
 
       .details_list
 
+        .detail
+          .type Added:
+          .value= video.created_at.to_date.to_s(:long)
+
+          .type Updated:
+          .value= video.updated_at.to_date.to_s(:long)
+
+        %br
+        %br
+
         - video.descriptor_types.each do |type|
 
           .detail
@@ -93,10 +103,13 @@
 
 .sidebar
   .entry
-    %div= link_to "Browse all videos", videos_path
-    - if request.headers["HTTP_REFERER"]
-      %div= link_to "Back", request.headers["HTTP_REFERER"]
-  %br
+    .title Other Videos
+    %ul
+      %li
+        = link_to "Browse all videos", videos_path
+      - if request.headers["HTTP_REFERER"]
+        %li
+          = link_to "Return to search results", request.headers["HTTP_REFERER"]
   .entry
     .title Related Videos
     %ul
@@ -105,7 +118,7 @@
     .title Tools and Services
     %ul.line
       - if current_user
-        %li= render :partial => "alter_favorites", :object => video
+        %li= render :partial => "videos/alter_favorites", :object => video
         %li
           = render :partial => "add_to_playlist", |
                    :object => video |

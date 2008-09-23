@@ -87,4 +87,23 @@ EOS
     options.join("")
   end
 
+  def container_text collection
+    collection.user_id == Library.collections_user_id ? "collection" \
+                                                       : "playlist"
+  end
+
+  def containers_text collection
+    container_text( collection ).pluralize
+  end
+
+  def owner_text collection
+    owner = nil
+    if current_user and current_user.id == collection.user_id
+      owner = "my"
+    else
+      collection.user.login
+    end
+    owner
+  end
+
 end

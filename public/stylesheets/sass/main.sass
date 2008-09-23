@@ -267,7 +267,10 @@ div.collection.videos
   :cursor pointer
   :background #eee
 
-#content .collections
+.pagination_info
+  :text-align center
+
+.collections.index
 
   .title
     :font-size 2.5em
@@ -276,11 +279,6 @@ div.collection.videos
     :border solid 1px #ccc
     :padding .5em
     :margin .1em
-
-  .pagination_info
-    :font-size 1.6em
-    :text-align center
-    :padding .5em
 
   .collection
 
@@ -334,7 +332,7 @@ div.collection.videos
     .pagination
       :font-size 1.2em
 
-#content .collection.page
+#content .collection.page .collection
   
   :margin-bottom 1em
 
@@ -360,16 +358,13 @@ div.collection.videos
   .details
     :float left
     :font-size 1.1em
-    :width 60%
 
     .title
+      :width 100%
       :background none
       :border none
       :font-size 1.4em
-      :padding-left 1em
-      :padding-right 1em
-      :margin-right 1em
-      :padding-bottom .4em
+      :padding none
       :background #eee
       :border 1px solid #ccc
      
@@ -519,3 +514,266 @@ div.collection.videos
 
   li.dt.new
     :clear left
+
+# NEW
+
+.videos.list.partial
+
+  :border none
+  :padding-top 0
+
+.videos.list.partial
+
+  .navigate
+    :border-top 1px solid #bbb
+    :border-bottom 1px solid #bbb
+    :padding-top 4px
+    :padding-bottom 4px
+    :margin 0
+    :margin-top 4px
+
+    .button
+      :float right
+      :margin 2px
+      :background #ccc
+      :border 1px solid #bbb
+      
+    .button.current img
+      :visibility hidden
+
+.videos.list.partial
+  :width 610px
+
+.videos.list.partial.bg_thumbs
+
+  .video
+    a
+      :padding 0
+
+    :padding-top 8px
+    :padding-bottom 8px
+    :border-bottom 1px dotted #888
+
+    .image
+      :width 122px
+      :height 92px
+      :border 1px solid #888
+      :padding 1px
+
+      img
+        :width 120px
+        :height 90px
+
+    .details
+      :float left
+      :margin-left 4px
+      :margin-top 0
+
+      .title
+        :background none
+        :font-size 1.2em
+        :font-weight bold
+        :display inline
+        :padding 0
+
+      .year
+        :display inline
+
+      .sentence
+        :margin-bottom 0
+
+.videos.list.partial.text_only
+
+  .video
+    a
+      :padding 0
+
+    :padding-top 6px
+    :padding-bottom 1px
+    :border-bottom 1px dotted #888
+
+    .image
+      :float none
+      :display inline-block
+      :width 40px
+      :height 30px
+      :border 1px solid #888
+      :margin 0
+
+      img
+        :width 40px
+        :height 30px
+
+    .clear
+      :display none
+
+    .details
+      :float none
+      :display inline
+      :vertical-align top
+      :margin-left 2px
+      :margin-top 0
+
+      .title
+        :background none
+        :font-weight bold
+        :display inline
+        :padding 0
+
+      .year
+        :display inline
+
+      .sentence
+        :display none
+
+      .menu 
+        :display none
+
+.videos.list.partial.sm_thumbs
+
+  .video
+
+    :float left
+    :margin 4px
+    :width 23%
+    :height 130px
+
+    a
+      :padding 0
+
+    :padding-top 8px
+    :padding-bottom 8px
+
+    .image
+      :width 122px
+      :height 92px
+      :border 1px solid #888
+      :padding 1px
+      :margin-left 8px
+      :text-align center
+
+      img
+        :width 120px
+        :height 90px
+
+    .details
+      :margin-top 0
+      :width 100%
+
+      .title
+        :background none
+        :font-weight bold
+        :padding 0
+        :width 100%
+        a
+          :display block
+          :text-align center
+
+      .year
+        :display none
+
+      .sentence
+        :display none
+
+      .menu
+        :display none
+
+.videos.list.partial.sm_thumbs_only
+
+  .navigate
+    :margin-bottom 4px
+
+  .list
+    :padding-left 0
+
+  .video
+
+    :float left
+    :margin 0
+    :padding 0
+
+    .image
+      :width 120px
+      :height 90px
+      :border 0px none
+      :margin 0
+
+      img
+        :width 120px
+        :height 90px
+
+    .details
+      :display none
+
+.details
+  :float left
+  .attribute
+    :float left
+    div
+      :display inline
+    .separator
+      :padding-left .5em
+      :padding-right .2em
+    .legend
+      :font-weight bold
+
+.collection.show
+  .title
+    :margin-bottom 8px
+    .created_by
+      :font-size .7em
+      .value
+        :display inline
+        :font-style italic
+  .details
+    .attribute.created_on .separator
+      :display none
+    .attribute.videos
+      :padding-top 0
+      :clear left
+      .separator
+        :display none
+
+.collections .collection .details
+  .attribute.size .separator
+    :display none
+  .description
+    :clear both
+    :padding-top 1em
+
+.collections.content
+  .created_by
+    :display none
+
+.my
+  .collections
+    :float left
+    :width 610px
+
+    .details
+
+      .attribute.created_on, .attribute.updated_on
+        :font-size .9em
+
+      .attribute.created_on .separator
+        :display none
+
+      .br.views
+        :clear both
+
+.collections.content
+  :float left
+
+.collections.show .content
+  :float left
+  :width 610px
+
+.my.content
+  :float left
+  :width 610px
+
+.collections.index.partial
+  .pagination_info
+    :font-size 1.1em
+    :margin-bottom .2em
+    :margin-top .2em

@@ -1,7 +1,7 @@
 namespace :db do
 
   desc "load database with [number] lorem ipsum test videos"
-  task( { :populate => :environment }, :number ) do |t,args|
+  task :populate, [ :number ] => :environment do |t,args|
 
     require File.expand_path(File.join(RAILS_ROOT,"spec","factories"))
     require File.expand_path(File.join(RAILS_ROOT,"spec","video_helper"))

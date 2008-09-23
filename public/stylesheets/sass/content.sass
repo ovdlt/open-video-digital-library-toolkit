@@ -11,7 +11,7 @@
     :color black
     :font-size 2em
     :margin 0 0 15px 0
-    :padding 0 0 10px 0
+    :padding .4em
     
   h3
     :margin 0 0 10 0
@@ -144,7 +144,8 @@
 
   h1
     :background #ddd
-    :padding .5em .5em .5em .5em
+    :padding .5em
+    :margin-bottom 4px
 
   .form
     :margin-bottom 1em
@@ -164,40 +165,6 @@
     :padding-top .2em
     a
       :border 0 none
-
-  .videos.list
-
-    :border-left 2px solid black
-    :border-right 2px solid black
-    :border-top 2px solid black
-    :border-bottom 1px solid black
-
-    .video
-
-      :border-bottom 1px solid black
-
-      :padding 1em
-
-      .image
-        :float left
-        :width 120px
-        :height 90px
-        :background #eee
-        :text-align center
-        :margin-right 1em
-
-        img
-          :width 120px
-          :height 90px
-
-      .title
-        :display inline
-        :font-size 1.2em
-        :font-weight bold
-      .year
-        :display inline
-        :font-size 1.2em
-        :font-weight bold
 
   .videos.tile
 
@@ -304,7 +271,7 @@
       :padding-bottom .3em
       :border-bottom 2px solid #ccc
 
-#content .details
+.details
 
   .videos.tile
 
@@ -384,7 +351,7 @@
         :margin-left 1em
 
 
-#content .details
+.details
   :float left
   :width 68%
   :margin-top 1em
@@ -514,3 +481,38 @@
 
 .videos
   :padding-top .5em
+
+.videos.list # .page
+
+  :border-left 2px solid black
+  :border-right 2px solid black
+  :border-top 2px solid black
+  :border-bottom 1px solid black
+
+  .video
+
+    :border-bottom 1px solid black
+
+    :padding 1em
+
+    .image
+      :float left
+      :width 120px
+      :height 90px
+      :background #eee
+      :text-align center
+      :margin-right 1em
+
+      img
+        :width 120px
+        :height 90px
+
+    .title
+      :display inline
+      :font-size 1.2em
+      :font-weight bold
+    .year
+      :display inline
+      :font-size 1.2em
+      :font-weight bold
+
