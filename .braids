@@ -1,64 +1,57 @@
 --- 
 vendor/plugins/rspec: 
-  local_branch: braid/git/vendor/plugins/rspec/master
+  squashed: true
   type: git
-  revision: 
+  url: git://github.com/dchelimsky/rspec.git
   branch: master
-  squash: true
-  remote: git://github.com/dchelimsky/rspec.git
+  remote: braid/git/vendor/plugins/rspec/master
 vendor/plugins/rspec_rails: 
-  local_branch: braid/git/vendor/plugins/rspec-rails/master
+  squashed: true
   type: git
-  revision: 
+  url: git://github.com/dchelimsky/rspec-rails.git
   branch: master
-  squash: true
-  remote: git://github.com/dchelimsky/rspec-rails.git
+  remote: braid/git/vendor/plugins/rspec-rails/master
 vendor/rails: 
-  local_branch: braid/git/vendor/rails/master
+  squashed: true
   type: git
+  url: git://github.com/rails/rails.git
+  lock: 71528b1825ce5184b23d09f923cb72f4073ce8ed
   revision: 71528b1825ce5184b23d09f923cb72f4073ce8ed
   branch: master
-  squash: true
-  remote: git://github.com/rails/rails.git
-vendor/gems/deprec: 
-  local_branch: braid/git/vendor/gems/deprec/master
-  type: git
-  revision: 
-  branch: master
-  squash: true
-  remote: git://github.com/mbailey/deprec.git
+  remote: braid/git/vendor/rails/master
 vendor/plugins/role_requirement: 
-  local_branch: braid/git/vendor/plugins/role-requirement/master
+  squashed: true
   type: git
-  revision: 
+  url: git://github.com/negonicrac/role_requirement.git
   branch: master
-  squash: true
-  remote: git://github.com/negonicrac/role_requirement.git
+  remote: braid/git/vendor/plugins/role-requirement/master
+vendor/gems/deprec: 
+  squashed: true
+  type: git
+  url: git://github.com/mbailey/deprec.git
+  branch: master
+  remote: braid/git/vendor/gems/deprec/master
 vendor/plugins/exception_notification: 
-  local_branch: braid/git/vendor/plugins/exception-notification/master
+  squashed: true
   type: git
-  revision: 
+  url: git://github.com/rails/exception_notification.git
   branch: master
-  squash: true
-  remote: git://github.com/rails/exception_notification.git
+  remote: braid/git/vendor/plugins/exception-notification/master
 vendor/plugins/will_paginate: 
-  local_branch: braid/git/vendor/plugins/will-paginate/master
+  squashed: true
   type: git
-  revision: 
+  url: git://github.com/mislav/will_paginate.git
   branch: master
-  squash: true
-  remote: git://github.com/mislav/will_paginate.git
+  remote: braid/git/vendor/plugins/will-paginate/master
 vendor/plugins/restful_authentication: 
-  local_branch: braid/git/vendor/plugins/restful-authentication/master
+  squashed: true
   type: git
-  revision: 
+  url: git://github.com/technoweenie/restful-authentication.git
   branch: master
-  squash: true
-  remote: git://github.com/technoweenie/restful-authentication.git
+  remote: braid/git/vendor/plugins/restful-authentication/master
 vendor/plugins/aasm: 
-  local_branch: braid/git/vendor/plugins/aasm/master
+  squashed: true
   type: git
-  revision: 
+  url: git://github.com/rubyist/aasm.git
   branch: master
-  squash: true
-  remote: git://github.com/rubyist/aasm.git
+  remote: braid/git/vendor/plugins/aasm/master
