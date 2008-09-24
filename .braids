@@ -1,20 +1,14 @@
 --- 
 vendor/rails: 
   squashed: true
-  url: git://github.com/rails/rails.git
   type: git
+  url: git://github.com/rails/rails.git
   revision: 70b8ea4fa6f432919340345ae0d5af6aa8f87ec8
   branch: master
   remote: braid/git/vendor/rails/master
 vendor/gems/deprec: 
   squashed: true
-  type: git
   url: git://github.com/mbailey/deprec.git
+  type: git
   branch: master
   remote: braid/git/vendor/gems/deprec/master
-vendor/plugins/will_paginate: 
-  squashed: true
-  type: git
-  url: git://github.com/mislav/will_paginate.git
-  branch: master
-  remote: braid/git/vendor/plugins/will-paginate/master
