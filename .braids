@@ -20,6 +20,13 @@ vendor/rails:
   revision: ec39711b1b3ca3818986fe32504b80323066f695
   branch: 2-1-stable
   remote: braid/vendor/rails
+vendor/plugins/role_requirement: 
+  squashed: true
+  url: git://github.com/negonicrac/role_requirement.git
+  type: git
+  revision: 0140050d6676ffa8519e5b1f7c146bd72c02e1da
+  branch: master
+  remote: braid/vendor/plugins/role-requirement
 vendor/gems/deprec: 
   squashed: true
   url: git://github.com/mbailey/deprec.git
