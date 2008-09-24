@@ -8,4 +8,6 @@
 /public/stylesheets/*.css
 /coverage
 /public/assets/*
+/public/assets
 /public/surrogates/*
+/public/surrogates
