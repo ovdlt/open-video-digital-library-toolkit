@@ -55,3 +55,10 @@ vendor/plugins/restful_authentication:
   revision: 5846e652407eb26f54f85062cd4fe5cda68daf61
   branch: master
   remote: braid/vendor/plugins/restful-authentication
+vendor/plugins/aasm: 
+  squashed: true
+  url: git://github.com/rubyist/aasm.git
+  type: git
+  revision: 3d291032cf2c15f97e0ec443bb638d3c6907b006
+  branch: master
+  remote: braid/vendor/plugins/aasm
