@@ -48,3 +48,10 @@ vendor/plugins/will_paginate:
   revision: dd5cba24ec61345ab0d3fb2f6fbb45d1bc9a0865
   branch: master
   remote: braid/vendor/plugins/will-paginate
+vendor/plugins/restful_authentication: 
+  squashed: true
+  url: git://github.com/technoweenie/restful-authentication.git
+  type: git
+  revision: 5846e652407eb26f54f85062cd4fe5cda68daf61
+  branch: master
+  remote: braid/vendor/plugins/restful-authentication
