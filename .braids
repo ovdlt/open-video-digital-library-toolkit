@@ -1,7 +1,2 @@
---- 
-vendor/gems/deprec: 
-  squashed: true
-  type: git
-  url: git://github.com/mbailey/deprec.git
-  branch: master
-  remote: braid/git/vendor/gems/deprec/master
+--- {}
+
