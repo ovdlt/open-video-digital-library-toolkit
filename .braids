@@ -1,2 +1,8 @@
---- {}
-
+--- 
+vendor/rails: 
+  squashed: true
+  url: git://github.com/rails/rails.git
+  type: git
+  revision: ec39711b1b3ca3818986fe32504b80323066f695
+  branch: 2-1-stable
+  remote: braid/vendor/rails
