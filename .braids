@@ -20,3 +20,10 @@ vendor/rails:
   revision: ec39711b1b3ca3818986fe32504b80323066f695
   branch: 2-1-stable
   remote: braid/vendor/rails
+vendor/gems/deprec: 
+  squashed: true
+  url: git://github.com/mbailey/deprec.git
+  type: git
+  revision: 2ee6027962c78c776bbf79a69893eabb98be0fb9
+  branch: master
+  remote: braid/vendor/gems/deprec

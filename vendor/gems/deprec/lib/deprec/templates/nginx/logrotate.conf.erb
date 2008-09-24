@@ -1,0 +1,13 @@
+<%= shared_path %>/log/*access.log <%= shared_path %>/log/*error.log{
+        daily
+        missingok
+        compress
+        rotate 21
+        dateext
+        notifempty
+        sharedscripts
+        extension gz
+        postrotate
+          [ ! -f /usr/local/nginx/logs/nginx.pid ] || kill -USR1 `cat /usr/local/nginx/logs/nginx.pid`
+        endscript
+}
