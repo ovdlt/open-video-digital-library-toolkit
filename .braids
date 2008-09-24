@@ -34,3 +34,10 @@ vendor/gems/deprec:
   revision: 2ee6027962c78c776bbf79a69893eabb98be0fb9
   branch: master
   remote: braid/vendor/gems/deprec
+vendor/plugins/exception_notification: 
+  squashed: true
+  url: git://github.com/rails/exception_notification.git
+  type: git
+  revision: 019b0de35a328c78204adc0fe93e942f011e0002
+  branch: master
+  remote: braid/vendor/plugins/exception-notification
