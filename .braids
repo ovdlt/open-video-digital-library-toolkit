@@ -1,14 +1,7 @@
 --- 
-vendor/rails: 
-  squashed: true
-  type: git
-  url: git://github.com/rails/rails.git
-  revision: 70b8ea4fa6f432919340345ae0d5af6aa8f87ec8
-  branch: master
-  remote: braid/git/vendor/rails/master
 vendor/gems/deprec: 
   squashed: true
-  url: git://github.com/mbailey/deprec.git
   type: git
+  url: git://github.com/mbailey/deprec.git
   branch: master
   remote: braid/git/vendor/gems/deprec/master
