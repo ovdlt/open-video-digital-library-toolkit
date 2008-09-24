@@ -188,6 +188,7 @@ module Rails
           Gem.loaded_specs[stub] = Gem::Specification.new do |s|
             s.name = stub
             s.version = Rails::VERSION::STRING
+            s.loaded_from = ""
           end
           Gem.source_index.add_spec(Gem.loaded_specs[stub])
         end
