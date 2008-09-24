@@ -1,4 +1,10 @@
 require 'faker'
+begin
+require 'factory_girl'
+rescue Exception => e
+pp e.backtrace
+raise
+end
 
 Factory.sequence :filename do |n|
   filename = "temp_video_#{n}.mov"

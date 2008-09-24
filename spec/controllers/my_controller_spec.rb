@@ -12,7 +12,7 @@ describe MyController do
     it "should render show if logged in" do
       login_as_user
       get :show
-      response.should render_template("my/show")
+      response.should redirect_to(favorites_my_path)
     end
 
 

@@ -9,6 +9,7 @@ describe Library do
       :title => "Library title",
       :subtitle => "about a library",
       :my => "My Library",
+      :collections_user_id => (User.find_by_login "collections").id
     }
 
   end
@@ -36,7 +37,11 @@ describe Library do
     it "should return the title of some library record" do
       s = "a title"
       my = "my title"
-      Library.create! :title => s, :my => my
+      Library.create! :title => s,
+                       :my => my,
+                       :collections_user_id => \
+                         (User.find_by_login "collections").id
+
       Library.title.should == s
     end
   end
@@ -46,7 +51,11 @@ describe Library do
       t = "a title"
       s = "a subtitle"
       my = "my title"
-      Library.create! :title => t, :subtitle => s, :my => my
+      Library.create! :title => t,
+                       :subtitle => s,
+                       :my => my,
+                       :collections_user_id => \
+                         (User.find_by_login "collections").id
       Library.subtitle.should == s
     end
   end
@@ -56,7 +65,11 @@ describe Library do
       t = "a title"
       s = "a logo_url"
       my = "my title"
-      Library.create! :title => t, :logo_url => s, :my => my
+      Library.create! :title => t,
+                       :logo_url => s,
+                       :my => my,
+                       :collections_user_id => \
+                         (User.find_by_login "collections").id
       Library.logo_url.should == s
     end
   end

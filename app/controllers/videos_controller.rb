@@ -7,7 +7,9 @@ class VideosController < ApplicationController
                                        :download,
                                       ]
 
-  require_role [ :admin, :cataloger], :for_all_except => [ :index, :show ]
+  require_role [ :admin, :cataloger], :for_all_except => [ :index,
+                                                           :show,
+                                                           :recent ]
 
   def show
     @path = lambda { |opts| opts == {} ? video_path( @video ) \

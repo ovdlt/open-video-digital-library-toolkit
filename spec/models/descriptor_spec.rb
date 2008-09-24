@@ -17,8 +17,9 @@ describe Descriptor do
   it "should require a descriptor type" do
     d = Descriptor.create
     d.text = "some text"
-    d.valid?.should be_false
-    d.save.should be_false
+    # d.valid?.should be_false
+    # d.save.should be_false
+    lambda { d.save! }.should raise_error( ActiveRecord::StatementInvalid )
     d.descriptor_type = @type
     d.valid?.should be_true
     d.save.should be_true

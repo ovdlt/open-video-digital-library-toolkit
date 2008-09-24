@@ -24,3 +24,4 @@ config.action_mailer.delivery_method = :test
 require 'ruby-debug'
 
 ASSET_DIR = File.join(RAILS_ROOT, 'spec/test_assets')
+SURROGATE_DIR = File.join(RAILS_ROOT, 'public/surrogates')

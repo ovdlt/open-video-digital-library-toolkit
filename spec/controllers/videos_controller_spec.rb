@@ -2,18 +2,26 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe VideosController do
 
-  describe "#index" do
-
-    fixtures :descriptors, :descriptor_types, :descriptors_videos, :videos
+  describe "#recent" do
 
     before(:each) do
-      get :index
+      get :recent
     end
     
     it "should assign @videos" do
       assigns[:videos].should_not be_nil
       # this works whether we are an array or a WillPaginate::Collection
       ( Array === assigns[:videos] ).should be_true
+    end
+    
+  end
+
+  describe "#index" do
+
+    fixtures :descriptors, :descriptor_types, :descriptors_videos, :videos
+
+    before(:each) do
+      get :index
     end
     
     it "should return a successful response" do
