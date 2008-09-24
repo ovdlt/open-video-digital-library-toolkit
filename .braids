@@ -41,3 +41,10 @@ vendor/plugins/exception_notification:
   revision: 019b0de35a328c78204adc0fe93e942f011e0002
   branch: master
   remote: braid/vendor/plugins/exception-notification
+vendor/plugins/will_paginate: 
+  squashed: true
+  url: git://github.com/mislav/will_paginate.git
+  type: git
+  revision: dd5cba24ec61345ab0d3fb2f6fbb45d1bc9a0865
+  branch: master
+  remote: braid/vendor/plugins/will-paginate
