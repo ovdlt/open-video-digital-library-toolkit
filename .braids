@@ -1,39 +1,33 @@
 --- 
 vendor/plugins/rspec: 
   squashed: true
-  type: git
   url: git://github.com/dchelimsky/rspec.git
+  type: git
   revision: d868cf0ab0338fd7842669186c2e453cd564470b
   branch: master
   remote: braid/git/vendor/plugins/rspec/master
 vendor/plugins/rspec_rails: 
   squashed: true
-  url: git://github.com/dchelimsky/rspec-rails.git
   type: git
+  url: git://github.com/dchelimsky/rspec-rails.git
   branch: master
   remote: braid/git/vendor/plugins/rspec-rails/master
 vendor/rails: 
   squashed: true
-  type: git
   url: git://github.com/rails/rails.git
+  type: git
   revision: 70b8ea4fa6f432919340345ae0d5af6aa8f87ec8
   branch: master
   remote: braid/git/vendor/rails/master
 vendor/gems/deprec: 
   squashed: true
-  url: git://github.com/mbailey/deprec.git
   type: git
+  url: git://github.com/mbailey/deprec.git
   branch: master
   remote: braid/git/vendor/gems/deprec/master
-vendor/plugins/role_requirement: 
-  squashed: true
-  url: git://github.com/negonicrac/role_requirement.git
-  type: git
-  branch: master
-  remote: braid/git/vendor/plugins/role-requirement/master
 vendor/plugins/will_paginate: 
   squashed: true
-  url: git://github.com/mislav/will_paginate.git
   type: git
+  url: git://github.com/mislav/will_paginate.git
   branch: master
   remote: braid/git/vendor/plugins/will-paginate/master
