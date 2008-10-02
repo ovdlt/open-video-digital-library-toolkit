@@ -4,7 +4,8 @@ class Video < ActiveRecord::Base
 
   has_many :assets, :dependent => :destroy
 
-  has_and_belongs_to_many :descriptors
+  has_many :assignments, :dependent => :destroy
+  has_many :descriptors, :through => :assignments
 
   has_many :bookmarks, :dependent => :destroy
   has_many :collections, :through => :bookmarks

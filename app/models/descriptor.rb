@@ -10,7 +10,8 @@ class Descriptor < ActiveRecord::Base
   # Don't do this ... don't want to load all the videos everytime we
   # talk about this descriptor ...
   
-  has_and_belongs_to_many :videos
+  has_many :assignments, :dependent => :destroy
+  has_many :videos, :through => :assignments
 
   def most_recent
     # bad idea ... see above ...
