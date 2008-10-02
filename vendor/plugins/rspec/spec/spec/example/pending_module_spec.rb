@@ -37,6 +37,30 @@ module Spec
           end
         }.should raise_error(PendingExampleFixedError, /TODO/)
       end
+      
+      it "should have the correct file and line number for pending given with a block which fails" do
+        file = __FILE__
+        line_number = __LINE__ + 3
+        begin
+          include Pending
+          pending do
+            raise
+          end
+        rescue => error
+          error.pending_caller.should == "#{file}:#{line_number}"
+        end
+      end
+      
+      it "should have the correct file and line number for pending given with no block" do
+        file = __FILE__
+        line_number = __LINE__ + 3
+        begin
+          include Pending
+          pending("TODO")
+        rescue => error
+          error.pending_caller.should == "#{file}:#{line_number}"
+        end
+      end
     end
     
     describe ExamplePendingError do
@@ -65,5 +89,57 @@ module Spec
       end
     end
     
+    describe NotYetImplementedError do
+      def rspec_root
+        File.expand_path(__FILE__.gsub("/spec/spec/example/pending_module_spec.rb", "/lib"))
+      end
+      
+      it "should have the root rspec path" do
+        NotYetImplementedError::RSPEC_ROOT_LIB.should == rspec_root
+      end
+      
+      it "should always have the error 'Not Yet Implemented'" do
+        NotYetImplementedError.new([]).message.should == "Not Yet Implemented"
+      end
+      
+      describe "pending_caller" do
+        it "should select an element out of the backtrace" do
+          error = NotYetImplementedError.new(["foo/bar.rb:18"])
+          
+          error.pending_caller.should == "foo/bar.rb:18"
+        end
+        
+        it "should actually report the element from the backtrace" do
+          error = NotYetImplementedError.new(["bar.rb:18"])
+          
+          error.pending_caller.should == "bar.rb:18"
+        end
+        
+        it "should not use an element with the rspec root path" do
+          error = NotYetImplementedError.new(["#{rspec_root}:8"])
+          
+          error.pending_caller.should be_nil
+        end
+        
+        it "should select the first line in the backtrace which isn't in the rspec root" do
+          error = NotYetImplementedError.new([
+            "#{rspec_root}/foo.rb:2",
+            "#{rspec_root}/foo/bar.rb:18",
+            "path1.rb:22",
+            "path2.rb:33"
+          ])
+          
+          error.pending_caller.should == "path1.rb:22"
+        end
+        
+        it "should cache the caller" do
+          backtrace = mock('backtrace')
+          backtrace.should_receive(:detect).once
+          
+          error = NotYetImplementedError.new(backtrace)
+          error.pending_caller.should == error.pending_caller
+        end
+      end
+    end
   end
 end

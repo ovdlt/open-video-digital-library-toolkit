@@ -8,7 +8,14 @@ module Spec
 
       def initialize(defined_description, &implementation)
         @_defined_description = defined_description
-        @_implementation = implementation
+        @_implementation = implementation || pending_implementation
+      end
+      
+    private
+      
+      def pending_implementation
+        error = NotYetImplementedError.new(caller)
+        lambda { raise(error) }
       end
     end
   end
