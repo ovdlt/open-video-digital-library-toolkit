@@ -2,7 +2,8 @@ require 'digest/sha1'
 
 class User < ActiveRecord::Base
   
-  has_and_belongs_to_many :roles
+  has_many :permissions, :dependent => :destroy  
+  has_many :roles, :through => :permissions
 
   has_many :saved_queries
   has_many :collections
