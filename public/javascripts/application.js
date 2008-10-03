@@ -134,7 +134,7 @@ $(function(){
         return false;
     });
 
-    $("div.new").hide();
+    $("div.dt.display-new div.new").hide();
 
     $("div.dt.display-new a").click(function(){
         top = $($(this).parents("li.new")[0])

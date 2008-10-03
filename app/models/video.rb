@@ -138,7 +138,7 @@ class Video < ActiveRecord::Base
         paths.flatten!
         if paths.size > 0
           path = paths[0]
-          path[Asset::SURROGATE_PREFIX_LENGTH,path.length]
+          path[Asset::SURROGATE_PREFIX.length,path.length]
         else
           nil
         end
@@ -155,7 +155,7 @@ class Video < ActiveRecord::Base
         paths.flatten!
         if paths.size > 0
           path = paths[0]
-          path[Asset::SURROGATE_PREFIX_LENGTH,path.length]
+          path[Asset::SURROGATE_PREFIX.length,path.length]
         else
           nil
         end
@@ -172,7 +172,7 @@ class Video < ActiveRecord::Base
         paths.flatten!
         if paths.size > 0
           path = paths[0]
-          path[Asset::SURROGATE_PREFIX_LENGTH,path.length]
+          path[Asset::SURROGATE_PREFIX.length,path.length]
         else
           nil
         end
@@ -189,7 +189,7 @@ class Video < ActiveRecord::Base
         paths.flatten!
         if paths.size > 0
           path = paths[0]
-          path[Asset::SURROGATE_PREFIX_LENGTH,path.length]
+          path[Asset::SURROGATE_PREFIX.length,path.length]
         else
           nil
         end
@@ -206,7 +206,7 @@ class Video < ActiveRecord::Base
         paths.flatten!
         if paths.size > 0
           paths = paths.map do |path|
-            path[Asset::SURROGATE_PREFIX_LENGTH,path.length]
+            path[Asset::SURROGATE_PREFIX.length,path.length]
           end
           paths.sort! do |a,b|
             a.match( /_(\d+\.\d+)[._][^\/]*$/ )[1].to_f <=>

@@ -3,15 +3,11 @@ class Asset < ActiveRecord::Base
   belongs_to :video
 
   ASSET_DIR = ::ASSET_DIR
-  ASSET_DIR_LENGTH = ASSET_DIR.length
 
   SURROGATE_DIR = ::SURROGATE_DIR
-  SURROGATE_DIR_LENGTH = SURROGATE_DIR.length
   SURROGATE_PREFIX = File.dirname( SURROGATE_DIR )
-  SURROGATE_PREFIX_LENGTH = SURROGATE_PREFIX.length
 
   FILE_PREFIX =  "file:///"
-  FILE_PREFIX_LENGTH = FILE_PREFIX.length
 
   validates_uniqueness_of :uri
   validate :must_have_valid_path
@@ -63,7 +59,7 @@ class Asset < ActiveRecord::Base
       
       list = list.map do |f|
         if f.index(ASSET_DIR) == 0
-          f[ASSET_DIR_LENGTH+1,f.length]
+          f[ASSET_DIR.length+1,f.length]
         else
           []
         end
@@ -104,7 +100,7 @@ class Asset < ActiveRecord::Base
 
   def relative_path
     raise ArgumentError if !uri.starts_with? FILE_PREFIX
-    uri[FILE_PREFIX_LENGTH,uri.length-FILE_PREFIX_LENGTH]
+    uri[FILE_PREFIX.length,uri.length-FILE_PREFIX.length]
   end
 
   def filename

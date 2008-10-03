@@ -1,14 +1,15 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
-
 describe Asset do
 
-  describe "::ASSET_DIR" do
-    it "should be a well formed path to an existing path" do
-      File.directory?(Asset::ASSET_DIR).should be_true
+  [ "ASSET_DIR", "SURROGATE_DIR" ].each do |dir|
+    describe "::#{dir}" do
+      it "should be a well formed path to an existing path" do
+        File.directory?(Asset.const_get(dir)).should be_true
+      end
     end
-
   end
+
 
   describe "validations" do
 
