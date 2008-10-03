@@ -1,0 +1,41 @@
+date:
+  id: 1
+  name: Date Types
+  range: date
+  optional: true
+  multivalued: true
+
+role:
+  id: 2
+  name: Roles
+  range: string
+  optional: true
+  multivalued: true
+
+# collection:
+#   id: 3
+#   name: Collections
+#   range: string
+#   optional: true
+#   multivalued: true
+
+# descriptor_type:
+#   id: 4
+#   name: Descriptor Types
+#   range: descriptor
+#   optional: true
+#   multivalued: true
+
+# digital_file:
+#   id: 5
+#   name: Digital Files
+#   range: string
+#   optional: true
+#   multivalued: true
+
+# rights_statement:
+#   id: 6
+#   name: Rights Statements
+#   range: rights_statement
+#   optional: false
+#   multivalued: false

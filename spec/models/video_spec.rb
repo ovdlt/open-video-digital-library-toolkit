@@ -1,75 +1,75 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
-describe Video, "validations" do
-
-  before :each do
-    @video = Factory(:video)
-  end
-  
-  after :each do
-    File.unlink @video.assets[0].absolute_path
-  end
-
-  it "should require the presence of a title" do
-    @video.should be_valid
-    @video.title = nil
-    @video.should_not be_valid
-  end
-  
-  it "should require the presence of a sentence" do
-    @video.should be_valid
-    @video.sentence = nil
-    @video.should_not be_valid
-  end
-  
-end
-
-describe Video, "descriptors" do
-
-  before :each do
-    @video = Factory(:video)
-    @type = DescriptorType.create! :title => "some descriptor"
-    @value = Descriptor.create! :descriptor_type => @type,
-                                 :text => "some descriptor"
-  end
-
-  after :each do
-    File.unlink @video.assets[0].absolute_path
-  end
-
-  it "should start as an empty set" do
-    @video.descriptors.should == []
-  end
-
-  it "should allow descriptors to be added" do
-    @video.descriptors << @value
-    @video.should be_valid
-    @video.save.should be_true
-  end
-
-  it "should require they be unique" do
-    @video.descriptors << @value
-    # the join table  so no chance for the validation to run
-    lambda { @video.descriptors << @value }.should raise_error
-  end
-
-end
-
-describe Video, ".recent" do
-  fixtures :videos
-
-  it "should return the most recent video (shortcut for .find ...)" do
-    Video.recent[0].should == ( Video.find :first, :order => "created_at desc" )
-  end
-
-  it "should return the n most recent videos (shortcut for .find ...)" do
-    Video.recent(3).should ==
-      ( Video.find :all, :order => "created_at desc", :limit => 3 )
-  end
-
-end
-
 describe Video do
+
+  describe "validations" do
+
+    before :each do
+      @video = Factory(:video)
+    end
+    
+    after :each do
+      File.unlink @video.assets[0].absolute_path
+    end
+
+    it "should require the presence of a title" do
+      @video.should be_valid
+      @video.title = nil
+      @video.should_not be_valid
+    end
+    
+    it "should require the presence of a sentence" do
+      @video.should be_valid
+      @video.sentence = nil
+      @video.should_not be_valid
+    end
+    
+  end
+
+  describe "descriptors" do
+
+    before :each do
+      @video = Factory(:video)
+      @type = DescriptorType.create! :title => "some descriptor"
+      @value = Descriptor.create! :descriptor_type => @type,
+      :text => "some descriptor"
+    end
+
+    after :each do
+      File.unlink @video.assets[0].absolute_path
+    end
+
+    it "should start as an empty set" do
+      @video.descriptors.should == []
+    end
+
+    it "should allow descriptors to be added" do
+      @video.descriptors << @value
+      @video.should be_valid
+      @video.save.should be_true
+    end
+
+    it "should require they be unique" do
+      @video.descriptors << @value
+      # the join table  so no chance for the validation to run
+      lambda { @video.descriptors << @value }.should raise_error
+    end
+
+  end
+
+  describe ".recent" do
+    fixtures :videos
+
+    it "should return the most recent video (shortcut for .find ...)" do
+      Video.recent[0].should == ( Video.find :first, :order => "created_at desc" )
+    end
+
+    it "should return the n most recent videos (shortcut for .find ...)" do
+      Video.recent(3).should ==
+        ( Video.find :all, :order => "created_at desc", :limit => 3 )
+    end
+
+  end
 
   describe "fulltext" do
 
@@ -158,6 +158,36 @@ describe Video do
       @video.descriptors_by_type( @dts[2] ).should == [ @dss[4] ]
     end
     
+  end
+
+  describe "property interface to video" do
+
+    before(:each) do
+      @video = Factory(:video)
+    end
+
+    after :each do
+      File.unlink @video.assets[0].absolute_path
+    end
+
+    it "should allow a property to be added" do
+      @video.properties << Property.build( "Producer", "Frank Capra" )
+      @video.save!
+    end
+
+    it "should list properties" do
+      @video.properties << Property.build( "Producer", "Frank Capra" )
+      @video.properties << Property.build( "Writer", "Stephen King" )
+      @video.properties << Property.build( "Broadcast", "10/25/2005" )
+    end
+
+    it "should search by propery values" do
+    end
+
+    it "should require required properties" do; end
+    it "should allow multivalued where appropriate" do; end
+    it "should prohbit multivalued where appropriate" do; end
+
   end
 
 end

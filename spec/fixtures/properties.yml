@@ -1,0 +1,59 @@
+# produced:
+#   id: 1
+#   property_type_id: 1
+#   text: Production
+
+# broadcast:
+#   id: 2
+#   property_type_id: 1
+#   text: Broadcast
+
+# director:
+#   id: 3
+#   property_type_id: 2
+#   text: Director
+
+# producer:
+#   id: 4
+#   property_type_id: 2
+#   text: Producer
+
+# era:
+#   id: 5
+#   property_type_id: 4
+#   text: Era
+
+# genre:
+#   id: 6
+#   property_type_id: 4
+#   text: Genre
+
+# administrative:
+#   id: 7
+#   property_type_id: 3
+#   text: Administrative
+
+# documentary:
+#   id: 8
+#   property_type_id: 3
+#   text: Documentary Video Collection
+
+# digital_video:
+#   id: 9
+#   property_type_id: 5
+#   text: Digital video
+
+# promotional_item:
+#   id: 10
+#   property_type_id: 5
+#   text: Promotional Item
+
+# all_rights_reserved:
+#   id: 11
+#   property_type_id: 6
+#   text: All Rights Reserved
+
+# CCA2.5:
+#   id: 12
+#   property_type_id: 6
+#   text: Creative Commons Attribution 2.5 License
