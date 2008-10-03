@@ -23,4 +23,10 @@ class Property < ActiveRecord::Base
     property_type.retrieve_value self
   end
 
+  def self.find_by_name name
+    property_type = PropertyType.find_by_name name
+    raise PropertyTypeNotFound.new( name ) unless property_type
+    self.find_by_property_type_id property_type.id
+  end
+
 end

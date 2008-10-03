@@ -177,8 +177,14 @@ describe Video do
 
     it "should list properties" do
       @video.properties << Property.build( "Producer", "Frank Capra" )
+      @video.properties << Property.build( "Producer", "George Lucas" )
       @video.properties << Property.build( "Writer", "Stephen King" )
       @video.properties << Property.build( "Broadcast", "10/25/2005" )
+
+      retrieved = Video.find @video.id
+
+      @video.properties.find_by_type( "Producer" ).should == true
+
     end
 
     it "should search by propery values" do
