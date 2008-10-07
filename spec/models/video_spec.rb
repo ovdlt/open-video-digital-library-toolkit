@@ -175,24 +175,32 @@ describe Video do
       @video.save!
     end
 
-    it "should list properties" do
-      @video.properties << Property.build( "Producer", "Frank Capra" )
+    it "should find properties" do
+
+      @video.properties <<
+        Property.new( :property_type =>
+                       PropertyType.find_by_name( "Producer" ),
+                       :value => "Frank Capra" )
+
       @video.properties << Property.build( "Producer", "George Lucas" )
       @video.properties << Property.build( "Writer", "Stephen King" )
       @video.properties << Property.build( "Broadcast", "10/25/2005" )
 
       retrieved = Video.find @video.id
 
-      @video.properties.find_by_type( "Producer" ).should == true
+      @video.properties.find_all_by_type( "Producer" ).size.should == 2
 
     end
 
-    it "should search by propery values" do
+    it "should list by class" do
+      pending
     end
 
-    it "should require required properties" do; end
-    it "should allow multivalued where appropriate" do; end
-    it "should prohbit multivalued where appropriate" do; end
+    it "should search by property values"  do; pending; end
+
+    it "should require required properties"  do; pending; end
+    it "should allow multivalued where appropriate"  do; pending; end
+    it "should prohbit multivalued where appropriate"  do; pending; end
 
   end
 

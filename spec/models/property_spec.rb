@@ -6,6 +6,7 @@ describe Property do
     @valid_attributes = {
       :video_id => 1,
       :property_type_id => 1,
+      :value => "10/25/2008"
     }
   end
 
@@ -25,6 +26,46 @@ describe Property do
       should raise_error( ActiveRecord::RecordInvalid )
   end
 
+  it "should require a value" do
+    @valid_attributes.delete :value
+    lambda { Property.create!(@valid_attributes) }.
+      should raise_error( ActiveRecord::RecordInvalid )
+  end
+
+  it "should require uniqueness" do
+    p1 = Property.build( "Producer", "Bar" )
+    p1.video_id = 1
+    p2 = Property.build( "Producer", "Bar" )
+    p2.video_id = 1
+    p1.save.should be_true
+    p2.save.should be_false
+  end
+
+  it "should have a nice interface with build" do
+    video = Video.new :title => "title", :sentence => "sentence",
+                       :rights_id => 1
+    video.properties << Property.build( "Producer", "Bar" )
+    p video.errors if !video.save
+    video.save.should be_true
+  end
+
+  it "should have a nice interface with new" do
+    video = Video.new :title => "title", :sentence => "sentence",
+                       :rights_id => 1
+    property = video.properties.build
+    property.property_type = PropertyType.find_by_name "Producer"
+    property.value = "Frank Capra"
+    video.save.should be_true
+  end
+
+  it "should have a nice interface with new with opts" do
+    video = Video.new :title => "title", :sentence => "sentence",
+                       :rights_id => 1
+    property = video.properties.build \
+      :property_type => PropertyType.find_by_name( "Producer" ),
+      :value => "Frank Capra"
+    video.save.should be_true
+  end
 
   describe ".build" do
 
@@ -121,7 +162,7 @@ describe Property do
       property.save.should be_true
       retrieved = Property.find property.id
       retrieved.should == property
-      retrieved.value.should == Date.parse( "10/25/2005" )
+      retrieved.value.should == "2005-10-25"
     end
 
   end
@@ -137,13 +178,16 @@ describe Property do
       p = Property.build( "Broadcast", "10/25/2001" )
       p.video_id = 1
       p.save!
-      p = Property.build( "Broadcast", "10/65/2001" )
+      p = Property.build( "Broadcast", "10/5/2001" )
       p.video_id = 1
       p.save!
       p = Property.build( "Producer", "John Smith" )
       p.video_id = 1
       p.save!
-      Property.find_by_name( "Broadcast" ).size.should == 2
+      p = Property.build( "Producer", "John Q Public" )
+      p.video_id = 1
+      p.save!
+      Property.find_all_by_name( "Broadcast" ).size.should == 2
     end
 
   end

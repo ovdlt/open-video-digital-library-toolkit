@@ -25,13 +25,25 @@ describe PropertyType do
       should raise_error( ActiveRecord::RecordInvalid )
   end
 
-  describe "#build_value" do
+  describe "#validate_value" do
 
     it "should throw a nice error if the property class is bad" do
       property_type = PropertyType.create! :name => "some name",
                                             :property_class_id => 1
       property_type.property_class_id = -1
-      lambda { property_type.build_value( "foo" ) }.
+      lambda { property_type.validate_value( "foo" ) }.
+        should raise_error( PropertyType::NoPropertyClass )
+    end
+
+  end
+
+  describe "#translate_value" do
+
+    it "should throw a nice error if the property class is bad" do
+      property_type = PropertyType.create! :name => "some name",
+                                            :property_class_id => 1
+      property_type.property_class_id = -1
+      lambda { property_type.translate_value( "foo" ) }.
         should raise_error( PropertyType::NoPropertyClass )
     end
 

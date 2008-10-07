@@ -33,9 +33,9 @@ role:
 #   optional: true
 #   multivalued: true
 
-# rights_statement:
-#   id: 6
-#   name: Rights Statements
-#   range: rights_statement
-#   optional: false
-#   multivalued: false
+6:
+  id: 6
+  name: Rights Statements
+  range: rights_detail
+  optional: false
+  multivalued: false

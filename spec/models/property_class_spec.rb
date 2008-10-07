@@ -39,37 +39,49 @@ describe PropertyClass do
       should raise_error( ActiveRecord::RecordInvalid )
   end
 
-  describe "#build_value" do
-
-    it "should raise an error on an unspported value" do
-      property_class = PropertyClass.create!(@valid_attributes)
-      property_class.range = "strange"
-      lambda { property_class.build_value( "foobar" ) }.
-        should raise_error( PropertyClass::NoRangeClass )
-    end
-
-    it "should map a string to string value" do
-      @valid_attributes[:range] = "string"
-      property_class = PropertyClass.create!(@valid_attributes)
-      property_class.build_value( "foobar" ).
-        should == { :string_value => "foobar" }
-    end
-
-    it "should map a date to a date value" do
+  describe "#validate_value" do
+    it "should validate a good date" do
       @valid_attributes[:range] = "date"
       property_class = PropertyClass.create!(@valid_attributes)
-      property_class.build_value( "10/25/2005" ).
-        should == { :date_value => Date.parse( "10/25/2005" ) }
+      property = mock "property"
+      property.stub!(:value).and_return("12/25/2005")
+      property_class.validate_value( property ).should be_true
     end
 
-    # Note: these checks don't handle changes that might occur by
-    # roundtriping through the database
+    it "should not validate a bad date" do
+      @valid_attributes[:range] = "date"
+      property_class = PropertyClass.create!(@valid_attributes)
+      property = mock "property"
+      property.stub!(:value).and_return("12/52/2005")
+      errors = mock "errors"
+      errors.should_receive(:add)
+      property.should_receive(:errors).and_return(errors)
+      property_class.validate_value( property ).should be_false
+    end
+
+  end
+
+  describe "#translate_value" do
+
+    it "should return a date for a date" do
+      @valid_attributes[:range] = "date"
+      property_class = PropertyClass.create!(@valid_attributes)
+      property = mock "property"
+      property.should_receive(:value).and_return("12/25/2005")
+      property.should_receive(:date_value=).with(Date.parse("12/25/2005"))
+      property_class.translate_value( property )
+    end
+
+  end
+
+  describe "#retrieve_value" do
 
     it "should return a string for a string" do
       @valid_attributes[:range] = "string"
       property_class = PropertyClass.create!(@valid_attributes)
       property = mock "property"
-      property.should_receive(:string_value).and_return("a result")
+      property.stub!(:string_value).and_return("a result")
+      property.stub!(:value).and_return("a result")
       property_class.retrieve_value( property ).should == "a result"
     end
 
@@ -77,13 +89,11 @@ describe PropertyClass do
       @valid_attributes[:range] = "date"
       property_class = PropertyClass.create!(@valid_attributes)
       property = mock "property"
-      property.should_receive(:date_value).
-        and_return(Date.parse("12/25/2005"))
-      property_class.retrieve_value( property ).
-        should == Date.parse("12/25/2005")
+      property.stub!(:date_value).and_return(Date.parse("12/25/2005"))
+      property.stub!(:value).and_return("12/25/2005")
+      property_class.retrieve_value( property ).should == "2005-12-25"
     end
 
   end
-
 
 end

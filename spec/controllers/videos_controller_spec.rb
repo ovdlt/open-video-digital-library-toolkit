@@ -18,7 +18,7 @@ describe VideosController do
 
   describe "#index" do
 
-    fixtures :descriptors, :descriptor_types, :descriptors_videos, :videos
+    fixtures :descriptors, :descriptor_types, :assignments, :videos
 
     before(:each) do
       get :index

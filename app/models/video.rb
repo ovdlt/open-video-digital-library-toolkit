@@ -1,10 +1,15 @@
 class Video < ActiveRecord::Base
 
-  belongs_to :rights
+  # belongs_to :rights
 
   has_many :assets, :dependent => :destroy
 
-  has_many :properties, :dependent => :destroy
+  has_many :properties, :dependent => :destroy do
+    def find_all_by_type name
+      pt = PropertyType.find_by_name name
+      find_all_by_property_type_id( pt ) if pt
+    end
+  end
 
   has_many :assignments, :dependent => :destroy
   has_many :descriptors, :through => :assignments
@@ -14,7 +19,8 @@ class Video < ActiveRecord::Base
 
   validates_presence_of :title
   validates_presence_of :sentence
-  validates_presence_of :rights_id, :message => "type must be selected"
+
+  # validates_presence_of :rights_id, :message => "type must be selected"
 
   validate :descriptors_must_be_unique
   
@@ -42,6 +48,15 @@ class Video < ActiveRecord::Base
       if vf
         vf.destroy
       end
+    end
+  end
+
+  # remove when rights table dropped
+
+  def initialize options = {}
+    super
+    if !self.rights_id
+      self.rights_id = 1
     end
   end
 
@@ -104,7 +119,7 @@ class Video < ActiveRecord::Base
     options.delete :query
 
     if options[:descriptor_id]
-      joins << "descriptors_videos dvs"
+      joins << "assignments dvs"
       
       conditions[0] << "(videos.id = dvs.video_id)"
       

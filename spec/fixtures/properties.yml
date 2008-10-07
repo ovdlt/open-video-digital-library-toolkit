@@ -48,12 +48,12 @@
 #   property_type_id: 5
 #   text: Promotional Item
 
-# all_rights_reserved:
+# 11:
 #   id: 11
-#   property_type_id: 6
+#   property_type_id: 11
 #   text: All Rights Reserved
 
-# CCA2.5:
+# 12:
 #   id: 12
-#   property_type_id: 6
+#   property_type_id: 11
 #   text: Creative Commons Attribution 2.5 License

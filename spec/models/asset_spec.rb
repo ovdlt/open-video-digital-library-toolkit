@@ -52,7 +52,8 @@ describe Asset do
 
       video = Video.new( :sentence => "bless you ants. blants.",
                           :title => "look around youlook around youlook",
-                          :rights => Rights.find(1) )
+                          :rights_id => 1
+                         )
     
       uri = "file:///look_around_you.mov"
 

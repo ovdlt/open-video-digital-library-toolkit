@@ -27,9 +27,16 @@ Factory.define :video do |v|
     end        
     v
   end  
+
+#   v.rights_id {
+#     rand(Rights.count) + 1
+#   }
+
   v.rights_id {
-    rand(Rights.count) + 1
+    # rand(Rights.count) + 1
+    1
   }
+
   v.assets do
     asset = Asset.new :uri => "file:///" + Factory.next( :filename ),
                        :size => rand(16.megabytes)

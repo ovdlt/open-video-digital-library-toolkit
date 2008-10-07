@@ -39,7 +39,7 @@ describe Descriptor do
   describe "#most_recent" do
 
     fixtures :videos, :descriptors, :descriptor_types, :libraries
-    fixtures :descriptors_videos
+    fixtures :assignments
 
     it "should return the most recent video for a descriptor" do
 
@@ -49,13 +49,12 @@ describe Descriptor do
       
       videos = Video.find :all,
                            :order =>  "created_at",
-                           :joins => "join descriptors_videos dv " +
+                           :joins => "join assignments dv " +
                                      "on dv.video_id = videos.id",
                            :conditions => [ "dv.descriptor_id = ?",
                                             descriptor.id ]
 
       found = descriptor.most_recent
-
       found.should == videos[0]
 
     end
