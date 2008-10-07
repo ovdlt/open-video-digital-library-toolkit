@@ -5,10 +5,25 @@ class Video < ActiveRecord::Base
   has_many :assets, :dependent => :destroy
 
   has_many :properties, :dependent => :destroy do
+
     def find_all_by_type name
       pt = PropertyType.find_by_name name
       find_all_by_property_type_id( pt ) if pt
     end
+
+    def find_all_by_class name
+
+      pc = PropertyClass.find_by_name name
+
+      if pc
+        pts = PropertyType.find_all_by_property_class_id pc.id
+        return find_all_by_property_type_id( pts ) if pts and !pts.empty?
+      end
+
+      []
+
+    end
+
   end
 
   has_many :assignments, :dependent => :destroy
@@ -26,16 +41,21 @@ class Video < ActiveRecord::Base
   
   after_save do |video|
     begin
+
       vf = VideoFulltext.find_by_video_id video.id
+
       if vf == nil
         vf = VideoFulltext.new :video_id => video.id
       end
+
       texts = [ video.title,
                 video.sentence,
                 video.abstract,
                 video.donor ]
 
       video.descriptors.each { |d| texts << d.text }
+
+      video.properties.each { |p| texts << p.value }
 
       vf.text = texts.join(" ")
       vf.save

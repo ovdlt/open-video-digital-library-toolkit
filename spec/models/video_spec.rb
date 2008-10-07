@@ -175,32 +175,48 @@ describe Video do
       @video.save!
     end
 
-    it "should find properties" do
+    describe "property operations" do
 
-      @video.properties <<
-        Property.new( :property_type =>
-                       PropertyType.find_by_name( "Producer" ),
-                       :value => "Frank Capra" )
+      before(:each) do
 
-      @video.properties << Property.build( "Producer", "George Lucas" )
-      @video.properties << Property.build( "Writer", "Stephen King" )
-      @video.properties << Property.build( "Broadcast", "10/25/2005" )
+        @video.properties <<
+          Property.new( :property_type =>
+                        PropertyType.find_by_name( "Producer" ),
+                        :value => "Frank Capra" )
 
-      retrieved = Video.find @video.id
+        @video.properties << Property.build( "Producer", "George Lucas" )
+        @video.properties << Property.build( "Writer", "Stephen King" )
+        @video.properties << Property.build( "Broadcast", "10/25/2005" )
+        @video.properties << Property.build( "Production", "10/25/2005" )
 
-      @video.properties.find_all_by_type( "Producer" ).size.should == 2
+        @video.save!
+
+        @retrieved = Video.find @video.id
+
+      end
+
+      it "should find properties" do
+        @retrieved.properties.find_all_by_type( "Producer" ).size.should == 2
+      end
+
+      it "should list by class" do
+        @retrieved.properties.find_all_by_class( "Roles" ).size.should == 3
+        @retrieved.properties.find_all_by_class( "Collections" ).size.
+          should == 0
+      end
+
+      it "should search by property values"  do
+        @retrieved = Video.search :query => "George Lucas"
+        @retrieved.size.should == 1
+      end
+
+      it "should require required properties" do
+      end
+
+      it "should allow multivalued where appropriate"  do; pending; end
+      it "should prohbit multivalued where appropriate"  do; pending; end
 
     end
-
-    it "should list by class" do
-      pending
-    end
-
-    it "should search by property values"  do; pending; end
-
-    it "should require required properties"  do; pending; end
-    it "should allow multivalued where appropriate"  do; pending; end
-    it "should prohbit multivalued where appropriate"  do; pending; end
 
   end
 

@@ -12,12 +12,12 @@ role:
   optional: true
   multivalued: true
 
-# collection:
-#   id: 3
-#   name: Collections
-#   range: string
-#   optional: true
-#   multivalued: true
+collection:
+  id: 3
+  name: Collections
+  range: string
+  optional: true
+  multivalued: true
 
 # descriptor_type:
 #   id: 4
@@ -33,7 +33,7 @@ role:
 #   optional: true
 #   multivalued: true
 
-6:
+rights_statements:
   id: 6
   name: Rights Statements
   range: rights_detail
