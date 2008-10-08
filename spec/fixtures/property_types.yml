@@ -23,32 +23,38 @@
 #   property_class_id: 4
 #   name: Era
 
-# 6:
-#   id: 6
-#   property_class_id: 4
-#   name: Genre
-
-# 7:
-#   id: 7
-#   property_class_id: 3
 #   name: Administrative
-
-# 8:
-#   id: 8
-#   property_class_id: 3
 #   name: Documentary Video Collection
-
-# 9:
-#   id: 9
-#   property_class_id: 5
 #   name: Digital video
-
-# 10:
-#   id: 10
-#   property_class_id: 5
 #   name: Promotional Item
 
 11:
   id: 11
   property_class_id: 6
   name: 'Rights Statement'
+
+12:
+  id: 12
+  property_class_id: 4
+  name: Genre
+
+13:
+  id: 13
+  property_class_id: 4
+  name: Language
+
+14:
+  id: 14
+  property_class_id: 4
+  name: Color
+
+15:
+  id: 15
+  property_class_id: 4
+  name: Sound
+
+16:
+  id: 16
+  property_class_id: 4
+  name: Geographic Region
+

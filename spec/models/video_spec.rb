@@ -251,4 +251,64 @@ describe Video do
 
   end
 
+  describe "descriptor properties" do
+
+    before(:each) do
+      @video = Factory(:video)
+    end
+
+    after :each do
+      File.unlink @video.assets[0].absolute_path
+    end
+
+    it "should allow a property descriptor to be added" do
+      @video.properties << Property.build( "Genre", "Documentary" )
+      @video.save.should be_true
+    end
+
+    it "should not allow a property descriptor to be added multiple times" do
+      @video.properties << Property.build( "Genre", "Documentary" )
+      @video.properties << Property.build( "Genre", "Documentary" )
+      @video.save.should be_false
+    end
+
+    it "should require mandatory descriptors" do
+      pc = PropertyClass.find_by_name "Mandatory Multivalued Descriptor"
+      pt = PropertyType.create! :name => "mytype",
+                                 :property_class => pc
+      dv = DescriptorValue.create! :property_type => pt,
+                                     :value => "myvalue"
+      @video.save.should be_false
+      @video.properties << Property.build( "mytype", "myvalue" )
+      @video.save.should be_true
+    end
+
+    it "should disallow mv descriptors when sv" do
+      pc = PropertyClass.find_by_name "Mandatory Singular Descriptor"
+      pt = PropertyType.create! :name => "mytype",
+                                 :property_class => pc
+      DescriptorValue.create! :property_type => pt, :value => "myvalue"
+      DescriptorValue.create! :property_type => pt, :value => "myvaluex"
+      @video.save.should be_false
+      @video.properties << Property.build( "mytype", "myvalue" )
+      @video.save.should be_true
+      @video.properties << Property.build( "mytype", "myvaluex" )
+      @video.save.should be_false
+    end
+
+    it "should allow mv descriptors when mv" do
+      pc = PropertyClass.find_by_name "Optional Multivalued Descriptor"
+      pt = PropertyType.create! :name => "mytype",
+                                 :property_class => pc
+      DescriptorValue.create! :property_type => pt, :value => "myvalue"
+      DescriptorValue.create! :property_type => pt, :value => "myvaluex"
+      @video.save.should be_true
+      @video.properties << Property.build( "mytype", "myvalue" )
+      @video.save.should be_true
+      @video.properties << Property.build( "mytype", "myvaluex" )
+      @video.save.should be_true
+    end
+
+  end
+
 end

@@ -1,0 +1,112 @@
+<%
+$index = 0
+def index
+  $index += 1  
+end
+%>
+
+documentary:
+  id: <%= index %>
+  property_type_id: 12
+  value: Documentary
+
+corporate:
+  id: <%= index %>
+  property_type_id: 12
+  value: Corporate
+
+historical:
+  id: <%= index %>
+  property_type_id: 12
+  value: Historical
+
+ephemeral:
+  id: <%= index %>
+  property_type_id: 12
+  value: Ephemeral
+
+lecture:
+  id: <%= index %>
+  property_type_id: 12
+  value: Lecture
+
+spanish:
+  id: <%= index %>
+  property_type_id: 13
+  value: Spanish
+
+french:
+  id: <%= index %>
+  property_type_id: 13
+  value: French
+
+italian:
+  id: <%= index %>
+  property_type_id: 13
+  value: Italian
+
+english:
+  id: <%= index %>
+  property_type_id: 13
+  value: English
+
+japanese:
+  id: <%= index %>
+  property_type_id: 13
+  value: Japanese
+
+north_america:
+  id: <%= index %>
+  property_type_id: 16
+  value: North America
+
+africa:
+  id: <%= index %>
+  property_type_id: 16
+  value: Africa
+
+europe:
+  id: <%= index %>
+  property_type_id: 16
+  value: Europe
+
+central_america:
+  id: <%= index %>
+  property_type_id: 16
+  value: Central America
+
+south_america:
+  id: <%= index %>
+  property_type_id: 16
+  value: South America
+
+asia:
+  id: <%= index %>
+  property_type_id: 16
+  value: Asia
+
+color:
+  id: <%= index %>
+  property_type_id: 14
+  value: Color
+
+blank_and_white:
+  id: <%= index %>
+  property_type_id: 14
+  value: Black and White
+
+colorized:
+  id: <%= index %>
+  property_type_id: 14
+  value: Colorized
+
+sound:
+  id: <%= index %>
+  property_type_id: 15
+  value: Sound
+
+silent:
+  id: <%= index %>
+  property_type_id: 15
+  value: Silent
+

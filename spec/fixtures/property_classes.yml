@@ -19,12 +19,12 @@ collection:
   optional: true
   multivalued: true
 
-# descriptor_type:
-#   id: 4
-#   name: Descriptor Types
-#   range: descriptor
-#   optional: true
-#   multivalued: true
+4:
+  id: 4
+  name: Optional Multivalued Descriptor
+  range: descriptor_value
+  optional: true
+  multivalued: true
 
 # digital_file:
 #   id: 5
@@ -39,3 +39,25 @@ rights_statements:
   range: rights_detail
   optional: false
   multivalued: false
+
+7:
+  id: 7
+  name: Mandatory Multivalued Descriptor
+  range: descriptor_value
+  optional: false
+  multivalued: true
+
+8:
+  id: 8
+  name: Optional Singular Descriptor
+  range: descriptor_value
+  optional: true
+  multivalued: false
+
+9:
+  id: 9
+  name: Mandatory Singular Descriptor
+  range: descriptor_value
+  optional: false
+  multivalued: false
+

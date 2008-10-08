@@ -17,6 +17,11 @@ class PropertyClass < ActiveRecord::Base
                 :translate => lambda { |v| translate_rights(v) },
                 :retrieve  => lambda { |p| retrieve_rights(p) } },
 
+    "descriptor_value" => { :field => :integer_value,
+                :validate  => lambda { |v| validate_descriptor( v ) },
+                :translate => lambda { |v| translate_descriptor(v) },
+                :retrieve  => lambda { |p| retrieve_descriptor(p) } },
+
   }
 
   validates_presence_of :name
@@ -61,7 +66,7 @@ class PropertyClass < ActiveRecord::Base
     NIL_DATE = Date.new
 
     def fields
-      [ :date_value, :string_value, :date_value ]
+      [ :date_value, :string_value, :integer_value ]
     end
 
     def default property
@@ -127,6 +132,22 @@ class PropertyClass < ActiveRecord::Base
 
     def retrieve_rights property
       property.integer_value
+    end
+
+    def validate_descriptor property
+      !!DescriptorValue.find_by_value( property.value )
+    end
+
+    def translate_descriptor property
+      begin
+        dv = DescriptorValue.find_by_value( property.value )
+        dv and property.integer_value = dv.id
+      rescue
+      end
+    end
+
+    def retrieve_descriptor property
+      DescriptorValue.find( property.integer_value ).value
     end
 
   end

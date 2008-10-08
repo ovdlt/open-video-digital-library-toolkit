@@ -199,4 +199,17 @@ describe Property do
 
   end
 
+  describe "descriptor properies" do
+
+    it "should require descriptor values be unique" do
+      p = Property.build( "Genre", "Documentary" )
+      p.video_id = 1
+      p.save.should be_true
+      p = Property.build( "Genre", "Documentary" )
+      p.video_id = 1
+      p.save.should be_false
+    end
+
+  end
+
 end

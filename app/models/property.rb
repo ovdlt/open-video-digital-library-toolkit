@@ -10,6 +10,9 @@ class Property < ActiveRecord::Base
   belongs_to :video
   belongs_to :property_type
 
+  # optionally
+  # has_one :descriptor_value
+
   def validate
 
     if property_type_id.blank?
