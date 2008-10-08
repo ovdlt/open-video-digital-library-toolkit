@@ -54,6 +54,7 @@ describe Asset do
                           :title => "look around youlook around youlook",
                           :rights_id => 1
                          )
+      video.properties << Property.build( "Rights Statement", 1 )
     
       uri = "file:///look_around_you.mov"
 
@@ -113,12 +114,14 @@ describe Asset do
     end
   
     after(:all) do
-      File.unlink @our_mr_sun.absolute_path
-      @our_mr_sun.destroy
-      File.unlink @second.path
-      File.unlink @third.path
-      Dir.rmdir @directory.path
-      File.unlink @first.path
+      if @our_mr_sun
+        File.unlink @our_mr_sun.absolute_path 
+        @our_mr_sun.destroy
+      end
+      File.unlink @second.path if @second
+      File.unlink @third.path if @third
+      Dir.rmdir @directory.path if @directory
+      File.unlink @first.path if @first
     end
 
     

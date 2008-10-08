@@ -12,33 +12,44 @@ class PropertyClass < ActiveRecord::Base
                 :translate => lambda { |v| translate_date(v) },
                 :retrieve  => lambda { |p| retrieve_date(p) } },
 
+    "rights_detail" => { :field => :integer_value,
+                :validate  => lambda { |v| validate_rights( v ) },
+                :translate => lambda { |v| translate_rights(v) },
+                :retrieve  => lambda { |p| retrieve_rights(p) } },
+
   }
 
   validates_presence_of :name
   validates_inclusion_of :multivalued, :optional, :in => [ true, false ]
-  validates_inclusion_of :range, :in => RANGE_MAP.keys
+  validates_inclusion_of :range, :in => ( RANGE_MAP.keys +
+                                          RANGE_MAP.keys.map( &:to_sym ) )
+
+  before_save { |pc|
+    Symbol === pc.range and pc.range = pc.range.to_s
+    true
+  }
 
   class NoRangeClass < StandardError; end
 
   def field
-    lambdas = RANGE_MAP[range]
+    lambdas = RANGE_MAP[range.to_s]
     lambdas and lambdas[:field]
   end
 
   def validate_value property
-    lambdas = RANGE_MAP[range]
+    lambdas = RANGE_MAP[range.to_s]
     raise NoRangeClass.new( range ) if not lambdas
     lambdas[:validate] ? lambdas[:validate].call( property ) : true
   end
 
   def translate_value property
-    lambdas = RANGE_MAP[range]
+    lambdas = RANGE_MAP[range.to_s]
     raise NoRangeClass.new( range ) if not lambdas
     lambdas[:translate] ? lambdas[:translate].call( property ) : true
   end
 
   def retrieve_value property
-    lambdas = RANGE_MAP[range]
+    lambdas = RANGE_MAP[range.to_s]
     raise NoRangeClass.new( range ) if not lambdas
     lambdas[:retrieve].call( property ).to_s
   end
@@ -101,6 +112,21 @@ class PropertyClass < ActiveRecord::Base
       
     def retrieve_date property
       property.date_value == NIL_DATE ? nil : property.date_value.to_s
+    end
+
+    def validate_rights property
+      !!RightsDetail.find_by_id( property.value )
+    end
+
+    def translate_rights property
+      begin
+        property.integer_value = property.value.to_i
+      rescue
+      end
+    end
+
+    def retrieve_rights property
+      property.integer_value
     end
 
   end

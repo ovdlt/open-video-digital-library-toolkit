@@ -35,9 +35,8 @@ class Video < ActiveRecord::Base
   validates_presence_of :title
   validates_presence_of :sentence
 
-  # validates_presence_of :rights_id, :message => "type must be selected"
-
   validate :descriptors_must_be_unique
+  validate :property_constraints
   
   after_save do |video|
     begin
@@ -260,8 +259,14 @@ class Video < ActiveRecord::Base
 
   def descriptors_must_be_unique
     # NB: the join table is generally updated before this gets run
-    errors.add( :descriptors, "Duplicate descriptors not allowed" ) \
-      if descriptors.uniq != descriptors
+    if descriptors.uniq != descriptors
+      errors.add( :descriptors, "Duplicate descriptors not allowed" )
+    end
+
+  end
+  
+  def property_constraints
+    PropertyType.validate_object self
   end
 
 end

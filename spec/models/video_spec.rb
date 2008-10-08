@@ -211,10 +211,41 @@ describe Video do
       end
 
       it "should require required properties" do
+
+        pc = PropertyClass.create! :name => "myclass",
+                                    :multivalued => false,
+                                    :optional => false,
+                                    :range => :string
+        pt = PropertyType.create! :property_class_id => pc.id,
+                                   :name =>  "mytype"
+
+        @video.save.should be_false
+
       end
 
-      it "should allow multivalued where appropriate"  do; pending; end
-      it "should prohbit multivalued where appropriate"  do; pending; end
+      it "should allow multivalued where appropriate"  do
+        @video.properties << Property.build( "Producer", "Steven Spielberg" )
+        @video.save.should be_true
+      end
+
+      it "should prohbit multivalued where appropriate"  do
+
+        pc = PropertyClass.create! :name => "myclass",
+                                    :multivalued => false,
+                                    :optional => false,
+                                    :range => :string
+
+        pt = PropertyType.create! :property_class_id => pc.id,
+                                   :name =>  "mytype"
+
+        @video.save.should be_false
+
+        @video.properties << Property.build( "mytype", "foo" )
+        @video.save.should be_true
+
+        @video.properties << Property.build( "mytype", "bar" )
+        @video.save.should be_false
+      end
 
     end
 

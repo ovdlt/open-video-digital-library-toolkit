@@ -13,7 +13,9 @@ Factory.sequence :filename do |n|
 end
 
 Factory.define :video do |v|
+
   v.title       { ( Faker::Lorem.words.sort { rand } ).join(" ").capitalize }
+
   v.sentence    do
     v = (( Faker::Lorem.words( 15 ).sort { rand } ).join(" ")+".").capitalize
     v += " acommonword"
@@ -28,18 +30,20 @@ Factory.define :video do |v|
     v
   end  
 
-#   v.rights_id {
-#     rand(Rights.count) + 1
-#   }
-
   v.rights_id {
     # rand(Rights.count) + 1
     1
   }
 
-  v.assets do
+  v.properties do
+    [ Property.build( "Rights Statement", 1 ) ]
+  end
+
+
+  v.assets do |v|
     asset = Asset.new :uri => "file:///" + Factory.next( :filename ),
                        :size => rand(16.megabytes)
     [ asset ]
   end
+
 end

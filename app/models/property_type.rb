@@ -28,4 +28,52 @@ class PropertyType < ActiveRecord::Base
     property_class.retrieve_value property
   end
 
+  def self.validate_object object
+    validate_required( object ) and validate_arity( object )
+  end
+
+  def self.validate_required object
+
+    okay = true
+
+    required_classes = PropertyClass.find_all_by_optional false
+
+    required_types =
+      PropertyType.find_all_by_property_class_id required_classes.map( &:id )
+
+    required_types.each do |rt|
+      if !object.properties.detect { |p| p.property_type_id == rt.id }
+        object.errors.add_to_base "property #{rt.name} required"
+        okay = false
+      end
+    end
+
+    return okay
+
+  end
+
+  def self.validate_arity object
+
+    okay = true
+
+    singular_classes = PropertyClass.find_all_by_multivalued false
+
+    singular_types =
+      PropertyType.find_all_by_property_class_id singular_classes.map( &:id )
+
+    singular_types.each do |st|
+      # could terminate early ...
+      count = object.properties.inject(0) do |count,p|
+        count + ( p.property_type_id == st.id ? 1 : 0 )
+      end
+      if count > 1
+        object.errors.add_to_base "property #{st.name} has multiple values"
+        okay = false
+      end
+    end
+
+    return okay
+
+  end
+
 end
