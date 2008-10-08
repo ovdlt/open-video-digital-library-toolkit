@@ -8,105 +8,105 @@ end
 documentary:
   id: <%= index %>
   property_type_id: 12
-  value: Documentary
+  text: Documentary
 
 corporate:
   id: <%= index %>
   property_type_id: 12
-  value: Corporate
+  text: Corporate
 
 historical:
   id: <%= index %>
   property_type_id: 12
-  value: Historical
+  text: Historical
 
 ephemeral:
   id: <%= index %>
   property_type_id: 12
-  value: Ephemeral
+  text: Ephemeral
 
 lecture:
   id: <%= index %>
   property_type_id: 12
-  value: Lecture
+  text: Lecture
 
 spanish:
   id: <%= index %>
   property_type_id: 13
-  value: Spanish
+  text: Spanish
 
 french:
   id: <%= index %>
   property_type_id: 13
-  value: French
+  text: French
 
 italian:
   id: <%= index %>
   property_type_id: 13
-  value: Italian
+  text: Italian
 
 english:
   id: <%= index %>
   property_type_id: 13
-  value: English
+  text: English
 
 japanese:
   id: <%= index %>
   property_type_id: 13
-  value: Japanese
+  text: Japanese
 
 north_america:
   id: <%= index %>
   property_type_id: 16
-  value: North America
+  text: North America
 
 africa:
   id: <%= index %>
   property_type_id: 16
-  value: Africa
+  text: Africa
 
 europe:
   id: <%= index %>
   property_type_id: 16
-  value: Europe
+  text: Europe
 
 central_america:
   id: <%= index %>
   property_type_id: 16
-  value: Central America
+  text: Central America
 
 south_america:
   id: <%= index %>
   property_type_id: 16
-  value: South America
+  text: South America
 
 asia:
   id: <%= index %>
   property_type_id: 16
-  value: Asia
+  text: Asia
 
 color:
   id: <%= index %>
   property_type_id: 14
-  value: Color
+  text: Color
 
 blank_and_white:
   id: <%= index %>
   property_type_id: 14
-  value: Black and White
+  text: Black and White
 
 colorized:
   id: <%= index %>
   property_type_id: 14
-  value: Colorized
+  text: Colorized
 
 sound:
   id: <%= index %>
   property_type_id: 15
-  value: Sound
+  text: Sound
 
 silent:
   id: <%= index %>
   property_type_id: 15
-  value: Silent
+  text: Silent
 

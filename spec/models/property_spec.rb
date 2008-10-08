@@ -210,6 +210,36 @@ describe Property do
       p.save.should be_false
     end
 
+    it "should accept strings" do
+      p = Property.build( "Genre", "Documentary" )
+      p.video_id = 1
+      p.save.should be_true
+      p.value.should == "Documentary"
+    end
+
+    it "should accept dvs" do
+      pt = PropertyType.find_by_name "Genre"
+      dv = DescriptorValue.create! :property_type => pt,
+                                     :text => "myvalue"
+      p = Property.new :property_type => pt,
+                        :value => dv
+
+      p.video_id = 1
+      p.save.should be_true
+      p.value.text.should == "myvalue"
+    end
+
+    it "should accept dvs w/o property type" do
+      pt = PropertyType.find_by_name "Genre"
+      dv = DescriptorValue.create! :property_type => pt,
+                                     :text => "myvalue"
+      p = Property.new :value => dv
+
+      p.video_id = 1
+      p.save.should be_true
+      p.value.text.should == "myvalue"
+    end
+
   end
 
 end

@@ -24,10 +24,19 @@ class Video < ActiveRecord::Base
 
     end
 
+    def find_all_by_property_class_id ids
+
+      pts = PropertyType.find_all_by_property_class_id ids
+      return find_all_by_property_type_id( pts ) if pts and !pts.empty?
+
+      []
+
+    end
+
   end
 
-  has_many :assignments, :dependent => :destroy
-  has_many :descriptors, :through => :assignments
+  # has_many :assignments, :dependent => :destroy
+  # has_many :descriptors, :through => :assignments
 
   has_many :bookmarks, :dependent => :destroy
   has_many :collections, :through => :bookmarks
@@ -35,7 +44,7 @@ class Video < ActiveRecord::Base
   validates_presence_of :title
   validates_presence_of :sentence
 
-  validate :descriptors_must_be_unique
+  # validate :descriptors_must_be_unique
   validate :property_constraints
   
   after_save do |video|
@@ -52,7 +61,7 @@ class Video < ActiveRecord::Base
                 video.abstract,
                 video.donor ]
 
-      video.descriptors.each { |d| texts << d.text }
+      # video.descriptors.each { |d| texts << d.text }
 
       video.properties.each { |p| texts << p.value }
 
@@ -79,6 +88,11 @@ class Video < ActiveRecord::Base
     end
   end
 
+  def descriptors
+    ids = PropertyClass.find_all_by_range "descriptor_value"
+    (properties.find_all_by_property_class_id ids).freeze
+  end
+
   def self.recent number = nil
     options = { :order => "created_at desc" }
     if number
@@ -92,12 +106,12 @@ class Video < ActiveRecord::Base
   end
 
   def descriptor_types
-    ( descriptors.map &:descriptor_type ).uniq.
+    ( descriptors.map &:property_type ).uniq.
       sort { |a,b| a.priority - b.priority }
   end
 
-  def descriptors_by_type type
-    descriptors.select { |d| d.descriptor_type == type }.
+  def properties_by_type type
+    properties.select { |d| d.property_type == type }.
       sort { |a,b| a.priority - b.priority }
   end
 

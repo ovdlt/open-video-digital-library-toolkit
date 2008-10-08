@@ -20,8 +20,8 @@ class PropertyClass < ActiveRecord::Base
     "descriptor_value" => { :field => :integer_value,
                 :validate  => lambda { |v| validate_descriptor( v ) },
                 :translate => lambda { |v| translate_descriptor(v) },
-                :retrieve  => lambda { |p| retrieve_descriptor(p) } },
-
+                :retrieve  => lambda { |p| retrieve_descriptor(p) },
+                :priority  => lambda { |p| priority_descriptor(p) } },
   }
 
   validates_presence_of :name
@@ -56,7 +56,13 @@ class PropertyClass < ActiveRecord::Base
   def retrieve_value property
     lambdas = RANGE_MAP[range.to_s]
     raise NoRangeClass.new( range ) if not lambdas
-    lambdas[:retrieve].call( property ).to_s
+    lambdas[:retrieve].call( property )
+  end
+
+  def retrieve_priority property
+    lambdas = RANGE_MAP[range.to_s]
+    raise NoRangeClass.new( range ) if not lambdas
+    ( l = lambdas[:priority] ) ? l.call( property ) : 0
   end
 
   class << self
@@ -135,19 +141,26 @@ class PropertyClass < ActiveRecord::Base
     end
 
     def validate_descriptor property
-      !!DescriptorValue.find_by_value( property.value )
+      DescriptorValue === property.value or
+        !!DescriptorValue.find_by_text( property.value )
     end
 
     def translate_descriptor property
       begin
-        dv = DescriptorValue.find_by_value( property.value )
+        dv = property.value
+        DescriptorValue === dv or
+          dv = DescriptorValue.find_by_text( property.value )
         dv and property.integer_value = dv.id
       rescue
       end
     end
 
     def retrieve_descriptor property
-      DescriptorValue.find( property.integer_value ).value
+      DescriptorValue.find( property.integer_value )
+    end
+
+    def priority_descriptor property
+      property.value.priority
     end
 
   end

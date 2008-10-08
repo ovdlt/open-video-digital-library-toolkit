@@ -11,21 +11,23 @@ class PropertyType < ActiveRecord::Base
   end
 
   def validate_value string
-    raise NoPropertyClass.new( property_class_id ) \
-      unless property_class
+    raise NoPropertyClass.new( property_class_id ) unless property_class
     property_class.validate_value string
   end
 
   def translate_value string
-    raise NoPropertyClass.new( property_class_id ) \
-      unless property_class
+    raise NoPropertyClass.new( property_class_id ) unless property_class
     property_class.translate_value string
   end
 
   def retrieve_value property
-    raise NoPropertyClass.new( property_class_id ) \
-      unless property_class
+    raise NoPropertyClass.new( property_class_id ) unless property_class
     property_class.retrieve_value property
+  end
+
+  def retrieve_priority property
+    raise NoPropertyClass.new( property_class_id ) unless property_class
+    property_class.retrieve_priority property
   end
 
   def self.validate_object object

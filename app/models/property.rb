@@ -33,8 +33,11 @@ class Property < ActiveRecord::Base
 
   def initialize options = nil
     super
-    if v = options[:value] or v = options["value"]
-      @value = v
+    if value = options[:value] || options["value"]
+      @value = value
+      if ActiveRecord::Base === value and self.property_type_id.nil?
+        self.property_type_id = value.property_type_id
+      end
     end
     PropertyClass.default( self )
   end
@@ -75,6 +78,11 @@ class Property < ActiveRecord::Base
     return @value if @value
     raise PropertyTypeNotFound.new( property_type_id ) unless property_type
     @value = property_type.retrieve_value self
+  end
+
+  def priority
+    raise PropertyTypeNotFound.new( property_type_id ) unless property_type
+    property_type.retrieve_priority self
   end
 
   private

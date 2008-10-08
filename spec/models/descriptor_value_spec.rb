@@ -5,7 +5,7 @@ describe DescriptorValue do
   before(:each) do
     @valid_attributes = {
       :property_type_id => 1,
-      :value => "my value",
+      :text => "my text",
     }
   end
 

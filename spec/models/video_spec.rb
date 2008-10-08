@@ -26,37 +26,6 @@ describe Video do
     
   end
 
-  describe "descriptors" do
-
-    before :each do
-      @video = Factory(:video)
-      @type = DescriptorType.create! :title => "some descriptor"
-      @value = Descriptor.create! :descriptor_type => @type,
-      :text => "some descriptor"
-    end
-
-    after :each do
-      File.unlink @video.assets[0].absolute_path
-    end
-
-    it "should start as an empty set" do
-      @video.descriptors.should == []
-    end
-
-    it "should allow descriptors to be added" do
-      @video.descriptors << @value
-      @video.should be_valid
-      @video.save.should be_true
-    end
-
-    it "should require they be unique" do
-      @video.descriptors << @value
-      # the join table  so no chance for the validation to run
-      lambda { @video.descriptors << @value }.should raise_error
-    end
-
-  end
-
   describe ".recent" do
     fixtures :videos
 
@@ -121,45 +90,6 @@ describe Video do
 
   end
 
-  describe "descriptors/type recall and sorting" do
-
-    before(:each) do
-      @video = Factory(:video)
-      @dts = [ DescriptorType.create!( :title => "a", :priority => 2 ),
-               DescriptorType.create!( :title => "b", :priority => 1 ),
-               DescriptorType.create!( :title => "c", :priority => 3 ),
-               DescriptorType.create!( :title => "d", :priority => 4 ) ]
-      @dss = [ Descriptor.create!( :descriptor_type => @dts[0],
-                                    :text => "aa", :priority => 2 ),
-               Descriptor.create!( :descriptor_type => @dts[0],
-                                    :text => "ab", :priority => 1 ),
-               Descriptor.create!( :descriptor_type => @dts[0],
-                                    :text => "ac", :priority => 3 ),
-               Descriptor.create!( :descriptor_type => @dts[1],
-                                    :text => "ba", :priority => 1 ),
-               Descriptor.create!( :descriptor_type => @dts[2],
-                                    :text => "ba", :priority => 1 ) ]
-      @video.descriptors = @dss
-      @video.save!
-    end
-
-    after :each do
-      File.unlink @video.assets[0].absolute_path
-    end
-
-    it "should return all the types for a video in pri order" do
-      @video.descriptor_types.should == [ @dts[1], @dts[0], @dts[2] ]
-    end
-    
-    it "should return all the descriptors for a video in pri order" do
-      @video.descriptors_by_type( @dts[0] ).
-        should == [ @dss[1], @dss[0], @dss[2] ]
-      @video.descriptors_by_type( @dts[1] ).should == [ @dss[3] ]
-      @video.descriptors_by_type( @dts[2] ).should == [ @dss[4] ]
-    end
-    
-  end
-
   describe "property interface to video" do
 
     before(:each) do
@@ -181,8 +111,8 @@ describe Video do
 
         @video.properties <<
           Property.new( :property_type =>
-                        PropertyType.find_by_name( "Producer" ),
-                        :value => "Frank Capra" )
+                           PropertyType.find_by_name( "Producer" ),
+                         :value => "Frank Capra" )
 
         @video.properties << Property.build( "Producer", "George Lucas" )
         @video.properties << Property.build( "Writer", "Stephen King" )
@@ -258,7 +188,9 @@ describe Video do
     end
 
     after :each do
-      File.unlink @video.assets[0].absolute_path
+      begin
+        File.unlink @video.assets[0].absolute_path
+      rescue Errno::ENOENT; end
     end
 
     it "should allow a property descriptor to be added" do
@@ -277,7 +209,7 @@ describe Video do
       pt = PropertyType.create! :name => "mytype",
                                  :property_class => pc
       dv = DescriptorValue.create! :property_type => pt,
-                                     :value => "myvalue"
+                                     :text => "myvalue"
       @video.save.should be_false
       @video.properties << Property.build( "mytype", "myvalue" )
       @video.save.should be_true
@@ -287,8 +219,8 @@ describe Video do
       pc = PropertyClass.find_by_name "Mandatory Singular Descriptor"
       pt = PropertyType.create! :name => "mytype",
                                  :property_class => pc
-      DescriptorValue.create! :property_type => pt, :value => "myvalue"
-      DescriptorValue.create! :property_type => pt, :value => "myvaluex"
+      DescriptorValue.create! :property_type => pt, :text => "myvalue"
+      DescriptorValue.create! :property_type => pt, :text => "myvaluex"
       @video.save.should be_false
       @video.properties << Property.build( "mytype", "myvalue" )
       @video.save.should be_true
@@ -300,13 +232,142 @@ describe Video do
       pc = PropertyClass.find_by_name "Optional Multivalued Descriptor"
       pt = PropertyType.create! :name => "mytype",
                                  :property_class => pc
-      DescriptorValue.create! :property_type => pt, :value => "myvalue"
-      DescriptorValue.create! :property_type => pt, :value => "myvaluex"
+      DescriptorValue.create! :property_type => pt, :text => "myvalue"
+      DescriptorValue.create! :property_type => pt, :text => "myvaluex"
       @video.save.should be_true
       @video.properties << Property.build( "mytype", "myvalue" )
       @video.save.should be_true
       @video.properties << Property.build( "mytype", "myvaluex" )
       @video.save.should be_true
+    end
+
+    it "should find by name" do
+      @video.properties << Property.build( "Genre", "Documentary" )
+      @video.properties << Property.build( "Genre", "Corporate" )
+
+      pt = PropertyType.find_by_name "Genre"
+
+      @video.properties << Property.new( :property_type => pt,
+                                          :value => "Ephemeral" )
+
+      dv = DescriptorValue.create! :property_type => pt, :text => "myvalue"
+
+      @video.properties << Property.new( :property_type => pt,
+                                          :value => dv )
+
+      @video.save.should be_true
+      v = Video.find @video.id
+      ps = v.properties.find_all_by_name "Genre"
+      ps.size.should == 4
+      ps.map(&:value).map(&:text).sort.should == [ "Corporate",
+                                                   "Documentary",
+                                                   "Ephemeral",
+                                                   "myvalue" ]
+    end
+
+    describe "descriptors" do
+
+      before :each do
+        @video = Factory(:video)
+        @class = PropertyClass.find_by_name "Optional Multivalued Descriptor"
+        @type = PropertyType.create! :name => "some descriptor",
+                                      :property_class => @class
+        @value = DescriptorValue.create! :property_type => @type,
+                                           :text => "some descriptor"
+        @property = Property.new :property_type => @type,
+                                  :value => @value
+        @p2 = Property.new :property_type => @type, :value => @value
+      end
+
+      after :each do
+        File.unlink @video.assets[0].absolute_path
+      end
+
+      it "should start as an empty set" do
+        @video.descriptors.size.should == 0
+      end
+
+      it "should allow descriptors to be added" do
+        @video.descriptors.size.should == 0
+        @video.properties << @property
+        @video.should be_valid
+        @video.save.should be_true
+        @video.descriptors.size.should == 1
+      end
+
+      it "should require they be unique" do
+        @video.properties << @property
+        @video.properties << @p2
+        @video.save.should be_false
+      end
+
+    end
+
+    describe "descriptors/type recall and sorting" do
+
+      before(:each) do
+        @video = Factory(:video)
+        @pcs = [
+          PropertyClass.find_by_name( "Optional Multivalued Descriptor" ),
+          PropertyClass.find_by_name( "Mandatory Multivalued Descriptor" ),
+          PropertyClass.find_by_name( "Optional Singular Descriptor" ),
+          PropertyClass.find_by_name( "Mandatory Singular Descriptor" ),
+        ]
+
+        @pts = [ PropertyType.create!( :name => "a",
+                                        :priority => 2,
+                                        :property_class => @pcs[0] ),
+                 PropertyType.create!( :name => "b",
+                                        :priority => 1,
+                                        :property_class => @pcs[1] ),
+                 PropertyType.create!( :name => "c",
+                                        :priority => 3,
+                                        :property_class => @pcs[2] ),
+                 PropertyType.create!( :name => "d",
+                                        :priority => 4,
+                                        :property_class => @pcs[3] ) ]
+
+        @dvs = [ DescriptorValue.create!( :property_type => @pts[0],
+                                            :text => "aa",
+                                            :priority => 2 ),
+                DescriptorValue.create!( :property_type => @pts[0],
+                                          :text => "ab",
+                                          :priority => 1 ),
+                DescriptorValue.create!( :property_type => @pts[0],
+                                          :text => "ac",
+                                          :priority => 3 ),
+                DescriptorValue.create!( :property_type => @pts[1],
+                                          :text => "ba",
+                                          :priority => 1 ),
+                DescriptorValue.create!( :property_type => @pts[3],
+                                          :text => "ba",
+                                          :priority => 1 ) ]
+
+        @ps = @dvs.map { |dv| Property.new :value => dv }
+
+        @ps.each { |p| @video.properties << p }
+        
+        pp @video, @video.properties if !@video.save
+
+        @video.save!
+      end
+
+      after :each do
+        File.unlink @video.assets[0].absolute_path
+      end
+
+      it "should return all the types for a video in pri order" do
+        @video.descriptor_types.should == [ @pts[1], @pts[0], @pts[3] ]
+      end
+      
+      it "should return all the propertys for a video in pri order" do
+        @video.properties_by_type( @pts[0] ).
+          should == [ @ps[1], @ps[0], @ps[2] ]
+        @video.properties_by_type( @pts[1] ).should == [ @ps[3] ]
+        @video.properties_by_type( @pts[2] ).should == []
+        @video.properties_by_type( @pts[3] ).should == [ @ps[4] ]
+      end
+      
     end
 
   end
