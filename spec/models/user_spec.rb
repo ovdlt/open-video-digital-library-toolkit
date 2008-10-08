@@ -13,7 +13,7 @@ describe User do
     it "should allow queries to be added" do
       user = create_user
       user.saved_queries.build :query_string => "foo"
-      user.saved_queries << SavedQuery.new( :descriptor_id => 1 )
+      user.saved_queries << SavedQuery.new( :descriptor_value_id => 1 )
       user.save.should be_true
       user.saved_queries.size.should == 2
     end

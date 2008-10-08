@@ -198,6 +198,15 @@ describe Video do
       @video.save.should be_true
     end
 
+    it "should allow a dv shortcuts" do
+      dv = DescriptorValue.find_by_text "Documentary"
+      @video.properties << dv
+      @video.save.should be_true
+      v = Video.find @video.id
+      v.properties.find_by_property_type_id(dv.property_type_id).value.text.
+        should == "Documentary"
+    end
+
     it "should not allow a property descriptor to be added multiple times" do
       @video.properties << Property.build( "Genre", "Documentary" )
       @video.properties << Property.build( "Genre", "Documentary" )

@@ -22,11 +22,11 @@ module ApplicationHelper
   end
   
   def sq_path sq
-    if sq.descriptor
+    if sq.descriptor_value
       if !sq.query_string.blank?
-        descriptor_videos_path( sq.descriptor, :query => sq.query_string )
+        descriptor_videos_path( sq.descriptor_value, :query => sq.query_string )
       else
-        descriptor_videos_path( sq.descriptor )
+        descriptor_videos_path( sq.descriptor_value )
       end
     else
       if !sq.query_string.blank?

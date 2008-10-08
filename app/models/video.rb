@@ -6,6 +6,11 @@ class Video < ActiveRecord::Base
 
   has_many :properties, :dependent => :destroy do
 
+    def << v
+      v = ( DescriptorValue === v ) ? Property.new( v ) : v
+      super v
+    end
+
     def find_all_by_type name
       pt = PropertyType.find_by_name name
       find_all_by_property_type_id( pt ) if pt
@@ -93,6 +98,12 @@ class Video < ActiveRecord::Base
     (properties.find_all_by_property_class_id ids).freeze
   end
 
+  def descriptors= descriptors
+    ids = PropertyClass.find_all_by_range "descriptor_value"
+    (properties.find_all_by_property_class_id ids).each {|p| p.destroy}
+    descriptors.each { |d| properties << d }
+  end
+
   def self.recent number = nil
     options = { :order => "created_at desc" }
     if number
@@ -151,15 +162,15 @@ class Video < ActiveRecord::Base
     end
     options.delete :query
 
-    if options[:descriptor_id]
-      joins << "assignments dvs"
+    if options[:descriptor_value_id]
+      joins << "properties dvs"
       
       conditions[0] << "(videos.id = dvs.video_id)"
       
-      conditions[0] << "(dvs.descriptor_id = ?)"
-      conditions[1] << options[:descriptor_id]
+      conditions[0] << "(dvs.integer_value = ?)"
+      conditions[1] << options[:descriptor_value_id]
     end
-    options.delete :descriptor_id
+    options.delete :descriptor_value_id
     
     options[:order] ||= "videos.created_at desc"
 

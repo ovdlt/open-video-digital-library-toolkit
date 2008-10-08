@@ -26,26 +26,23 @@ describe VideosController do
       response.should be_success
     end
 
-    it "should set current from descriptor_type if given" do
-      pending
-      type = DescriptorType.find :first
-      get :index, :descriptor_type_id => type.id
+    it "should set current from property_type if given" do
+      type = PropertyType.find :first
+      get :index, :property_type_id => type.id
       assigns[:current].should == type
     end
 
     it "should set current from descriptor if given" do
-      pending
-      d = Descriptor.find :first
+      d = DescriptorValue.find :first
       d.should_not be_nil
-      get :index, :descriptor_id => d.id
+      get :index, :descriptor_value_id => d.id
       assigns[:current].should == d
     end
 
-    it "should filter videos by descriptor if given" do
-      pending
-      d = Descriptor.find :first
+    it "should filter videos by property if given" do
+      d = DescriptorValue.find :first
       d.should_not be_nil
-      get :index, :descriptor_id => d.id
+      get :index, :descriptor_value_id => d.id
       assigns[:videos].size.should > 0
       assigns[:videos].size.should < Video.count
     end
@@ -64,7 +61,7 @@ describe VideosController do
     end
     
     it "should assign @video to a new instance of Video with its filename prepopulated from the params" do
-      pending
+      pending "rework with new asset stuff"
       assigns[:video].should_not be_nil
       assigns[:video].should be_an_instance_of(Video)
       assigns[:video].should be_new_record
@@ -74,7 +71,7 @@ describe VideosController do
   
   describe "#new, when the filename parameter refers to a file outside the videos directory" do    
     it "should return a 404" do
-      pending
+      pending "rework with new asset stuff"
       login_as_admin
       get :new, :filename => '../README.md'
       response.should be_missing
@@ -236,14 +233,13 @@ describe VideosController do
     end
   end
   
-  describe "#update when descriptors change" do
+  describe "#update when properties change" do
 
     before(:each) do
       login_as_admin
       @video = Factory(:video)
-      pending
       @video.descriptors.should be_empty
-      @video.descriptors << Descriptor.find( :first )
+      @video.properties << DescriptorValue.find( :first )
       @video.save!
       @video.descriptors.should_not be_empty
     end
@@ -252,48 +248,41 @@ describe VideosController do
       File.unlink @video.assets[0].absolute_path
     end
 
-    it "should change descriptors as indicated" do
-      pending
-      descriptor_ids = [ 1, 3, 5 ].sort
+    it "should change properties as indicated" do
+      descriptor_value_ids = [ 1, 3, 5 ].sort
       put :update, :id => @video.id,
-                   :"descriptor" => descriptor_ids
+                   :descriptor_value => descriptor_value_ids
       response.should redirect_to(video_path(@video.id))
-      @video.reload.descriptors.map( &:id ).sort.should == descriptor_ids
-      
+      @video.reload.descriptors.map( &:integer_value ).sort.
+        should == descriptor_value_ids
     end
 
-    it "should allow all descriptors to be removed" do
-      
-      pending
+    it "should allow all properties to be removed" do
       put :update, :id => @video.id,
-                    :"descriptor" => []
+                    :descriptor_value => []
       response.should redirect_to(video_path(@video.id))
       @video.reload.descriptors.should be_empty
     end
 
-    it "should allow all descriptors to be removed via a special field" do
-      pending
+    it "should allow all properties to be removed via a special field" do
       put :update, :id => @video.id,
-                    :"descriptors_passed" => true
+                   :descriptors_passed => true
       response.should redirect_to(video_path(@video.id))
       @video.reload.descriptors.should be_empty
     end
 
-    it "should handle invalid descriptors" do
-      pending
-      put :update, :id => @video.id,
-                    :"descriptor" => [ -1 ]
+    it "should handle invalid properties" do
+      put :update, :id => @video.id, :descriptor_value => [ -1 ]
       response.code.should == "400"
     end
 
-    it "should handle bizzare descriptors" do
-      pending
+    it "should handle bizzare properties" do
       put :update, :id => @video.id,
-                    :"descriptor" => "foobar"
+                    :descriptor_value => "foobar"
       response.code.should == "400"
 
       put :update, :id => @video.id,
-                    :"descriptor" => [ "foobar" ]
+                    :descriptor_value => [ "foobar" ]
       response.code.should == "400"
     end
 

@@ -40,7 +40,7 @@ describe SavedQueriesController do
     end
 
     it "should add saved query given a descriptor" do
-      lambda { post :create, :descriptor_id => 1 }.should \
+      lambda { post :create, :descriptor_value_id => 1 }.should \
         change { current_user.reload; current_user.saved_queries.size }.by(1)
       flash[:notice].should match(/saved/)
     end

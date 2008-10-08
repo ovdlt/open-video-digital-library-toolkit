@@ -32,6 +32,9 @@ class Property < ActiveRecord::Base
   end
 
   def initialize options = nil
+    if DescriptorValue === options
+      options = { :value => options }
+    end
     super
     if value = options[:value] || options["value"]
       @value = value

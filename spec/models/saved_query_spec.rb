@@ -7,7 +7,7 @@ describe SavedQuery do
     before(:each) do
       @valid_attributes = {
         :user_id => 1,
-        :descriptor_id => 1,
+        :descriptor_value_id => 1,
         :query_string => "foo bar"
       }
     end
@@ -24,12 +24,12 @@ describe SavedQuery do
     it "should require a descriptor if no query" do
       @valid_attributes.delete :query_string
       SavedQuery.create(@valid_attributes).save.should be_true
-      @valid_attributes.delete :descriptor_id
+      @valid_attributes.delete :descriptor_value_id
       SavedQuery.create(@valid_attributes).save.should be_false
     end
 
     it "should require a query if no descriptor" do
-      @valid_attributes.delete :descriptor_id
+      @valid_attributes.delete :descriptor_value_id
       SavedQuery.create(@valid_attributes).save.should be_true
       @valid_attributes.delete :query_string
       SavedQuery.create(@valid_attributes).save.should be_false

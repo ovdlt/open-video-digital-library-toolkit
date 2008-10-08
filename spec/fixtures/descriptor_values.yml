@@ -1,112 +1,105 @@
-<%
-$index = 0
-def index
-  $index += 1  
-end
-%>
-
 documentary:
-  id: <%= index %>
+  id: 1
   property_type_id: 12
   text: Documentary
 
 corporate:
-  id: <%= index %>
+  id: 2
   property_type_id: 12
   text: Corporate
 
 historical:
-  id: <%= index %>
+  id: 3
   property_type_id: 12
   text: Historical
 
 ephemeral:
-  id: <%= index %>
+  id: 4
   property_type_id: 12
   text: Ephemeral
 
 lecture:
-  id: <%= index %>
+  id: 5
   property_type_id: 12
   text: Lecture
 
 spanish:
-  id: <%= index %>
+  id: 6
   property_type_id: 13
   text: Spanish
 
 french:
-  id: <%= index %>
+  id: 7
   property_type_id: 13
   text: French
 
 italian:
-  id: <%= index %>
+  id: 8
   property_type_id: 13
   text: Italian
 
 english:
-  id: <%= index %>
+  id: 9
   property_type_id: 13
   text: English
 
 japanese:
-  id: <%= index %>
+  id: 10
   property_type_id: 13
   text: Japanese
 
 north_america:
-  id: <%= index %>
+  id: 11
   property_type_id: 16
   text: North America
 
 africa:
-  id: <%= index %>
+  id: 12
   property_type_id: 16
   text: Africa
 
 europe:
-  id: <%= index %>
+  id: 13
   property_type_id: 16
   text: Europe
 
 central_america:
-  id: <%= index %>
+  id: 14
   property_type_id: 16
   text: Central America
 
 south_america:
-  id: <%= index %>
+  id: 15
   property_type_id: 16
   text: South America
 
 asia:
-  id: <%= index %>
+  id: 16
   property_type_id: 16
   text: Asia
 
 color:
-  id: <%= index %>
+  id: 17
   property_type_id: 14
   text: Color
 
 blank_and_white:
-  id: <%= index %>
+  id: 18
   property_type_id: 14
   text: Black and White
 
 colorized:
-  id: <%= index %>
+  id: 19
   property_type_id: 14
   text: Colorized
 
 sound:
-  id: <%= index %>
+  id: 20
   property_type_id: 15
   text: Sound
 
 silent:
-  id: <%= index %>
+  id: 21
   property_type_id: 15
   text: Silent
 

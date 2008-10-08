@@ -47,8 +47,8 @@ class VideosController < ApplicationController
   end
 
   def index
-    if params[:descriptor_id] or
-       params[:descriptor_type_id] or
+    if params[:descriptor_value_id] or
+       params[:property_type_id] or
        params[:query]
       search
     else
@@ -71,15 +71,16 @@ class VideosController < ApplicationController
 
     # FIX: number of videos selected depends on the format
 
-    if params[:descriptor_type_id]
-      @current = @type = DescriptorType.find( params[:descriptor_type_id] )
+    if params[:property_type_id]
+      @current = @type = PropertyType.find( params[:property_type_id] )
     end
 
     @path = lambda { |opts| recent_videos_path( opts ) }
     
-    if params[:descriptor_id]
-      @current = @descriptor = Descriptor.find( params[:descriptor_id] )
-      @type = @descriptor.descriptor_type
+    if params[:descriptor_value_id]
+      @current = @descriptor =
+        DescriptorValue.find( params[:descriptor_value_id] )
+      @type = @descriptor.property_type
       @path = lambda do |opts|
         descriptor_videos_path( @descriptor, opts )
       end
@@ -89,7 +90,8 @@ class VideosController < ApplicationController
                             :page => params[:page],
                             :per_page => per_page,
                             :query => params[:query],
-                            :descriptor_id => params[:descriptor_id]
+                            :descriptor_value_id =>
+                              params[:descriptor_value_id]
 
     render :template => "videos/index"
 
@@ -133,7 +135,7 @@ class VideosController < ApplicationController
       when "duration"
         @video[k] = duration_to_int( v, @video, k )
       when "descriptors"
-        @video.descriptor_ids = v
+        @video.descriptor_value_ids = v
       when "assets"
         @video.asset_ids = v.reject { |path| path == ":id:" }
       else
@@ -147,14 +149,14 @@ class VideosController < ApplicationController
       end
     end
 
-    if params["descriptors_passed"] && !params["descriptor"]
-      params["descriptor"] = []
+    if params["descriptors_passed"] && !params["descriptor_value"]
+      params["descriptor_value"] = []
     end
 
-    if params["descriptor"]
-      @video.descriptors = params["descriptor"].map do |d|
+    if params["descriptor_value"]
+      @video.descriptors = params["descriptor_value"].map do |d|
         begin
-          Descriptor.find d.to_i
+          DescriptorValue.find d.to_i
         rescue ActiveRecord::RecordNotFound
           render_bad_request 
           return
@@ -199,14 +201,14 @@ class VideosController < ApplicationController
     # This is so if all boxes are unchecked, we actually remove all
     # descriptors
 
-    if params["descriptors_passed"] && !params["descriptor"]
-      params["descriptor"] = []
+    if params["descriptors_passed"] && !params["descriptor_value"]
+      params["descriptor_value"] = []
     end
 
-    if params["descriptor"]
-      @video.descriptors = params["descriptor"].map do |d|
+    if params["descriptor_value"]
+      @video.descriptors = params["descriptor_value"].map do |d|
         begin
-          Descriptor.find d.to_i
+          DescriptorValue.find d.to_i
         rescue ActiveRecord::RecordNotFound
           render_bad_request 
           return
@@ -268,14 +270,14 @@ class VideosController < ApplicationController
         @video[k] = v
       end
 
-      if params["descriptors_passed"] && !params["descriptor"]
-        params["descriptor"] = []
+      if params["descriptors_passed"] && !params["descriptor_value"]
+        params["descriptor_value"] = []
       end
 
-      if params["descriptor"]
-        @video.descriptors = params["descriptor"].map do |d|
+      if params["descriptor_value"]
+        @video.descriptors = params["descriptor_value"].map do |d|
           begin
-            Descriptor.find d.to_i
+            DescriptorValue.find d.to_i
           rescue ActiveRecord::RecordNotFound
             render_bad_request 
             return

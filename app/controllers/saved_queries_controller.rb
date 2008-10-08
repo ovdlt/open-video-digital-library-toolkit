@@ -5,7 +5,7 @@ class SavedQueriesController < ApplicationController
       flash[:error] = "You must be logged in to save a search"
     else
       current_user.saved_queries.build \
-        :descriptor_id => params[:descriptor_id],
+        :descriptor_value_id => params[:descriptor_value_id],
         :query_string => params[:query]
       if current_user.save
         flash[:notice] = "Search saved"
