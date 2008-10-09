@@ -4,6 +4,10 @@ require File.join(File.dirname(__FILE__), 'state_machine')
 require File.join(File.dirname(__FILE__), 'persistence')
 
 module AASM
+  def self.Version
+    '0.0.2'
+  end
+
   class InvalidTransition < RuntimeError
   end
   
@@ -96,11 +100,14 @@ module AASM
   end
 
   private
-  def aasm_current_state_with_persistence=(state)
+  def set_aasm_current_state_with_persistence(state)
+    save_success = true
     if self.respond_to?(:aasm_write_state) || self.private_methods.include?('aasm_write_state')
-      aasm_write_state(state)
+      save_success = aasm_write_state(state)
     end
-    self.aasm_current_state = state
+    self.aasm_current_state = state if save_success
+
+    save_success
   end
 
   def aasm_current_state=(state)
@@ -122,18 +129,21 @@ module AASM
     unless new_state.nil?
       aasm_state_object_for_state(new_state).call_action(:enter, self)
       
-      if self.respond_to?(:aasm_event_fired)
-        self.aasm_event_fired(self.aasm_current_state, new_state)
-      end
-
+      persist_successful = true
       if persist
-        self.aasm_current_state_with_persistence = new_state
-        self.send(self.class.aasm_events[name].success) if self.class.aasm_events[name].success
+        persist_successful = set_aasm_current_state_with_persistence(new_state)
+        self.send(self.class.aasm_events[name].success) if persist_successful && self.class.aasm_events[name].success
       else
         self.aasm_current_state = new_state
       end
 
-      true
+      if persist_successful 
+        self.aasm_event_fired(self.aasm_current_state, new_state) if self.respond_to?(:aasm_event_fired)
+      else
+        self.aasm_event_failed(name) if self.respond_to?(:aasm_event_failed)
+      end
+
+      persist_successful
     else
       if self.respond_to?(:aasm_event_failed)
         self.aasm_event_failed(name)

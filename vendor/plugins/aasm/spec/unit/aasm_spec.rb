@@ -146,6 +146,39 @@ describe AASM, '- event firing with persistence' do
 
     foo.close!
   end
+
+  it 'should return true if aasm_write_state is defined and returns true' do
+    foo = Foo.new
+    
+    def foo.aasm_write_state(state)
+      true
+    end
+
+    foo.close!.should be_true
+  end
+
+  it 'should return false if aasm_write_state is defined and returns false' do
+    foo = Foo.new
+    
+    def foo.aasm_write_state(state)
+      false
+    end
+
+    foo.close!.should be_false
+  end
+
+  it "should not update the aasm_current_state if the write fails" do
+    foo = Foo.new
+    
+    def foo.aasm_write_state
+      false
+    end
+
+    foo.should_receive(:aasm_write_state)
+
+    foo.close!
+    foo.aasm_current_state.should == :open
+  end
 end
 
 describe AASM, '- event firing without persistence' do
@@ -213,7 +246,29 @@ describe AASM, '- event callbacks' do
     foo.close!
   end
 
-    it 'should call aasm_event_fired if defined and successful for non-bang fire' do
+  it 'should not call aasm_event_fired if defined but persist fails for bang fire' do
+    foo = Foo.new
+    def foo.aasm_event_fired(from, to)
+    end
+    foo.stub!(:set_aasm_current_state_with_persistence).and_return(false)
+
+    foo.should_not_receive(:aasm_event_fired)
+
+    foo.close!
+  end
+
+  it 'should not call aasm_event_failed if defined and persist fails for bang fire' do
+    foo = Foo.new
+    def foo.aasm_event_failed(from, to)
+    end
+    foo.stub!(:set_aasm_current_state_with_persistence).and_return(false)
+
+    foo.should_receive(:aasm_event_failed)
+
+    foo.close!
+  end
+
+  it 'should call aasm_event_fired if defined and successful for non-bang fire' do
     foo = Foo.new
     def foo.aasm_event_fired(from, to)
     end
