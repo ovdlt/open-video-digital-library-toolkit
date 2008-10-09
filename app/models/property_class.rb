@@ -22,7 +22,7 @@ class PropertyClass < ActiveRecord::Base
                 :translate => lambda { |v| translate_descriptor(v) },
                 :retrieve  => lambda { |p| retrieve_descriptor(p) },
                 :priority  => lambda { |p| priority_descriptor(p) },
-                :values  => lambda { |t| values_descriptor(t) } },
+                :values  => lambda { |t,o| values_descriptor(t,o) } },
   }
 
   validates_presence_of :name
@@ -42,11 +42,11 @@ class PropertyClass < ActiveRecord::Base
     lambdas and lambdas[:field]
   end
 
-  def values type
+  def values type, options
     lambdas = RANGE_MAP[range.to_s]
     raise NoRangeClass.new( range ) if not lambdas
     if lambdas[:values]
-      lambdas[:values].call( type )
+      lambdas[:values].call( type, options )
     else
       raise "not implemented"
     end
@@ -174,8 +174,8 @@ class PropertyClass < ActiveRecord::Base
       property.value.priority
     end
 
-    def values_descriptor t
-      DescriptorValue.find_all_by_property_type_id t.id
+    def values_descriptor t, options
+      DescriptorValue.find_all_by_property_type_id t.id, options
     end
 
   end

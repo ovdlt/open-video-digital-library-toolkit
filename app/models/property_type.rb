@@ -18,13 +18,9 @@ class PropertyType < ActiveRecord::Base
     end
   end
 
-  def values
+  def values options = {}
     raise NoPropertyClass.new( property_class_id ) unless property_class
-    return property_class.values( self )
-    ps = Property.find_all_by_property_type_id id
-    pp ps
-    ps.map! { |p| property_class.retrieve_value p }
-    ps.uniq
+    return property_class.values( self, options )
   end
 
   def field

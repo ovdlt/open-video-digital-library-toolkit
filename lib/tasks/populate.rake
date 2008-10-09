@@ -14,7 +14,8 @@ namespace :db do
 
     values = []
     types.each do |type|
-      values[type.id] = DescriptorValue.find_all_by_property_type_id(type.id).to_a
+      values[type.id] =
+        DescriptorValue.find_all_by_property_type_id(type.id).to_a
     end
 
     # DANGEROUS!

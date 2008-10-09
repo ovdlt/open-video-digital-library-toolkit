@@ -120,4 +120,14 @@ module VideosHelper
     ( hash.map { |k,v| v ? "#{k}='#{k}'" : "" } ).join(" ")
   end
 
+  def random descriptor, shown
+    videos = descriptor.videos
+    return nil if videos.size == 0
+    candidates = descriptor.videos.map( &:id ) - shown.keys
+    return nil if candidates.size == 0
+    selected = rand( candidates.size )
+    shown[candidates[selected]] = true
+    Video.find candidates[selected]
+  end
+
 end

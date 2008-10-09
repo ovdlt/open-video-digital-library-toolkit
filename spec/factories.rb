@@ -36,7 +36,7 @@ Factory.define :video do |v|
   }
 
   v.properties do
-    [ Property.build( "Rights Statement", 1 ) ]
+    [  Property.build( "Rights Statement", 1 ) ]
   end
 
 

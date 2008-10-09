@@ -2,3 +2,8 @@
   video_id: 1
   property_type_id: 12
   integer_value: 1
+
+2:
+  video_id: 2
+  property_type_id: 12
+  integer_value: 2

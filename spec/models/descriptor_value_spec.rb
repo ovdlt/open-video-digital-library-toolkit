@@ -29,11 +29,7 @@ describe DescriptorValue do
   end
 
   it "should return videos" do
-    pending "rails edge patch?"
     dv = DescriptorValue.find_by_text "Documentary"
-    pp dv.videos
-    pp dv.properties
-    pp Property.find_by_integer_value( dv.id )
     dv.videos.map(&:id).should == [ 1 ]
   end
 

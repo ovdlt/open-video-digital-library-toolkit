@@ -8,8 +8,8 @@
       - PropertyType.browse do |type|
         .axis
           - i = 0
-          - type.descriptors_prioritized.each do |descriptor|
-            - v = descriptor.random shown
+          - type.values().each do |descriptor|
+            - v = random( descriptor, shown )
             - if v
               .video
                 .image

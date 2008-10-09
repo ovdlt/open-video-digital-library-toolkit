@@ -9,5 +9,5 @@
             = link_to descriptor.text, descriptor_videos_path( descriptor )
             %span.count= "[#{descriptor.videos.size}]"
         %li.all
-          = link_to "All #{type.title.pluralize} >>", |
+          = link_to "All #{type.name.pluralize} >>", |
                     descriptor_type_videos_path( type ) |
