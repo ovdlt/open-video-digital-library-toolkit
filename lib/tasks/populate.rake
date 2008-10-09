@@ -7,10 +7,14 @@ namespace :db do
     require File.expand_path(File.join(RAILS_ROOT,"spec","video_helper"))
     require File.expand_path(File.join(RAILS_ROOT,"spec","asset_helper"))
 
-    types = DescriptorType.find( :all ).to_a
+    types = begin
+              dvs = DescriptorValue.find(:all)
+              dts = dvs.map(&:property_type).uniq
+            end
+
     values = []
     types.each do |type|
-      values[type.id] = type.descriptors.to_a
+      values[type.id] = DescriptorValue.find_all_by_property_type_id(type.id).to_a
     end
 
     # DANGEROUS!
@@ -39,7 +43,7 @@ namespace :db do
       v = Factory(:video)
       v.year = years[rand(years.size)]
       types.each do |type|
-        v.descriptors << values[type.id][ rand(values[type.id].size) ]
+        v.properties << values[type.id][ rand(values[type.id].size) ]
       end
       v.duration = rand(3*60*60)
 

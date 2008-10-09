@@ -1,9 +1,10 @@
 .axes
-  - DescriptorType.browse do |type|
+  - PropertyType.browse do |type|
     .axis
-      .title= type.title
+      .title= type.name
       %ul
-        - type.descriptors_prioritized.each do |descriptor|
+        / - type.descriptors_prioritized.each do |descriptor|
+        - type.values.each do |descriptor|
           %li
             = link_to descriptor.text, descriptor_videos_path( descriptor )
             %span.count= "[#{descriptor.videos.size}]"

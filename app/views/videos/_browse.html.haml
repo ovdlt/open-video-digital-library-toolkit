@@ -5,7 +5,7 @@
     .videos
       - srand Time.parse("0:0").to_i
       - shown = {}
-      - DescriptorType.browse do |type|
+      - PropertyType.browse do |type|
         .axis
           - i = 0
           - type.descriptors_prioritized.each do |descriptor|

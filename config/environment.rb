@@ -91,3 +91,4 @@ ActionView::Helpers::AssetTagHelper.
   register_javascript_include_default "jquery.pagination"
 ActionView::Helpers::AssetTagHelper.
   register_javascript_include_default "jquery.livequery"
+

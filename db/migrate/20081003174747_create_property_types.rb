@@ -4,10 +4,13 @@ class CreatePropertyTypes < ActiveRecord::Migration
       t.integer :property_class_id,     :null => false
       t.string  :name,                  :null => false
       t.integer :priority,              :null => false, :default => 999
+      t.boolean :browsable,             :null => false, :default => false
       t.timestamps
     end
 
     add_index :property_types, [ :property_class_id, :priority ]
+    add_index :property_types, [ :property_class_id, :browsable, :priority ],
+              :name => :property_types_browse
     add_index :property_types, :priority
 
   end

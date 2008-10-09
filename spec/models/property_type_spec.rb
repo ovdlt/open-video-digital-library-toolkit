@@ -61,4 +61,41 @@ describe PropertyType do
 
   end
 
+  describe ".browse" do
+
+    it "should return an ordered list of browsable properites" do
+      PropertyType.browse.map(&:id).should == [ 12, 13, 16, 14 ]
+    end
+
+    it "should yield the results, too" do
+      r = []
+      PropertyType.browse do |t|
+        r << t.id
+      end
+      r.should == [ 12, 13, 16, 14 ]
+
+    end
+
+  end
+
+  describe "#values" do
+
+    it "should return a list of descriptors for descriptor types" do
+      pt = PropertyType.find_by_name "Genre"
+      pt.values.map(&:text).
+        should ==  [ "Corporate", "Documentary", "Ephemeral",
+                     "Historical", "Lecture" ]
+    end
+
+  end
+
+  describe "#properties" do
+
+    it "should return the props for a type" do
+      pt = PropertyType.find_by_name "Genre"
+      pt.properties.map(&:video_id).should == [1]
+    end
+    
+  end
+
 end

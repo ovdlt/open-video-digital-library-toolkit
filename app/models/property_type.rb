@@ -4,7 +4,28 @@ class PropertyType < ActiveRecord::Base
 
   belongs_to :property_class
 
+  has_many :properties
+
   validates_presence_of :name, :property_class_id
+
+  def self.browse &block
+    options = { :order => "priority asc",
+                :conditions => [ "browsable = true" ] }
+    if block
+      ( self.find :all, options ).each &block
+    else
+      ( self.find :all, options )
+    end
+  end
+
+  def values
+    raise NoPropertyClass.new( property_class_id ) unless property_class
+    return property_class.values( self )
+    ps = Property.find_all_by_property_type_id id
+    pp ps
+    ps.map! { |p| property_class.retrieve_value p }
+    ps.uniq
+  end
 
   def field
     property_class and property_class.field

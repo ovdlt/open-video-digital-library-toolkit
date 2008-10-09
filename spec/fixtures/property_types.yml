@@ -37,24 +37,33 @@
   id: 12
   property_class_id: 4
   name: Genre
+  priority: 1
+  browsable: true
 
 13:
   id: 13
   property_class_id: 4
   name: Language
+  priority: 2
+  browsable: true
 
 14:
   id: 14
   property_class_id: 4
   name: Color
+  priority: 4
+  browsable: true
 
 15:
   id: 15
   property_class_id: 4
+  priority: 5
   name: Sound
 
 16:
   id: 16
   property_class_id: 4
   name: Geographic Region
+  priority: 3
+  browsable: true
 
