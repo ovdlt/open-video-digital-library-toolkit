@@ -25,7 +25,7 @@ describe DescriptorValue do
 
   it "should return properties" do
     dv = DescriptorValue.find_by_text "Documentary"
-    dv.properties.should == [ 1, 999 ]
+    dv.properties.map(&:video_id).should == [ 1 ]
   end
 
   it "should return videos" do
