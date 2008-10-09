@@ -24,7 +24,6 @@ describe DescriptorValue do
   end
 
   it "should return properties" do
-    pending "rails edge patch?"
     dv = DescriptorValue.find_by_text "Documentary"
     dv.properties.should == [ 1, 999 ]
   end
