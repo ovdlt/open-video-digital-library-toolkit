@@ -1,8 +1,27 @@
-=== Development
+=== Maintenance
 
 * 1 bug fix
 
-	* fixed regression where values assigned to the assigns hash were not accessible from the example (#549)
+  * require 'rubygems' in script/spec
+
+=== Version 1.1.8 / 2008-10-03
+
+* 2 bug fixes
+
+  * correctly handle assigns that are false. Fixes #552.
+  * ensure that NotYetImplemented examples report as pending (fixed in rspec, not rspec-rails). Fixes #553.
+  
+=== Version 1.1.7 / 2008-10-02
+
+* 1 bug fix
+
+  * depend on the correct version of rspec
+
+=== Version 1.1.6 / 2008-10-02
+
+* 1 bug fix
+
+  * fixed regression where values assigned to the assigns hash were not accessible from the example (#549)
 
 === Version 1.1.5 / 2008-09-28
 

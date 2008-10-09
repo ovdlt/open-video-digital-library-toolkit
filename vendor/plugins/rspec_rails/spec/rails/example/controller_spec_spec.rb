@@ -6,6 +6,8 @@ require 'controller_spec_controller'
     controller_name :controller_spec
     integrate_views if mode == 'integration'
     
+    specify "this example should be pending, not an error"
+    
     it "should provide controller.session as session" do
       get 'action_with_template'
       session.should equal(controller.session)
@@ -171,6 +173,11 @@ require 'controller_spec_controller'
     it "should expose instance vars through the assigns hash" do
       get 'action_setting_the_assigns_hash'
       assigns[:indirect_assigns_key].should == :indirect_assigns_key_value
+    end
+    
+    it "should expose instance vars through the assigns hash that are set to false" do
+      get 'action_that_assigns_false_to_a_variable'
+      assigns[:a_variable].should be_false
     end
     
     it "should NOT complain when calling should_receive with arguments other than :render" do
