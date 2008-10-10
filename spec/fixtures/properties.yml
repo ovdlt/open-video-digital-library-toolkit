@@ -7,3 +7,38 @@
   video_id: 2
   property_type_id: 12
   integer_value: 2
+
+1r:
+  video_id: 1
+  property_type_id: 11
+  integer_value: 1
+
+2r:
+  video_id: 2
+  property_type_id: 11
+  integer_value: 2
+  
+3r:
+  video_id: 3
+  property_type_id: 11
+  integer_value: 3
+  
+4r:
+  video_id: 4
+  property_type_id: 11
+  integer_value: 4
+  
+5r:
+  video_id: 5
+  property_type_id: 11
+  integer_value: 5
+  
+6r:
+  video_id: 6
+  property_type_id: 11
+  integer_value: 6
+  
+7r:
+  video_id: 7
+  property_type_id: 11
+  integer_value: 7

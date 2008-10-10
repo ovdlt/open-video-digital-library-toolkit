@@ -82,7 +82,7 @@ class VideosController < ApplicationController
         DescriptorValue.find( params[:descriptor_value_id] )
       @type = @descriptor.property_type
       @path = lambda do |opts|
-        descriptor_videos_path( @descriptor, opts )
+        descriptor_value_videos_path( @descriptor, opts )
       end
     end
     

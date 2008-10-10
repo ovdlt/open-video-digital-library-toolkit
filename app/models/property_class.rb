@@ -42,7 +42,7 @@ class PropertyClass < ActiveRecord::Base
     lambdas and lambdas[:field]
   end
 
-  def values type, options
+  def values type, options = nil
     lambdas = RANGE_MAP[range.to_s]
     raise NoRangeClass.new( range ) if not lambdas
     if lambdas[:values]

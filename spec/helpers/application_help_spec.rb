@@ -27,7 +27,7 @@ describe ApplicationHelper do
     end
     it "should redirect a descriptor only search properly" do
       helper.sq_path( SavedQuery.new( :descriptor_value_id => 1 ) ).
-        should == descriptor_videos_path( 1 )
+        should == descriptor_value_videos_path( 1 )
     end
     it "should redirect a query only search properly" do
       helper.sq_path( SavedQuery.new( :query_string => "foo" ) ).
@@ -36,7 +36,7 @@ describe ApplicationHelper do
     it "should redirect a combined search properly" do
       helper.sq_path( SavedQuery.new( :descriptor_value_id => 1,
                                        :query_string => "foo" ) ).
-        should == descriptor_videos_path( 1, :query => "foo" )
+        should == descriptor_value_videos_path( 1, :query => "foo" )
     end
   end
 

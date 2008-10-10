@@ -11,6 +11,11 @@ class Video < ActiveRecord::Base
       super v
     end
 
+    def find_by_type name
+      pt = PropertyType.find_by_name name
+      find_by_property_type_id( pt ) if pt
+    end
+
     def find_all_by_type name
       pt = PropertyType.find_by_name name
       find_all_by_property_type_id( pt ) if pt
@@ -278,6 +283,10 @@ class Video < ActiveRecord::Base
           nil
         end
       end
+  end
+
+  def rights
+    RightsDetail.find properties.find_by_name( "Rights Statement" ).value
   end
 
   private

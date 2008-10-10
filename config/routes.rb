@@ -1,4 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
+
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'
   map.login '/login', :controller => 'sessions', :action => 'new'
   map.register '/register', :controller => 'users', :action => 'create'
@@ -39,12 +40,12 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :assets, :collection => { :uncataloged => :any }
 
 
-  map.resources :descriptors do |descriptor|
-    descriptor.resources :videos
+  map.resources :descriptor_values do |dv|
+    dv.resources :videos
   end
   
-  map.resources :descriptor_types do |descriptor_type|
-    descriptor_type.resources :videos
+  map.resources :property_types do |property_type|
+    property_type.resources :videos
   end
   
   map.resource :library, :controller => :library

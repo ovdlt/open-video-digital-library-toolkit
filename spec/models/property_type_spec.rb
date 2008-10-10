@@ -111,4 +111,28 @@ describe PropertyType do
     
   end
 
+  describe ".descriptor_types" do
+    it "should return the property types that are descriptor types" do
+      PropertyType.descriptor_types.map(&:name).
+        should == [ "Genre", "Language", "Geographic Region", "Color", "Sound" ]
+    end
+  end
+
+  describe "#descriptor_values" do
+
+    it "should raise an error on the wrong kind of PT" do
+      pt = PropertyType.find_by_name "Rights Statement"
+      lambda { pt.descriptor_values }.
+        should raise_error( PropertyType::NotDescriptorType )
+    end
+
+    it "should return the descriptor_values for a property" do
+      pt = PropertyType.find_by_name "Genre"
+      pt.descriptor_values.map(&:text).
+        should == [ "Corporate", "Documentary", "Ephemeral",
+                    "Historical", "Lecture" ]
+    end
+  end
+
 end
+

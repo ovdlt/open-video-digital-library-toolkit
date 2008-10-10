@@ -381,4 +381,19 @@ describe Video do
 
   end
 
+  describe "rights" do
+
+    it "should find the rights type by name" do
+      v = Video.find :first
+      v.properties.find_by_name("Rights Statement").should_not be_nil
+    end
+
+    it "should provide a shortcut to the rights object" do
+      v = Video.find :first
+      v.rights.should_not be_nil
+      (RightsDetail === v.rights).should be_true
+    end
+    
+  end
+  
 end

@@ -1,6 +1,7 @@
 class PropertyType < ActiveRecord::Base
 
   class NoPropertyClass < StandardError; end
+  class NotDescriptorType < StandardError; end
 
   belongs_to :property_class
 
@@ -9,13 +10,27 @@ class PropertyType < ActiveRecord::Base
   validates_presence_of :name, :property_class_id
 
   def self.browse &block
-    options = { :order => "priority asc",
+    options = { :order => "priority asc, name asc",
                 :conditions => [ "browsable = true" ] }
     if block
       ( self.find :all, options ).each &block
     else
       ( self.find :all, options )
     end
+  end
+
+  def self.descriptor_types
+    find :all, :order => "pts.priority asc, pts.name asc",
+               :select => "pts.*",
+               :joins => "pts, property_classes pcs",
+               :conditions => "property_class_id = pcs.id and " +
+                              "range = 'descriptor_value'"
+  end
+
+  def descriptor_values
+    raise NotDescriptorType.new( property_class_id ) unless 
+      property_class.range == "descriptor_value"
+    property_class.values self
   end
 
   def values options = {}

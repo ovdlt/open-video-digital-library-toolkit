@@ -197,6 +197,10 @@ describe Property do
       Property.find_all_by_name( "Broadcast" ).size.should == 2
     end
 
+    it "should find some properites by rights statement" do
+      Property.find_by_name("Rights Statement").should_not be_nil
+    end
+
   end
 
   describe "descriptor properies" do
