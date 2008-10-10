@@ -43,6 +43,16 @@ def login_as_admin
   self.current_user = User.find( :all ).detect { |u| u.has_role? "admin" }
 end
 
+def login_as_cataloger
+  self.current_user = User.find( :all ).detect do
+    |u| u.has_role? "cataloger" and !u.has_role? "admin"
+  end
+end
+
+def login_as_collections
+  self.current_user = User.find Library.collections_user_id
+end
+
 def logout
   self.current_user = nil
 end

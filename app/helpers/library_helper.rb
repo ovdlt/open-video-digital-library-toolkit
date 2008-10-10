@@ -1,7 +1,6 @@
 module LibraryHelper
 
   def tabs
-    p "lib tabs"
     [
      :general_information,
      :date_types,

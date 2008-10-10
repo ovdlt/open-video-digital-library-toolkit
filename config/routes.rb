@@ -64,7 +64,7 @@ ActionController::Routing::Routes.draw do |map|
     collections.resources :bookmarks
   end
 
-  map.resource :session
+  map.resources :sessions
 
   map.root :controller => 'videos'
   

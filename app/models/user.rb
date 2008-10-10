@@ -55,7 +55,7 @@ class User < ActiveRecord::Base
   def has_role?(role_in_question)
     @_list ||= self.roles.collect(&:name)
     return true if @_list.include?("admin")
-    role_in_question.to_a.detect { |role| @_list.include? role.to_s }
+    Array(role_in_question).detect { |role| @_list.include? role.to_s }
   end
 
   include Authentication

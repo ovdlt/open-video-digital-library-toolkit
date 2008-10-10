@@ -1,9 +1,11 @@
 class LibraryController < ApplicationController
 
+  before_filter :login_required
   require_role [ :admin]
 
   def show
     @library = Library.find :first
+    render :template => "library/show"
   end
 
   def update

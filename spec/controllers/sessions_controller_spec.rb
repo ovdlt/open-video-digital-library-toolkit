@@ -102,7 +102,7 @@ describe SessionsController do
       route_for(:controller => 'sessions', :action => 'new').should == "/login"
     end
     it "should route the create sessions correctly" do
-      route_for(:controller => 'sessions', :action => 'create').should == "/session"
+      route_for(:controller => 'sessions', :action => 'create').should == "/sessions"
     end
     it "should route the destroy sessions action correctly" do
       route_for(:controller => 'sessions', :action => 'destroy').should == "/logout"
@@ -114,7 +114,7 @@ describe SessionsController do
       params_from(:get, '/login').should == {:controller => 'sessions', :action => 'new'}
     end
     it "should generate params from POST /session correctly" do
-      params_from(:post, '/session').should == {:controller => 'sessions', :action => 'create'}
+      params_from(:post, '/sessions').should == {:controller => 'sessions', :action => 'create'}
     end
     it "should generate params from DELETE /session correctly" do
       params_from(:delete, '/logout').should == {:controller => 'sessions', :action => 'destroy'}
@@ -126,10 +126,10 @@ describe SessionsController do
       get :new
     end
     it "should route session_path() correctly" do
-      session_path().should == "/session"
+      sessions_path().should == "/sessions"
     end
     it "should route new_session_path() correctly" do
-      new_session_path().should == "/session/new"
+      new_session_path().should == "/sessions/new"
     end
   end
 end

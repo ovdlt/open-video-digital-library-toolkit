@@ -9,7 +9,7 @@ describe Library do
       :title => "Library title",
       :subtitle => "about a library",
       :my => "My Library",
-      :collections_user_id => (User.find_by_login "collections").id
+      :collections_login => "collections"
     }
 
   end
@@ -39,8 +39,7 @@ describe Library do
       my = "my title"
       Library.create! :title => s,
                        :my => my,
-                       :collections_user_id => \
-                         (User.find_by_login "collections").id
+                       :collections_login => "collections"
 
       Library.title.should == s
     end
@@ -54,8 +53,7 @@ describe Library do
       Library.create! :title => t,
                        :subtitle => s,
                        :my => my,
-                       :collections_user_id => \
-                         (User.find_by_login "collections").id
+                       :collections_login => "collections"
       Library.subtitle.should == s
     end
   end
@@ -68,8 +66,7 @@ describe Library do
       Library.create! :title => t,
                        :logo_url => s,
                        :my => my,
-                       :collections_user_id => \
-                         (User.find_by_login "collections").id
+                       :collections_login => "collections"
       Library.logo_url.should == s
     end
   end
