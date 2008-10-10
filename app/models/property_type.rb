@@ -9,6 +9,12 @@ class PropertyType < ActiveRecord::Base
 
   validates_presence_of :name, :property_class_id
 
+  # FIX: factor
+  def tableize
+    s = name
+    s.titleize.delete(' ').tableize
+  end
+
   def self.browse &block
     options = { :order => "priority asc, name asc",
                 :conditions => [ "browsable = true" ] }

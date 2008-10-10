@@ -1,5 +1,10 @@
 - f = @f
+- pc = PropertyClass.find_by_name "Collections"
 %div
 
   .form
-    Not Yet Implemented
+
+    - pc.property_types.each do |pt|
+    
+      %div{:id=>pt.tableize}
+        = pt.tableize

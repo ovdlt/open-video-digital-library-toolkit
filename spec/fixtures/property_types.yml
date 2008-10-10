@@ -1,67 +1,217 @@
 1:
   id: 1
   property_class_id: 1
-  name: Production
+  name: Broadcast
 
 2:
   id: 2
   property_class_id: 1
-  name: Broadcast
+  name: Copyright
 
 3:
   id: 3
-  property_class_id: 2
-  name: Writer
+  property_class_id: 1
+  name: Creation
 
 4:
   id: 4
+  property_class_id: 1
+  name: Digitization
+
+5:
+  id: 5
+  property_class_id: 1
+  name: Production
+
+6:
+  id: 6
+  property_class_id: 1
+  name: Rebroadcast
+
+7:
+  id: 7
+  property_class_id: 1
+  name: Reissue
+
+8:
+  id: 8
+  property_class_id: 1
+  name: Release
+
+9:
+  id: 9
+  property_class_id: 1
+  name: Screening
+
+10:
+  id: 10
   property_class_id: 2
-  name: Producer
-
-# 5:
-#   id: 5
-#   property_class_id: 4
-#   name: Era
-
-#   name: Administrative
-#   name: Documentary Video Collection
-#   name: Digital video
-#   name: Promotional Item
+  name: Commentator
 
 11:
   id: 11
-  property_class_id: 6
-  name: 'Rights Statement'
+  property_class_id: 2
+  name: Contributor
 
 12:
   id: 12
+  property_class_id: 2
+  name: Copyright Holder
+
+13:
+  id: 13
+  property_class_id: 2
+  name: Director
+
+14:
+  id: 14
+  property_class_id: 2
+  name: Distributor
+
+15:
+  id: 15
+  property_class_id: 2
+  name: Performer
+
+16:
+  id: 16
+  property_class_id: 2
+  name: Producer
+
+17:
+  id: 17
+  property_class_id: 2
+  name: Writer
+
+18:
+  id: 18
+  property_class_id: 3
+  name: Administrative
+
+19:
+  id: 19
+  property_class_id: 3
+  name: Documentary Video Collection
+
+20:
+  id: 20
+  property_class_id: 3
+  name: Educational Video Collection
+
+21:
+  id: 21
+  property_class_id: 3
+  name: Instructional Video Collection
+
+22:
+  id: 22
+  property_class_id: 3
+  name: Thematic
+
+23:
+  id: 23
+  property_class_id: 5
+  name: Administrative item
+
+24:
+  id: 24
+  property_class_id: 5
+  name: Digital video
+
+25:
+  id: 25
+  property_class_id: 5
+  name: Production itema
+
+26:
+  id: 26
+  property_class_id: 5
+  name: Promotional item
+
+27:
+  id: 27
+  property_class_id: 5
+  name: Related document
+
+28:
+  id: 28
+  property_class_id: 10
+  name: GIF
+
+29:
+  id: 29
+  property_class_id: 10
+  name: JPG
+
+30:
+  id: 30
+  property_class_id: 10
+  name: MOV
+
+31:
+  id: 31
+  property_class_id: 10
+  name: MPEG-1
+
+32:
+  id: 32
+  property_class_id: 10
+  name: MPEG-2
+
+33:
+  id: 33
+  property_class_id: 10
+  name: MPEG-4
+
+34:
+  id: 34
+  property_class_id: 10
+  name: MPEG-7
+
+35:
+  id: 35
+  property_class_id: 10
+  name: PDF
+
+36:
+  id: 36
+  property_class_id: 10
+  name: PNG
+
+37:
+  id: 37
+  property_class_id: 6
+  name: 'Rights Statement'
+
+38:
+  id: 38
   property_class_id: 4
   name: Genre
   priority: 1
   browsable: true
 
-13:
-  id: 13
+39:
+  id: 39
   property_class_id: 4
   name: Language
   priority: 2
   browsable: true
 
-14:
-  id: 14
+40:
+  id: 40
   property_class_id: 4
   name: Color
   priority: 4
   browsable: true
 
-15:
-  id: 15
+41:
+  id: 41
   property_class_id: 4
   priority: 5
   name: Sound
 
-16:
-  id: 16
+42:
+  id: 42
   property_class_id: 4
   name: Geographic Region
   priority: 3

@@ -1,96 +1,96 @@
 documentary:
   id: 1
-  property_type_id: 12
+  property_type_id: 38
   text: Documentary
 
 corporate:
   id: 2
-  property_type_id: 12
+  property_type_id: 38
   text: Corporate
 
 historical:
   id: 3
-  property_type_id: 12
+  property_type_id: 38
   text: Historical
 
 ephemeral:
   id: 4
-  property_type_id: 12
+  property_type_id: 38
   text: Ephemeral
 
 lecture:
   id: 5
-  property_type_id: 12
+  property_type_id: 38
   text: Lecture
 
 spanish:
   id: 6
-  property_type_id: 13
+  property_type_id: 39
   text: Spanish
 
 french:
   id: 7
-  property_type_id: 13
+  property_type_id: 39
   text: French
 
 italian:
   id: 8
-  property_type_id: 13
+  property_type_id: 39
   text: Italian
 
 english:
   id: 9
-  property_type_id: 13
+  property_type_id: 39
   text: English
 
 japanese:
   id: 10
-  property_type_id: 13
+  property_type_id: 39
   text: Japanese
 
 north_america:
   id: 11
-  property_type_id: 16
+  property_type_id: 42
   text: North America
 
 africa:
-  id: 12
-  property_type_id: 16
+  id: 38
+  property_type_id: 42
   text: Africa
 
 europe:
-  id: 13
-  property_type_id: 16
+  id: 39
+  property_type_id: 42
   text: Europe
 
 central_america:
   id: 14
-  property_type_id: 16
+  property_type_id: 42
   text: Central America
 
 south_america:
   id: 15
-  property_type_id: 16
+  property_type_id: 42
   text: South America
 
 asia:
-  id: 16
-  property_type_id: 16
+  id: 42
+  property_type_id: 42
   text: Asia
 
 color:
   id: 17
-  property_type_id: 14
+  property_type_id: 40
   text: Color
 
 blank_and_white:
   id: 18
-  property_type_id: 14
+  property_type_id: 40
   text: Black and White
 
 colorized:
   id: 19
-  property_type_id: 14
+  property_type_id: 40
   text: Colorized
 
 sound:

@@ -1,11 +1,13 @@
 arr:
   id: 1
+  property_type_id: 37
   statement: 'All Rights Reserved'
   license: 'All Rights Reserved'
   html: 'No reuse without permission of owner.'
 
 cca25:
   id: 2
+  property_type_id: 37
   statement: 'Rights available via Creative Commons license per donor'
   license: 'Creative Commons Attribution 2.5 License'
   html: '<!--Creative Commons License--><a rel="license" href="http://creativecommons.org/licenses/by/2.5/"><img alt="Creative Commons License" border="0" src="http://creativecommons.org/images/public/somerights20.png"/></a><br/>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/2.5/">Creative Commons Attribution 2.5 License</a>.<!--/Creative Commons License--><!-- <rdf:RDF xmlns="http://web.resource.org/cc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
@@ -16,6 +18,7 @@ cca25:
 
 ccasa25:
   id: 3
+  property_type_id: 37
   statement: 'Rights available via Creative Commons license per donor'
   license: 'Creative Commons Attribution-ShareAlike 2.5 License'
   html: '<!--Creative Commons License--><a rel="license" href="http://creativecommons.org/licenses/by-sa/2.5/"><img alt="Creative Commons License" border="0" src="http://creativecommons.org/images/public/somerights20.png"/></a><br/>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/2.5/">Creative Commons Attribution-ShareAlike 2.5 License</a>.<!--/Creative Commons License--><!-- <rdf:RDF xmlns="http://web.resource.org/cc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
@@ -26,6 +29,7 @@ ccasa25:
 
 ccand25:
   id: 4
+  property_type_id: 37
   statement: 'Rights available via Creative Commons license per donor'
   license: 'Creative Commons Attribution-NoDerivs 2.5 License'
   html: '<!--Creative Commons License--><a rel="license" href="http://creativecommons.org/licenses/by-nd/2.5/"><img alt="Creative Commons License" border="0" src="http://creativecommons.org/images/public/somerights20.png"/></a><br/>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nd/2.5/">Creative Commons Attribution-NoDerivs 2.5 License</a>.<!--/Creative Commons License--><!-- <rdf:RDF xmlns="http://web.resource.org/cc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
@@ -36,6 +40,7 @@ ccand25:
 
 ccanc25:
   id: 5
+  property_type_id: 37
   statement: 'Rights available via Creative Commons license per donor'
   license: 'Creative Commons Attribution-NonCommercial 2.5 License'
   html: '<!--Creative Commons License--><a rel="license" href="http://creativecommons.org/licenses/by-nc/2.5/"><img alt="Creative Commons License" border="0" src="http://creativecommons.org/images/public/somerights20.png"/></a><br/>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/2.5/">Creative Commons Attribution-NonCommercial 2.5 License</a>.<!--/Creative Commons License--><!-- <rdf:RDF xmlns="http://web.resource.org/cc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
@@ -46,6 +51,7 @@ ccanc25:
 
 ccancsa25:
   id: 6
+  property_type_id: 37
   statement: 'Rights available via Creative Commons license per donor'
   license: 'Creative Commons Attribution-NonCommercial-ShareAlike 2.5 License'
   html: '<!--Creative Commons License--><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/2.5/"><img alt="Creative Commons License" border="0" src="http://creativecommons.org/images/public/somerights20.png"/></a><br/>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/2.5/">Creative Commons Attribution-NonCommercial-ShareAlike 2.5 License</a>.<!--/Creative Commons License--><!-- <rdf:RDF xmlns="http://web.resource.org/cc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
@@ -56,6 +62,7 @@ ccancsa25:
 
 ccancnd25:
   id: 7
+  property_type_id: 37
   statement: 'Rights available via Creative Commons license per donor'
   license: 'Creative Commons Attribution-NonCommercial-NoDerivs 2.5 License'
   html: '<!--Creative Commons License--><a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/2.5/"><img alt="Creative Commons License" border="0" src="http://creativecommons.org/images/public/somerights20.png"/></a><br/>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/2.5/">Creative Commons Attribution-NonCommercial-NoDerivs 2.5 License</a>.<!--/Creative Commons License--><!-- <rdf:RDF xmlns="http://web.resource.org/cc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">

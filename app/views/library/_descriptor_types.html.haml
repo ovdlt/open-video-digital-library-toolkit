@@ -11,21 +11,24 @@
             .edit
               %label
                 Type:
-                = text_field_tag "descriptor_types[#{dt.id}][name]", |
+                = text_field_tag "property_type[#{dt.id}][name]", |
                                   dt.name, :id => nil |
                 %span.delete= link_to "delete", ""
           %ul
-            - dt.descriptor_values.each do |d|
+            - dt.descriptor_values.each do |dv|
               %li.delete
                 %div.d.display-edit
                   .display
-                    = d.text
+                    = dv.text
                     %span.edit= link_to "edit", ""
                   .edit
                     %label
                       Value:
-                      = text_field_tag "descriptor_types[#{dt.id}][descriptors][#{d.id}][text]", |
-                                        d.text, :id => nil |
+                      = text_field_tag "descriptor_value[#{dv.id}][text]", |
+                                        dv.text, :id => nil |
+                      .hidden
+                        = text_field_tag "descriptor_value[#{dv.id}][property_type_id]", |
+                                          dv.property_type_id, :id => nil |
                     %span.delete= link_to "delete", ""
             %li.d.new
               %div.d.display-new

@@ -73,12 +73,6 @@ module ActionController
     #
     #   dom_id(Post.find(45), :edit) # => "edit_post_45"
     def dom_id(record, prefix = nil) 
-      if false and !(ActiveRecord::Base === record)
-        pp
-        pp
-        pp record
-        pp caller(0)
-      end
       if record_id = record.id
         "#{dom_class(record, prefix)}#{JOIN}#{record_id}"
       else

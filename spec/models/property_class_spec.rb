@@ -39,6 +39,32 @@ describe PropertyClass do
       should raise_error( ActiveRecord::RecordInvalid )
   end
 
+  describe "#tabelize" do
+
+    it "should make things sutable for a tablename or html id attribute" do
+      PropertyClass.find(:all).map(&:tableize).
+        should == [ "date_types",
+                    "roles",
+                    "collections",
+                    "optional_multivalued_descriptors",
+                    "digital_files",
+                    "rights_statements",
+                    "mandatory_multivalued_descriptors",
+                    "optional_singular_descriptors",
+                    "mandatory_singular_descriptors",
+                    "format_types",
+                  ]
+    end
+
+  end
+
+  describe "#simple" do
+    it "should list the non-special classes" do
+      PropertyClass.simple.map(&:name).
+        should == [ "Date Types", "Roles", "Collections", "Digital Files", "Format Types"]
+    end
+  end
+
   describe "#validate_value" do
     it "should validate a good date" do
       @valid_attributes[:range] = "date"

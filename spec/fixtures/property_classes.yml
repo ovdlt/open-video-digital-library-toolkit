@@ -26,12 +26,12 @@ collection:
   optional: true
   multivalued: true
 
-# digital_file:
-#   id: 5
-#   name: Digital Files
-#   range: string
-#   optional: true
-#   multivalued: true
+digital_file:
+  id: 5
+  name: Digital Files
+  range: string
+  optional: true
+  multivalued: true
 
 rights_statements:
   id: 6
@@ -61,3 +61,9 @@ rights_statements:
   optional: false
   multivalued: false
 
+10:
+  id: 10
+  name: Format Types
+  range: string
+  optional: true
+  multivalued: true

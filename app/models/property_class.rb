@@ -1,5 +1,7 @@
 class PropertyClass < ActiveRecord::Base
 
+  has_many :property_types
+
   RANGE_MAP = {
 
     "string" => { :field => :string_value,
@@ -15,7 +17,8 @@ class PropertyClass < ActiveRecord::Base
     "rights_detail" => { :field => :integer_value,
                 :validate  => lambda { |v| validate_rights( v ) },
                 :translate => lambda { |v| translate_rights(v) },
-                :retrieve  => lambda { |p| retrieve_rights(p) } },
+                :retrieve  => lambda { |p| retrieve_rights(p) },
+                :values  => lambda { |t,o| values_rights(t,o) } },
 
     "descriptor_value" => { :field => :integer_value,
                 :validate  => lambda { |v| validate_descriptor( v ) },
@@ -36,6 +39,15 @@ class PropertyClass < ActiveRecord::Base
   }
 
   class NoRangeClass < StandardError; end
+
+  def self.simple
+    find :all, :conditions => "range in ( 'string', 'date' )"
+  end
+
+  def tableize
+    s = name
+    s.titleize.delete(' ').tableize
+  end
 
   def field
     lambdas = RANGE_MAP[range.to_s]
@@ -149,6 +161,10 @@ class PropertyClass < ActiveRecord::Base
 
     def retrieve_rights property
       property.integer_value
+    end
+
+    def values_rights t, options
+      RightsDetail.find_all_by_property_type_id t.id, options
     end
 
     def validate_descriptor property

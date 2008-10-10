@@ -64,15 +64,15 @@ describe PropertyType do
   describe ".browse" do
 
     it "should return an ordered list of browsable properites" do
-      PropertyType.browse.map(&:id).should == [ 12, 13, 16, 14 ]
+      PropertyType.browse.map(&:name).should == [ "Genre", "Language", "Geographic Region", "Color" ]
     end
 
     it "should yield the results, too" do
       r = []
       PropertyType.browse do |t|
-        r << t.id
+        r << t.name
       end
-      r.should == [ 12, 13, 16, 14 ]
+      r.should == [ "Genre", "Language", "Geographic Region", "Color" ]
 
     end
 
@@ -132,6 +132,19 @@ describe PropertyType do
         should == [ "Corporate", "Documentary", "Ephemeral",
                     "Historical", "Lecture" ]
     end
+
+  end
+
+  describe "#values" do
+
+    it "should return the values for rights" do
+      pt = PropertyType.find_by_name "Rights Statement"
+      vs = pt.values.map(&:license)
+      vs.first.should == 'All Rights Reserved'
+      vs.last.should == \
+        'Creative Commons Attribution-NonCommercial-NoDerivs 2.5 License'
+    end
+
   end
 
 end

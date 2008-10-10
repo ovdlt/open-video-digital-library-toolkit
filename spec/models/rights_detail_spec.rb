@@ -5,15 +5,13 @@ describe RightsDetail do
     @valid_attributes = {
       :statement => "some rights statement",
       :license => "a way of labeling it",
+      :property_type => PropertyType.find_by_name( "Rights Statement" )
     }
 
   end
 
   def create_rd
     rd = RightsDetail.new @valid_attributes
-    pt = PropertyType.find_by_name( "Rights Statement" )
-    rd.property = Property.new :property_type_id => pt.id,
-                                :video_id => 1
     rd.save
   end
 
