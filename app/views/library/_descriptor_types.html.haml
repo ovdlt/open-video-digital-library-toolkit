@@ -26,7 +26,7 @@
                       Value:
                       = text_field_tag "descriptor_value[#{dv.id}][text]", |
                                         dv.text, :id => nil |
-                      .hidden
+                      %span.hidden
                         = text_field_tag "descriptor_value[#{dv.id}][property_type_id]", |
                                           dv.property_type_id, :id => nil |
                     %span.delete= link_to "delete", ""

@@ -3,6 +3,12 @@ class Library < ActiveRecord::Base
   validates_presence_of :title
   validates_presence_of :my
 
+  def validate
+    if !User.find_by_login self.collections_login
+      errors.add :collections_login, "login does not exist"
+    end
+  end
+
   def self.title
     ( self.find :first ).title
   end
@@ -20,7 +26,11 @@ class Library < ActiveRecord::Base
   end
 
   def self.collections_user_id
-    ( self.find :first ).collections_user_id
+    User.find_by_login( self.find(:first).collections_login ).id
+  end
+
+  def self.collections_login
+    ( self.find :first ).collections_login
   end
 
   def self.collections_title

@@ -8,6 +8,7 @@ class PropertyType < ActiveRecord::Base
   has_many :properties
 
   validates_presence_of :name, :property_class_id
+  validates_uniqueness_of :name
 
   # FIX: factor
   def tableize

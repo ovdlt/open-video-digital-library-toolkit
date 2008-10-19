@@ -84,11 +84,11 @@
         - video.descriptor_types.each do |type|
 
           .detail
-            - descriptors = video.descriptors_by_type( type )
-            .type= h ( descriptors.size > 1 ? type.title.pluralize : |
-                                               type.title ) + ":" |
+            - descriptors = video.properties.find_all_by_property_type( type )
+            .type= h ( descriptors.size > 1 ? type.name.pluralize : |
+                                               type.name ) + ":" |
             - descriptors.each do |descriptor|
-              .value= h descriptor.text
+              .value= h descriptor.value.text
             .clear
 
       .details_list

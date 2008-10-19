@@ -1,4 +1,3 @@
-- f = @f
 %div
 
   .form
@@ -10,42 +9,42 @@
         %label
           Title
           %br
-          = f.text_field :title, :size => 50
+          = @form.text_field :title, :size => 50
 
       .label
         %label
           Subtitle
           %br
-          = f.text_field :subtitle, :size => 80
+          = @form.text_field :subtitle, :size => 80
 
       .label
         %label
           Logo URL
           %br
-          = f.text_field :logo_url, :size => 80, :maxlength => 255
+          = @form.text_field :logo_url, :size => 80, :maxlength => 255
 
       .label
         %label
           My Library Tab
           %br
-          = f.text_field :my, :size => 80, :maxlength => 255
+          = @form.text_field :my, :size => 80, :maxlength => 255
 
       .label
         %label
           Collections Title
           %br
-          = f.text_field :collections_title, :size => 80, :maxlength => 255
+          = @form.text_field :collections_title, :size => 80, :maxlength => 255
 
       .label
         %label
           Playlists Title
           %br
-          = f.text_field :playlists_title, :size => 80, :maxlength => 255
+          = @form.text_field :playlists_title, :size => 80, :maxlength => 255
 
       .label
         %label
           Collections Login
           %br
-          = f.text_field :collections_login, :size => 80, :maxlength => 255
+          = @form.text_field :collections_login, :size => 80, :maxlength => 255
 
     .clear

@@ -6,12 +6,17 @@ module LibraryHelper
      :date_types,
      :roles,
      :descriptor_types,
-     :collections,
+#     :collections,
      :digital_files,
      :rights_statements,
-     :video_relation_types,
+#     :video_relation_types,
      :format_types,
     ]
   end
+
+  def property_types_by_class pc
+    @property_types.select { |pt| pt.property_class_id == pc.id }
+  end
+
 
 end

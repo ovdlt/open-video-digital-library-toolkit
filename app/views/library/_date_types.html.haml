@@ -1,7 +1,26 @@
-- f = @f
-- pc = PropertyClass.find_by_name "Date Types"
+- pc = @property_classes.detect { |pc| pc.name == "Date Types" }
 %div
   .form
-    - pc.property_types.each do |pt|
-      %div{:id=>pt.tableize}
-        = pt.tableize
+    %ul
+      - pc.property_types.each do |pt|
+        %li.delete
+          - fields_for "property_type[#{pt.id}]", pt do |fields|
+            .property-type.display-edit
+              .display
+                = pt.name
+                %span.edit= link_to "edit", ""
+              .edit
+                %label
+                  Name:
+                  = fields.text_field :name
+                %span.delete
+                  = link_to "delete", ""
+                  = hidden_field_tag "property_type[#{pt.id}][deleted]", false, :id => nil
+                -
+                = hidden_field_tag "property_type[#{type_id(pt)}][property_class_id]", |
+                                   pc.id, :id => nil |
+      %li.add
+        add
+        .template
+          stuff
+        

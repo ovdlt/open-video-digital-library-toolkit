@@ -25,6 +25,11 @@ describe PropertyType do
       should raise_error( ActiveRecord::RecordInvalid )
   end
 
+  it "should require names be unique" do
+    PropertyType.create! @valid_attributes
+    PropertyType.new(@valid_attributes).save.should be_false
+  end
+
   describe "#validate_value" do
 
     it "should throw a nice error if the property class is bad" do

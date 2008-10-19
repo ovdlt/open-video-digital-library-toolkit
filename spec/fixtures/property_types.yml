@@ -83,30 +83,30 @@
   property_class_id: 2
   name: Writer
 
-18:
-  id: 18
-  property_class_id: 3
-  name: Administrative
+# 18:
+#   id: 18
+#   property_class_id: 3
+#   name: Administrative
 
-19:
-  id: 19
-  property_class_id: 3
-  name: Documentary Video Collection
+# 19:
+#   id: 19
+#   property_class_id: 3
+#   name: Documentary Video Collection
 
-20:
-  id: 20
-  property_class_id: 3
-  name: Educational Video Collection
+# 20:
+#   id: 20
+#   property_class_id: 3
+#   name: Educational Video Collection
 
-21:
-  id: 21
-  property_class_id: 3
-  name: Instructional Video Collection
+# 21:
+#   id: 21
+#   property_class_id: 3
+#   name: Instructional Video Collection
 
-22:
-  id: 22
-  property_class_id: 3
-  name: Thematic
+# 22:
+#   id: 22
+#   property_class_id: 3
+#   name: Thematic
 
 23:
   id: 23

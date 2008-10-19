@@ -1,4 +1,4 @@
-- form_for :library, @library, :html => { :method => :put } do |@f|
+- form_for :library, @library, :html => { :method => :put } do |@form|
   
   %fieldset.library
     %legend Collection Information
@@ -10,5 +10,5 @@
         = tabs_div_for tab
     .clear
 
-    = @f.submit "Save"
+    = @form.submit "Save"
     = link_to "cancel", library_path

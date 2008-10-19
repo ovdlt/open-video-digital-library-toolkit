@@ -50,6 +50,29 @@ $.fn.paginate = function(number,path){
 
 $(function(){
 
+    $("ul.template").addClass("hidden");
+
+    $("div.property-type.new a").click(function(){
+        var li = $(this).parents("li")[0];
+        var template = $("ul.template li.delete",li)[0];
+        var copy = $(template).clone();
+
+        // could use a stored variable, but really ...
+        var r = Math.floor(Math.random()*32768)
+
+        $("[name]",copy).each(function(){
+            // alert($(this).attr("name"));
+            name = $(this).attr("name");
+            name = name.replace("[new]","[new_"+r+"]")
+            $(this).attr("name",name);
+        });
+
+        $(li).before(copy);
+        $("div.display",copy).hide();
+        $("div.edit",copy).show();
+        return false;
+    });
+
     $("div.template").addClass("hidden");
 
     $(".assets.ajax").each(function(){
@@ -122,7 +145,10 @@ $(function(){
         $("div.bookmark.hidden",$(this).parents("form")).toggle();
     });
 
+    $("div.display-edit div.display.error").hide();
+
     $("div.display-edit div.edit").hide();
+    $("div.display-edit div.edit.error").show();
 
     $("div.display-edit span.edit a").click(function(){
         $("div.display, div.edit",$(this).parents("div.display-edit")[0]).toggle();
@@ -130,8 +156,10 @@ $(function(){
     });
 
     $("div.display-edit span.delete a").click(function(){
-        $($(this).parents("li.delete")[0]).remove();
-        return false;
+      var top = $(this).parents("li.delete");
+      $("input.deleted[type=hidden]",top).attr("value","deleted");
+      top.hide();
+      return false;
     });
 
     $("div.dt.display-new div.new").hide();

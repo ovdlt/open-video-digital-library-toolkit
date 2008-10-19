@@ -106,4 +106,22 @@ EOS
     owner
   end
 
+  def type_id object
+    if object
+      id = object.id
+      if id.nil?
+        "new_" + object.object_id.to_s
+      else
+        id.to_s
+      end
+    else
+      raise ArgumentError
+    end
+  end
+
+  def error_class object
+    object.errors.empty? ? {} : { :class => "error" }
+  end
+
+
 end

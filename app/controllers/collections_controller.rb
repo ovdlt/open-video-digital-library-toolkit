@@ -52,7 +52,7 @@ class CollectionsController < ApplicationController
   end
 
   def collections
-    user = User.find Library.collections_user_id;
+    user = User.find_by_login Library.collections_login;
     @collections =
       Collection.paginate :page => params[:page],
                            :per_page => 5,
@@ -66,7 +66,7 @@ class CollectionsController < ApplicationController
   end
 
   def playlists
-    user = User.find Library.collections_user_id;
+    user = User.find_by_login Library.collections_login;
     @collections =
       Collection.paginate :page => params[:page],
                            :per_page => 5,

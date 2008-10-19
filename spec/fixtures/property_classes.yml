@@ -12,12 +12,12 @@ role:
   optional: true
   multivalued: true
 
-collection:
-  id: 3
-  name: Collections
-  range: string
-  optional: true
-  multivalued: true
+# collection:
+#   id: 3
+#   name: Collections
+#   range: string
+#   optional: true
+#   multivalued: true
 
 4:
   id: 4

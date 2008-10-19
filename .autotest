@@ -1,0 +1,88 @@
+Autotest.add_hook :initialize do |at|
+
+  class << at
+    
+    def run_tests
+      hook :run_command
+
+      new_mtime = self.find_files_to_test
+      return unless new_mtime
+      self.last_mtime = new_mtime
+
+      trans = {}
+      non_trans = {}
+      
+      self.files_to_test.map do |k,v|
+        if k =~ /_spec.rb$/
+          trans[k] = v
+        elsif k =~ /_trans.rb$/
+          non_trans[k] = v
+        else
+          trans[k] = v
+        end
+      end
+
+      self.results = []
+
+      [ trans, non_trans ].each do |hash|
+
+        cmd = self.make_test_cmd hash
+        next if cmd.empty?
+
+        puts cmd unless $q
+
+        old_sync = $stdout.sync
+        $stdout.sync = true
+        line = []
+        begin
+          open("| #{cmd}", "r") do |f|
+            until f.eof? do
+              c = f.getc
+              putc c
+              line << c
+              if c == ?\n then
+                self.results << if RUBY_VERSION >= "1.9" then
+                                  line.join
+                                else
+                                  line.pack "c*"
+                                end
+                line.clear
+              end
+            end
+          end
+        ensure
+          $stdout.sync = old_sync
+        end
+      end
+
+      # pp self.results
+
+      ex = 0
+      fai = 0
+
+      completed, rest = self.results.partition do |l|
+        if( m = l.match( /^(\d+)\s+examples?,\s+(\d+)\s+failures?/ ) )
+          ex += m[1].to_i
+          fai += m[2].to_i
+        end
+      end
+
+      if completed.size > 1
+        e = ex == 1 ? "example" : "examples"
+        f = fai == 1 ? "failure" : "failures"
+        completed = [ "#{ex} #{e}, #{fai} #{f}\n" ]
+      end
+
+      self.results = rest + completed
+
+      hook :ran_command
+
+      self.results = self.results.join
+      
+      handle_results(self.results)
+    end
+
+  end
+
+end
+

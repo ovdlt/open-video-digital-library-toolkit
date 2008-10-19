@@ -40,4 +40,41 @@ describe ApplicationHelper do
     end
   end
 
+  describe "#type_id" do
+
+    it "should return the id of an object" do
+      o = Object.new
+      o.should_receive(:id).and_return(12)
+      helper.type_id(o).should == "12"
+    end
+
+    it "should return the munged object id if id is nil" do
+      # note we're assuming an AR object so id is sensical
+      o = Object.new
+      o.should_receive(:id).and_return(nil)
+      helper.type_id(o).should =~ /^new_\d+$/
+    end
+
+    it "should raise error if called on nil" do
+      lambda { helper.type_id(nil) }.should raise_error(ArgumentError)
+    end
+
+  end
+
+  describe "#error_class" do
+
+    it "should return an error class if the object has errors" do
+      o = Object.new
+      o.should_receive(:errors).and_return([ 1 ])
+      helper.error_class(o).should == { :class => "error" }
+    end
+
+    it "should return an empty hash otherwise" do
+      o = Object.new
+      o.should_receive(:errors).and_return([])
+      helper.error_class(o).should == {}
+    end
+
+  end
+
 end

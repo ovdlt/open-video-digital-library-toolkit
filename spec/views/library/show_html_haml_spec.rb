@@ -4,6 +4,11 @@ describe "library/show.html.haml" do
 
   before(:each) do
     assigns[:library] = @library = Library.find(:first)
+    assigns[:property_types] = @property_types = PropertyType.find(:all)
+    assigns[:property_classes] = @property_classes = PropertyClass.find(:all)
+    assigns[:descriptor_values] =
+      @descriptor_values = DescriptorValue.find(:all)
+    assigns[:rights_details] = @rights_details = RightsDetail.find(:all)
     render "library/show"
   end
 
@@ -48,15 +53,23 @@ describe "library/show.html.haml" do
 
     PropertyClass.simple.each do |pc|
 
-      response.should have_tag( "##{pc.tableize}" )
+      response.should have_tag( "##{pc.tableize}" ) do
 
-      pc.property_types.each do |pt|
-        response.should have_tag( "##{pt.tableize}" )
+        pc.property_types.each do |pt|
+
+          response.should have_tag(
+                %(input[name='property_type[#{pt.id}][name]']) +
+                %([value='#{pt.name}']) )
+
+          response.should have_tag(
+                %(input[name='property_type[#{pt.id}][property_class_id]']) +
+                %([value='#{pt.property_class_id}']) )
+
+        end
+          
       end
-
+      
     end
-
-    pending "should actually look to make sure the values are there"
 
   end
 
@@ -67,11 +80,11 @@ describe "library/show.html.haml" do
     pc = PropertyClass.find_by_name("Rights Statements")
     pt = PropertyType.find_by_property_class_id( pc.id )
     
-    pending
-
     pc.values(pt).each do |rd|
-      response.should have_tag( "##{rd.license}" )
-    end
+        response.should have_tag(
+                %(input[name='rights_detail[#{rd.id}][license]']) +
+                %([value='#{rd.license}']) )
+      end
 
   end
 

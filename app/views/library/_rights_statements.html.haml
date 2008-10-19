@@ -1,5 +1,11 @@
-- f = @f
 %div
-
   .form
-    Not Yet Implemented
+    %ul
+      - @rights_details.each do |rd|
+        %li
+          - fields_for "rights_detail[#{rd.id}]", rd do |fields|
+            = rd.license
+            %label
+              License:
+              = fields.text_field :license
+    .clear

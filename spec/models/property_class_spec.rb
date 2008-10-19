@@ -45,7 +45,7 @@ describe PropertyClass do
       PropertyClass.find(:all).map(&:tableize).
         should == [ "date_types",
                     "roles",
-                    "collections",
+                    # "collections",
                     "optional_multivalued_descriptors",
                     "digital_files",
                     "rights_statements",
@@ -61,7 +61,11 @@ describe PropertyClass do
   describe "#simple" do
     it "should list the non-special classes" do
       PropertyClass.simple.map(&:name).
-        should == [ "Date Types", "Roles", "Collections", "Digital Files", "Format Types"]
+        should == [ "Date Types",
+                    "Roles",
+                    # "Collections",
+                    "Digital Files",
+                    "Format Types"]
     end
   end
 

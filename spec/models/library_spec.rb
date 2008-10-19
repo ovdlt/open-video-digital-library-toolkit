@@ -71,5 +71,41 @@ describe Library do
     end
   end
 
+  describe "#collections_login" do
+
+    before(:each) do
+      t = "a title"
+      s = "a logo_url"
+      my = "my title"
+      @l = Library.create! :title => t,
+                            :logo_url => s,
+                            :my => my,
+                            :collections_login => "collections"
+    end
+
+    it "should return the current value" do
+      Library.find(:first).collections_login.should == "collections"
+    end
+
+    it "should allow update to a valid user the current value" do
+      @l.collections_login =
+        User.find( :first,
+                    :conditions => [ "login <> ?",
+                                     @l.collections_login ] ).login
+      @l.save.should_not be_nil
+      Library.find(:first).collections_login.should_not == "collections"
+    end
+
+
+    it "should not allow update to an invalid user" do
+      @l.collections_login = "xyzzy"
+      @l.save.should be_false
+      @l.errors_on(:collections_user).should_not be_nil
+      Library.find(:first).collections_login.should == "collections"
+    end
+
+
+  end
+
 end
 

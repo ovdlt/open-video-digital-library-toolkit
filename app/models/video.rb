@@ -21,6 +21,10 @@ class Video < ActiveRecord::Base
       find_all_by_property_type_id( pt ) if pt
     end
 
+    def find_all_by_property_type pt
+      find_all_by_property_type_id( pt.id )
+    end
+
     def find_all_by_class name
 
       pc = PropertyClass.find_by_name name
@@ -44,6 +48,8 @@ class Video < ActiveRecord::Base
     end
 
   end
+
+  has_many :property_types, :through => :properties
 
   # has_many :assignments, :dependent => :destroy
   # has_many :descriptors, :through => :assignments
@@ -174,6 +180,11 @@ class Video < ActiveRecord::Base
       
       conditions[0] << "(dvs.integer_value = ?)"
       conditions[1] << options[:descriptor_value_id]
+
+      dv = DescriptorValue.find options[:descriptor_value_id]
+      
+      conditions[0] << "(dvs.property_type_id = ?)"
+      conditions[1] << dv.property_type_id
     end
     options.delete :descriptor_value_id
     
@@ -185,7 +196,7 @@ class Video < ActiveRecord::Base
 
     if conditions != [ [], [] ]
       options[:conditions] =
-        [ "(" + conditions[0].join("AND") + ")", conditions[1] ]
+        [ "(" + conditions[0].join("AND") + ")" ] + conditions[1]
     end
 
     options[:select] = select.join(", ")
