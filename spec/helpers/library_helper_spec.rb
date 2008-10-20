@@ -19,4 +19,17 @@ describe LibraryHelper do
 
   end
 
+  describe "#rights_details" do
+    
+    it "should return all the current rights details" do
+      assigns[:rights_details] = @rights_details = RightsDetail.find(:all)
+
+      @rights_details << ( rd = RightsDetail.new )
+
+      helper.rights_details.should == ( RightsDetail.find(:all).to_a + [ rd ]  )
+
+    end
+
+  end
+
 end

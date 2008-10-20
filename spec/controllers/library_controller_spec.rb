@@ -307,6 +307,106 @@ describe LibraryController do
       
     end
 
+    describe "rights details" do
+
+      before(:each) do
+        @params = {}
+        @params["rights_detail"] =
+          controller.send(:parameters)["rights_detail"]
+        @rd_id = @params["rights_detail"].keys[4]
+        @rd = @params["rights_detail"][@rd_id]
+        @pt_id = PropertyType.find_by_name "Rights Statement"
+      end
+
+      it "should require all the rights details be present " +
+         "in order to process them" do
+      
+        post :update, @params
+
+        response.should redirect_to(library_path)
+      
+        @params["rights_detail"].delete @params["rights_detail"].keys.first
+      
+        post :update, @params
+
+        response.status.to_i.should == 400
+      end
+
+      it "should update rd attributes" do
+        @rd["license"] = "something"
+
+        post :update, @params
+        response.should redirect_to(library_path)
+      
+        RightsDetail.find(@rd_id).license.should == "something"
+      end
+
+      it "should delete rd" do
+        @rd["deleted"] = "deleted"
+
+        post :update, @params
+        response.should redirect_to(library_path)
+      
+        RightsDetail.find_by_id(@rd_id).should be_nil
+      end
+
+      it "should be okay with 'new' ids" do
+        new = @params["rights_detail"]["new"] = {}
+        new["license"] = "foo"
+        new["statement"] = "foo st"
+        new["html"] = "foo html"
+
+        post :update, @params
+        response.should redirect_to(library_path)
+      end
+
+      it "should add rds" do
+        new = @params["rights_detail"]["new_1123"] = {}
+        new["license"] = "foo"
+        new["statement"] = "foo st"
+        new["html"] = "foo html"
+        new["deleted"] = nil
+        new["property_type_id"] = @pt_id
+
+        post :update, @params
+        response.should redirect_to(library_path)
+
+        RightsDetail.find_by_license("foo").should_not be_nil
+      end
+      
+      it "should not add rd with dup license" do
+        new = @params["rights_detail"]["new_1123"] = {}
+        new["license"] = "All Rights Reserved"
+        new["statement"] = "foo st"
+        new["html"] = "foo html"
+        new["deleted"] = nil
+
+        post :update, @params
+
+        response.should be_success
+        response.should render_template( "library/show" )
+
+        assigns[:library].should_not be_nil
+        flash.should_not be_nil
+      end
+      
+      it "should not rename a rd to a dup name" do
+        
+        arr_key, arr_value = @params["rights_detail"].
+          detect { |k,v| v["license"] == "All Rights Reserved" }
+        arr_value["license"] = "Creative Commons Attribution 2.5 License"
+        
+        post :update, @params
+
+        response.should be_success
+        response.should render_template( "library/show" )
+
+        assigns[:library].should_not be_nil
+        flash.should_not be_nil
+      end
+      
+    end
+
   end
 
   describe ".parameters" do

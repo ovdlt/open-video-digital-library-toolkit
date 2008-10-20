@@ -29,4 +29,14 @@ describe RightsDetail do
     create_rd.should be_false
   end
 
+  it "should require license be unique" do
+    create_rd.should be_true
+    create_rd.should be_false
+  end
+
+  it "should insert a property type if none given" do
+    @valid_attributes.delete :property_type
+    create_rd.should be_true
+  end
+
 end

@@ -89,6 +89,44 @@ class LibraryController < ApplicationController
 
       end
 
+      if rds = params[:rights_detail]
+
+        all_rd_ids = RightsDetail.find( :all, :select => "id").map &:id
+        all_rd_ids = all_rd_ids - rds.keys.map(&:to_i)
+
+        logger.warn rds.keys.map(&:to_i).inspect
+
+        if !all_rd_ids.empty?
+          logger.warn "missing rd ids: #{all_rd_ids.inspect}"
+          render :nothing => true, :status => 400
+          return
+        end
+
+        rds.each do |rd_id,rd_params|
+          rd_ar = @rights_details.detect { |rd_ar| rd_ar.id == rd_id.to_i }
+          if rd_ar
+            if rd_params["deleted"] == "deleted"
+              rd_ar.destroy
+            else
+              rd_params.delete "deleted"
+              okay = false if !rd_ar.update_attributes(rd_params)
+            end
+          elsif rd_id =~ /^new_\d+$/ and rd_params["deleted"] != "deleted"
+            rd_params.delete "deleted"
+            @rights_details << (rd = RightsDetail.new rd_params)
+            if !rd.save
+              okay = false
+            end
+            # pp rd.errors if !rd.errors.empty?
+          elsif rd_id != "new" and rd_params["deleted"] != "deleted"
+            logger.warn "bad rd id: #{rd_id}"
+            render :nothing => true, :status => 400
+            return
+          end
+        end
+
+      end
+
       if false and dts = params[:descriptor_types]
         missing_dts = ( DescriptorType.find :all, :select => "id" ).map &:id
         missing_ds = ( Descriptor.find :all, :select => "id" ).map &:id

@@ -18,5 +18,9 @@ module LibraryHelper
     @property_types.select { |pt| pt.property_class_id == pc.id }
   end
 
+  def rights_details
+    @rights_details
+  end
+
 
 end
