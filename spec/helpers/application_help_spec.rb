@@ -52,11 +52,22 @@ describe ApplicationHelper do
       # note we're assuming an AR object so id is sensical
       o = Object.new
       o.should_receive(:id).and_return(nil)
+      helper.assigns[:rollback] = true
+      helper.assigns[:new] = [ o ]
       helper.type_id(o).should =~ /^new_\d+$/
     end
 
     it "should raise error if called on nil" do
       lambda { helper.type_id(nil) }.should raise_error(ArgumentError)
+    end
+
+    it "should refevert to a munged object id if the object was new and we rolled back" do
+      o = Object.new
+      o.stub!(:id).and_return(12)
+      assigns[:rollback] = true
+      assigns[:new] = [ o ]
+      helper.type_id(o).should_not == "12"
+      helper.type_id(o).should =~ /^new_\d+$/
     end
 
   end

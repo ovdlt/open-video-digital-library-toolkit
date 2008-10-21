@@ -3,10 +3,12 @@ $.ui.tabs.defaults.spinner = false;
 $.load_assets = function(page,container){
 
     options = { "page": page };
+
     if (typeof(AUTH_TOKEN) != "undefined") {
         options.authenticity_token = AUTH_TOKEN;
     }
-        "authenticity_token=" + encodeURIComponent(AUTH_TOKEN);
+
+    "authenticity_token=" + encodeURIComponent(AUTH_TOKEN);
 
     $.getJSON($.fn.paginate.load_path,options,function(data,status){
 
@@ -53,17 +55,25 @@ $(function(){
     $("ul.template").addClass("hidden");
 
     $("div.property-type.new a").click(function(){
+
+        string = $(this).attr("name");
+
+        if( !string ) {
+            string = "new"
+        }
+
         var li = $(this).parents("li")[0];
         var template = $("ul.template li.delete",li)[0];
         var copy = $(template).clone();
 
         // could use a stored variable, but really ...
         var r = Math.floor(Math.random()*32768)
-
+        before = "[" + string + "]"
+        after = "[" + string + "_" + r + "]"
+        
         $("[name]",copy).each(function(){
-            // alert($(this).attr("name"));
             name = $(this).attr("name");
-            name = name.replace("[new]","[new_"+r+"]")
+            name = name.replace(before,after);
             $(this).attr("name",name);
         });
 
@@ -156,10 +166,10 @@ $(function(){
     });
 
     $("div.display-edit span.delete a").click(function(){
-      var top = $(this).parents("li.delete");
-      $("input.deleted[type=hidden]",top).attr("value","deleted");
-      top.hide();
-      return false;
+        var top = $($(this).parents("li.delete")[0]);
+        $("input.deleted[type=hidden]",top).attr("value","deleted");
+        top.hide();
+        return false;
     });
 
     $("div.dt.display-new div.new").hide();

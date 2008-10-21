@@ -31,4 +31,8 @@ module LibraryHelper
     @descriptor_values.select { |dv| dv.property_type_id == pt.id }
   end
 
+  def default_descriptor_class
+     PropertyClass.find_by_name "Optional Multivalued Descriptor"
+  end
+
 end

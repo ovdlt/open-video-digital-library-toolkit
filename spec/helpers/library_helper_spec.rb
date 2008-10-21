@@ -79,4 +79,14 @@ describe LibraryHelper do
 
   end
 
+  describe "#default_descriptor_class" do
+
+    it "should return a descriptor class type" do
+      dcs = PropertyClass.find :all,
+                                 :conditions => "range = 'descriptor_value'"
+      dcs.include?( helper.default_descriptor_class ).should be_true
+    end
+    
+  end
+
 end

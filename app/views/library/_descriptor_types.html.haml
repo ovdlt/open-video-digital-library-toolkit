@@ -60,11 +60,15 @@
                 .edit
                   %label
                     Type:
-                    = text_field_tag "descriptor_type[new_pt][name]", |
-                                        nil, :id => nil |
+                    = text_field_tag "property_type[new_pt][name]", |
+                                        "name", :id => nil |
                   %span.delete= link_to "delete", ""
-                  = hidden_field_tag "descriptor_type[new_pt][deleted]", |
+                  = hidden_field_tag "property_type[new_pt][deleted]", |
                                        false, :id => nil, :class => :deleted |
+                  -
+                  = hidden_field_tag "property_type[new_pt][property_class_id]", |
+                                       default_descriptor_class.id, |
+                                      :id => nil, :class => :deleted |
             %li
               .property-type.new
                 = link_to "Add new descriptor type", "", :name => "new_pt"

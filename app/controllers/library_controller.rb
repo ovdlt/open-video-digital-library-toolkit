@@ -11,6 +11,9 @@ class LibraryController < ApplicationController
 
   def update
 
+    @rollback = false
+    @new = []
+
     Library.transaction do
 
       okay = true
@@ -64,6 +67,8 @@ class LibraryController < ApplicationController
           return
         end
 
+        # pp params[:property_type]
+
         pts.each do |pt_id,pt_params|
           pt_ar = @property_types.detect { |pt_ar| pt_ar.id == pt_id.to_i }
           if pt_ar
@@ -73,14 +78,15 @@ class LibraryController < ApplicationController
               pt_params.delete "deleted"
               okay = false if !pt_ar.update_attributes(pt_params)
             end
-          elsif pt_id =~ /^new_\d+$/ and pt_params["deleted"] != "deleted"
+          elsif pt_id =~ /^new(_[a-z]+)?_\d+$/ and pt_params["deleted"] != "deleted"
             pt_params.delete "deleted"
             @property_types << (pt = PropertyType.new pt_params)
+            @new << pt
             if !pt.save
               okay = false
             end
             # pp pt.errors if !pt.errors.empty?
-          elsif pt_id != "new" and pt_params["deleted"] != "deleted"
+          elsif pt_id !~ /new(_[a-z]+)?/ and pt_params["deleted"] != "deleted"
             logger.warn "bad pt id: #{pt_id}"
             render :nothing => true, :status => 400
             return
@@ -114,12 +120,52 @@ class LibraryController < ApplicationController
           elsif rd_id =~ /^new_\d+$/ and rd_params["deleted"] != "deleted"
             rd_params.delete "deleted"
             @rights_details << (rd = RightsDetail.new rd_params)
+            @new << rd
             if !rd.save
               okay = false
             end
             # pp rd.errors if !rd.errors.empty?
           elsif rd_id != "new" and rd_params["deleted"] != "deleted"
             logger.warn "bad rd id: #{rd_id}"
+            render :nothing => true, :status => 400
+            return
+          end
+        end
+
+      end
+
+      if dvs = params[:descriptor_value]
+
+        all_dv_ids = DescriptorValue.find( :all, :select => "id").map &:id
+        all_dv_ids = all_dv_ids - dvs.keys.map(&:to_i)
+
+        logger.warn dvs.keys.map(&:to_i).inspect
+
+        if !all_dv_ids.empty?
+          logger.warn "missing dv ids: #{all_dv_ids.inspect}"
+          render :nothing => true, :status => 400
+          return
+        end
+
+        dvs.each do |dv_id,dv_params|
+          dv_ar = @descriptor_values.detect { |dv_ar| dv_ar.id == dv_id.to_i }
+          if dv_ar
+            if dv_params["deleted"] == "deleted"
+              dv_ar.destroy
+            else
+              dv_params.delete "deleted"
+              okay = false if !dv_ar.update_attributes(dv_params)
+            end
+          elsif dv_id =~ /^new(_[a-z]+)?_\d+$/ and dv_params["deleted"] != "deleted"
+            dv_params.delete "deleted"
+            @descriptor_values << (dv = DescriptorValue.new dv_params)
+            @new << dv
+            if !dv.save
+              okay = false
+            end
+            # pp dv.errors if !dv.errors.empty?
+          elsif dv_id !~ /new(_[a-z]+)?/ and dv_params["deleted"] != "deleted"
+            logger.warn "bad dv id: #{dv_id}"
             render :nothing => true, :status => 400
             return
           end
@@ -197,6 +243,7 @@ class LibraryController < ApplicationController
       end
 
       if !okay
+        @rollback = true
         flash[:error] = "Errors exist; could not update"
         render :action => :show
         raise ActiveRecord::Rollback
