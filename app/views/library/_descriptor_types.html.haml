@@ -1,72 +1,84 @@
-- f = @f
 %div
   .form
     %ul
-      - PropertyType.descriptor_types.each do |dt|
-        %li.dt.delete
-          %div.dt.display-edit
-            .display
-              = dt.name
-              %span.edit= link_to "edit", ""
-            .edit
-              %label
-                Type:
-                = text_field_tag "property_type[#{dt.id}][name]", |
-                                  dt.name, :id => nil |
+      - self.descriptor_types.each do |dt|
+        %li.delete
+          - fields_for "property_type[#{type_id(dt)}]", |
+                       dt do |pt_fields| |
+            .property-type.display-edit
+              .display{ error_class(dt) }
+                = dt.name
+                %span.edit= link_to "edit", ""
+              .edit{ error_class(dt) }
+                %label
+                  Type:
+                  = pt_fields.text_field :name
                 %span.delete= link_to "delete", ""
+                = error_messages_for 'property_type', :object => dt
+                = hidden_field_tag "property_type[#{type_id(dt)}][deleted]", |
+                                   false, :id => nil, :class => :deleted |
           %ul
-            - dt.descriptor_values.each do |dv|
+            - descriptor_values(dt).each do |dv|
               %li.delete
-                %div.d.display-edit
-                  .display
-                    = dv.text
-                    %span.edit= link_to "edit", ""
-                  .edit
-                    %label
-                      Value:
-                      = text_field_tag "descriptor_value[#{dv.id}][text]", |
-                                        dv.text, :id => nil |
-                      %span.hidden
-                        = text_field_tag "descriptor_value[#{dv.id}][property_type_id]", |
-                                          dv.property_type_id, :id => nil |
-                    %span.delete= link_to "delete", ""
-            %li.d.new
-              %div.d.display-new
-                .display
-                  = link_to "Add new descriptor"
-                .new
-                  %ul
-                    %li.delete
-                      %div.d.display-edit
-                        .edit
-                          %label
-                            Value:
-                            = text_field_tag "descriptor_types[#{dt.id}][descriptors][new_d][text]", |
-                                              nil, :id => nil |
-                          %span.delete= link_to "delete", ""
-      %li.dt.new
-        %div.dt.display-new
-          .display
-            = link_to "Add new descriptor type"
-          .new
-            %ul
-              %li.dt.delete
-                %div.dt.display-edit
-                  .edit
-                    %label
-                      Type:
-                      = text_field_tag "descriptor_types[new_dt][name]", |
-                                        nil, :id => nil |
+                - fields_for "descriptor_value[#{type_id(dv)}]", dv do |dv_fields|
+                  .property-type.display-edit
+                    .display{ error_class(dv) }
+                      = dv.text
+                      %span.edit= link_to "edit", ""
+                    .edit{ error_class(dv) }
+                      %label
+                        Value:
+                        = dv_fields.text_field :text
                       %span.delete= link_to "delete", ""
-                %ul
+                      = error_messages_for 'descriptor_value', :object => dv
+                      = hidden_field_tag( "descriptor_value[#{type_id(dv)}][deleted]", |
+                                          false, :id => nil, :class => :deleted ) |
+                      = dv_fields.hidden_field :property_type_id
+            %li.delete
+              .property-type.new
+                = link_to "Add new descriptor", ""
+                %ul.template
                   %li.delete
-                    %div.d.display-edit
+                    .property-type.display-edit
                       .edit
                         %label
                           Value:
-                          = text_field_tag "descriptor_types[new_dt][descriptors][new_d][text]", |
+                          = text_field_tag "descriptor_value[new][text]", |
+                                              nil, :id => nil |
+                        %span.delete= link_to "delete", ""
+                      = hidden_field_tag( "descriptor_value[new][deleted]", |
+                                          false, :id => nil, :class => :deleted ) |
+                      -
+                      = hidden_field_tag( "descriptor_value[new][property_type_id]", |
+                                          dt.id, :id => nil ) |
+      %li
+        .property-type.new
+          = link_to "Add new descriptor type", "", :name => "new_pt"
+          %ul.template
+            %li.delete
+              .property-type.display-edit
+                .edit
+                  %label
+                    Type:
+                    = text_field_tag "descriptor_type[new_pt][name]", |
+                                        nil, :id => nil |
+                  %span.delete= link_to "delete", ""
+                  = hidden_field_tag "descriptor_type[new_pt][deleted]", |
+                                       false, :id => nil, :class => :deleted |
+            %li
+              .property-type.new
+                = link_to "Add new descriptor type", "", :name => "new_pt"
+                %ul.template
+                  %li.delete
+                    .property-type.display-edit
+                      .edit
+                        %label
+                          Value:
+                          = text_field_tag "descriptor_value[new_dv][text]", |
                                             nil, :id => nil |
                         %span.delete= link_to "delete", ""
-                  %li
-                    = link_to "Add new descriptor"
-    .clear
+                        = hidden_field_tag "descriptor_value[new_dv][deleted]", |
+                                       false, :id => nil, :class => :deleted |
+                        -
+                        = hidden_field_tag "descriptor_value[new_dv][property_type_id]", |
+                                       "new_pt", :id => nil |
