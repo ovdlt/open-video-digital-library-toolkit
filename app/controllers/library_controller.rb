@@ -11,9 +11,6 @@ class LibraryController < ApplicationController
 
   def update
 
-    @rollback = false
-    @new = {}
-
     Library.transaction do
 
       okay = true
@@ -67,8 +64,6 @@ class LibraryController < ApplicationController
           return
         end
 
-        # pp params[:property_type]
-
         pts.each do |pt_id,pt_params|
           pt_ar = @property_types.detect { |pt_ar| pt_ar.id == pt_id.to_i }
           if pt_ar
@@ -76,19 +71,16 @@ class LibraryController < ApplicationController
               pt_ar.destroy
             else
               pt_params.delete "deleted"
-              # pp pt_ar.errors if  !pt_ar.update_attributes(pt_params)
               okay = false if !pt_ar.update_attributes(pt_params)
             end
-          elsif pt_id =~ /^new(_[a-z]+)?_\d+$/ and pt_params["deleted"] != "deleted"
+          elsif pt_id =~ /^new_\d+$/ and pt_params["deleted"] != "deleted"
             pt_params.delete "deleted"
             @property_types << (pt = PropertyType.new pt_params)
-            @new[pt_id] = pt
             if !pt.save
-              # pp pt.errors
               okay = false
             end
             # pp pt.errors if !pt.errors.empty?
-          elsif pt_id !~ /new(_[a-z]+)?/ and pt_params["deleted"] != "deleted"
+          elsif pt_id != "new" and pt_params["deleted"] != "deleted"
             logger.warn "bad pt id: #{pt_id}"
             render :nothing => true, :status => 400
             return
@@ -117,19 +109,16 @@ class LibraryController < ApplicationController
               rd_ar.destroy
             else
               rd_params.delete "deleted"
-              # pp rd_ar.errors if !rd_ar.update_attributes(rd_params)
               okay = false if !rd_ar.update_attributes(rd_params)
             end
-          elsif rd_id =~ /^new(_[a-z]+)?_\d+$/ and rd_params["deleted"] != "deleted"
+          elsif rd_id =~ /^new_\d+$/ and rd_params["deleted"] != "deleted"
             rd_params.delete "deleted"
             @rights_details << (rd = RightsDetail.new rd_params)
-            @new[rd_id] = rd
             if !rd.save
-              # pp rd.errors
               okay = false
             end
             # pp rd.errors if !rd.errors.empty?
-          elsif rd_id !~ /new(_[a-z]+)?/ and rd_params["deleted"] != "deleted"
+          elsif rd_id != "new" and rd_params["deleted"] != "deleted"
             logger.warn "bad rd id: #{rd_id}"
             render :nothing => true, :status => 400
             return
@@ -138,55 +127,76 @@ class LibraryController < ApplicationController
 
       end
 
-      if dvs = params[:descriptor_value]
-
-        all_dv_ids = DescriptorValue.find( :all, :select => "id").map &:id
-        all_dv_ids = all_dv_ids - dvs.keys.map(&:to_i)
-
-        logger.warn dvs.keys.map(&:to_i).inspect
-
-        if !all_dv_ids.empty?
-          logger.warn "missing dv ids: #{all_dv_ids.inspect}"
-          render :nothing => true, :status => 400
-          return
-        end
-
-        dvs.each do |dv_id,dv_params|
-          dv_ar = @descriptor_values.detect { |dv_ar| dv_ar.id == dv_id.to_i }
-          if dv_ar
-            if dv_params["deleted"] == "deleted"
-              dv_ar.destroy
-            else
-              dv_params.delete "deleted"
-              # pp dv_ar.errors if !dv_ar.update_attributes(dv_params)
-              okay = false if !dv_ar.update_attributes(dv_params)
+      if false and dts = params[:descriptor_types]
+        missing_dts = ( DescriptorType.find :all, :select => "id" ).map &:id
+        missing_ds = ( Descriptor.find :all, :select => "id" ).map &:id
+        dts.each do |dt_id,param|
+          if dt_id == "new_dt"
+          elsif dt_id =~ /new_dt_\d+/
+            p "new dt", param
+            dt = DescriptorType.new
+            param.each do |k,v|
+              if k == "descriptors"
+                v.each do |d_id,d_param|
+                  if d_id == "new_d"
+                  elsif d_id =~ /new_d_\d+/
+                    d = Descriptor.new
+                    d_param.each do |k,v|
+                      d[k] = v
+                    end
+                    dt.descriptors << d
+                  end
+                end
+              else
+                dt[k] = v
+              end
             end
-          elsif dv_id =~ /^new(_[a-z]+)?_\d+$/ and dv_params["deleted"] != "deleted"
-            dv_params.delete "deleted"
-            if new_pt = @new[dv_params["property_type_id"]]
-              dv_params.delete dv_params["property_type_id"]
+            p "bs",dt
+            dt.save!
+          else
+            dt = DescriptorType.find dt_id
+            if dt
+              missing_dts.delete dt.id
+              param.each do |k,v|
+                if k == "descriptors"
+                  v.each do |d_id,d_param|
+                    if d_id == "new_d"
+                    elsif d_id =~ /new_d_\d+/
+                      d = Descriptor.new
+                      d_param.each do |k,v|
+                        d[k] = v
+                      end
+                      dt.descriptors << d
+                    else
+                      d = Descriptor.find d_id
+                      missing_ds.delete d.id
+                      if d
+                        d_param.each do |k,v|
+                          d[k] = v
+                        end
+                      end
+                      d.save
+                    end
+                  end
+                else
+                  dt[k] = v
+                end
+              end
             end
-            @descriptor_values << (dv = DescriptorValue.new dv_params)
-            if new_pt
-              dv.property_type = new_pt
-            end
-            @new[dv_id] = dv
-            if !dv.save
-              # pp dv.errors
-              okay = false
-            end
-            # pp dv.errors if !dv.errors.empty?
-          elsif dv_id !~ /new(_[a-z]+)?/ and dv_params["deleted"] != "deleted"
-            logger.warn "bad dv id: #{dv_id}"
-            render :nothing => true, :status => 400
-            return
+            dt.save
           end
         end
-
+        if false and missing_dts.size < 2 and missing_ds.size < 10
+          missing_dts.each do |dt|
+            ar = DescriptorType.find_by_id(dt) and ar.destroy
+          end
+          missing_ds.each do |d|
+            ar = Descriptor.find_by_id(d) and ar.destroy
+          end
+        end
       end
 
       if !okay
-        @rollback = true
         flash[:error] = "Errors exist; could not update"
         render :action => :show
         raise ActiveRecord::Rollback

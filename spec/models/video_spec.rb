@@ -105,82 +105,78 @@ describe Video do
       @video.save!
     end
 
-  end
+    describe "property operations" do
 
-  describe "property operations" do
+      before(:each) do
 
-    before(:each) do
-      @video = Factory(:video)
-      @video.properties <<
-        Property.new( :property_type =>
-                      PropertyType.find_by_name( "Producer" ),
-                      :value => "Frank Capra" )
+        @video.properties <<
+          Property.new( :property_type =>
+                           PropertyType.find_by_name( "Producer" ),
+                         :value => "Frank Capra" )
 
-      @video.properties << Property.build( "Producer", "George Lucas" )
-      @video.properties << Property.build( "Writer", "Stephen King" )
-      @video.properties << Property.build( "Broadcast", "10/25/2005" )
-      @video.properties << Property.build( "Production", "10/25/2005" )
+        @video.properties << Property.build( "Producer", "George Lucas" )
+        @video.properties << Property.build( "Writer", "Stephen King" )
+        @video.properties << Property.build( "Broadcast", "10/25/2005" )
+        @video.properties << Property.build( "Production", "10/25/2005" )
 
-      @video.save!
+        @video.save!
 
-      @retrieved = Video.find @video.id
+        @retrieved = Video.find @video.id
 
-    end
+      end
 
-    after :each do
-      File.unlink @video.assets[0].absolute_path
-    end
+      it "should find properties" do
+        @retrieved.properties.find_all_by_type( "Producer" ).size.should == 2
+      end
 
-    it "should find properties" do
-      @retrieved.properties.find_all_by_type( "Producer" ).size.should == 2
-    end
+      it "should list by class" do
+        @retrieved.properties.find_all_by_class( "Roles" ).size.should == 3
+        @retrieved.properties.find_all_by_class( "Collections" ).size.
+          should == 0
+      end
 
-    it "should list by class" do
-      @retrieved.properties.find_all_by_class( "Roles" ).size.should == 3
-      @retrieved.properties.find_all_by_class( "Collections" ).size.
-        should == 0
-    end
+      it "should search by property values"  do
+        @retrieved = Video.search :query => "George Lucas"
+        @retrieved.size.should == 1
+      end
 
-    it "should search by property values"  do
-      @retrieved = Video.search :query => "George Lucas"
-      @retrieved.size.should == 1
-    end
+      it "should require required properties" do
 
-    it "should require required properties" do
+        pc = PropertyClass.create! :name => "myclass",
+                                    :multivalued => false,
+                                    :optional => false,
+                                    :range => :string
+        pt = PropertyType.create! :property_class_id => pc.id,
+                                   :name =>  "mytype"
 
-      pc = PropertyClass.create! :name => "myclass",
-      :multivalued => false,
-      :optional => false,
-      :range => :string
-      pt = PropertyType.create! :property_class_id => pc.id,
-      :name =>  "mytype"
+        @video.save.should be_false
 
-      @video.save.should be_false
+      end
 
-    end
+      it "should allow multivalued where appropriate"  do
+        @video.properties << Property.build( "Producer", "Steven Spielberg" )
+        @video.save.should be_true
+      end
 
-    it "should allow multivalued where appropriate"  do
-      @video.properties << Property.build( "Producer", "Steven Spielberg" )
-      @video.save.should be_true
-    end
+      it "should prohbit multivalued where appropriate"  do
 
-    it "should prohbit multivalued where appropriate"  do
+        pc = PropertyClass.create! :name => "myclass",
+                                    :multivalued => false,
+                                    :optional => false,
+                                    :range => :string
 
-      pc = PropertyClass.create! :name => "myclass",
-      :multivalued => false,
-      :optional => false,
-      :range => :string
+        pt = PropertyType.create! :property_class_id => pc.id,
+                                   :name =>  "mytype"
 
-      pt = PropertyType.create! :property_class_id => pc.id,
-      :name =>  "mytype"
+        @video.save.should be_false
 
-      @video.save.should be_false
+        @video.properties << Property.build( "mytype", "foo" )
+        @video.save.should be_true
 
-      @video.properties << Property.build( "mytype", "foo" )
-      @video.save.should be_true
+        @video.properties << Property.build( "mytype", "bar" )
+        @video.save.should be_false
+      end
 
-      @video.properties << Property.build( "mytype", "bar" )
-      @video.save.should be_false
     end
 
   end
@@ -278,111 +274,111 @@ describe Video do
                                                    "myvalue" ]
     end
 
-  end
+    describe "descriptors" do
 
-  describe "descriptors" do
+      before :each do
+        @video = Factory(:video)
+        @class = PropertyClass.find_by_name "Optional Multivalued Descriptor"
+        @type = PropertyType.create! :name => "some descriptor",
+                                      :property_class => @class
+        @value = DescriptorValue.create! :property_type => @type,
+                                           :text => "some descriptor"
+        @property = Property.new :property_type => @type,
+                                  :value => @value
+        @p2 = Property.new :property_type => @type, :value => @value
+      end
 
-    before :each do
-      @video = Factory(:video)
-      @class = PropertyClass.find_by_name "Optional Multivalued Descriptor"
-      @type = PropertyType.create! :name => "some descriptor",
-      :property_class => @class
-      @value = DescriptorValue.create! :property_type => @type,
-      :text => "some descriptor"
-      @property = Property.new :property_type => @type,
-      :value => @value
-      @p2 = Property.new :property_type => @type, :value => @value
+      after :each do
+        File.unlink @video.assets[0].absolute_path
+      end
+
+      it "should start as an empty set" do
+        @video.descriptors.size.should == 0
+      end
+
+      it "should allow descriptors to be added" do
+        @video.descriptors.size.should == 0
+        @video.properties << @property
+        @video.should be_valid
+        @video.save.should be_true
+        @video.descriptors.size.should == 1
+      end
+
+      it "should require they be unique" do
+        @video.properties << @property
+        @video.properties << @p2
+        @video.save.should be_false
+      end
+
     end
 
-    after :each do
-      File.unlink @video.assets[0].absolute_path
-    end
+    describe "descriptors/type recall and sorting" do
 
-    it "should start as an empty set" do
-      @video.descriptors.size.should == 0
-    end
+      before(:each) do
+        @video = Factory(:video)
+        @pcs = [
+          PropertyClass.find_by_name( "Optional Multivalued Descriptor" ),
+          PropertyClass.find_by_name( "Mandatory Multivalued Descriptor" ),
+          PropertyClass.find_by_name( "Optional Singular Descriptor" ),
+          PropertyClass.find_by_name( "Mandatory Singular Descriptor" ),
+        ]
 
-    it "should allow descriptors to be added" do
-      @video.descriptors.size.should == 0
-      @video.properties << @property
-      @video.should be_valid
-      @video.save.should be_true
-      @video.descriptors.size.should == 1
-    end
+        @pts = [ PropertyType.create!( :name => "a",
+                                        :priority => 2,
+                                        :property_class => @pcs[0] ),
+                 PropertyType.create!( :name => "b",
+                                        :priority => 1,
+                                        :property_class => @pcs[1] ),
+                 PropertyType.create!( :name => "c",
+                                        :priority => 3,
+                                        :property_class => @pcs[2] ),
+                 PropertyType.create!( :name => "d",
+                                        :priority => 4,
+                                        :property_class => @pcs[3] ) ]
 
-    it "should require they be unique" do
-      @video.properties << @property
-      @video.properties << @p2
-      @video.save.should be_false
-    end
+        @dvs = [ DescriptorValue.create!( :property_type => @pts[0],
+                                            :text => "aa",
+                                            :priority => 2 ),
+                DescriptorValue.create!( :property_type => @pts[0],
+                                          :text => "ab",
+                                          :priority => 1 ),
+                DescriptorValue.create!( :property_type => @pts[0],
+                                          :text => "ac",
+                                          :priority => 3 ),
+                DescriptorValue.create!( :property_type => @pts[1],
+                                          :text => "ba",
+                                          :priority => 1 ),
+                DescriptorValue.create!( :property_type => @pts[3],
+                                          :text => "ba",
+                                          :priority => 1 ) ]
 
-  end
+        @ps = @dvs.map { |dv| Property.new :value => dv }
 
-  describe "descriptors/type recall and sorting" do
+        @ps.each { |p| @video.properties << p }
+        
+        pp @video, @video.properties if !@video.save
 
-    before(:each) do
-      @video = Factory(:video)
-      @pcs = [
-              PropertyClass.find_by_name( "Optional Multivalued Descriptor" ),
-              PropertyClass.find_by_name( "Mandatory Multivalued Descriptor" ),
-              PropertyClass.find_by_name( "Optional Singular Descriptor" ),
-              PropertyClass.find_by_name( "Mandatory Singular Descriptor" ),
-             ]
+        @video.save!
+      end
 
-      @pts = [ PropertyType.create!( :name => "a",
-                                     :priority => 2,
-                                     :property_class => @pcs[0] ),
-               PropertyType.create!( :name => "b",
-                                     :priority => 1,
-                                     :property_class => @pcs[1] ),
-               PropertyType.create!( :name => "c",
-                                     :priority => 3,
-                                     :property_class => @pcs[2] ),
-               PropertyType.create!( :name => "d",
-                                     :priority => 4,
-                                     :property_class => @pcs[3] ) ]
+      after :each do
+        File.unlink @video.assets[0].absolute_path
+      end
 
-      @dvs = [ DescriptorValue.create!( :property_type => @pts[0],
-                                        :text => "aa",
-                                        :priority => 2 ),
-               DescriptorValue.create!( :property_type => @pts[0],
-                                        :text => "ab",
-                                        :priority => 1 ),
-               DescriptorValue.create!( :property_type => @pts[0],
-                                        :text => "ac",
-                                        :priority => 3 ),
-               DescriptorValue.create!( :property_type => @pts[1],
-                                        :text => "ba",
-                                        :priority => 1 ),
-               DescriptorValue.create!( :property_type => @pts[3],
-                                        :text => "ba",
-                                        :priority => 1 ) ]
-
-      @ps = @dvs.map { |dv| Property.new :value => dv }
-
-      @ps.each { |p| @video.properties << p }
+      it "should return all the types for a video in pri order" do
+        @video.descriptor_types.should == [ @pts[1], @pts[0], @pts[3] ]
+      end
       
-      pp @video, @video.properties if !@video.save
-
-      @video.save!
+      it "should return all the propertys for a video in pri order" do
+        @video.properties_by_type( @pts[0] ).
+          should == [ @ps[1], @ps[0], @ps[2] ]
+        @video.properties_by_type( @pts[1] ).should == [ @ps[3] ]
+        @video.properties_by_type( @pts[2] ).should == []
+        @video.properties_by_type( @pts[3] ).should == [ @ps[4] ]
+      end
+      
     end
 
-    after :each do
-      File.unlink @video.assets[0].absolute_path
-    end
-
-    it "should return all the types for a video in pri order" do
-      @video.descriptor_types.should == [ @pts[1], @pts[0], @pts[3] ]
-    end
-    
-    it "should return all the propertys for a video in pri order" do
-      @video.properties_by_type( @pts[0] ).
-        should == [ @ps[1], @ps[0], @ps[2] ]
-      @video.properties_by_type( @pts[1] ).should == [ @ps[3] ]
-      @video.properties_by_type( @pts[2] ).should == []
-      @video.properties_by_type( @pts[3] ).should == [ @ps[4] ]
-    end
-    
   end
 
   describe "rights" do

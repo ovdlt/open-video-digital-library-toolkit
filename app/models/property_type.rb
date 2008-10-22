@@ -8,7 +8,6 @@ class PropertyType < ActiveRecord::Base
   has_many :properties
 
   validates_presence_of :name, :property_class_id
-  validates_numericality_of :property_class_id, :greater_than => 0
   validates_uniqueness_of :name
 
   # FIX: factor

@@ -18,16 +18,6 @@ describe DescriptorValue do
     DescriptorValue.new(@valid_attributes).save.should be_false
   end
 
-  it "should require non-blank text" do
-    @valid_attributes[:text] =""
-    DescriptorValue.new(@valid_attributes).save.should be_false
-  end
-
-  it "should require non-zero pt_ids" do
-    @valid_attributes[:property_type_id] = 0
-    DescriptorValue.new(@valid_attributes).save.should be_false
-  end
-
   it "should return the property type" do
     dv = DescriptorValue.find_by_text "Documentary"
     dv.property_type.name.should == "Genre"

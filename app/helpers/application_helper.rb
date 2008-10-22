@@ -109,7 +109,7 @@ EOS
   def type_id object
     if object
       id = object.id
-      if id.nil? or ( @rollback and @new.values.include?(object) )
+      if id.nil?
         "new_" + object.object_id.to_s
       else
         id.to_s

@@ -30,16 +30,6 @@ describe PropertyType do
     PropertyType.new(@valid_attributes).save.should be_false
   end
 
-  it "should require non-blank text" do
-    @valid_attributes[:name] =""
-    PropertyType.new(@valid_attributes).save.should be_false
-  end
-
-  it "should require non-zero pt_ids" do
-    @valid_attributes[:property_class_id] = 0
-    PropertyType.new(@valid_attributes).save.should be_false
-  end
-
   describe "#validate_value" do
 
     it "should throw a nice error if the property class is bad" do

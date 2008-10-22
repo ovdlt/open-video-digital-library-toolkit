@@ -315,7 +315,7 @@ describe LibraryController do
           controller.send(:parameters)["rights_detail"]
         @rd_id = @params["rights_detail"].keys[4]
         @rd = @params["rights_detail"][@rd_id]
-        @pt_id = PropertyType.find_by_name("Rights Statement").id
+        @pt_id = PropertyType.find_by_name "Rights Statement"
       end
 
       it "should require all the rights details be present " +
@@ -411,48 +411,48 @@ describe LibraryController do
 
       before(:each) do
         @params = {}
-        @params["descriptor_value"] =
-          controller.send(:parameters)["descriptor_value"]
-        @dv_id = @params["descriptor_value"].keys[4]
-        @dv = @params["descriptor_value"][@dv_id]
-        @pt_id = PropertyType.find_by_name("Genre").id
+        @params["rights_detail"] =
+          controller.send(:parameters)["rights_detail"]
+        @rd_id = @params["rights_detail"].keys[4]
+        @rd = @params["rights_detail"][@rd_id]
+        @pt_id = PropertyType.find_by_name "Rights Statement"
       end
 
-      it "should require all the descriptor values be present " +
+      it "should require all the rights details be present " +
          "in order to process them" do
       
         post :update, @params
 
         response.should redirect_to(library_path)
       
-        @params["descriptor_value"].delete @params["descriptor_value"].keys.first
+        @params["rights_detail"].delete @params["rights_detail"].keys.first
       
         post :update, @params
 
         response.status.to_i.should == 400
       end
 
-      it "should update dv attributes" do
-        @dv["text"] = "something"
+      it "should update rd attributes" do
+        @rd["license"] = "something"
 
         post :update, @params
         response.should redirect_to(library_path)
       
-        DescriptorValue.find(@dv_id).text.should == "something"
+        RightsDetail.find(@rd_id).license.should == "something"
       end
 
-      it "should delete dv" do
-        @dv["deleted"] = "deleted"
+      it "should delete rd" do
+        @rd["deleted"] = "deleted"
 
         post :update, @params
         response.should redirect_to(library_path)
       
-        DescriptorValue.find_by_id(@dv_id).should be_nil
+        RightsDetail.find_by_id(@rd_id).should be_nil
       end
 
       it "should be okay with 'new' ids" do
-        new = @params["descriptor_value"]["new"] = {}
-        new["text"] = "foo"
+        new = @params["rights_detail"]["new"] = {}
+        new["license"] = "foo"
         new["statement"] = "foo st"
         new["html"] = "foo html"
 
@@ -460,23 +460,26 @@ describe LibraryController do
         response.should redirect_to(library_path)
       end
 
-      it "should add dvs" do
-        new = @params["descriptor_value"]["new_1123"] = {}
-        new["text"] = "foo"
+      it "should add rds" do
+        new = @params["rights_detail"]["new_1123"] = {}
+        new["license"] = "foo"
+        new["statement"] = "foo st"
+        new["html"] = "foo html"
         new["deleted"] = nil
         new["property_type_id"] = @pt_id
 
         post :update, @params
         response.should redirect_to(library_path)
 
-        DescriptorValue.find_by_text("foo").should_not be_nil
+        RightsDetail.find_by_license("foo").should_not be_nil
       end
       
-      it "should not add dv with dup text" do
-        new = @params["descriptor_value"]["new_1123"] = {}
-        new["text"] = "Documentary"
+      it "should not add rd with dup license" do
+        new = @params["rights_detail"]["new_1123"] = {}
+        new["license"] = "All Rights Reserved"
+        new["statement"] = "foo st"
+        new["html"] = "foo html"
         new["deleted"] = nil
-        new["property_type_id"] = @pt_id
 
         post :update, @params
 
@@ -487,11 +490,11 @@ describe LibraryController do
         flash.should_not be_nil
       end
       
-      it "should not rename a dv to a dup name" do
+      it "should not rename a rd to a dup name" do
         
-        arr_key, arr_value = @params["descriptor_value"].
-          detect { |k,v| v["text"] == "Italian" }
-        arr_value["text"] = "Spanish"
+        arr_key, arr_value = @params["rights_detail"].
+          detect { |k,v| v["license"] == "All Rights Reserved" }
+        arr_value["license"] = "Creative Commons Attribution 2.5 License"
         
         post :update, @params
 
@@ -500,66 +503,6 @@ describe LibraryController do
 
         assigns[:library].should_not be_nil
         flash.should_not be_nil
-      end
-      
-    end
-
-    describe "property types as descriptor types" do
-
-      before(:each) do
-        @params = {}
-        @params["property_type"] =
-          controller.send(:parameters)["property_type"]
-        @dc_id = PropertyClass.find_by_name( "Optional Multivalued Descriptor" ).id
-      end
-
-      it "should be okay with 'new' ids" do
-        new = @params["property_type"]["new_pt"] = {}
-        new["name"] = "foo"
-        post :update, @params
-        response.should redirect_to(library_path)
-      end
-
-      it "should add pts" do
-        new = @params["property_type"]["new_pt_1123"] = {}
-        new["name"] = "foo"
-        new["property_class_id"] = @dc_id
-        new["deleted"] = nil
-
-        post :update, @params
-        response.should redirect_to(library_path)
-
-        PropertyType.find_by_name("foo").should_not be_nil
-      end
-      
-    end
-
-    describe "new descriptor values" do
-
-      before(:each) do
-        @params = {}
-        @params["property_type"] =
-          controller.send(:parameters)["property_type"]
-        @dc_id = PropertyClass.find_by_name( "Optional Multivalued Descriptor" ).id
-      end
-
-      it "should be okay with 'new' ids" do
-        new = @params["property_type"]["new_pt"] = {}
-        new["name"] = "foo"
-        post :update, @params
-        response.should redirect_to(library_path)
-      end
-
-      it "should add pts" do
-        new = @params["property_type"]["new_pt_1123"] = {}
-        new["name"] = "foo"
-        new["property_class_id"] = @dc_id
-        new["deleted"] = nil
-
-        post :update, @params
-        response.should redirect_to(library_path)
-
-        PropertyType.find_by_name("foo").should_not be_nil
       end
       
     end
@@ -727,11 +670,11 @@ describe LibraryController do
           14=>{"property_type_id"=>42, "text"=>"Central America", "priority"=>999},
           3=>{"property_type_id"=>38, "text"=>"Historical", "priority"=>999},
           42=>{"property_type_id"=>42, "text"=>"Asia", "priority"=>999},
-          20=>{"property_type_id"=>41, "text"=>"Sound", "priority"=>999},
+          20=>{"property_type_id"=>15, "text"=>"Sound", "priority"=>999},
           9=>{"property_type_id"=>39, "text"=>"English", "priority"=>999},
           15=>{"property_type_id"=>42, "text"=>"South America", "priority"=>999},
           4=>{"property_type_id"=>38, "text"=>"Ephemeral", "priority"=>999},
-          21=>{"property_type_id"=>41, "text"=>"Silent", "priority"=>999},
+          21=>{"property_type_id"=>15, "text"=>"Silent", "priority"=>999},
           10=>{"property_type_id"=>39, "text"=>"Japanese", "priority"=>999}
         },
 

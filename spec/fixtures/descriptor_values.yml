@@ -95,11 +95,11 @@ colorized:
 
 sound:
   id: 20
-  property_type_id: 41
+  property_type_id: 15
   text: Sound
 
 silent:
   id: 21
-  property_type_id: 41
+  property_type_id: 15
   text: Silent
 
