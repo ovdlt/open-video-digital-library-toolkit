@@ -1,6 +1,8 @@
 class DescriptorValue < ActiveRecord::Base
 
   validates_uniqueness_of :text, :scope => :property_type_id
+  validates_presence_of :text
+  validates_numericality_of :property_type_id, :greater_than => 0
 
   belongs_to :property_type
 

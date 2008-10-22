@@ -3,10 +3,12 @@ $.ui.tabs.defaults.spinner = false;
 $.load_assets = function(page,container){
 
     options = { "page": page };
+
     if (typeof(AUTH_TOKEN) != "undefined") {
         options.authenticity_token = AUTH_TOKEN;
     }
-        "authenticity_token=" + encodeURIComponent(AUTH_TOKEN);
+
+    "authenticity_token=" + encodeURIComponent(AUTH_TOKEN);
 
     $.getJSON($.fn.paginate.load_path,options,function(data,status){
 
@@ -52,7 +54,14 @@ $(function(){
 
     $("ul.template").addClass("hidden");
 
-    $("div.property-type.new a").click(function(){
+    function edit() {
+
+        string = $(this).attr("name");
+
+        if( !string ) {
+            string = "new"
+        }
+
         var li = $(this).parents("li")[0];
         var template = $("ul.template li.delete",li)[0];
         var copy = $(template).clone();
@@ -61,19 +70,45 @@ $(function(){
         var r = Math.floor(Math.random()*32768)
 
         $("[name]",copy).each(function(){
-            // alert($(this).attr("name"));
+
             name = $(this).attr("name");
-            name = name.replace("[new]","[new_"+r+"]")
+
+            new_name = name.replace( /\[template_([^\]]+)\]/g, "[$1]" )
+
+            if ( new_name != name ) {
+                name = new_name
+            } else {
+                name = name.replace( /\[(new(_[a-z]+)?)\]/g, "[$1_"+r+"]" )
+            }
+
+
             $(this).attr("name",name);
+
+            if ( v = $(this).attr("value") ) {
+                v = v.replace( /^(new(_[a-z]+)?)$/g, "$1_"+r+"" )
+                $(this).attr("value",v);
+            }
         });
+
+        $("div.property-type.new a",copy).each(edit);
 
         $(li).before(copy);
         $("div.display",copy).hide();
         $("div.edit",copy).show();
         return false;
-    });
+    };
+
+    $("div.property-type.new a").livequery('click',edit);
 
     $("div.template").addClass("hidden");
+
+    /* make tab text red on panes with errors */
+    $("a.tab").each(function(){
+        id = $(this).attr("href");
+        if ( $(id + " div.error").length > 0 ) {
+            $("span",this).addClass("error");
+        }
+    });
 
     $(".assets.ajax").each(function(){
 
@@ -155,69 +190,10 @@ $(function(){
         return false;
     });
 
-    $("div.display-edit span.delete a").click(function(){
-      var top = $(this).parents("li.delete");
-      $("input.deleted[type=hidden]",top).attr("value","deleted");
-      top.hide();
-      return false;
-    });
-
-    $("div.dt.display-new div.new").hide();
-
-    $("div.dt.display-new a").click(function(){
-        top = $($(this).parents("li.new")[0])
-        cl = $("div.new > ul > li",top).clone();
-        dtn = top.data("dt_count")
-        if (dtn == null) {
-            dtn = 0;
-            top.data("dt_count",dtn);
-        }
-        dn = top.data("d_count")
-        if (dn == null) {
-            dn = 0;
-            top.data("d_count",dn);
-        }
-        $("div.dt input",cl).each(function(){
-            name = $(this).attr("name");
-            name = name.replace("[new_dt]","[new_dt_"+dtn+"]")
-            $(this).attr("name",name);
-
-            $("div.d input",cl).each(function(){
-                name = $(this).attr("name");
-                name = name.replace("[new_dt]","[new_dt_"+dtn+"]");
-
-                name = name.replace("[new_d]","[new_d_"+dn+"]");
-                $(this).attr("name",name);
-                dn++;
-                top.data("d_count",dn);
-            });
-
-            dtn++;
-            top.data("dt_count",dtn);
-
-        });
-        top.before(cl);
-        $(".edit",cl).show();
-        return false;
-    });
-
-    $("div.d.display-new a").click(function(){
-        top = $($(this).parents("li.new")[0])
-        cl = $("div.new > ul > li",top).clone();
-        dn = top.data("d_count")
-        if (dn == null) {
-            dn = 0;
-            top.data("d_count",dn);
-        }
-        $("div.d input",cl).each(function(){
-            name = $(this).attr("name");
-            name = name.replace("[new_d]","[new_d_"+dn+"]");
-            $(this).attr("name",name);
-            dn++;
-            top.data("d_count",dn);
-        });
-        top.before(cl);
-        $(".edit",cl).show();
+    $("div.display-edit span.delete a").livequery('click',function(){
+        var top = $($(this).parents("li.delete")[0]);
+        $("input.deleted[type=hidden]",top).attr("value","deleted");
+        top.hide();
         return false;
     });
 
