@@ -30,7 +30,7 @@ class LibraryController < ApplicationController
         if !all_pc_ids.empty?
           logger.warn "missing pc ids: #{all_pc_ids.inspect}"
           render :nothing => true, :status => 400
-          return
+          raise ActiveRecord::Rollback
         end
 
         pcs.each do |pc_id,pc_params|
@@ -47,7 +47,7 @@ class LibraryController < ApplicationController
           elsif pc_id != "new"
             logger.warn "bad pc id: #{pc_id}"
             render :nothing => true, :status => 400
-            return
+            raise ActiveRecord::Rollback
           end
         end
 
@@ -64,7 +64,7 @@ class LibraryController < ApplicationController
         if !all_pt_ids.empty?
           logger.warn "missing pt ids: #{all_pt_ids.inspect}"
           render :nothing => true, :status => 400
-          return
+          raise ActiveRecord::Rollback
         end
 
         # pp params[:property_type]
@@ -91,7 +91,7 @@ class LibraryController < ApplicationController
           elsif pt_id !~ /new(_[a-z]+)?/ and pt_params["deleted"] != "deleted"
             logger.warn "bad pt id: #{pt_id}"
             render :nothing => true, :status => 400
-            return
+            raise ActiveRecord::Rollback
           end
         end
 
@@ -107,7 +107,7 @@ class LibraryController < ApplicationController
         if !all_rd_ids.empty?
           logger.warn "missing rd ids: #{all_rd_ids.inspect}"
           render :nothing => true, :status => 400
-          return
+          raise ActiveRecord::Rollback
         end
 
         rds.each do |rd_id,rd_params|
@@ -132,7 +132,7 @@ class LibraryController < ApplicationController
           elsif rd_id !~ /new(_[a-z]+)?/ and rd_params["deleted"] != "deleted"
             logger.warn "bad rd id: #{rd_id}"
             render :nothing => true, :status => 400
-            return
+            raise ActiveRecord::Rollback
           end
         end
 
@@ -148,7 +148,7 @@ class LibraryController < ApplicationController
         if !all_dv_ids.empty?
           logger.warn "missing dv ids: #{all_dv_ids.inspect}"
           render :nothing => true, :status => 400
-          return
+          raise ActiveRecord::Rollback
         end
 
         dvs.each do |dv_id,dv_params|
@@ -179,7 +179,7 @@ class LibraryController < ApplicationController
           elsif dv_id !~ /new(_[a-z]+)?/ and dv_params["deleted"] != "deleted"
             logger.warn "bad dv id: #{dv_id}"
             render :nothing => true, :status => 400
-            return
+            raise ActiveRecord::Rollback
           end
         end
 
