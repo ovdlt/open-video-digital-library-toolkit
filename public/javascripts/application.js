@@ -54,7 +54,7 @@ $(function(){
 
     $("ul.template").addClass("hidden");
 
-    $("div.property-type.new a").click(function(){
+    $("div.property-type.new a").livequery('click',function(){
 
         string = $(this).attr("name");
 
@@ -68,13 +68,20 @@ $(function(){
 
         // could use a stored variable, but really ...
         var r = Math.floor(Math.random()*32768)
+
         before = "[" + string + "]"
         after = "[" + string + "_" + r + "]"
         
         $("[name]",copy).each(function(){
+
             name = $(this).attr("name");
-            name = name.replace(before,after);
+            name = name.replace( /\[(new(_[a-z]+)?)\]/g, "[$1_"+r+"]" )
             $(this).attr("name",name);
+
+            if ( v = $(this).attr("value") ) {
+                v = v.replace( /\[(new(_[a-z]+)?)\]/g, "[$1_"+r+"]" )
+                $(this).attr("value",v);
+            }
         });
 
         $(li).before(copy);
@@ -165,7 +172,7 @@ $(function(){
         return false;
     });
 
-    $("div.display-edit span.delete a").click(function(){
+    $("div.display-edit span.delete a").livequery('click',function(){
         var top = $($(this).parents("li.delete")[0]);
         $("input.deleted[type=hidden]",top).attr("value","deleted");
         top.hide();
