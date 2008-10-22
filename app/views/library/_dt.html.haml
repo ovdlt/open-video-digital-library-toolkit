@@ -16,20 +16,6 @@
   %ul
     - descriptor_values(dt).each do |dv|
       = render :partial => "library/dv", :object => dv
-      /
-        %li.delete
-          .property-type.display-edit
-            .edit
-              %label
-                Value:
-                = text_field_tag "descriptor_value[new_dv][text]", |
-                                    nil, :id => nil |
-              %span.delete= link_to "delete", ""
-            = hidden_field_tag( "descriptor_value[new_dv][deleted]", |
-                                false, :id => nil, :class => :deleted ) |
-            -
-            = hidden_field_tag( "descriptor_value[new_dv][property_type_id]", |
-                                "[new_dt]", :id => nil ) |
     %li.delete
       .property-type.new
         = link_to "Add new descriptor value", ""

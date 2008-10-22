@@ -28,7 +28,9 @@ module LibraryHelper
   end
 
   def descriptor_values pt
-    @descriptor_values.select { |dv| dv.property_type_id == pt.id }
+    @descriptor_values.select do |dv|
+      dv.property_type == pt or type_id( dv.property_type ) == type_id(pt)
+    end
   end
 
   def default_descriptor_class
@@ -93,6 +95,10 @@ module LibraryHelper
       @property_class.id
     end
 
+    def real_object_id
+      object_id
+    end
+
     def id
       "new_pt"
     end
@@ -118,6 +124,10 @@ module LibraryHelper
         def count; length; end
       end
       errors
+    end
+
+    def real_object_id
+      object_id
     end
 
     def property_class_id

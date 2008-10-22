@@ -55,6 +55,8 @@ class LibraryController < ApplicationController
 
       if pts = params[:property_type]
 
+        # pp pts
+
         all_pt_ids = PropertyType.find( :all, :select => "id").map &:id
         all_pt_ids = all_pt_ids - pts.keys.map(&:to_i)
         all_pt_ids.delete PropertyType.find_by_name("Rights Statement").id
@@ -140,6 +142,8 @@ class LibraryController < ApplicationController
 
       if dvs = params[:descriptor_value]
 
+        # pp dvs
+
         all_dv_ids = DescriptorValue.find( :all, :select => "id").map &:id
         all_dv_ids = all_dv_ids - dvs.keys.map(&:to_i)
 
@@ -163,7 +167,8 @@ class LibraryController < ApplicationController
             end
           elsif dv_id =~ /^new(_[a-z]+)?_\d+$/ and dv_params["deleted"] != "deleted"
             dv_params.delete "deleted"
-            if new_pt = @new[dv_params["property_type_id"]]
+            new_pt = @new[dv_params["property_type_id"]]
+            if new_pt
               dv_params.delete dv_params["property_type_id"]
             end
             @descriptor_values << (dv = DescriptorValue.new dv_params)
@@ -173,6 +178,7 @@ class LibraryController < ApplicationController
             @new[dv_id] = dv
             if !dv.save
               # pp dv.errors
+              # pp dv.property_type
               okay = false
             end
             # pp dv.errors if !dv.errors.empty?

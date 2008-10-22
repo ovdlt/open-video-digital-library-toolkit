@@ -118,4 +118,9 @@ class PropertyType < ActiveRecord::Base
 
   end
 
+  # avoid the AR proxy getting in the way
+  def real_object_id
+    object_id
+  end
+
 end

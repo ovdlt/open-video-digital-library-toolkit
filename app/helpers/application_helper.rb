@@ -110,7 +110,11 @@ EOS
     if object
       id = object.id
       if id.nil? or ( @rollback and @new.values.include?(object) )
-        "new_" + object.object_id.to_s
+        begin
+          "new_" + object.real_object_id.to_s
+        rescue
+          "new_" + object.object_id.to_s
+        end
       else
         id.to_s
       end

@@ -2,7 +2,16 @@ class DescriptorValue < ActiveRecord::Base
 
   validates_uniqueness_of :text, :scope => :property_type_id
   validates_presence_of :text
-  validates_numericality_of :property_type_id, :greater_than => 0
+
+  def validate 
+    if ( property_type_id.nil? or
+         property_type_id < 1 ) and
+       ( property_type.nil? or
+         property_type.id.nil? or
+         property_type.id < 1 )
+      errors.add_to_base "Descriptor type is invalid"
+    end
+  end
 
   belongs_to :property_type
 
@@ -18,19 +27,12 @@ class DescriptorValue < ActiveRecord::Base
   end
 
   def videos
-    
-    if false
-      properties.find( :all,
-                       :include => :video ).
-        map(&:video)
-    else
-      Video.find :all,
-                  :joins => ", properties ps",
-                  :conditions =>
-                        "videos.id = ps.video_id and " +
-                        "ps.property_type_id = #{property_type_id} and " +
-                        "ps.integer_value = #{id}"
-    end
+    Video.find :all,
+                :joins => ", properties ps",
+                :conditions =>
+                      "videos.id = ps.video_id and " +
+                      "ps.property_type_id = #{property_type_id} and " +
+                      "ps.integer_value = #{id}"
   end
 
 end
