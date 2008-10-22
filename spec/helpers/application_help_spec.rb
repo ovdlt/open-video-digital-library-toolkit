@@ -53,7 +53,7 @@ describe ApplicationHelper do
       o = Object.new
       o.should_receive(:id).and_return(nil)
       helper.assigns[:rollback] = true
-      helper.assigns[:new] = [ o ]
+      helper.assigns[:new] = { :a => o }
       helper.type_id(o).should =~ /^new_\d+$/
     end
 
@@ -65,7 +65,7 @@ describe ApplicationHelper do
       o = Object.new
       o.stub!(:id).and_return(12)
       assigns[:rollback] = true
-      assigns[:new] = [ o ]
+      assigns[:new] = { :a => o }
       helper.type_id(o).should_not == "12"
       helper.type_id(o).should =~ /^new_\d+$/
     end

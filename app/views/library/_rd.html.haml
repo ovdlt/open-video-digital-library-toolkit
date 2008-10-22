@@ -1,0 +1,32 @@
+%li.delete
+  .property-type.display-edit
+    .display{ error_class(rd) }
+      .license
+        License:
+        = rd.license
+        %span.edit= link_to "edit", ""
+      .statement
+        Statement:
+        = rd.statement
+      .html
+        HTML:
+        %div= rd.html
+    .edit{ error_class(rd) }
+      - fields_for "rights_detail[#{type_id(rd)}]", rd do |fields|
+        .license
+          %label
+            License:
+            = fields.text_field :license
+          %span.delete
+            = link_to "delete", ""
+        .statement
+          %label
+            Statement:
+            = fields.text_field :statement
+        .html
+          %label
+            HTML:
+            %div= fields.text_area :html
+        = error_messages_for 'rights_detail', :object => rd
+        = hidden_field_tag "rights_detail[#{type_id(rd)}][deleted]", |
+                           false, :id => nil, :class => :deleted |

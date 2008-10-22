@@ -89,4 +89,69 @@ describe LibraryHelper do
     
   end
 
+  describe "templates" do
+
+    describe "descriptor types" do
+    end
+
+    describe "descriptor values" do
+
+      describe "existing dts" do
+
+        before(:each) do
+          @dt = PropertyType.descriptor_types[0]
+          @dv = helper.dv_template( @dt )
+          helper.extend  ApplicationHelper
+        end
+
+        it "should reference the dt" do
+          @dv.property_type_id.should == @dt.id.to_s
+        end
+
+        it "should have a template id" do
+          @dv.id.should == "new_dv"
+        end
+
+      end
+
+      describe "unsaved dts" do
+
+        before(:each) do
+          @dt = PropertyType.new
+          @dv = helper.dv_template( @dt )
+          helper.extend  ApplicationHelper
+        end
+
+        it "should reference the dt" do
+          @dv.property_type_id.should =~ /^new_\d+$/
+        end
+
+        it "should have a template id" do
+          @dv.id.should == "new_dv"
+        end
+
+      end
+
+      describe "template dt" do
+
+        before(:each) do
+          @dt = helper.dt_template
+          @dv = helper.dv_template( @dt )
+          helper.extend  ApplicationHelper
+        end
+
+        it "should reference the dt" do
+          @dv.property_type_id.should == "new_dt"
+        end
+
+        it "should have a template id" do
+          @dv.id.should == "template_new_dv"
+        end
+
+      end
+
+    end
+
+  end
+
 end
