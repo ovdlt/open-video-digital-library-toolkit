@@ -1,16 +1,24 @@
 module VideosHelper
 
-  def tabs
-    p "vids helpers"
+  def edit_tabs
     [
-     :general_information,
-     :digital_files,
-     :responsible_entities,
-     :dates,
-     :chapters,
-     :descriptors,
-     :collections,
-     :related_videos,
+     :edit_general_information,
+     :edit_digital_files,
+     :edit_responsible_entities,
+     :edit_dates,
+     :edit_chapters,
+     :edit_descriptors,
+     :edit_collections,
+     :edit_related_videos,
+    ]
+  end
+
+  def show_tabs
+    [
+     :show_dates,
+     :show_responsible_entities,
+     :show_descriptors,
+     :show_digital_files,
     ]
   end
 
@@ -107,6 +115,16 @@ module VideosHelper
   end
 
   private
+
+  def property_types_by_class pc
+    @video.property_types.select { |pt| pt.property_class_id == pc }
+  end
+
+  def render_partial_by_class class_name
+    range = PropertyClass.find_by_name( class_name ).range
+    render :partial => "show_properties_#{range}",
+           :locals => { :property_class => class_name }
+  end
 
   def select_flash_path video
     case params[:details_format]

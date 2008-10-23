@@ -1,5 +1,13 @@
 module ApplicationHelper
 
+  def tab_title string
+    string = string.to_s
+    string = string.titleize
+    string.sub! /^show\s+/i, ""
+    string.sub! /^edit\s+/i, ""
+    string
+  end
+
   def tabs_tab_for field
     render :partial => "/shared/tab", :object => field
   end
@@ -131,6 +139,42 @@ EOS
     @descriptor_values.select do |dv|
       dv.property_type == pt or type_id( dv.property_type ) == type_id(pt)
     end
+  end
+
+  class PropertyTypeTemplate
+    def initialize helper, pc
+      @helper = helper
+      @property_class = pc
+    end
+
+    def name
+      nil
+    end
+
+    def errors
+      errors = []
+      class << errors
+        def count; length; end
+      end
+      errors
+    end
+
+    def property_class_id
+      @property_class.id
+    end
+
+    def real_object_id
+      object_id
+    end
+
+    def id
+      "new_pt"
+    end
+
+  end
+
+  def pt_template property_class
+    PropertyTypeTemplate.new self, property_class
   end
 
 end

@@ -99,6 +99,13 @@
 
     .clear
 
+    .tabs
+      %ul
+        - show_tabs.each do |tab|
+          = tabs_tab_for tab
+      - show_tabs.each do |tab|
+        = tabs_div_for tab
+
 .sidebar
   .entry
     .title Other Videos
@@ -133,3 +140,4 @@
         %li= link_to "Add new video", new_video_path
 
 .clear
+
