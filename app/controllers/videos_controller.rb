@@ -319,4 +319,16 @@ class VideosController < ApplicationController
     end
   end
   
+  private
+
+  before_filter :load
+
+  def load
+    # @library = Library.find :first
+    # @property_classes = PropertyClass.find :all
+    # @property_types = PropertyType.find :all
+    @descriptor_values = DescriptorValue.find :all
+    # @rights_details = RightsDetail.find :all
+  end
+
 end

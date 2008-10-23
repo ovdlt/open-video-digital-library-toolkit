@@ -61,24 +61,6 @@ describe LibraryHelper do
 
   end
 
-  describe "#descriptor_values" do
-    
-    it "should return all the descriptor values for a given pt" do
-
-      assigns[:property_types] = @property_types = PropertyType.find( :all )
-      
-      assigns[:descriptor_values] = @descriptor_values = DescriptorValue.find( :all )
-
-      dt = @property_types.find { |pt| pt.property_class.range == "descriptor_value" }
-
-      @descriptor_values << ( dv = DescriptorValue.new( :property_type_id => dt.id ) )
-
-      sort_ar( helper.descriptor_values( dt ) ).
-        should == sort_ar( [ dv ] + DescriptorValue.find( :all, :conditions =>"property_type_id = #{dt.id}" ) )
-    end
-
-  end
-
   describe "#default_descriptor_class" do
 
     it "should return a descriptor class type" do

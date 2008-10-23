@@ -2,6 +2,14 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe ApplicationHelper do
 
+  def sort_ar( l )
+    l.sort do |a,b|
+      aid = a.id || a.object_id
+      bid = b.id || b.object_id
+      aid <=> bid
+    end
+  end
+
   describe "#file_size(file)" do
     before(:each) do
       @asset = create_temp_asset("the_doctor_dances.avi", 10.kilobytes)
@@ -84,6 +92,24 @@ describe ApplicationHelper do
       o = Object.new
       o.should_receive(:errors).and_return([])
       helper.error_class(o).should == {}
+    end
+
+  end
+
+  describe "#descriptor_values" do
+    
+    it "should return all the descriptor values for a given pt" do
+
+      assigns[:property_types] = @property_types = PropertyType.find( :all )
+      
+      assigns[:descriptor_values] = @descriptor_values = DescriptorValue.find( :all )
+
+      dt = @property_types.find { |pt| pt.property_class.range == "descriptor_value" }
+
+      @descriptor_values << ( dv = DescriptorValue.new( :property_type_id => dt.id ) )
+
+      sort_ar( helper.descriptor_values( dt ) ).
+        should == sort_ar( [ dv ] + DescriptorValue.find( :all, :conditions =>"property_type_id = #{dt.id}" ) )
     end
 
   end

@@ -1,4 +1,4 @@
-- form_for @video do |@f|
+- form_for @video do |@form|
 
   %fieldset
 
@@ -12,11 +12,18 @@
     .tabs
       %ul
         - tabs.each do |tab|
-          = tab_for tab
+          = tabs_tab_for tab
       - tabs.each do |tab|
-        = div_for tab
+        = tabs_div_for tab
 
     .clear
 
-    = render :partial => "/shared/create", :object => @video, |
-                                           :locals => { :f => @f } |
+    = @form.submit @video.new_record? ? "Create " : "Save " 
+    Video
+    - if @video.new_record?
+      = link_to "clear", clear_videos_path
+      = link_to "cancel", cancel_videos_path
+    - else
+      = link_to "reset", reset_video_path( @video )
+      -
+      = link_to "cancel", video_path( @video )

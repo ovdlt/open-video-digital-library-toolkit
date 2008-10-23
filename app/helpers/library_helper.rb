@@ -27,12 +27,6 @@ module LibraryHelper
     @property_types.select { |pt| pcs.include?(pt.property_class_id) }
   end
 
-  def descriptor_values pt
-    @descriptor_values.select do |dv|
-      dv.property_type == pt or type_id( dv.property_type ) == type_id(pt)
-    end
-  end
-
   def default_descriptor_class
      PropertyClass.find_by_name "Optional Multivalued Descriptor"
   end

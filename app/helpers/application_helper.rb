@@ -127,5 +127,10 @@ EOS
     object.errors.empty? ? {} : { :class => "error" }
   end
 
+  def descriptor_values pt
+    @descriptor_values.select do |dv|
+      dv.property_type == pt or type_id( dv.property_type ) == type_id(pt)
+    end
+  end
 
 end

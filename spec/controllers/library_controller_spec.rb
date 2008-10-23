@@ -325,9 +325,6 @@ describe LibraryController do
         @new_rd_id = @new_rd[0].first
         @new_rd = @new_rd[0].last
 
-        p @new_rd_id, @new_rd
-
-
         @pt_id = PropertyType.find_by_name("Rights Statement").id
       end
 

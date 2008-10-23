@@ -1,9 +1,8 @@
-- f = @f
 %div
   .form
     %fieldset
       %legend Descriptors
       %dl
-        = render :partial => "type", :collection => DescriptorType.sorted, |
-                                     :locals => { :f => f } |
+        = render :partial => "type", |
+                 :collection => PropertyType.descriptor_types |
     .clear

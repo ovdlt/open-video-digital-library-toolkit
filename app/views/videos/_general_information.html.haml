@@ -1,4 +1,3 @@
-- f = @f
 %div
 
   .form
@@ -8,17 +7,17 @@
       %fieldset
         %legend Title Information
 
-        .label= f.label :title, "Title of Video"
-        %div= f.text_field :title, :size => 50
+        .label= @form.label :title, "Title of Video"
+        %div= @form.text_field :title, :size => 50
 
       %fieldset
         %legend Content Summary
 
-        .label= f.label :sentence, "Sentence Summary"
-        %div= f.text_area :sentence, :cols => 38, :rows => 2
+        .label= @form.label :sentence, "Sentence Summary"
+        %div= @form.text_area :sentence, :cols => 38, :rows => 2
 
-        .label= f.label :abstract
-        %div= f.text_area :abstract, :cols => 38, :rows => 6
+        .label= @form.label :abstract
+        %div= @form.text_area :abstract, :cols => 38, :rows => 6
 
 
     .column
@@ -26,7 +25,7 @@
       %fieldset
         %legend Description
 
-        .label= f.label :duration
+        .label= @form.label :duration
         %div
           = text_field_tag :video_duration, |
                            (( params[:video] and params[:video][:duration] ) |
@@ -38,21 +37,21 @@
       %fieldset
         %legend Local Reference
 
-        .label= f.label :local_id
-        %div= f.text_field :local_id
+        .label= @form.label :local_id
+        %div= @form.text_field :local_id
 
-        .label= f.label :donor
-        %div= f.text_area :donor, :cols => 38, :rows => 2
+        .label= @form.label :donor
+        %div= @form.text_area :donor, :cols => 38, :rows => 2
 
     .full_width
 
       %fieldset
         %legend Rights
 
-        .label= f.label :rights_holder, "Rights Holder"
-        %div= f.text_field :rights_holder
+        .label= @form.label :rights_holder, "Rights Holder"
+        %div= @form.text_field :rights_holder
 
-        .label= f.label :rights, "Type of Rights"
+        .label= @form.label :rights, "Type of Rights"
         %div
           %select{:id => "video_rights", :name=>"video[rights_id]"}
             = rights_options
