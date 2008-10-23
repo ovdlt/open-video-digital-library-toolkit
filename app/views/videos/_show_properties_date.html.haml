@@ -2,10 +2,17 @@
 %div
   .form
     %ul
-      - property_types_by_class(pc).each do |pt|
-        = render :partial => "pt", :object => pt
-      %li
-        .property-type.new
-          = link_to "new", ""
-          %ul.template
-            = render :partial => "pt", :object => pt_template(pc)
+      - if ( pts = property_types_by_class(pc) ).size == 0
+        %li.delete.none
+          .property-type.display-edit
+            .display
+              No properites
+      - else
+        - property_types_by_class(pc).each do |pt|
+          = render :partial => "pt_date", :object => pt
+      - if editing?
+        %li
+          .property-type.new
+            = link_to "new", "#"
+            %ul.template
+              = render :partial => "pt_date", :object => pt_template(pc)

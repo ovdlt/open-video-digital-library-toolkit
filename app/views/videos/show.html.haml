@@ -92,8 +92,8 @@
             .clear
 
       .details_list
-
-        %div= h video.rights_holder
+        - if !video.rights_holder.blank?
+          %div= h video.rights_holder
         %div= h video.rights.statement
         %div= video.rights.html
 

@@ -11,9 +11,9 @@
 
     .tabs
       %ul
-        - tabs.each do |tab|
+        - edit_tabs.each do |tab|
           = tabs_tab_for tab
-      - tabs.each do |tab|
+      - edit_tabs.each do |tab|
         = tabs_div_for tab
 
     .clear

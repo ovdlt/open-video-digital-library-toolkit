@@ -247,6 +247,8 @@ class LibraryController < ApplicationController
 
   end
 
+  before_filter :load
+
   def load
     @library = Library.find :first
     @property_classes = PropertyClass.find :all

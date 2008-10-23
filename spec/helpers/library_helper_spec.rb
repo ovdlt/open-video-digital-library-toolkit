@@ -2,14 +2,6 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe LibraryHelper do
   
-  def sort_ar( l )
-    l.sort do |a,b|
-      aid = a.id || a.object_id
-      bid = b.id || b.object_id
-      aid <=> bid
-    end
-  end
-
   it "should be included in the object returned by #helper" do
     included_modules = (class << helper; self; end).send :included_modules
     included_modules.should include(LibraryHelper)

@@ -148,4 +148,8 @@ module VideosHelper
     Video.find candidates[selected]
   end
 
+  def editing?
+    true
+  end
+
 end

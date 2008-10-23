@@ -67,42 +67,6 @@ module LibraryHelper
     DescriptorValueTemplate.new self, property_type
   end
 
-  class PropertyTypeTemplate
-    def initialize helper, pc
-      @helper = helper
-      @property_class = pc
-    end
-
-    def name
-      nil
-    end
-
-    def errors
-      errors = []
-      class << errors
-        def count; length; end
-      end
-      errors
-    end
-
-    def property_class_id
-      @property_class.id
-    end
-
-    def real_object_id
-      object_id
-    end
-
-    def id
-      "new_pt"
-    end
-
-  end
-
-  def pt_template property_class
-    PropertyTypeTemplate.new self, property_class
-  end
-
   class DescriptorTypeTemplate
     def initialize helper
       @helper = helper

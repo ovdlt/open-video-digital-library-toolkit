@@ -62,6 +62,7 @@ $(function(){
             string = "new"
         }
 
+        var ul = $(this).parents("ul")[0];
         var li = $(this).parents("li")[0];
         var template = $("ul.template li.delete",li)[0];
         var copy = $(template).clone();
@@ -95,6 +96,9 @@ $(function(){
         $(li).before(copy);
         $("div.display",copy).hide();
         $("div.edit",copy).show();
+
+        $("li.none",ul).hide();
+
         return false;
     };
 
@@ -191,9 +195,15 @@ $(function(){
     });
 
     $("div.display-edit span.delete a").livequery('click',function(){
+        ul = $(this).parents("ul")[0];
         var top = $($(this).parents("li.delete")[0]);
         $("input.deleted[type=hidden]",top).attr("value","deleted");
         top.hide();
+
+        if ( $("li.delete:visible", ul).length == 1 ) {
+            $("li.none").show();
+        }
+
         return false;
     });
 
