@@ -83,6 +83,11 @@ class Property < ActiveRecord::Base
     @value = property_type.retrieve_value self
   end
 
+  def name
+    raise PropertyTypeNotFound.new( property_type_id ) unless property_type
+    property_type.name
+  end
+
   def priority
     raise PropertyTypeNotFound.new( property_type_id ) unless property_type
     property_type.retrieve_priority self

@@ -122,62 +122,108 @@ class VideosController < ApplicationController
   end
 
   def update
+    @path = lambda { |opts| opts == {} ? video_path( @video ) \
+                                       : video_path( @video, opts ) }
     @video = Video.find params[:id]
     _change
   end
   
   def _change
 
-    errors = false
+    @rollback = false
+    @new = {}
 
-    params[:video] and params[:video].each do |k,v|
-      case k.to_s
-      when "duration"
-        @video[k] = duration_to_int( v, @video, k )
-      when "descriptors"
-        @video.descriptor_value_ids = v
-      when "assets"
-        @video.asset_ids = v.reject { |path| path == ":id:" }
-      else
-        @video[k] = v
+    Video.transaction do
+
+      okay = true
+
+      if ps = params[:property]
+        ps.each do |p_id,p_params|
+          p_ar = @properties.detect { |p_ar| p_ar.id == p_id.to_i }
+          if p_ar
+            if p_params["deleted"] == "deleted"
+              p_ar.destroy
+            else
+              p_params.delete "deleted"
+              # pp p_ar.errors if !p_ar.update_attributes(p_params)
+              okay = false if !p_ar.update_attributes(p_params)
+            end
+          elsif p_id =~ /^new(_[a-z]+)?_\d+$/ and p_params["deleted"] != "deleted"
+            p_params.delete "deleted"
+            @properties << (p = @video.properties.build p_params)
+            @new[p_id] = p
+            if !p.save
+              okay = false
+            end
+            # raise p.errors.inspect if !p.save
+          elsif p_id !~ /new(_[a-z]+)?/ and p_params["deleted"] != "deleted"
+            logger.warn "bad p id: #{p_id}"
+            render :nothing => true, :status => 400
+            raise ActiveRecord::Rollback
+          end
+        end
+
       end
-    end
 
-    if params[:new_assets]
-      params[:new_assets].each do |uri|
-        @video.assets << Asset.new( :uri => uri )
-      end
-    end
+      errors = false
 
-    if params["descriptors_passed"] && !params["descriptor_value"]
-      params["descriptor_value"] = []
-    end
-
-    if params["descriptor_value"]
-      @video.descriptors = params["descriptor_value"].map do |d|
-        begin
-          DescriptorValue.find d.to_i
-        rescue ActiveRecord::RecordNotFound
-          render_bad_request 
-          return
+      params[:video] and params[:video].each do |k,v|
+        case k.to_s
+        when "duration"
+          @video[k] = duration_to_int( v, @video, k )
+        when "descriptors"
+          @video.descriptor_value_ids = v
+        when "assets"
+          @video.asset_ids = v.reject { |path| path == ":id:" }
+        else
+          @video[k] = v
         end
       end
-    end
 
-    was_new = @video.new_record?
-    if !errors and @video.errors.empty? and @video.save
-      if was_new
-        flash[:notice] = "#{@video.title} was added"
-        redirect_to videos_path
-      else
-        flash[:notice] = "#{@video.title} saved"
-        redirect_to video_path( @video )
+      if params[:new_assets]
+        params[:new_assets].each do |uri|
+          @video.assets << Asset.new( :uri => uri )
+        end
       end
-    else
-      render :action => :form
+
+      if params["descriptors_passed"] && !params["descriptor_value"]
+        params["descriptor_value"] = []
+      end
+
+      if params["descriptor_value"]
+        @video.descriptors = params["descriptor_value"].map do |d|
+          begin
+            DescriptorValue.find d.to_i
+          rescue ActiveRecord::RecordNotFound
+            render_bad_request 
+            return
+          end
+        end
+      end
+
+      was_new = @video.new_record?
+      
+      @video.save
+
+      if !errors and okay and @video.errors.empty? and
+          if was_new
+            flash[:notice] = "#{@video.title} was added"
+            redirect_to videos_path
+          else
+            flash[:notice] = "#{@video.title} saved"
+            redirect_to video_path( @video )
+          end
+      else
+        @rollback = true
+        flash[:error] = "Errors exist; could not update"
+        render :action => :show
+        raise ActiveRecord::Rollback
+      end
+
     end
 
   end
+
   
   def _edit
     @video = Video.find params[:id]
@@ -318,17 +364,21 @@ class VideosController < ApplicationController
       redirect_to videos_path
     end
   end
-  
+
   private
 
   before_filter :load
 
   def load
-    # @library = Library.find :first
-    # @property_classes = PropertyClass.find :all
-    # @property_types = PropertyType.find :all
+    @library = Library.find :first
+    @property_classes = PropertyClass.find :all
+    @property_types = PropertyType.find :all
     @descriptor_values = DescriptorValue.find :all
-    # @rights_details = RightsDetail.find :all
+    @rights_details = RightsDetail.find :all
+    @properties = Property.find_all_by_video_id params[:id]
+
+    @editing = current_user && current_user.has_role?( [ :cataloger, :admin ] )
+
   end
 
 end

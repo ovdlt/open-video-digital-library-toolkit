@@ -141,15 +141,7 @@ EOS
     end
   end
 
-  class PropertyTypeTemplate
-    def initialize helper, pc
-      @helper = helper
-      @property_class = pc
-    end
-
-    def name
-      nil
-    end
+  class Template
 
     def errors
       errors = []
@@ -157,6 +149,18 @@ EOS
         def count; length; end
       end
       errors
+    end
+
+  end
+
+  class PropertyTypeTemplate < Template
+    def initialize helper, pc
+      @helper = helper
+      @property_class = pc
+    end
+
+    def name
+      nil
     end
 
     def property_class_id
@@ -175,6 +179,25 @@ EOS
 
   def pt_template property_class
     PropertyTypeTemplate.new self, property_class
+  end
+
+  class PropertyTemplate < Template
+    def name
+      nil
+    end
+    def property_type_id
+      nil
+    end
+    def value
+      nil
+    end
+    def id
+      "new_p"
+    end
+  end
+
+  def p_template
+    PropertyTemplate.new
   end
 
 end

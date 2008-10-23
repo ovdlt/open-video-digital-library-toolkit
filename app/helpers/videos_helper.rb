@@ -117,7 +117,8 @@ module VideosHelper
   private
 
   def property_types_by_class pc
-    @video.property_types.select { |pt| pt.property_class_id == pc }
+    raise ArgumentError, pc.class.to_s if !(Integer === pc )
+    @property_types.select { |pt| pt.property_class_id == pc }
   end
 
   def render_partial_by_class class_name
@@ -149,7 +150,29 @@ module VideosHelper
   end
 
   def editing?
-    true
+    @editing
+  end
+
+  def properties_by_class pc
+    types = property_types_by_class( pc ).map &:id
+    @properties.select do |p|
+      types.include? p.property_type_id
+    end
+  end
+
+  def date_types
+    # could be faster
+    pcs = PropertyClass.find_all_by_range( "date" ).map( &:id )
+    PropertyType.find_all_by_property_class_id pcs
+  end
+
+  def date_range_select fields, object
+    if false
+      fields.select :property_type_id,
+        options_from_collection_for_select( date_types, :name, :id, object.id )
+    else
+      fields.collection_select :property_type_id, date_types, :id, :name
+    end
   end
 
 end

@@ -2,17 +2,17 @@
 %div
   .form
     %ul
-      - if ( pts = property_types_by_class(pc) ).size == 0
+      - if ( ps = properties_by_class( pc.id ) ).size == 0
         %li.delete.none
           .property-type.display-edit
             .display
               No properites
       - else
-        - property_types_by_class(pc).each do |pt|
-          = render :partial => "pt_date", :object => pt
+        - ps.each do |p|
+          = render :partial => "p_date", :object => p
       - if editing?
         %li
           .property-type.new
             = link_to "new", "#"
             %ul.template
-              = render :partial => "pt_date", :object => pt_template(pc)
+              = render :partial => "p_date", :object => p_template

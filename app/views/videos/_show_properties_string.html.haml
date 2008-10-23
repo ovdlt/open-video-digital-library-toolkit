@@ -2,7 +2,7 @@
 %div
   .form
     %ul
-      - property_types_by_class(pc).each do |pt|
+      - property_types_by_class(pc.id).each do |pt|
         = render :partial => "pt", :object => pt
       %li
         .property-type.new
