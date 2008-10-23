@@ -116,7 +116,7 @@ class LibraryController < ApplicationController
           rd_ar = @rights_details.detect { |rd_ar| rd_ar.id == rd_id.to_i }
           if rd_ar
             if rd_params["deleted"] == "deleted"
-              rd_ar.destroy
+              rd_ar.destroy or okay = false
             else
               rd_params.delete "deleted"
               # pp rd_ar.errors if !rd_ar.update_attributes(rd_params)

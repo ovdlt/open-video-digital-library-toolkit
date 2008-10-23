@@ -310,11 +310,24 @@ describe LibraryController do
     describe "rights details" do
 
       before(:each) do
+        RightsDetail.create! :license => "foo", :statement => "bar"
+
         @params = {}
         @params["rights_detail"] =
           controller.send(:parameters)["rights_detail"]
+
         @rd_id = @params["rights_detail"].keys[4]
         @rd = @params["rights_detail"][@rd_id]
+
+        @new_rd = @params["rights_detail"].select do |k,v|
+          v["license"] == "foo"
+        end
+        @new_rd_id = @new_rd[0].first
+        @new_rd = @new_rd[0].last
+
+        p @new_rd_id, @new_rd
+
+
         @pt_id = PropertyType.find_by_name("Rights Statement").id
       end
 
@@ -341,13 +354,27 @@ describe LibraryController do
         RightsDetail.find(@rd_id).license.should == "something"
       end
 
-      it "should delete rd" do
+      it "should not delete rd if it has videos" do
         @rd["deleted"] = "deleted"
+
+        post :update, @params
+
+        response.should be_success
+        response.should render_template( "library/show" )
+
+        assigns[:library].should_not be_nil
+        flash.should_not be_nil
+
+        RightsDetail.find_by_id(@rd_id).should_not be_nil
+      end
+
+      it "should delete rd if it has no videos" do
+        @new_rd["deleted"] = "deleted"
 
         post :update, @params
         response.should redirect_to(library_path)
       
-        RightsDetail.find_by_id(@rd_id).should be_nil
+        RightsDetail.find_by_id(@new_rd_id).should be_nil
       end
 
       it "should be okay with 'new' ids" do
@@ -362,7 +389,7 @@ describe LibraryController do
 
       it "should add rds" do
         new = @params["rights_detail"]["new_1123"] = {}
-        new["license"] = "foo"
+        new["license"] = "fooby"
         new["statement"] = "foo st"
         new["html"] = "foo html"
         new["deleted"] = nil

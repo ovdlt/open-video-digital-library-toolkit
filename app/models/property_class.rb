@@ -160,7 +160,7 @@ class PropertyClass < ActiveRecord::Base
     end
 
     def retrieve_rights property
-      property.integer_value
+      RightsDetail.find property.integer_value
     end
 
     def values_rights t, options

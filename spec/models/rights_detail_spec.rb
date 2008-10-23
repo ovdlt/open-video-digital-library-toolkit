@@ -39,4 +39,14 @@ describe RightsDetail do
     create_rd.should be_true
   end
 
+  it "should disallow destroy if properties exit" do
+    rd = RightsDetail.find_by_license "All Rights Reserved"
+    rd.destroy.should be_false
+  end
+
+  it "should allow destroy if no properties exit" do
+    rd = RightsDetail.find_by_license "All Rights Reserved"
+    rd.destroy.should be_false
+  end
+
 end

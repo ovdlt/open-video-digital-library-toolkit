@@ -297,7 +297,7 @@ class Video < ActiveRecord::Base
   end
 
   def rights
-    RightsDetail.find properties.find_by_name( "Rights Statement" ).value
+    properties.find_by_name( "Rights Statement" ).value
   end
 
   private

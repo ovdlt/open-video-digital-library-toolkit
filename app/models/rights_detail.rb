@@ -13,6 +13,16 @@ class RightsDetail < ActiveRecord::Base
     end
   end
 
+  def before_destroy
+    pt = PropertyType.find_by_name( "Rights Statement" )
+    if !Property.find_by_property_type_id_and_integer_value( pt.id, id ).nil?
+      errors.add "cannot destroy a rights statement if used by a video"
+      false
+    else
+      true
+    end
+  end
+
 end
 
 
