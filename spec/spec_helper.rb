@@ -57,3 +57,11 @@ def logout
   self.current_user = nil
 end
 
+def sort_ar( l )
+  l.sort do |a,b|
+    aid = a.id || a.object_id
+    bid = b.id || b.object_id
+    aid <=> bid
+  end
+end
+

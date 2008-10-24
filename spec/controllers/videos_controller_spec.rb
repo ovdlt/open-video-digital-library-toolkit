@@ -220,7 +220,7 @@ describe VideosController do
     end
 
     it "should render the form again" do
-      response.should render_template("videos/form")
+      response.should render_template("videos/show")
     end
     
     it "should assign the video to @video" do
