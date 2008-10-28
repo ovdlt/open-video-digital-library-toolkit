@@ -2,14 +2,6 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe ApplicationHelper do
 
-  def sort_ar( l )
-    l.sort do |a,b|
-      aid = a.id || a.object_id
-      bid = b.id || b.object_id
-      aid <=> bid
-    end
-  end
-
   describe "#file_size(file)" do
     before(:each) do
       @asset = create_temp_asset("the_doctor_dances.avi", 10.kilobytes)
