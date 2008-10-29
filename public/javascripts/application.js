@@ -157,6 +157,8 @@ $(function(){
             $("td.format",c).text("");
             $("td.size",c).text("");
             tbody.append(c);
+            $(this).attr("value",null);
+            return false;
         }
         return true;
     });

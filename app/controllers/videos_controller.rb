@@ -138,23 +138,14 @@ class VideosController < ApplicationController
       okay = true
 
       if v = params[:video]
-
+        v[:assets]
+        if a = v[:assets]
+          a.reject! { |val| val == ":id:" }
+          v[:asset_ids] = a.map { |s| s.to_i }
+          v.delete(:assets)
+        end
+        
         okay = false if !@video.update_attributes(v)
-
-        if false
-          params[:video].each do |k,v|
-            case k.to_s
-            when "duration"
-              @video[k] = duration_to_int( v, @video, k )
-            when "descriptors"
-              @video.descriptor_value_ids = v
-            when "assets"
-              @video.asset_ids = v.reject { |path| path == ":id:" }
-            else
-              @video[k] = v
-            end
-          end
-        end        
       end
 
       if ps = params[:property]
@@ -263,12 +254,6 @@ class VideosController < ApplicationController
 
   end
 
-  
-  def _edit
-    @video = Video.find params[:id]
-    render :action => 'form'
-  end
-  
   def edit
     @object = @video = Video.find( params[:id] )
     render :action => :form
