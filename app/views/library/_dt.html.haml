@@ -2,13 +2,13 @@
   .property-type.display-edit
     .display{ error_class(dt) }
       = dt.name
-      %span.edit= link_to "edit", ""
+      %span.edit= link_to "edit", "#"
     .edit{ error_class(dt) }
       - fields_for "property_type[#{type_id(dt)}]", dt do |fields|
         %label
           Type:
           = fields.text_field :name
-        %span.delete= link_to "delete", ""
+        %span.delete= link_to "delete", "#"
         = error_messages_for 'property_type', :object => dt
         = fields.hidden_field :property_class_id
         = hidden_field_tag "property_type[#{type_id(dt)}][deleted]", |
@@ -18,6 +18,6 @@
       = render :partial => "library/dv", :object => dv
     %li.delete
       .property-type.new
-        = link_to "Add new descriptor value", ""
+        = link_to "Add new descriptor value", "#"
         %ul.template
           = render :partial => "library/dv", :object => dv_template( dt )
