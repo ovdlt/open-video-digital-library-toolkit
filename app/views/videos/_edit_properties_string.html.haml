@@ -10,10 +10,10 @@
       - else
         - ps.each do |p|
           = render :partial => "p_string", :object => p, |
-                                             :locals => { :property_class => pc } |
+                    :locals => { :property_class => pc } |
       %li
         .property-type.new
           = link_to "new", "#"
           %ul.template
             = render :partial => "p_string", :object => p_template, |
-                                             :locals => { :property_class => pc } |
+                               :locals => { :property_class => pc } |

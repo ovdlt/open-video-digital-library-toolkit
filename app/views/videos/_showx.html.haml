@@ -21,7 +21,11 @@
           );
           s1.write('flash');
         
-    .sentence= h video.sentence
+    - if !video.sentence.blank?
+      .sentence&= video.sentence
+
+    - if !video.abstract.blank?
+      .abstract&= video.abstract
 
     .navigate
 

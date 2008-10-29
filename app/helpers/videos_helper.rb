@@ -6,10 +6,10 @@ module VideosHelper
      :edit_digital_files,
      :edit_responsible_entities,
      :edit_dates,
-     :edit_chapters,
+     # :edit_chapters,
      :edit_descriptors,
-     :edit_collections,
-     :edit_related_videos,
+     # :edit_collections,
+     # :edit_related_videos,
     ]
   end
 

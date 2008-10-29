@@ -137,6 +137,26 @@ class VideosController < ApplicationController
 
       okay = true
 
+      if v = params[:video]
+
+        okay = false if !@video.update_attributes(v)
+
+        if false
+          params[:video].each do |k,v|
+            case k.to_s
+            when "duration"
+              @video[k] = duration_to_int( v, @video, k )
+            when "descriptors"
+              @video.descriptor_value_ids = v
+            when "assets"
+              @video.asset_ids = v.reject { |path| path == ":id:" }
+            else
+              @video[k] = v
+            end
+          end
+        end        
+      end
+
       if ps = params[:property]
         ps.each do |p_id,p_params|
           p_ar = @properties.detect { |p_ar| p_ar.id == p_id.to_i }
@@ -163,21 +183,6 @@ class VideosController < ApplicationController
           end
         end
 
-      end
-
-      errors = false
-
-      params[:video] and params[:video].each do |k,v|
-        case k.to_s
-        when "duration"
-          @video[k] = duration_to_int( v, @video, k )
-        when "descriptors"
-          @video.descriptor_value_ids = v
-        when "assets"
-          @video.asset_ids = v.reject { |path| path == ":id:" }
-        else
-          @video[k] = v
-        end
       end
 
       if params[:new_assets]
@@ -231,14 +236,22 @@ class VideosController < ApplicationController
       
       @video.save
 
-      if !errors and okay and @video.errors.empty? and
-          if was_new
-            flash[:notice] = "#{@video.title} was added"
-            redirect_to videos_path
+      if okay
+        if was_new
+          flash[:notice] = "#{@video.title} was added"
+          if params["submit"] == "apply"
+            redirect_to edit_video_path( @video )
           else
-            flash[:notice] = "#{@video.title} saved"
+            redirect_to videos_path
+          end
+        else
+          flash[:notice] = "#{@video.title} saved"
+          if params["submit"] == "apply"
+            redirect_to edit_video_path( @video )
+          else
             redirect_to video_path( @video )
           end
+        end
       else
         @rollback = true
         flash[:error] = "Errors exist; could not update"

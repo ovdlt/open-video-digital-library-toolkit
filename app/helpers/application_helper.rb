@@ -1,5 +1,9 @@
 module ApplicationHelper
 
+  def rights_details
+    @rights_details
+  end
+
   def tab_title string
     string = string.to_s
     string = string.titleize
@@ -59,6 +63,7 @@ module ApplicationHelper
 
   def int_to_duration v
     return nil if v.nil?
+    return v if String === v
     h = v/3600
     m = ( v % 3600 ) / 60
     s = ( v % 3600 ) % 60
@@ -136,8 +141,12 @@ EOS
     end
   end
 
-  def error_class object
-    object.errors.empty? ? {} : { :class => "error" }
+  def error_class object, method = nil
+    if method.nil?
+      object.errors.empty? ? {} : { :class => "error" }
+    else
+      error_message_on( object, method ).blank? ? {} : { :class => "error" }
+    end
   end
 
   def descriptor_types

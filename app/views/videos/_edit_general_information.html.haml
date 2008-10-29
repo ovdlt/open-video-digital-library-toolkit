@@ -6,7 +6,6 @@
 
       %fieldset
         %legend Title Information
-
         .label= @form.label :title, "Title of Video"
         %div= @form.text_field :title, :size => 50
 
@@ -26,13 +25,14 @@
         %legend Description
 
         .label= @form.label :duration
-        %div
+        %div{ error_class( @video, :duration ) }
           = text_field_tag :video_duration, |
                            (( params[:video] and params[:video][:duration] ) |
                            or |
                            int_to_duration( @video.duration )), |
                            :name => "video[duration]", :size => 20 |
           Format: HH:MM:SS
+          = error_message_on @video, :duration
 
       %fieldset
         %legend Local Reference
@@ -53,7 +53,6 @@
 
         .label= @form.label :rights, "Type of Rights"
         %div
-          %select{:id => "video_rights", :name=>"video[rights_id]"}
-            = rights_options
+          = @form.collection_select :rights_id, rights_details, :id, :license
 
     .clear

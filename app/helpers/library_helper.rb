@@ -14,10 +14,6 @@ module LibraryHelper
     ]
   end
 
-  def rights_details
-    @rights_details
-  end
-
   def descriptor_types
     pcs = PropertyClass.find( :all, :conditions => "range = 'descriptor_value'" ).map(&:id)
     @property_types.select { |pt| pcs.include?(pt.property_class_id) }

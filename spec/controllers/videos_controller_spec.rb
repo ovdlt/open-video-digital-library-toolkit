@@ -120,6 +120,7 @@ describe VideosController do
     before(:each) do
       # note, no before(:all) this time
       login_as_admin
+      pending "filename is not used anymore"
       post :create, :video => {:filename => "this file is not there", :title => "teen cult machine", :sentence => "all your dreams are dead"}
     end
     
@@ -146,6 +147,7 @@ describe VideosController do
 
     def do_post
       login_as_admin
+      pending "filename is not used anymore"
       post :create, :video => {:filename => "cute_with_chris.fla", :title => "", :sentence => "all your dreams are dead"}
     end
     

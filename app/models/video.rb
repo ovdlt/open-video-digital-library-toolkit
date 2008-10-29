@@ -1,7 +1,5 @@
 class Video < ActiveRecord::Base
 
-  # belongs_to :rights
-
   has_many :assets, :dependent => :destroy
 
   has_many :properties, :dependent => :destroy do
@@ -51,39 +49,40 @@ class Video < ActiveRecord::Base
 
   has_many :property_types, :through => :properties
 
-  # has_many :assignments, :dependent => :destroy
-  # has_many :descriptors, :through => :assignments
-
   has_many :bookmarks, :dependent => :destroy
   has_many :collections, :through => :bookmarks
 
   validates_presence_of :title
   validates_presence_of :sentence
 
-  # validate :descriptors_must_be_unique
   validate :property_constraints
+  validate :validate_duration
   
+  before_save do |video|
+    video.send :convert_duration
+  end
+
   after_save do |video|
-    begin
 
-      vf = VideoFulltext.find_by_video_id video.id
+    video.send :save_rights
 
-      if vf == nil
-        vf = VideoFulltext.new :video_id => video.id
-      end
+    vf = VideoFulltext.find_by_video_id video.id
 
-      texts = [ video.title,
-                video.sentence,
-                video.abstract,
-                video.donor ]
-
-      # video.descriptors.each { |d| texts << d.text }
-
-      video.properties.each { |p| texts << p.value }
-
-      vf.text = texts.join(" ")
-      vf.save
+    if vf == nil
+      vf = VideoFulltext.new :video_id => video.id
     end
+
+    texts = [ video.title,
+              video.sentence,
+              video.abstract,
+              video.donor ]
+
+    # video.descriptors.each { |d| texts << d.text }
+
+    video.properties.each { |p| texts << p.value }
+
+    vf.text = texts.join(" ")
+    vf.save
   end
 
   after_destroy do |video|
@@ -92,15 +91,6 @@ class Video < ActiveRecord::Base
       if vf
         vf.destroy
       end
-    end
-  end
-
-  # remove when rights table dropped
-
-  def initialize options = {}
-    super
-    if !self.rights_id
-      self.rights_id = 1
     end
   end
 
@@ -297,7 +287,32 @@ class Video < ActiveRecord::Base
   end
 
   def rights
-    properties.find_by_name( "Rights Statement" ).value
+    @rights_property and @rights_property.value or properties.find_by_name( "Rights Statement" ).value
+  end
+
+  def rights_id
+    p = @rights_property || properties.find_by_name( "Rights Statement" )
+    if p
+      p.integer_value
+    else
+      nil
+    end
+  end
+
+  # Note: doesn't do any validation, just as the native rails assoc don't
+
+  def rights_id= v
+    if @rights_property.nil?
+      @rights_property = properties.find_by_name( "Rights Statement" )
+    end
+    if @rights_property.nil?
+      @rights_property =
+        Property.new :video_id => id,
+                      :property_type_id => PropertyType.find_by_name( "Rights Statement" ).id
+    end
+    if @rights_property.integer_value != v
+      @rights_property.integer_value = v
+    end
   end
 
   private
@@ -312,6 +327,38 @@ class Video < ActiveRecord::Base
   
   def property_constraints
     PropertyType.validate_object self
+  end
+
+  DURATION_REGEX = %r{^\s*(\d\d?):(\d\d?):(\d\d?)\s*$} 
+
+  def validate_duration
+    duration = attributes_before_type_cast["duration"]
+    if String === duration
+      if duration !~ DURATION_REGEX
+        errors.add :duration, "#{duration} is not a valid duration"
+      end
+      false
+    else
+      true
+    end
+  end
+
+  def convert_duration
+    duration = attributes_before_type_cast["duration"]
+    if String === duration
+      new_value = nil
+      if ( m = duration.match( DURATION_REGEX ) )
+        new_value = ((m[1].to_i*60)+m[2].to_i)*60+m[3].to_i
+      end
+      update_attribute( :duration, new_value )
+    end
+  end
+
+  def save_rights
+    if @rights_property and @rights_property.changed?
+      @rights_property.video_id = id
+      @rights_property.save
+    end
   end
 
 end
