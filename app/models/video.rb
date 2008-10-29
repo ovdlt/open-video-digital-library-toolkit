@@ -309,6 +309,7 @@ class Video < ActiveRecord::Base
       @rights_property =
         Property.new :video_id => id,
                       :property_type_id => PropertyType.find_by_name( "Rights Statement" ).id
+      properties << @rights_property
     end
     if @rights_property.integer_value != v
       @rights_property.integer_value = v

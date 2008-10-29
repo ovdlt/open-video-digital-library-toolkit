@@ -6,17 +6,23 @@
 
       %fieldset
         %legend Title Information
-        .label= @form.label :title, "Title of Video"
-        %div= @form.text_field :title, :size => 50
+        .title{ error_class( @video, :title ) }
+          .label= @form.label :title, "Title of Video"
+          %div= @form.text_field :title, :size => 50
+          = error_message_on @video, :title
 
       %fieldset
         %legend Content Summary
 
-        .label= @form.label :sentence, "Sentence Summary"
-        %div= @form.text_area :sentence, :cols => 38, :rows => 2
+        .sentence{ error_class( @video, :sentence ) }
+          .label= @form.label :sentence, "Sentence Summary"
+          %div= @form.text_area :sentence, :cols => 38, :rows => 2
+          = error_message_on @video, :sentence
 
-        .label= @form.label :abstract
-        %div= @form.text_area :abstract, :cols => 38, :rows => 6
+        .abstract{ error_class( @video, :abstract ) }
+          .label= @form.label :abstract
+          %div= @form.text_area :abstract, :cols => 38, :rows => 6
+          = error_message_on @video, :abstract
 
 
     .column
@@ -37,22 +43,25 @@
       %fieldset
         %legend Local Reference
 
-        .label= @form.label :local_id
-        %div= @form.text_field :local_id
+        .local{ error_class( @video, :local ) }
+          .label= @form.label :local_id
+          %div= @form.text_field :local_id
 
-        .label= @form.label :donor
-        %div= @form.text_area :donor, :cols => 38, :rows => 2
+        .donor{ error_class( @video, :donor ) }
+          .label= @form.label :donor
+          %div= @form.text_area :donor, :cols => 38, :rows => 2
 
     .full_width
 
       %fieldset
         %legend Rights
 
-        .label= @form.label :rights_holder, "Rights Holder"
-        %div= @form.text_field :rights_holder
+        .rights_holder{ error_class( @video, :rights_holder ) }
+          .label= @form.label :rights_holder, "Rights Holder"
+          %div= @form.text_field :rights_holder
 
-        .label= @form.label :rights_id, "Type of Rights"
-        %div
-          = @form.collection_select :rights_id, rights_details, :id, :license
+          .rights_type{ error_class( @video, :rights_type ) }
+          .label= @form.label :rights_id, "Type of Rights"
+          %div= @form.collection_select :rights_id, rights_details, :id, :license
 
     .clear

@@ -1,5 +1,7 @@
 - form_for @video do |@form|
 
+  -# = error_messages_for 'video'
+
   %fieldset
 
     %legend
@@ -19,7 +21,6 @@
            :name => "submit", :value => "save", :id => nil |
     = @form.submit "Apply", :name => "submit", :value => "apply", :id => nil
     - if @video.new_record?
-      = @form.submit
       = link_to "clear", clear_videos_path
       = link_to "cancel", cancel_videos_path
     - else
