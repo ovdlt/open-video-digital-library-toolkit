@@ -51,7 +51,7 @@
         .label= @form.label :rights_holder, "Rights Holder"
         %div= @form.text_field :rights_holder
 
-        .label= @form.label :rights, "Type of Rights"
+        .label= @form.label :rights_id, "Type of Rights"
         %div
           = @form.collection_select :rights_id, rights_details, :id, :license
 
