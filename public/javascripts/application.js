@@ -270,6 +270,16 @@ $(function(){
     $("li.print a").click(function(){
         window.print();
         return false;
-    })
+    });
+
+    $("span.next input").click(function(){
+        tabs = $(".tabs > ul").tabs();
+        current = tabs.data('selected.tabs');
+        if( current+2 == tabs.tabs('length') ) {
+            $("span.next input").hide();
+        }
+        tabs.tabs('select',current+1);
+        return false;
+    });
 
 });

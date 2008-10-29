@@ -17,6 +17,7 @@
 
     .clear
 
+    %span.next= @form.submit "next"
     = @form.submit @video.new_record? ? "Create" : "Save", |
            :name => "submit", :value => "save", :id => nil |
     = @form.submit "Apply", :name => "submit", :value => "apply", :id => nil
