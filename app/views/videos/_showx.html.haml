@@ -129,7 +129,7 @@
         %li
           = render :partial => "add_to_playlist", |
                    :object => video |
-      %li Print this page
+      %li.print= link_to "Print this page", "#"
       %li
         = link_to "E-mail link to this video", mail_video( video )
     - if current_user and current_user.has_role?(  [ :admin, :cataloger ] )

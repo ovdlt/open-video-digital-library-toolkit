@@ -267,4 +267,9 @@ $(function(){
         });
     });
 
+    $("li.print a").click(function(){
+        window.print();
+        return false;
+    })
+
 });
