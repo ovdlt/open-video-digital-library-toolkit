@@ -1,15 +1,15 @@
 %li.delete
   .property-type.display-edit
-    .display{ error_class(p_date) }
+    .display{ error_class(p_string) }
       .type
-        = p_date.name
+        = p_string.name
         -if editing?
           %span.edit= link_to "edit", "#"
       .value
-        = p_date.value
+        = p_string.value
     -if editing?
-      .edit{ error_class(p_date) }
-        - fields_for "property[#{type_id(p_date)}]", p_date do |fields|
+      .edit{ error_class(p_string) }
+        - fields_for "property[#{type_id(p_string)}]", p_string do |fields|
           .type
             %label
               Type:
@@ -20,7 +20,7 @@
           .value
             %label
               Value:
-              = fields.text_field :value
-          = error_messages_for 'property', :object => p_date
-          = hidden_field_tag "property[#{type_id(p_date)}][deleted]", |
+              = fields.text_field :value, :id => "id_#{rand(32768)}"
+          = error_messages_for 'property', :object => p_string
+          = hidden_field_tag "property[#{type_id(p_string)}][deleted]", |
                                false, :id => nil, :class => :deleted |

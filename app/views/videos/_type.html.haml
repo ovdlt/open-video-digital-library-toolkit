@@ -1,9 +1,8 @@
-%dt.descriptor= "#{h type.name}:"
+%dt.descriptor&== #{type.name}:
 %dd.descriptor
-  - descriptor_values(type).each do |descriptor|
+  - descriptor_values(type).each do |dv|
     .value
-      = check_box_tag "video_descriptor_#{descriptor.id}", |
-                      descriptor.id, |
-                      @video.descriptors.detect { |d| d.id == descriptor.id }, |
-                      :name => "video[descriptors][]" |
-      = label_tag "video_descriptor_#{descriptor.id}", h(descriptor.text)
+      %label
+        = check_box_tag "descriptor_type[#{type.id}][#{dv.id}]", 1, video_has_dv( dv )
+        = hidden_field_tag "descriptor_type[#{type.id}][#{dv.id}]", "no"
+        &= dv.text

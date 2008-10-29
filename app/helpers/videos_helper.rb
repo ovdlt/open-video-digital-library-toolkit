@@ -18,7 +18,6 @@ module VideosHelper
      :show_dates,
      :show_responsible_entities,
      :show_descriptors,
-     :show_digital_files,
     ]
   end
 
@@ -116,14 +115,16 @@ module VideosHelper
 
   private
 
-  def property_types_by_class pc
-    raise ArgumentError, pc.class.to_s if !(Integer === pc )
-    @property_types.select { |pt| pt.property_class_id == pc }
-  end
-
-  def render_partial_by_class class_name
+  def render_partial_by_class class_name, title
     range = PropertyClass.find_by_name( class_name ).range
     render :partial => "show_properties_#{range}",
+           :locals => { :property_class => class_name,
+                        :title => title }
+  end
+
+  def render_partial_edit_by_class class_name
+    range = PropertyClass.find_by_name( class_name ).range
+    render :partial => "edit_properties_#{range}",
            :locals => { :property_class => class_name }
   end
 
@@ -160,10 +161,15 @@ module VideosHelper
     end
   end
 
-  def date_types
-    # could be faster
-    pcs = PropertyClass.find_all_by_range( "date" ).map( &:id )
-    PropertyType.find_all_by_property_class_id pcs
+  def properties_by_type pt
+    pp @properties
+    @properties.select { |p| pt.id == p.property_type_id }
+  end
+  
+  def video_has_dv dv
+    ps = @properties.select { |p| p.property_type_id == dv.property_type_id and
+                                  p.integer_value == dv.id }
+    !ps.empty?
   end
 
   def date_range_select fields, object
@@ -173,6 +179,10 @@ module VideosHelper
     else
       fields.collection_select :property_type_id, date_types, :id, :name
     end
+  end
+
+  def _section_for field
+    render :partial => "/shared/tab", :object => field
   end
 
 end

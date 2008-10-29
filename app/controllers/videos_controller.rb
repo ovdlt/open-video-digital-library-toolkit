@@ -186,8 +186,34 @@ class VideosController < ApplicationController
         end
       end
 
-      if params["descriptors_passed"] && !params["descriptor_value"]
-        params["descriptor_value"] = []
+      if dts = params["descriptor_type"]
+
+        dts.each do |dt,dvs|
+
+          dt_id = dt.to_i
+          
+          if dt_id.nil? or dt_id < 1
+            render_bad_request 
+            return
+          end
+          
+          current_ids = @properties.select { |p| p.property_type_id == dt_id }.map(&:integer_value)
+          on_ids = dvs.select { |k,v| v == "1" }.map { |k,v| k.to_i }
+          off_ids = dvs.select { |k,v| v == "no" }.map { |k,v| k.to_i }
+          
+          turn_on = on_ids - current_ids
+          turn_off = off_ids & current_ids
+          
+          turn_off.each do |dv_id|
+            destroy_dv_property( dt_id, dv_id )
+          end
+
+          turn_on.each do |dv_id|
+            create_dv_property( dt_id, dv_id )
+          end
+
+        end
+
       end
 
       if params["descriptor_value"]
@@ -216,7 +242,7 @@ class VideosController < ApplicationController
       else
         @rollback = true
         flash[:error] = "Errors exist; could not update"
-        render :action => :show
+        render :action => :form
         raise ActiveRecord::Rollback
       end
 
@@ -235,41 +261,6 @@ class VideosController < ApplicationController
     render :action => :form
   end
 
-  def _update
-    if params[:video] &&
-       params[:video].include?(:filename) &&
-       ( params[:video][:filename].nil? or
-         ( "file:///" + params[:video][:filename] != @video.assets[0].uri ) )
-      render_bad_request 
-      return
-    end
-    
-    # This is so if all boxes are unchecked, we actually remove all
-    # descriptors
-
-    if params["descriptors_passed"] && !params["descriptor_value"]
-      params["descriptor_value"] = []
-    end
-
-    if params["descriptor_value"]
-      @video.descriptors = params["descriptor_value"].map do |d|
-        begin
-          DescriptorValue.find d.to_i
-        rescue ActiveRecord::RecordNotFound
-          render_bad_request 
-          return
-        end
-      end
-    end
-
-    if @video.update_attributes(params[:video])
-      flash[:notice] = "#{@video.title} was updated"
-      redirect_to video_path( @video )
-    else
-      render :action => :form
-    end
-  end
-  
   def destroy
     @video.destroy
     flash[:notice] = "#{@video.title} was deleted"
@@ -373,12 +364,26 @@ class VideosController < ApplicationController
     @library = Library.find :first
     @property_classes = PropertyClass.find :all
     @property_types = PropertyType.find :all
-    @descriptor_values = DescriptorValue.find :all
     @rights_details = RightsDetail.find :all
+    @descriptor_values = DescriptorValue.find :all
+
     @properties = Property.find_all_by_video_id params[:id]
+    # @descriptor_values = DescriptorValue.find_all_by_video_id params[:id]
 
     @editing = current_user && current_user.has_role?( [ :cataloger, :admin ] )
 
+  end
+
+  def create_dv_property pt_id, dv_id
+    @properties << ( p = Property.new( :property_type_id => pt_id,
+                                        :integer_value => dv_id,
+                                        :video_id => @video.id ) )
+    p.save
+  end
+
+  def destroy_dv_property pt_id, dv_id
+    @properties.reject! { |p| p.property_type_id == pt_id and p.integer_value == dv_id }
+    Property.find_by_video_id_and_property_type_id_and_integer_value( @video.id, pt_id, dv_id ).destroy
   end
 
 end

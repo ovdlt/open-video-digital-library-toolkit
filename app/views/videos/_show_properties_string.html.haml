@@ -1,11 +1,9 @@
 - pc = PropertyClass.find_by_name property_class
-%div
-  .form
-    %ul
-      - property_types_by_class(pc.id).each do |pt|
-        = render :partial => "pt", :object => pt
-      %li
-        .property-type.new
-          = link_to "new", "#"
-          %ul.template
-            = render :partial => "pt", :object => pt_template(pc)
+- if ( ps = properties_by_class( pc ) ).size > 0 or true
+  %fieldset
+    %legend&= title
+    %dl
+      - ps.each do |p|
+        %dt&== #{p.name}:
+        %dd&= p.value
+

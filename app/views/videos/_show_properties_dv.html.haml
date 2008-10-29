@@ -1,0 +1,11 @@
+- dts = descriptor_types
+- dvs = dts.map { |dt| properties_by_type( dt ) }
+- if dvs.flatten.size > 0
+  %fieldset
+    %legend Attributes
+    %dl
+      - dts.each_with_index do |dt,i|
+        - if dvs[i].length > 0
+          %dt&== #{dt.name}:
+          %dd
+            &= dvs[i].map(&:value).map(&:text).join(", ")

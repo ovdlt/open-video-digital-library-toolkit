@@ -97,17 +97,10 @@
         %div= h video.rights.statement
         %div= video.rights.html
 
-    .clear
-
-    .tabs
-      %ul
         - show_tabs.each do |tab|
-          = tabs_tab_for tab
-      - show_tabs.each do |tab|
-        = tabs_div_for tab
+          = tabs_div_for tab
 
-    - if editing?
-      = @form.submit "Save"
+    .clear
 
 .sidebar
 

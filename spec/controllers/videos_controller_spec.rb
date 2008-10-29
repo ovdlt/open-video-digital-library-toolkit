@@ -220,7 +220,7 @@ describe VideosController do
     end
 
     it "should render the form again" do
-      response.should render_template("videos/show")
+      response.should render_template("videos/form")
     end
     
     it "should assign the video to @video" do
@@ -260,13 +260,6 @@ describe VideosController do
     it "should allow all properties to be removed" do
       put :update, :id => @video.id,
                     :descriptor_value => []
-      response.should redirect_to(video_path(@video.id))
-      @video.reload.descriptors.should be_empty
-    end
-
-    it "should allow all properties to be removed via a special field" do
-      put :update, :id => @video.id,
-                   :descriptors_passed => true
       response.should redirect_to(video_path(@video.id))
       @video.reload.descriptors.should be_empty
     end

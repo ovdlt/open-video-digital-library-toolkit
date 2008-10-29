@@ -36,7 +36,7 @@ class Property < ActiveRecord::Base
       options = { :value => options }
     end
     super
-    if value = options[:value] || options["value"]
+    if options and value = options[:value] || options["value"]
       @value = value
       if ActiveRecord::Base === value and self.property_type_id.nil?
         self.property_type_id = value.property_type_id

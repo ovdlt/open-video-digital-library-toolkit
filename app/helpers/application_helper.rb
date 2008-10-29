@@ -52,6 +52,11 @@ module ApplicationHelper
     types.map { |t| [ t, descriptors.select { |d| d.descriptor_type == t } ] }
   end
 
+  def property_types_by_class pc
+    pcs = Array(pc).map(&:id)
+    @property_types.select { |pt| pcs.include? pt.property_class_id }
+  end
+
   def int_to_duration v
     return nil if v.nil?
     h = v/3600
@@ -135,6 +140,11 @@ EOS
     object.errors.empty? ? {} : { :class => "error" }
   end
 
+  def descriptor_types
+    pcs = @property_classes.select { |pc| pc.range == "descriptor_value" }.map( &:id )
+    @property_types.select { |pt| pcs.include? pt.property_class_id }
+  end
+  
   def descriptor_values pt
     @descriptor_values.select do |dv|
       dv.property_type == pt or type_id( dv.property_type ) == type_id(pt)

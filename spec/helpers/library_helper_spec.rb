@@ -7,18 +7,6 @@ describe LibraryHelper do
     included_modules.should include(LibraryHelper)
   end
 
-  describe "#property_types_by_class" do
-    
-    it "should filter the property types variable by class" do
-      assigns[:property_types] = @property_types = PropertyType.find(:all)
-      @property_types << ( pt = PropertyType.new :property_class_id => 1 )
-
-      helper.property_types_by_class( PropertyClass.find(1) ).should ==
-        ( PropertyType.find_all_by_property_class_id(1) + [ pt ] )
-    end
-
-  end
-
   describe "#rights_details" do
     
     it "should return all the current rights details" do
