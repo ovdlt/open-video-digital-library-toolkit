@@ -51,8 +51,7 @@ describe Asset do
                    "w" ) { |f| f << "thanks ants. thants." }
 
       video = Video.new( :sentence => "bless you ants. blants.",
-                          :title => "look around youlook around youlook",
-                          :rights_id => 1
+                          :title => "look around youlook around youlook"
                          )
       video.properties << Property.build( "Rights Statement", 1 )
     

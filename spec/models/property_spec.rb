@@ -42,8 +42,7 @@ describe Property do
   end
 
   it "should have a nice interface with build" do
-    video = Video.new :title => "title", :sentence => "sentence",
-                       :rights_id => 1
+    video = Video.new :title => "title", :sentence => "sentence"
     video.properties << Property.build( "Rights Statement", 1 )
 
     video.properties << Property.build( "Producer", "Bar" )
@@ -53,8 +52,7 @@ describe Property do
   end
 
   it "should have a nice interface with new" do
-    video = Video.new :title => "title", :sentence => "sentence",
-                       :rights_id => 1
+    video = Video.new :title => "title", :sentence => "sentence"
     video.properties << Property.build( "Rights Statement", 1 )
 
     property = video.properties.build
@@ -66,7 +64,6 @@ describe Property do
   it "should have a nice interface with new with opts" do
     video = Video.new :title => "title", :sentence => "sentence",
                        :rights_id => 1
-    video.properties << Property.build( "Rights Statement", 1 )
 
     property = video.properties.build \
       :property_type => PropertyType.find_by_name( "Producer" ),
