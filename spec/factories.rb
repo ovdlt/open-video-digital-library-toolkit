@@ -30,11 +30,6 @@ Factory.define :video do |v|
     v
   end  
 
-  v.rights_id {
-    # rand(Rights.count) + 1
-    1
-  }
-
   v.properties do
     [  Property.build( "Rights Statement", 1 ) ]
   end
