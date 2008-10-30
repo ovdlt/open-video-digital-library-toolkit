@@ -366,9 +366,12 @@ class VideosController < ApplicationController
     @descriptor_values = DescriptorValue.find :all
 
     @properties = Property.find_all_by_video_id params[:id]
-    # @descriptor_values = DescriptorValue.find_all_by_video_id params[:id]
 
-    @editing = current_user && current_user.has_role?( [ :cataloger, :admin ] )
+    if params[:search]
+      @search = Search.new params[:search]
+    else
+      @search = Search.new
+    end
 
   end
 

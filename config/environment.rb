@@ -107,3 +107,9 @@ end
 
 ActionView::Base.field_error_proc = Proc.new { |html_tag, instance|
 "<span class=\"fieldWithErrors\">#{html_tag}</span>" }
+
+ActiveSupport::Inflector.inflections do |inflect|
+  inflect.irregular 'criterion', 'criteria'
+end
+
+ActionView::Base.default_form_builder = OvdltFormBuilder

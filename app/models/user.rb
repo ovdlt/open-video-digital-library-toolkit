@@ -5,7 +5,10 @@ class User < ActiveRecord::Base
   has_many :permissions, :dependent => :destroy  
   has_many :roles, :through => :permissions
 
+  # TBD
   has_many :saved_queries
+
+  has_many :searches
   has_many :collections
 
   has_one :favorites, :class_name => "Collection", :dependent => :destroy

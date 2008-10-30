@@ -1,6 +1,7 @@
 .hitlist
 
-  %h1 Search / Browse Results
+  %h1
+    Search / Browse Results
 
   = render :partial => "videos/index", :object => @videos
 
@@ -13,20 +14,29 @@
     - if @type
       = render :partial => "shared/axis", :object => @type
   .entry
-    .title Refine Results
-    - form_tag @path.call({}), :method => :get do
-      = text_field_tag :query, params[:query], :size => 35, :id => nil
-      / = submit_tag "Search"
-      - if params[:descriptor_value_id]
-        - descriptor = DescriptorValue.find( params[:descriptor_value_id] )
-        .search-within
-          In
-          = h(descriptor.property_type.name)
-          &mdash;
-          = h(descriptor.text)
-
-    %ul
-      %li Genre: select one
+    Refine Results
+    - form_for @search, :url => videos_path, :method => :get do |form|
+      %ul.refine
+        / %li= text_field_tag :query, params[:query], :size => 35, :id => nil
+        %li
+          = form.criterion :text
+          / = text_field_tag :query, params[:query], :size => 35, :id => nil
+        %li
+          Duration:
+          %select
+            = select_options_for_duration nil
+        - PropertyType.browse do |type|
+          %li
+            &== #{type.name}:
+            %select
+              = select_options_for_type type, nil
+        - if params[:descriptor_value_id]
+          - descriptor = DescriptorValue.find( params[:descriptor_value_id] )
+          .search-within
+            In
+            = h(descriptor.property_type.name)
+            &mdash;
+            = h(descriptor.text)
   - if current_user
     .entry
       .title Tools and Services

@@ -185,4 +185,22 @@ module VideosHelper
     render :partial => "/shared/tab", :object => field
   end
 
+  def select_options_for_duration selected
+    options_for_select [["- any duration -", nil],
+                        ["short"],
+                        ["medium"],
+                        ["long"]],
+                        selected
+                         
+  end
+
+  def select_options_for_type type, selected
+    options_from_collection_for_select type.values,
+                                       :id,
+                                       :text,
+                                       selected
+
+                      
+  end
+
 end
