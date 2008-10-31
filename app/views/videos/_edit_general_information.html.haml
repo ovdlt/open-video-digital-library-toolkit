@@ -62,6 +62,7 @@
 
           .rights_type{ error_class( @video, :rights_type ) }
           .label= @form.label :rights_id, "Type of Rights"
+          - p @form.class
           %div= @form.collection_select :rights_id, rights_details, :id, :license
 
     .clear

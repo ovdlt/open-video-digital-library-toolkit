@@ -260,18 +260,18 @@ class Video < ActiveRecord::Base
 
         range = [ [-1,1], [1,2], [2,5], [5,10], [10,30], [30,60], [60,-1] ]
 
-        d = criterion.duration
+        d = criterion.duration.to_i
 
         lower, upper = range[d]
 
         if lower > 0
           conditions[0] << "(videos.duration > ?)"
-          conditions[1] << lower
+          conditions[1] << lower*60
         end
 
         if upper > 0
           conditions[0] << "(videos.duration <= ?)"
-          conditions[1] << upper
+          conditions[1] << upper*60
         end
 
       else raise "not implemented: #{criterion.type}"
