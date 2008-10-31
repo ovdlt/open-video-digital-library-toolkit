@@ -210,10 +210,90 @@ class Video < ActiveRecord::Base
     joins = []
     select = [ "videos.*" ]
 
-    p options[:search]
     options[:search].criteria.each do |criterion|
+
+      case criterion.type
+      when :text
+
+        # FIX: check for safety of sql escaping
+
+        p = criterion.text.gsub(/\\/, '\&\&').gsub(/'/, "''") 
+        
+        select << "match ( vfs.text ) against ( '#{p}' ) as r"
+        joins << "video_fulltexts vfs"
+
+        # FIX: only add + if not there; don't add if starts with -
+        p = ( p.split(/\s+/).map { |v| "+" + v } ).join(" ")
+        
+        conditions[0] <<
+          "( match ( vfs.text ) " +
+          "against ( '#{p}' in boolean mode ))"
+        conditions[0] << "(videos.id = vfs.video_id)"
+        options[:order] ||= "r desc"
+
+      when :property_type
+
+        if false
+      
+          joins << "properties dvs"
+          
+          conditions[0] << "(videos.id = dvs.video_id)"
+
+          conditions[0] << "(dvs.integer_value = ?)"
+          conditions[1] << criterion.integer_value
+
+          conditions[0] << "(dvs.property_type_id = ?)"
+          conditions[1] << criterion.property_type_id
+
+        else
+
+          conditions[0] <<
+            "exists ( select * from properties dvs where dvs.video_id = videos.id and " +
+                                                        "dvs.integer_value = ? and " +
+                                                        "dvs.property_type_id = ? )"
+          conditions[1] << criterion.integer_value
+          conditions[1] << criterion.property_type_id
+
+        end
+
+      when :duration
+
+        range = [ [-1,1], [1,2], [2,5], [5,10], [10,30], [30,60], [60,-1] ]
+
+        d = criterion.duration
+
+        lower, upper = range[d]
+
+        if lower > 0
+          conditions[0] << "(videos.duration > ?)"
+          conditions[1] << lower
+        end
+
+        if upper > 0
+          conditions[0] << "(videos.duration <= ?)"
+          conditions[1] << upper
+        end
+
+      else raise "not implemented: #{criterion.type}"
+      end
+
     end
+
     options.delete :search
+    
+    options[:order] ||= "videos.created_at desc"
+
+    if joins != []
+      joins = joins.uniq
+      options[:joins] = ", " + joins.join(", ")
+    end
+
+    if conditions != [ [], [] ]
+      options[:conditions] =
+        [ "(" + conditions[0].join(")AND(") + ")" ] + conditions[1]
+    end
+
+    options[:select] = select.join(", ")
 
     self.send method, :all, options
 

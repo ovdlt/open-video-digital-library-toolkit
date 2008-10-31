@@ -44,4 +44,23 @@ class Criterion < ActiveRecord::Base
     @integer_value = i
   end
 
+  def add_to_params hash
+    save = hash
+    case @type
+    when :text
+      hash["text"] ||= []
+      hash["text"] << @text
+    when :duration;
+      hash["duration"] ||= []
+      hash["duration"] << @duration
+    when :property_type;
+      hash["property_type"] ||= {}
+      hash = hash["property_type"]
+      hash["#{property_type_id}"] ||= []
+      hash["#{property_type_id}"] << @integer_value
+    else raise "not implemenated: #{@type}"
+    end
+    save
+  end
+
 end

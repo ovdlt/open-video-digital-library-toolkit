@@ -203,11 +203,15 @@ module VideosHelper
   end
 
   def descriptor_value_search dv
-    search_path Search.new( :descriptor_value_id => dv.id )
+    search = Search.new
+    search.criteria <<
+      Criterion.new( :property_type_id => dv.property_type_id,
+                      :integer_value => dv.id )
+    search_path search
   end
 
   def search_path search
-    videos_path search.to_params
+    videos_path search.add_to_params( {}, :search )
   end
 
 end

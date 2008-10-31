@@ -52,8 +52,8 @@
               .register
                 .button= link_to "REGISTER", signup_path
             .search
-              - form_tag videos_path, :method => :get do
-                = text_field_tag "query", nil, :size => 40, :id => nil
+              - form_for Search.new, :url => videos_path, :html => { :method => :get } do |form|
+                = form.criterion :text, :size => 40, :id => nil
                 = image_submit_tag "mag.png"
         #content
           - [:notice, :error].each do |type|

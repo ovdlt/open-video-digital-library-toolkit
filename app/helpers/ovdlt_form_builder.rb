@@ -7,7 +7,7 @@ class OvdltFormBuilder < ActionView::Helpers::FormBuilder
   # All these only handle single values though the model
   # code has some suport for MV (so that url's dont' change)
 
-  def criterion field, *args
+  def criterion field, options = {}
     case field
     when :text
       v = object.criteria.detect do |criterion| 
@@ -15,25 +15,32 @@ class OvdltFormBuilder < ActionView::Helpers::FormBuilder
       end
       v = v.text if v
 
-      text_field_tag "#{object_name}[criteria][text][]", v
+      text_field_tag "#{object_name}[criteria][text][]", v, options.merge( { :id => nil } )
 
     when :duration
 
       v = object.criteria.detect do |criterion| 
         criterion.type == :duration
       end
+
+      p "v?", v
+
       v = v.duration if v
+      p "v??", v
+      v = v.to_i if !v.blank?
+
+      p "v???", v
 
       options =
         options_for_select( [ [ "-- any duration --", nil ],
-                              [ "less than 1 minute", 1 ],
-                              [ "between 1 and 2 minutes", 2 ],
-                              [ "between 2 and 5 mintues", 5 ],
-                              [ "between 5 and 10 mintues", 10 ],
-                              [ "between 10 and 30 mintues", 30 ],
-                              [ "between 30 and 60 minutes", 60 ],
-                              [ "longer than 1 hour", -1 ],
-                            ], v.to_i )
+                              [ "less than 1 minute", 0 ],
+                              [ "between 1 and 2 minutes", 1 ],
+                              [ "between 2 and 5 mintues", 2 ],
+                              [ "between 5 and 10 mintues", 3 ],
+                              [ "between 10 and 30 mintues", 4 ],
+                              [ "between 30 and 60 minutes", 5 ],
+                              [ "longer than 1 hour", 6 ],
+                            ], v )
       
       name = "#{object_name}[criteria][#{field}][]"
 
