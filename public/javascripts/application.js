@@ -56,39 +56,33 @@ $(function(){
 
     function edit() {
 
-        string = $(this).attr("name");
-
-        if( !string ) {
-            string = "new"
-        }
-
         var ul = $(this).parents("ul")[0];
         var li = $(this).parents("li")[0];
         var template = $("ul.template li.delete",li)[0];
         var copy = $(template).clone();
 
         // could use a stored variable, but really ...
-        var r = Math.floor(Math.random()*32768)
+        var r = Math.floor(Math.random()*32768);
 
-        $("[name]",copy).each(function(){
+        $("[name]",copy).each(function() {
 
             name = $(this).attr("name");
 
-            new_name = name.replace( /\[template_([^\]]+)\]/g, "[$1]" )
+            new_name = name.replace( /\[template_([^\]]+)\]/g, "[$1]" );
 
             if ( new_name != name ) {
-                name = new_name
+                name = new_name;
             } else {
-                name = name.replace( /\[(new(_[a-z]+)?)\]/g, "[$1_"+r+"]" )
+                name = name.replace( /\[(new(_[a-z]+)?)\]/g, "[$1_"+r+"]" );
             }
-
 
             $(this).attr("name",name);
 
             if ( v = $(this).attr("value") ) {
-                v = v.replace( /^(new(_[a-z]+)?)$/g, "$1_"+r+"" )
+                v = v.replace( /^(new(_[a-z]+)?)$/g, "$1_"+r+"" );
                 $(this).attr("value",v);
             }
+
         });
 
         $("div.property-type.new a",copy).each(edit);
@@ -241,7 +235,6 @@ $(function(){
         var clicked = this;
         $("div.button",$(clicked).parents("div.navigate")[0]).each(function(){
           if(this == clicked){
-            /* alert( $.cookie(".videos.list.partial.navigate.current") ); */
 
             var classes = $(this).attr("class").split(" ");
             current = $.grep( classes, function(n){

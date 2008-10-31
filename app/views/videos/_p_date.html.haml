@@ -3,24 +3,22 @@
     .display{ error_class(p_date) }
       .type
         = p_date.name
-        -if editing?
-          %span.edit= link_to "edit", "#"
+        %span.edit= link_to "edit", "#"
       .value
         = p_date.value
-    -if editing?
-      .edit{ error_class(p_date) }
-        - fields_for "property[#{type_id(p_date)}]", p_date do |fields|
-          .type
-            %label
-              Type:
-              = fields.collection_select :property_type_id, |
-                 property_types_by_class( property_class ), |
-                 :id, :name, {}, :id => "id_#{rand(32768)}" |
-              %span.delete= link_to "delete", "#"
-          .value
-            %label
-              Value:
-              = fields.text_field :value
-          = error_messages_for 'property', :object => p_date
-          = hidden_field_tag "property[#{type_id(p_date)}][deleted]", |
-                               false, :id => nil, :class => :deleted |
+    .edit{ error_class(p_date) }
+      - fields_for "property[#{type_id(p_date)}]", p_date do |fields|
+        .type
+          %label
+            Type:
+            = fields.collection_select :property_type_id, |
+               property_types_by_class( property_class ), |
+               :id, :name, {}, :id => "id_#{rand(32768)}" |
+            %span.delete= link_to "delete", "#"
+        .value
+          %label
+            Value:
+            = fields.text_field :value
+        = error_messages_for 'property', :object => p_date
+        = hidden_field_tag "property[#{type_id(p_date)}][deleted]", |
+                             false, :id => nil, :class => :deleted |

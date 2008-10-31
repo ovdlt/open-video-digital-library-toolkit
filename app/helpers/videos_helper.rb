@@ -150,10 +150,6 @@ module VideosHelper
     Video.find candidates[selected]
   end
 
-  def editing?
-    @editing
-  end
-
   def properties_by_class pc
     types = property_types_by_class( pc ).map &:id
     @properties.select do |p|
