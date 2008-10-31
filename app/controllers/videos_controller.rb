@@ -43,7 +43,7 @@ class VideosController < ApplicationController
   end
 
   def recent
-    search
+    search Search.new
   end
 
   def index
@@ -66,6 +66,8 @@ class VideosController < ApplicationController
   end
 
   def search search
+
+    @search = search
 
     @videos = Video.search :method => :paginate,
                             :page => params[:page],

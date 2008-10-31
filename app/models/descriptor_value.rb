@@ -17,6 +17,7 @@ class DescriptorValue < ActiveRecord::Base
 
   has_many :properties,
            :through => :property_type do
+
     def sql_conditions
       conditions = "properties.integer_value = #{@owner.id}"
       if base = super
@@ -24,6 +25,7 @@ class DescriptorValue < ActiveRecord::Base
       end
       conditions
     end
+
   end
 
   def videos

@@ -8,10 +8,13 @@ class Search < ActiveRecord::Base
   def initialize attributes = {}
     super()
     attributes.each do |k,v|
-      case k
+      case k.to_s
       when "criteria"
         load_criteria v
-      else; raise "hell #{k.inspect}"
+      when "user_id"
+        self.user_id = v
+      else
+        criteria << Criterion.new( k => v )
       end
     end
 

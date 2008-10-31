@@ -53,38 +53,38 @@ describe Video do
 
     it "should insert into FT table on save" do
       @video.id.should be_nil
-      ( Video.search :query => @string ).should be_empty
+      ( Video.search :search => Search.new( :text => @string ) ).should be_empty
       @video.save!
-      ( Video.search :query => @string )[0].should == @video
+      ( Video.search :search => Search.new( :text => @string ) )[0].should == @video
     end
 
     it "should delete from FT table on destroy" do
       @video.save!
-      ( Video.search :query => @string )[0].should == @video
+      ( Video.search :search => Search.new( :text => @string ) )[0].should == @video
       @video.destroy
-      ( Video.search :query => @string ).should be_empty
+      ( Video.search :search => Search.new( :text => @string ) ).should be_empty
     end
 
     it "should update FT table on update" do
       @video.save!
-      ( Video.search :query => @string )[0].should == @video
+      ( Video.search :search => Search.new( :text => @string ) )[0].should == @video
       @new_string = "isnt_the_same"
       @video.sentence = @new_string
       @video.save!
-      ( Video.search :query => @string ).should be_empty
-      ( Video.search :query => @new_string )[0].should == @video
+      ( Video.search :search => Search.new( :text => @string ) ).should be_empty
+      ( Video.search :search => Search.new( :text => @new_string ) )[0].should == @video
     end
 
     it "should normal not return a pagination object" do
       @video.save!
       ( WillPaginate::Collection ===
-        ( Video.search :query => @string ) ).should be_false
+        ( Video.search :search => Search.new( :text => @string ) ) ).should be_false
     end
 
     it "should normal not return a pagination object" do
       @video.save!
       ( WillPaginate::Collection ===
-        ( Video.search :query => @string, :method => :paginate ) ).
+        ( Video.search :search => Search.new( :text => @string ), :method => :paginate ) ).
         should be_true
     end
 
@@ -142,7 +142,7 @@ describe Video do
     end
 
     it "should search by property values"  do
-      @retrieved = Video.search :query => "George Lucas"
+      @retrieved = Video.search :search => Search.new( :text => "George Lucas" )
       @retrieved.size.should == 1
     end
 

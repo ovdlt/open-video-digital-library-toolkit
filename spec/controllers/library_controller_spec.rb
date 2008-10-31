@@ -170,7 +170,7 @@ describe LibraryController do
       
         post :update, @params
 
-        response.status.to_i.should == 400
+        response.response_code.should == 400
       end
 
       it "should update pc attributes" do
@@ -235,7 +235,7 @@ describe LibraryController do
       
         post :update, @params
 
-        response.status.to_i.should == 400
+        response.response_code.should == 400
       end
 
       it "should update pt attributes" do
@@ -339,7 +339,7 @@ describe LibraryController do
       
         post :update, @params
 
-        response.status.to_i.should == 400
+        response.response_code.should == 400
       end
 
       it "should update rd attributes" do
@@ -453,7 +453,7 @@ describe LibraryController do
       
         post :update, @params
 
-        response.status.to_i.should == 400
+        response.response_code.should == 400
       end
 
       it "should update dv attributes" do

@@ -29,6 +29,7 @@ describe VideosController do
     it "should set current from property_type if given" do
       type = PropertyType.find :first
       get :index, :property_type_id => type.id
+      pending "decision on whether/how to keep display this"
       assigns[:current].should == type
     end
 
@@ -36,12 +37,14 @@ describe VideosController do
       d = DescriptorValue.find :first
       d.should_not be_nil
       get :index, :descriptor_value_id => d.id
+      pending "decision on whether/how to keep display this"
       assigns[:current].should == d
     end
 
     it "should filter videos by property if given" do
       d = DescriptorValue.find :first
       d.should_not be_nil
+      pending "decision on whether/how to keep display this"
       get :index, :descriptor_value_id => d.id
       assigns[:videos].size.should > 0
       assigns[:videos].size.should < Video.count

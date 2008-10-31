@@ -21,19 +21,12 @@
     .title Other videos
     %ul
       %li= link_to "Browse all videos", videos_path
-  /
-    .entry
-      - if @type
-        = render :partial => "shared/axis", :object => @type
   .entry
     .title Refine Results
-    / = debug ( @search )
     - form_for @search, :url => videos_path, :html => { :method => :get } do |form|
       %ul.refine
-        / %li= text_field_tag :query, params[:query], :size => 35, :id => nil
         %li
-          = form.criterion :text
-          / = text_field_tag :query, params[:query], :size => 35, :id => nil
+          = form.criterion :text, :size => 39
         %li
           %label
             = form.criterion :duration
