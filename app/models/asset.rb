@@ -87,10 +87,12 @@ class Asset < ActiveRecord::Base
   end
 
   def valid_path?
-    video_path = Pathname.new File.expand_path(ASSET_DIR)
-    Pathname.new(File.expand_path(absolute_path)).ascend do |path|
-      return true if path == video_path
-    end
+    begin
+      video_path = Pathname.new File.expand_path(ASSET_DIR)
+      Pathname.new(File.expand_path(absolute_path)).ascend do |path|
+        return true if path == video_path
+      end
+    rescue ArgumentError; end
     return false
   end
   

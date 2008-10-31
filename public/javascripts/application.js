@@ -134,6 +134,31 @@ $(function(){
     $(".tabs > ul").tabs({ cookie: { expires: null } });
 
     $("#uncatted").autocomplete("/assets/uncataloged.txt");
+
+    function promote(uncatted) {
+        uri = uncatted.attr("value");
+
+        row = $(".current.template tr");
+        tbody = $("tbody.assets.ajax");
+
+        c = row.clone();
+        input = $("td.input input", c);
+        input.removeAttr("id");
+        input.attr("name","new_assets[]");
+        input.attr("value",uri);
+        a = $("a.uri", c);
+        a.text(uri);
+        $("td.format",c).text("");
+        $("td.size",c).text("");
+        tbody.append(c);
+        uncatted.attr("value",null);
+    }
+
+    $("#uncataloged_assets input[type=submit]").click(function(){
+        promote( $("#uncatted") );
+        return false;
+    });
+
     $("#uncatted").keypress(function(e){
         if(e.which == 13){
             uri = $(this).attr("value");
