@@ -47,10 +47,8 @@ class VideosController < ApplicationController
   end
 
   def index
-    if params[:descriptor_value_id] or
-       params[:property_type_id] or
-       params[:query]
-      search
+    if s = params[:search]
+      search Search.new( s )
     else
       params[:style] = "recent"
       home
@@ -67,31 +65,12 @@ class VideosController < ApplicationController
     render :template => "videos/#{params[:style]}"
   end
 
-  def search
+  def search search
 
-    # FIX: number of videos selected depends on the format
-
-    if params[:property_type_id]
-      @current = @type = PropertyType.find( params[:property_type_id] )
-    end
-
-    @path = lambda { |opts| recent_videos_path( opts ) }
-    
-    if params[:descriptor_value_id]
-      @current = @descriptor =
-        DescriptorValue.find( params[:descriptor_value_id] )
-      @type = @descriptor.property_type
-      @path = lambda do |opts|
-        descriptor_value_videos_path( @descriptor, opts )
-      end
-    end
-    
     @videos = Video.search :method => :paginate,
                             :page => params[:page],
                             :per_page => per_page,
-                            :query => params[:query],
-                            :descriptor_value_id =>
-                              params[:descriptor_value_id]
+                            :search => @search
 
     render :template => "videos/index"
 
@@ -369,8 +348,6 @@ class VideosController < ApplicationController
 
     if params[:search]
       @search = Search.new params[:search]
-    else
-      @search = Search.new
     end
 
   end

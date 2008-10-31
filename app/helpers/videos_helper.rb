@@ -162,7 +162,6 @@ module VideosHelper
   end
 
   def properties_by_type pt
-    pp @properties
     @properties.select { |p| pt.id == p.property_type_id }
   end
   
@@ -201,6 +200,14 @@ module VideosHelper
                                        selected
 
                       
+  end
+
+  def descriptor_value_search dv
+    search_path Search.new( :descriptor_value_id => dv.id )
+  end
+
+  def search_path search
+    videos_path search.to_params
   end
 
 end

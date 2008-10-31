@@ -3,6 +3,17 @@
   %h1
     Search / Browse Results
 
+    - if params[:descriptor_value_id]
+      %br
+      %br
+      %div
+        - descriptor = DescriptorValue.find( params[:descriptor_value_id] )
+        .search-within
+          In
+          = h(descriptor.property_type.name)
+          &mdash;
+          = h(descriptor.text)
+
   = render :partial => "videos/index", :object => @videos
 
 .sidebar
@@ -10,33 +21,29 @@
     .title Other videos
     %ul
       %li= link_to "Browse all videos", videos_path
+  /
+    .entry
+      - if @type
+        = render :partial => "shared/axis", :object => @type
   .entry
-    - if @type
-      = render :partial => "shared/axis", :object => @type
-  .entry
-    Refine Results
-    - form_for @search, :url => videos_path, :method => :get do |form|
+    .title Refine Results
+    / = debug ( @search )
+    - form_for @search, :url => videos_path, :html => { :method => :get } do |form|
       %ul.refine
         / %li= text_field_tag :query, params[:query], :size => 35, :id => nil
         %li
           = form.criterion :text
           / = text_field_tag :query, params[:query], :size => 35, :id => nil
         %li
-          Duration:
-          %select
-            = select_options_for_duration nil
+          %label
+            = form.criterion :duration
+            %span.text Duration:
         - PropertyType.browse do |type|
           %li
-            &== #{type.name}:
-            %select
-              = select_options_for_type type, nil
-        - if params[:descriptor_value_id]
-          - descriptor = DescriptorValue.find( params[:descriptor_value_id] )
-          .search-within
-            In
-            = h(descriptor.property_type.name)
-            &mdash;
-            = h(descriptor.text)
+            %label
+              = form.criterion type
+              %span.text&== #{type.name}:
+        %li= form.submit "refine"
   - if current_user
     .entry
       .title Tools and Services

@@ -8,6 +8,8 @@ class CreateSearches < ActiveRecord::Migration
       t.boolean :public,        :null => false, :default => false
 
       # could be a criterion eventually, but easier to do right now?
+      t.string  :text,          :null => true
+      t.integer :duration,      :null => true
 
       t.timestamps
     end

@@ -127,7 +127,7 @@ class Video < ActiveRecord::Base
       sort { |a,b| a.priority - b.priority }
   end
 
-  def self.search options = {}
+  def self._search options = {}
 
     options = options.dup
     
@@ -190,6 +190,30 @@ class Video < ActiveRecord::Base
     end
 
     options[:select] = select.join(", ")
+
+    self.send method, :all, options
+
+  end
+
+  def self.search options = {}
+
+    options = options.dup
+    
+    method = options[:method] || :find
+    options.delete :method
+
+    if method == :paginate
+      options[:page] ||= nil
+    end
+
+    conditions = [ [], [] ]
+    joins = []
+    select = [ "videos.*" ]
+
+    p options[:search]
+    options[:search].criteria.each do |criterion|
+    end
+    options.delete :search
 
     self.send method, :all, options
 

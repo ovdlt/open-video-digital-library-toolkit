@@ -7,7 +7,7 @@
         - type.values.each do |descriptor|
           %li
             = link_to descriptor.text, |
-              descriptor_value_videos_path( descriptor ) |
+              descriptor_value_search( descriptor ) |
             %span.count= "[#{descriptor.videos.size}]"
         %li.all
           = link_to "All #{type.name.pluralize} >>", |
