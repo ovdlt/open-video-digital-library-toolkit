@@ -19,8 +19,8 @@
 
     %span.next= @form.submit "next"
     = @form.submit @video.new_record? ? "Create" : "Save", |
-           :name => "submit", :value => "save", :id => nil |
-    = @form.submit "Apply", :name => "submit", :value => "apply", :id => nil
+           :name => "submit", :value => "finished", :id => nil |
+    = @form.submit "Apply", :name => "submit", :value => "save", :id => nil
     - if @video.new_record?
       = link_to "clear", clear_videos_path
       = link_to "cancel", cancel_videos_path

@@ -1,7 +1,7 @@
 class LibraryController < ApplicationController
 
   before_filter :login_required
-  require_role [ :admin]
+  require_role [ :admin ]
 
   before_filter :load
 
@@ -197,7 +197,11 @@ class LibraryController < ApplicationController
         render :action => :show
         raise ActiveRecord::Rollback
       else
-        redirect_to library_path
+        if params["submit"] == "finished"
+          redirect_to videos_path
+        else
+          redirect_to library_path
+        end
       end
 
     end

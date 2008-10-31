@@ -211,14 +211,14 @@ class VideosController < ApplicationController
       if okay
         if was_new
           flash[:notice] = "#{@video.title} was added"
-          if params["submit"] == "apply"
+          if params["submit"] == "save"
             redirect_to edit_video_path( @video )
           else
             redirect_to videos_path
           end
         else
           flash[:notice] = "#{@video.title} saved"
-          if params["submit"] == "apply"
+          if params["submit"] == "save"
             redirect_to edit_video_path( @video )
           else
             redirect_to video_path( @video )
