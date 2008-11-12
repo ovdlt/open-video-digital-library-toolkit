@@ -9,7 +9,13 @@ class PropertyType < ActiveRecord::Base
 
   validates_presence_of :name, :property_class_id
   validates_numericality_of :property_class_id, :greater_than => 0
-  validates_uniqueness_of :name
+
+  # validates_uniqueness_of :name
+  def validate
+    if other = self.class.find_by_name( name ) and other.id != self.id
+      errors.add :name, "must be unique: already used in #{other.property_class.name}"
+    end
+  end
 
   # FIX: factor
   def tableize
