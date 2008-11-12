@@ -37,22 +37,6 @@ module ApplicationHelper
     videos_path search.add_to_params( {}, :search )
   end
 
-  def sq_path sq
-    if sq.descriptor_value
-      if !sq.query_string.blank?
-        descriptor_value_videos_path( sq.descriptor_value, :query => sq.query_string )
-      else
-        descriptor_value_videos_path( sq.descriptor_value )
-      end
-    else
-      if !sq.query_string.blank?
-        videos_path( :query => sq.query_string )
-      else
-        videos_path
-      end
-    end
-  end
-
   def browse_descriptors_and_types video
     descriptors = video.descriptors
     types = ( descriptors.map { |d| d.descriptor_type } ).uniq

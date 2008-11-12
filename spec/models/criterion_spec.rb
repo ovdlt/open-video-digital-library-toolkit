@@ -14,6 +14,8 @@ describe Criterion do
       @search = Search.create! :user_id => 1
       @valid_attributes = {
         :search => @search,
+        :criterion_type => "text",
+        :text => "foobar"
       }
     end
 

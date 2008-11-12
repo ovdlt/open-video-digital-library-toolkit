@@ -219,7 +219,7 @@ module VideosHelper
         params += to_form_inputs v, value_name
       end
     else
-      params += [ hidden_field_tag name, value, :id => nil ]
+      params += [ hidden_field_tag( name, value, :id => nil  ) ]
     end
     params
   end

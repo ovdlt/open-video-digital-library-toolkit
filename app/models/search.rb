@@ -7,6 +7,7 @@ class Search < ActiveRecord::Base
 
   def initialize attributes = {}
     super()
+    attributes ||= {}
     attributes.each do |k,v|
       case k.to_s
       when "criteria"
@@ -38,14 +39,9 @@ class Search < ActiveRecord::Base
     hash
   end
 
-  def _criteria
-    @criteria ||= []
-  end
-
   private
 
   def load_criteria hash
-    # @criteria = []
     hash.each do |k,v|
       case k
       when "text"

@@ -26,22 +26,23 @@ describe SavedQueriesController do
       request.env["HTTP_REFERER"] = @prev
     end
 
-    it "should require either a descriptor or a query string" do
-      lambda { post :create }.should_not \
-        change { current_user.saved_queries.size }
-      flash[:error].should match(/error/i)
-      response.should redirect_to(@prev)
-    end
+    # we no longer require this; parameters could be empty anyway
+#     it "should require some parameters" do
+#       lambda { post :create }.should_not \
+#         change { current_user.searches.size }
+#       flash[:error].should match(/error/i)
+#       response.should redirect_to(@prev)
+#     end
 
     it "should add saved query given a string" do
-      lambda { post :create, :query => "foo bar" }.should \
-        change { current_user.reload; current_user.saved_queries.size }.by(1)
+      lambda { post :create, "search[criteria][text][]" => "foo" }.should \
+        change { current_user.reload; current_user.searches.size }.by(1)
       flash[:notice].should match(/saved/)
     end
 
     it "should add saved query given a descriptor" do
       lambda { post :create, :descriptor_value_id => 1 }.should \
-        change { current_user.reload; current_user.saved_queries.size }.by(1)
+        change { current_user.reload; current_user.searches.size }.by(1)
       flash[:notice].should match(/saved/)
     end
 
@@ -51,13 +52,13 @@ describe SavedQueriesController do
 
     before(:each) do
       login_as_user
-      @sq = SavedQuery.create! :user_id => current_user.id,
-                                :query_string => "some words"
+      @search = Search.create! :user_id => current_user.id,
+                                :text => "some words"
     end
 
     it "should require the user be logged in" do
       logout
-      delete :destroy, :id => @sq.id
+      delete :destroy, :id => @search.id
       response.response_code.should == 404
     end
 
@@ -69,8 +70,8 @@ describe SavedQueriesController do
       login_as_user
       @prev = "http://test.host/previous/page"
       request.env["HTTP_REFERER"] = @prev
-      @sq = SavedQuery.create! :user_id => current_user.id,
-                                :query_string => "some words"
+      @search = Search.create! :user_id => current_user.id,
+                                :text => "some words"
     end
 
     it "should require a parameter" do
@@ -85,13 +86,13 @@ describe SavedQueriesController do
 
     it "should require the user own the search" do
       login_as_other_user
-      delete :destroy, :id => @sq.id
+      delete :destroy, :id => @search.id
       response.response_code.should == 404
     end
 
     it "should delete the query" do
-      lambda { delete :destroy, :id => @sq.id }.should \
-        change { current_user.reload; current_user.saved_queries.size }.by(-1)
+      lambda { delete :destroy, :id => @search.id }.should \
+        change { current_user.reload; current_user.searches.size }.by(-1)
       flash[:notice].should match(/deleted/i)
       response.should redirect_to(@prev)
     end

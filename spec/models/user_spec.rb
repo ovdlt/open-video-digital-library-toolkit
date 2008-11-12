@@ -3,19 +3,19 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe User do
 
-  describe "#saved_queries" do
+  describe "#searches" do
 
     it "should be empty to start" do
       user = create_user
-      user.saved_queries.should be_empty
+      user.searches.should be_empty
     end
 
     it "should allow queries to be added" do
       user = create_user
-      user.saved_queries.build :query_string => "foo"
-      user.saved_queries << SavedQuery.new( :descriptor_value_id => 1 )
+      user.searches << Search.new( :text => "foo" )
+      user.searches << Search.new( :duration => 2 )
       user.save.should be_true
-      user.saved_queries.size.should == 2
+      user.searches.size.should == 2
     end
 
   end
