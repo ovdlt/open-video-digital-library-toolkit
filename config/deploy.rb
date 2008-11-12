@@ -2,6 +2,8 @@ require 'deprec'
   
 set :database_yml_in_scm, false
 
+# may be able to go away, but there's an issue with cap 2.5.1
+set :branch, "master"
 
 set :application, "ovdlt"
 set :domain, "ovdlt.smparkes.net"
