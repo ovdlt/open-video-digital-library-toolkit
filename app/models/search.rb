@@ -13,11 +13,16 @@ class Search < ActiveRecord::Base
         load_criteria v
       when "user_id"
         self.user_id = v
+      when "title"
+        self.title = v
       else
         criteria << Criterion.new( k => v )
       end
     end
 
+  end
+
+  def as_inputs hash, name
   end
 
   def add_to_params hash, name
@@ -33,30 +38,30 @@ class Search < ActiveRecord::Base
     hash
   end
 
-  def criteria
+  def _criteria
     @criteria ||= []
   end
 
   private
 
   def load_criteria hash
-    @criteria = []
+    # @criteria = []
     hash.each do |k,v|
       case k
       when "text"
         v.each do |t|
-          !t.blank? and @criteria << Criterion.new( :text => t )
+          !t.blank? and criteria << Criterion.new( :text => t )
         end
       when "property_type"
         v.each do |pt_id,dvs|
           dvs.each do |dv_id|
-            !dv_id.blank? and @criteria << Criterion.new( :property_type_id => pt_id,
+            !dv_id.blank? and criteria << Criterion.new( :property_type_id => pt_id,
                                                             :integer_value => dv_id )
           end
         end
       when "duration"
         v.each do |d|
-          !d.blank? and @criteria << Criterion.new( :duration => d )
+          !d.blank? and criteria << Criterion.new( :duration => d )
         end
       else raise "hell #{k}"
       end

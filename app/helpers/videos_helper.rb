@@ -206,8 +206,22 @@ module VideosHelper
     search_path search
   end
 
-  def search_path search
-    videos_path search.add_to_params( {}, :search )
+  def to_form_inputs value, name = ""
+    params = []
+    case value
+    when "foo";
+    when Hash:
+      value.each do |k,v|
+        value_name = k.to_s
+        if !name.blank?
+          value_name = "#{name}[#{value_name}]"
+        end
+        params += to_form_inputs v, value_name
+      end
+    else
+      params += [ hidden_field_tag name, value, :id => nil ]
+    end
+    params
   end
 
 end

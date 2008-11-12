@@ -7,7 +7,7 @@ class OvdltFormBuilder < ActionView::Helpers::FormBuilder
     case field
     when :text
       v = object.criteria.detect do |criterion| 
-        criterion.type == :text
+        criterion.criterion_type.to_s == "text"
       end
       v = v.text if v
 
@@ -16,16 +16,11 @@ class OvdltFormBuilder < ActionView::Helpers::FormBuilder
     when :duration
 
       v = object.criteria.detect do |criterion| 
-        criterion.type == :duration
+        criterion.criterion_type.to_s == "duration"
       end
 
-      p "v?", v
-
       v = v.duration if v
-      p "v??", v
       v = v.to_i if !v.blank?
-
-      p "v???", v
 
       options =
         @template.options_for_select( [ [ "-- any duration --", nil ],
@@ -46,7 +41,7 @@ class OvdltFormBuilder < ActionView::Helpers::FormBuilder
 
     when PropertyType
       current = object.criteria.detect do |criterion| 
-        criterion.type == :property_type &&
+        criterion.criterion_type.to_s == "property_type" &&
         criterion.property_type_id.to_i == field.id
       end
       current = current.integer_value.to_i if current

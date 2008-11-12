@@ -33,6 +33,10 @@ module ApplicationHelper
     number_to_human_size(file.stat.size) if File.file?(file)
   end
   
+  def search_path search
+    videos_path search.add_to_params( {}, :search )
+  end
+
   def sq_path sq
     if sq.descriptor_value
       if !sq.query_string.blank?

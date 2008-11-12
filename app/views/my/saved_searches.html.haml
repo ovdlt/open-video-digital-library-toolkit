@@ -1,21 +1,15 @@
 .searches.box
   .title Saved Searches
-  - if current_user.saved_queries.size > 0
-    - current_user.saved_queries.each do |sq|
+  - if current_user.searches.size > 0
+    - current_user.searches.each do |search|
       .search
         %span.title Search:
-        %a{:href=>sq_path(sq)}
+        %a{:href=>search_path(search)}
           %span
-            - if !sq.query_string.blank?
-              = '"'+ h(sq.query_string) + '"'
-            - if sq.descriptor
-              in
-              = h sq.descriptor.descriptor_type.title
-              &mdash;
-              = h( sq.descriptor.text )
+            = h search.title
         .controls
           .delete
-            - form_tag saved_query_path(sq), :method => :delete do
+            - form_tag saved_query_path(search), :method => :delete do
               %label.button
                 delete
                 = submit_tag "delete", :class => :hidden

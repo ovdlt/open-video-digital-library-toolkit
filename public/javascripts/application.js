@@ -300,4 +300,10 @@ $(function(){
         return false;
     });
 
+    $("form .button.save_query a").click(function(){
+        var form = $(this).parents("form")[0];
+        $(".hidden",form).show();
+        return false;
+    });
+
 });

@@ -212,8 +212,8 @@ class Video < ActiveRecord::Base
 
     options[:search].criteria.each do |criterion|
 
-      case criterion.type
-      when :text
+      case criterion.criterion_type.to_s
+      when "text"
 
         # FIX: check for safety of sql escaping
 
@@ -231,32 +231,16 @@ class Video < ActiveRecord::Base
         conditions[0] << "(videos.id = vfs.video_id)"
         options[:order] ||= "r desc"
 
-      when :property_type
+      when "property_type"
 
-        if false
-      
-          joins << "properties dvs"
-          
-          conditions[0] << "(videos.id = dvs.video_id)"
+        conditions[0] <<
+          "exists ( select * from properties dvs where dvs.video_id = videos.id and " +
+          "dvs.integer_value = ? and " +
+          "dvs.property_type_id = ? )"
+        conditions[1] << criterion.integer_value
+        conditions[1] << criterion.property_type_id
 
-          conditions[0] << "(dvs.integer_value = ?)"
-          conditions[1] << criterion.integer_value
-
-          conditions[0] << "(dvs.property_type_id = ?)"
-          conditions[1] << criterion.property_type_id
-
-        else
-
-          conditions[0] <<
-            "exists ( select * from properties dvs where dvs.video_id = videos.id and " +
-                                                        "dvs.integer_value = ? and " +
-                                                        "dvs.property_type_id = ? )"
-          conditions[1] << criterion.integer_value
-          conditions[1] << criterion.property_type_id
-
-        end
-
-      when :duration
+      when "duration"
 
         range = [ [-1,1], [1,2], [2,5], [5,10], [10,30], [30,60], [60,-1] ]
 
@@ -274,7 +258,7 @@ class Video < ActiveRecord::Base
           conditions[1] << upper*60
         end
 
-      else raise "not implemented: #{criterion.type}"
+      else raise "not implemented: #{criterion.criterion_type}"
       end
 
     end

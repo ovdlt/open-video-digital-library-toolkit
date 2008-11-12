@@ -1,64 +1,48 @@
 class Criterion < ActiveRecord::Base
 
   belongs_to :search
-  has_one :property
 
-  validates_presence_of :search_id
+  # caught by database
+  # validates_presence_of :search_id
+
+  # could be made polymorphic, etc.
 
   def text= t
-    @text = t
-    @type = :text
-  end
-
-  def type
-    @type
-  end
-
-  def text
-    @text
-  end
-
-  def duration
-    @duratino
+    self.criterion_type = "text"
+    write_attribute "text", t
   end
 
   def duration= d
-    @duratino = d
-    @type = :duration
-  end
-
-  def property_type_id
-    @property_type_id
+    self.criterion_type = "duration"
+    write_attribute "duration", d
   end
 
   def property_type_id= pt_id
-    @property_type_id = pt_id
-    @type = :property_type
-  end
-
-  def integer_value
-    @integer_value
-  end
-
-  def integer_value= i
-    @integer_value = i
+    self.criterion_type = "property_type"
+    write_attribute "property_type_id", pt_id
   end
 
   def add_to_params hash
     save = hash
-    case @type
-    when :text
-      hash["text"] ||= []
-      hash["text"] << @text
-    when :duration;
-      hash["duration"] ||= []
-      hash["duration"] << @duration
-    when :property_type;
-      hash["property_type"] ||= {}
-      hash = hash["property_type"]
-      hash["#{property_type_id}"] ||= []
-      hash["#{property_type_id}"] << @integer_value
-    else raise "not implemenated: #{@type}"
+    case criterion_type
+    when "text"
+      if !text.blank?
+        hash["text"] ||= []
+        hash["text"] << text
+      end
+    when "duration";
+      if !duration.blank?
+        hash["duration"] ||= []
+        hash["duration"] << duration
+      end
+    when "property_type";
+      if !integer_value.blank?
+        hash["property_type"] ||= {}
+        hash = hash["property_type"]
+        hash["#{property_type_id}"] ||= []
+        hash["#{property_type_id}"] << integer_value
+      end
+    else raise "not implemenated: #{criterion_type}"
     end
     save
   end

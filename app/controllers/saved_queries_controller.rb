@@ -4,9 +4,8 @@ class SavedQueriesController < ApplicationController
     if current_user.nil?
       flash[:error] = "You must be logged in to save a search"
     else
-      current_user.saved_queries.build \
-        :descriptor_value_id => params[:descriptor_value_id],
-        :query_string => params[:query]
+      search = Search.new params[:search]
+      current_user.searches << search
       if current_user.save
         flash[:notice] = "Search saved"
       else
@@ -27,20 +26,21 @@ class SavedQueriesController < ApplicationController
       return
     end
 
-    sq = nil
+    search = nil
     begin
-      sq = SavedQuery.find params[:id]
+      search = Search.find params[:id]
     rescue ActiveRecord::RecordNotFound
       render_missing
       return
     end
 
-    if sq.user_id != current_user.id
+    if search.user_id != current_user.id
       render_missing
       return
     end
 
-    sq.destroy
+    search.destroy
+
     flash[:notice] = "Search deleted"
 
     redirect_to :back

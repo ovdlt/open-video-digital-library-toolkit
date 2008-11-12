@@ -23,7 +23,8 @@
       %li= link_to "Browse all videos", videos_path
   .entry
     .title Refine Results
-    - form_for @search, :url => videos_path, :html => { :method => :get } do |form|
+    - form_for @search, :url => videos_path, |
+                        :html => { :method => :get, :id => nil } do |form| |
       %ul.refine
         %li
           = form.criterion :text, :size => 39
@@ -43,13 +44,16 @@
       %ul
         - if current_user && current_user.has_role?( [ :admin, :cataloger ] )
           %li= link_to "<span>Add new video</span>", "/videos/new"
-        - if current_user and ( params[:descriptor_value_id] or params[:query] )
+        - if current_user and params[:search]
           %li
             - form_tag saved_queries_path, :method => :post do
-              = hidden_field_tag :descriptor_value_id, params[:descriptor_value_id]
-              = hidden_field_tag :query, params[:query]
-              %label.button
-                Save this search
-                = submit_tag "Save this search", :class => :hidden
-
+              %label.button.save_query
+                = link_to "Save this search", "#"
+              = to_form_inputs ( @search.add_to_params( {}, :search ) )
+              .save_query
+                .title.hidden
+                  %label
+                    Title:
+                    = text_field_tag 'search[title]', nil, :id => nil
+                    = submit_tag "Save", :class => :hidden
 .clear
