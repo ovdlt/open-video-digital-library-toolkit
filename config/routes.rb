@@ -39,15 +39,6 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :assets, :collection => { :uncataloged => :any }
 
-
-  map.resources :descriptor_values do |dv|
-    dv.resources :videos
-  end
-  
-  map.resources :property_types do |property_type|
-    property_type.resources :videos
-  end
-  
   map.resource :library, :controller => :library
 
   map.resource :my, :controller => :my,

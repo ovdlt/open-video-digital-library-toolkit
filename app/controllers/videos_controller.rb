@@ -43,12 +43,13 @@ class VideosController < ApplicationController
   end
 
   def recent
-    search Search.new
+    @search = Search.new
+    search
   end
 
   def index
-    if s = params[:search]
-      search Search.new( s )
+    if params[:search] or @property_type_menu
+      search
     else
       params[:style] = "recent"
       home
@@ -65,9 +66,7 @@ class VideosController < ApplicationController
     render :template => "videos/#{params[:style]}"
   end
 
-  def search search
-
-    @search = search
+  def search
 
     @videos = Video.search :method => :paginate,
                             :page => params[:page],
@@ -348,8 +347,10 @@ class VideosController < ApplicationController
 
     @properties = Property.find_all_by_video_id params[:id]
 
-    if params[:search]
-      @search = Search.new params[:search]
+    @search = Search.new params[:search]
+
+    if ptid = params[:property_type_menu_id]
+      @property_type_menu = PropertyType.find_by_id ptid
     end
 
   end

@@ -1,5 +1,9 @@
 module ApplicationHelper
 
+  def property_type_videos_path t
+    videos_path :property_type_menu_id => t.id
+  end
+
   def rights_details
     @rights_details
   end

@@ -21,6 +21,9 @@
     .title Other videos
     %ul
       %li= link_to "Browse all videos", videos_path
+    - if @property_type_menu
+      .entry
+        = render :partial => "shared/axis", :object => @property_type_menu
   .entry
     .title Refine Results
     - form_for @search, :url => videos_path, |
