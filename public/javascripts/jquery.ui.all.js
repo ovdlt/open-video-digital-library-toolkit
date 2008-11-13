@@ -9166,7 +9166,13 @@ $.widget("ui.tabs", {
 					});
 				}
 				else if (o.cookie) {
-					var index = parseInt($.cookie('ui-tabs' + $.data(self.element)),10);
+                                    /* OVLDT patch; can't use $.data */
+                                    var v  = self.element.attr("id");
+                                    if (!v) {
+                                        v = $.data(self.element);
+                                    }
+                                    /* alert(v); */
+					var index = parseInt($.cookie('ui-tabs' + v),10);
 					if (index && self.$tabs[index])
 						o.selected = index;
 				}
@@ -9315,8 +9321,14 @@ $.widget("ui.tabs", {
 				}
 			}
 
-			if (o.cookie)
-				$.cookie('ui-tabs' + $.data(self.element), self.options.selected, o.cookie);
+		    if (o.cookie) {
+                        /* OVLDT patch; can't use $.data */
+                        var v  = self.element.attr("id");
+                        if (!v) {
+                            v = $.data(self.element);
+                        }
+			$.cookie('ui-tabs' + v, self.options.selected, o.cookie);
+                    }
 
 			// stop possibly running animations
 			self.$panels.stop();
