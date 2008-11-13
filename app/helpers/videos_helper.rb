@@ -224,4 +224,28 @@ module VideosHelper
     params
   end
 
+  VIDEO_DETAILS_FIELDS = [
+              :alternative_title,
+              :series_title,
+              :audience,
+              :language_note,
+              :creation_credits,
+              :participation_credits,
+              :classification,
+              :preservation_note,
+             ]
+
+  def video_details video
+    details = []
+
+    VIDEO_DETAILS_FIELDS.each do |field|
+      if !(v = video[field]).blank?
+        details << [ "#{field.to_s.humanize.titleize}:", v ]
+      end
+    end
+
+    details
+  end
+
 end
+

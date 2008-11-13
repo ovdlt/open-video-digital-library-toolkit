@@ -6,23 +6,52 @@
 
       %fieldset
         %legend Title Information
-        .title{ error_class( @video, :title ) }
+
+        .title.required{ error_class( @video, :title ) }
           .label= @form.label :title, "Title of Video"
-          %div= @form.text_field :title, :size => 50
+          %div= @form.text_field :title, :size => 44
           = error_message_on @video, :title
 
+        .alternative_title{ error_class( @video, :alternative_title ) }
+          .label= @form.label :alternative_title, "Alternative Title of Video"
+          %div= @form.text_field :alternative_title, :size => 44
+          = error_message_on @video, :alternative_title
+
+        .series_title{ error_class( @video, :series_title ) }
+          .label= @form.label :series_title, "Series Title of Video"
+          %div= @form.text_field :series_title, :size => 44
+          = error_message_on @video, :series_title
+
       %fieldset
-        %legend Content Summary
+        %legend Participants
+
+        .creation_credits{ error_class( @video, :creation_credits ) }
+          .label= @form.label :creation_credits, "Creation Credits"
+          %div= @form.text_area :creation_credits, :cols => 38, :rows => 6
+          = error_message_on @video, :creation_credits
+
+        .participation_credits{ error_class( @video, :participation_credits ) }
+          .label= @form.label :participation_credits, "Participation Credits"
+          %div= @form.text_area :participation_credits, :cols => 38, :rows => 6
+          = error_message_on @video, :participation_credits
+
+      %fieldset
+        %legend Content 
+
+        .abstract.required{ error_class( @video, :abstract ) }
+          .label= @form.label :abstract
+          %div= @form.text_area :abstract, :cols => 38, :rows => 6
+          = error_message_on @video, :abstract
 
         .sentence{ error_class( @video, :sentence ) }
           .label= @form.label :sentence, "Sentence Summary"
           %div= @form.text_area :sentence, :cols => 38, :rows => 2
           = error_message_on @video, :sentence
 
-        .abstract{ error_class( @video, :abstract ) }
-          .label= @form.label :abstract
-          %div= @form.text_area :abstract, :cols => 38, :rows => 6
-          = error_message_on @video, :abstract
+        .transcript{ error_class( @video, :transcript ) }
+          .label= @form.label :transcript, "Transcript"
+          %div= @form.text_area :transcript, :cols => 38, :rows => 6
+          = error_message_on @video, :transcript
 
 
     .column
@@ -30,26 +59,51 @@
       %fieldset
         %legend Description
 
-        .label= @form.label :duration
-        %div{ error_class( @video, :duration ) }
-          = text_field_tag :video_duration, |
-                           (( params[:video] and params[:video][:duration] ) |
-                           or |
-                           int_to_duration( @video.duration )), |
-                           :name => "video[duration]", :size => 20 |
-          Format: HH:MM:SS
-          = error_message_on @video, :duration
+        .duration.required
+          .label= @form.label :duration
+          %div{ error_class( @video, :duration ) }
+            = text_field_tag :video_duration, |
+                             (( params[:video] and params[:video][:duration] ) |
+                             or |
+                             int_to_duration( @video.duration )), |
+                             :name => "video[duration]", :size => 20 |
+            Format: HH:MM:SS
+            = error_message_on @video, :duration
+
+        .audience{ error_class( @video, :audience ) }
+          .label= @form.label :audience, "Audience"
+          %div= @form.text_field :audience, :size => 44
+          = error_message_on @video, :audience
+
+        .language_note{ error_class( @video, :language_note ) }
+          .label= @form.label :language_note, "Language Note"
+          %div= @form.text_field :language_note, :size => 44
+          = error_message_on @video, :language_note
 
       %fieldset
         %legend Local Reference
 
+        .classification{ error_class( @video, :classification ) }
+          .label= @form.label :classification
+          %div= @form.text_field :classification, :size => 44
+          = error_message_on @video, :classification
+
         .local{ error_class( @video, :local ) }
-          .label= @form.label :local_id
-          %div= @form.text_field :local_id
+          .label= @form.label :local_id, "Local System ID #"
+          %div= @form.text_field :local_id, :size => 44
+          = error_message_on @video, :local
 
         .donor{ error_class( @video, :donor ) }
           .label= @form.label :donor
           %div= @form.text_area :donor, :cols => 38, :rows => 2
+
+        .preservation_note{ error_class( @video, :preservation_note ) }
+          .label= @form.label :preservation_note, "Preservation Note"
+          %div= @form.text_area :preservation_note, :cols => 38, :rows => 2
+
+        .notes{ error_class( @video, :notes ) }
+          .label= @form.label :notes, "Other notes"
+          %div= @form.text_area :notes, :cols => 38, :rows => 2
 
     .full_width
 

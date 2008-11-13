@@ -75,7 +75,13 @@ class Video < ActiveRecord::Base
     texts = [ video.title,
               video.sentence,
               video.abstract,
-              video.donor ]
+              video.donor,
+
+              video.alternative_title,
+              video.series_title,
+              video.creation_credits,
+              video.participation_credits,
+            ]
 
     # video.descriptors.each { |d| texts << d.text }
 
