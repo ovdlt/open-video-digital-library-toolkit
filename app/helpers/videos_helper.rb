@@ -198,14 +198,6 @@ module VideosHelper
                       
   end
 
-  def descriptor_value_search dv
-    search = Search.new
-    search.criteria <<
-      Criterion.new( :property_type_id => dv.property_type_id,
-                      :integer_value => dv.id )
-    search_path search
-  end
-
   def to_form_inputs value, name = ""
     params = []
     case value

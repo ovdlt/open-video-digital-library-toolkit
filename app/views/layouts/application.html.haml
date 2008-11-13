@@ -62,6 +62,9 @@
             .subtitle= Library.subtitle
             #navigation
               %ul
+                %li= link_to_unless HomeController === controller, |
+                     "<span>Home</span>", url_for( :controller => :home, :action => :index ) |
+              %ul
                 %li= link_to_unless VideosController === controller, |
                      "<span>Videos</span>", videos_path |
               %ul
@@ -80,19 +83,6 @@
                 %ul.tall
                   %li= link_to_unless LibraryController === controller, |
                        "<span>Collection<br />Administration</span>", "/library" |
-          /
-            .login_logout
-              - if logged_in?
-                .logout
-                  .button= link_to "LOGOUT", logout_path
-                .user
-                  You're logged in as
-                  %span.login= h current_user.login
-              - else
-                .login
-                  .button= link_to "LOGIN", login_path
-                .register
-                  .button= link_to "REGISTER", signup_path
           .clear
         #content
           - [:notice, :error].each do |type|
@@ -109,7 +99,7 @@
                 #{@library.copyright}
           .right
             .ts_and_cs
-              = link_to "Privacy Policy & Terms of Use", |
+              = link_to "Privacy Policy &amp; Terms of Use", |
                         url_for( :controller => :home, :action => :tcs_and_cs ) |
           .open_video
             = link_to "Open Video", "http://open-video.org/"

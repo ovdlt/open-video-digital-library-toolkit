@@ -1,7 +1,7 @@
 .category
   .title.block Browse Videos
   .content.block.last
-    = render :partial => "axes"
+    = render :partial => "shared/axes"
     .videos
       - srand Time.parse("0:0").to_i
       - shown = {}

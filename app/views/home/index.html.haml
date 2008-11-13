@@ -1,1 +1,31 @@
-hello, world
+#home
+  .search
+    = @library.video_count
+    videos
+    .form
+      - form_for Search.new, :url => videos_path, :html => { :method => :get, :id => nil } do |form|
+        %span.input
+          = form.criterion :text, :size => 40, :id => nil
+          = image_submit_tag "mag.png"
+        = form.submit "Search"
+  .divider
+    .graphic
+  .main
+    .left
+      .content
+        .column_title
+          Browse
+        .category
+          = render :partial => "shared/axes"
+    .center
+      .content
+        center
+    .right
+      .content
+        .column_title
+          .size
+            = link_to "All", collections_path
+            == [#{public_collections_count}]
+          Collections
+        right
+    .clear

@@ -211,4 +211,12 @@ EOS
     PropertyTemplate.new
   end
 
+  def descriptor_value_search dv
+    search = Search.new
+    search.criteria <<
+      Criterion.new( :property_type_id => dv.property_type_id,
+                      :integer_value => dv.id )
+    search_path search
+  end
+
 end
