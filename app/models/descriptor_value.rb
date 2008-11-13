@@ -28,6 +28,14 @@ class DescriptorValue < ActiveRecord::Base
 
   end
 
+  def count
+    Video.count :joins => ", properties ps",
+                 :conditions =>
+                      "videos.id = ps.video_id and " +
+                      "ps.property_type_id = #{property_type_id} and " +
+                      "ps.integer_value = #{id}"
+  end
+
   def videos
     Video.find :all,
                 :joins => ", properties ps",

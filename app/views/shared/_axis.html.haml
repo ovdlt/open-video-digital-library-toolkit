@@ -1,9 +1,11 @@
 .title= axis.name.pluralize
 %ul
   %li= link_to_unless @current == axis, |
-                      "all", |
+                      "All", |
                       property_type_videos_path( axis ) |
   - axis.values.each do |descriptor|
-    %li= link_to_unless @current == descriptor, |
-                    descriptor.text, |
+    %li
+      = link_to_unless @current == descriptor, |
+                    h(descriptor.text), |
                     descriptor_value_search( descriptor ) |
+      == [#{descriptor.count}]
