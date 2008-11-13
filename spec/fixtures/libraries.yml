@@ -1,9 +1,11 @@
 nhf:
   id: 1
-  title: NHF Digital Video Library
+  title: Northeast Historic Film Archives
   subtitle: a digital library for the Northeast Historic Film archives
   logo_url: http://www.oldfilm.org/themes/oldfilm/images/nhflogo.jpg
   my: My NHF
   collections_login: collections
   collections_title: NHF Special Collections
   playlists_title: NHF Public Playlists
+  copyright: '&copy; Northeast Historic Film. All Rights Reserved.'
+  org_link: '"Northeast Historic Film":http://www.oldfilm.org/'
