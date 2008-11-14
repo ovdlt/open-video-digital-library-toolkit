@@ -262,11 +262,16 @@ EOS
   end
 
   def video_created video
-    date = video.created_at
-    if p = video.properties.find_by_property_type_id( PropertyType.find_by_name( "Creation" ) )
-      date = p.value
+    created =  PropertyType.find_by_name( "Creation" )
+    date = nil
+    if created
+      if p = video.properties.find_by_property_type_id( created.id )
+        date = p.value
+      end
+    else
+      date = video.created_at
     end
-    date.to_date.to_s(:long)
+    date ? date.to_date : nil
   end
 
 end

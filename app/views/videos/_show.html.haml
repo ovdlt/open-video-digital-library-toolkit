@@ -8,8 +8,8 @@
     .title
       = link_to h(video.title), video_path( video.id )
 
-    - if !video.year.blank?
-      .year= "(#{h video.year})"
+    - if !(date = video_created(video)).blank?
+      .year= "(#{h date.year})"
 
     .sentence=h video.sentence
     .menu
