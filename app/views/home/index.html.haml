@@ -36,12 +36,8 @@
                 %span.between
                   |
                 .created&= video.created_at.to_date
-                .description
-                  - if video.abstract
-                    :textile
-                      #{video.abstract}
-                  - else
-                    &= video.sentence
+                - if !video.sentence.blank?
+                  .description&= video.sentence
               .clear  
 
     .right
