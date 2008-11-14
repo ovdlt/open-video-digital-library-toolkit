@@ -46,13 +46,14 @@
       .content
         .column_title
           .size
-            = link_to "All", collections_path
+            = link_to "All", collections_collections_path
             == [#{public_collections_count}]
           Collections
 
         - featured_collections.each do |collection|
           .collection
-            .title&= collection.title
+            .title
+              = link_to h(collection.title), collection_path( collection )
             .videos
               = collection.size
               videos
