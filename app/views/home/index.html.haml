@@ -35,7 +35,8 @@
                 .duration= int_to_duration( video.duration )
                 %span.between
                   |
-                .created&= video.created_at.to_date
+                .created
+                  &= video_created ( video )
                 - if !video.sentence.blank?
                   .description&= video.sentence
               .clear  

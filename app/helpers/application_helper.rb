@@ -261,4 +261,12 @@ EOS
     "(#{i} of #{total})"
   end
 
+  def video_created video
+    date = video.created_at
+    if p = video.properties.find_by_property_type_id( PropertyType.find_by_name( "Creation" ) )
+      date = p.value
+    end
+    date.to_date.to_s(:long)
+  end
+
 end
