@@ -85,6 +85,20 @@ EOS
     "mailto:?subject=#{subject}&amp;body=#{body}"
   end
 
+  def mail_video_issue video
+    subject = url_encode( h( "Issues with video entitled #{video.title}" ) )
+    body = url_encode( h( <<EOS ) )
+Video: #{video_url(video)}
+#{Library.title}: #{root_url}
+
+Issue:
+EOS
+    to = @library.emails
+    # to.tr! ",", " "
+    # to.tr! ";", " "
+    "mailto:#{url_encode(@library.emails)}?subject=#{subject}&amp;body=#{body}"
+  end
+
   def bookmark_options( video )
     options = current_user.collections.map do |c|
       disabled = ""

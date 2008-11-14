@@ -155,10 +155,11 @@
       - if request.headers["HTTP_REFERER"]
         %li
           = link_to "Return to search results", request.headers["HTTP_REFERER"]
-  .entry
-    .title Related Videos
-    %ul
-      %li Something here
+  /        
+    .entry
+      .title Related Videos
+      %ul
+        %li Something here
   .entry
     .title Tools and Services
     %ul.line
@@ -170,6 +171,9 @@
       %li.print= link_to "Print this page", "#"
       %li
         = link_to "E-mail link to this video", mail_video( video )
+      - if !@library.emails.blank?
+        %li
+          = link_to "Report issue with this video", mail_video_issue( video )
     - if current_user and current_user.has_role?(  [ :admin, :cataloger ] )
       %ul.line
         %li= link_to "Edit catalog data", edit_video_path( video )
