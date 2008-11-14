@@ -357,6 +357,9 @@ class VideosController < ApplicationController
     @properties = Property.find_all_by_video_id params[:id]
 
     @search = Search.new params[:search]
+    if params[:search]
+      session[:search] = @search
+    end
 
     if ptid = params[:property_type_menu_id]
       @property_type_menu = PropertyType.find_by_id ptid

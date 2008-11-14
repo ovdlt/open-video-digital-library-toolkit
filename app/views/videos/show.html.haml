@@ -152,9 +152,9 @@
     %ul
       %li
         = link_to "Browse all videos", videos_path
-      - if request.headers["HTTP_REFERER"]
+      - if session[:search]
         %li
-          = link_to "Return to search results", request.headers["HTTP_REFERER"]
+          = link_to "Return to search results", search_path( session[:search] )
   /        
     .entry
       .title Related Videos
