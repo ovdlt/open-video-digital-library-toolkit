@@ -274,4 +274,26 @@ EOS
     date ? date.to_date : nil
   end
 
+  def collections_flag
+    if CollectionsController === controller 
+      if params[:action] == "collections"
+        "on"
+      elsif params[:id]
+        collection = Collection.find params[:id]
+        ( collection and collection.user.login == @library.collections_login ) ? "on" : "off"
+      else
+        "off"
+      end
+    end
+  end
+
+  def playlists_flag
+    if CollectionsController === controller 
+      collections_flag == "off" ? "on" : "off"
+    else
+      "off"
+    end
+  end
+
+
 end

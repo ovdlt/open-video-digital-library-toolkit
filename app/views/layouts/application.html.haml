@@ -70,11 +70,11 @@
               %ul
                 %li
                   .text= link_to "Collections", collections_collections_path
-                  .flag{:class => ( ( CollectionsController === controller and params[:action] != "playlists" ) ? "on" : "off" ) }
+                  .flag{:class => collections_flag }
               %ul
                 %li
                   .text= link_to "Playlists", playlists_collections_path |
-                  .flag{:class => ( ( CollectionsController === controller  and params[:action] == "playlists" ) ? "on" : "off" ) }
+                  .flag{:class => playlists_flag }
               - if current_user
                 %ul
                   %li

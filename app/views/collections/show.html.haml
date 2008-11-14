@@ -4,18 +4,17 @@
              :locals => { :videos => @videos } |
   .collections.sidebar
     .entry
-      .title
-        Other
-        = containers_text( @collection )
       %ul
         %li
-          Browse all
-          = containers_text( @collection )
-        - if owner = owner_text( @collection )
+          = link_to "Browse all #{containers_text( @collection )}", |
+            "/collections/#{containers_text( @collection )}" |
+        /
+          - if owner = owner_text( @collection )
+            %li
+              All
+              = owner
+              = containers_text( @collection )
+        /
           %li
-            All
-            = owner
+            Related
             = containers_text( @collection )
-        %li
-          Related
-          = containers_text( @collection )
