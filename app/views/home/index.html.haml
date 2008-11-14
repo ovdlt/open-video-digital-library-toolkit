@@ -17,9 +17,27 @@
           Browse
         .category
           = render :partial => "shared/axes"
+
     .center
       .content
-        center
+        - first = true
+        - featured_videos.each do |video|
+          .video
+            %div{:class =>(first ? "first" : "other")}
+              - first = false
+              .image
+                %a{:href => video_path( video.id )}
+                  -if poster_path = video.poster_path
+                    %img{:src=>poster_path,:alt => "video #{video.id}"}
+              .details
+                .title
+                  = link_to h(video.title), video_path( video )
+                .duration= int_to_duration( video.duration )
+                %span.between |
+                .created&= video.created_at.to_date
+                .description&= video.abstract || video.sentence
+              .clear  
+
     .right
       .content
         .column_title
@@ -27,5 +45,16 @@
             = link_to "All", collections_path
             == [#{public_collections_count}]
           Collections
-        right
+
+        - featured_collections.each do |collection|
+          .collection
+            .title&= collection.title
+            .videos
+              = collection.size
+              videos
+            .description
+              &= collection.description
+
+        = link_to "View all collections >>", collections_collections_path
+
     .clear

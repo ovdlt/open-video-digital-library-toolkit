@@ -6,6 +6,6 @@ class AddLibraryFields < ActiveRecord::Migration
 
   def self.down
     remove_column :libraries, :org_link
-    remove_column :libraries, :copyright, :string
+    remove_column :libraries, :copyright
   end
 end

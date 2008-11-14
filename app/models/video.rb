@@ -60,6 +60,7 @@ class Video < ActiveRecord::Base
   
   before_save do |video|
     video.send :convert_duration
+    video.send :update_featured_on
   end
 
   after_save do |video|
@@ -410,6 +411,14 @@ class Video < ActiveRecord::Base
     end
   end
 
+  def featured_on
+    v = read_attribute :featured_on
+    if v.blank?
+      v = self.updated_at
+    end
+    v
+  end
+
   private
 
   def descriptors_must_be_unique
@@ -428,7 +437,9 @@ class Video < ActiveRecord::Base
 
   def validate_duration
     duration = attributes_before_type_cast["duration"]
-    if String === duration
+    p "DDDD", duration
+    p "DDDDX", self.duration
+    if String === duration and self.duration.to_s != duration
       if duration !~ DURATION_REGEX
         errors.add :duration, "#{duration} is not a valid duration"
       end
@@ -440,12 +451,18 @@ class Video < ActiveRecord::Base
 
   def convert_duration
     duration = attributes_before_type_cast["duration"]
-    if String === duration
+    if String === duration and self.duration.to_s != duration
       new_value = nil
       if ( m = duration.match( DURATION_REGEX ) )
         new_value = ((m[1].to_i*60)+m[2].to_i)*60+m[3].to_i
       end
       update_attribute( :duration, new_value )
+    end
+  end
+
+  def update_featured_on
+    if featured? and featured_changed?
+      self.featured_on = Time::now
     end
   end
 

@@ -30,5 +30,25 @@ class Collection < ActiveRecord::Base
     end
   end
 
+  def featured_on
+    v = read_attribute :featured_on
+    if v.blank?
+      v = self.updated_at
+    end
+    v
+  end
+
+  private
+
+  before_save do |collection|
+    collection.send :update_featured_on
+  end
+
+  def update_featured_on
+    if featured? and featured_changed?
+      self.featured_on = Time::now
+    end
+  end
+
 end
 

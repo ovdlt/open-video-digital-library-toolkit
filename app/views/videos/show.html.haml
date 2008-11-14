@@ -3,6 +3,23 @@
 
   %h1.title= h video.title
 
+  - if current_user and current_user.has_role?(  [ :admin, :cataloger ] )
+    .featured
+      - form_for video, :html => { :id => nil } do |form|
+        %label
+          = form.check_box :featured
+          - if !video.featured?
+            Feature this video
+          - else
+            This video featured on
+            = video.featured_on.to_time.localtime.strftime("%B %d, %Y at %I:%M %p")
+            = feature_rank( video )
+  - else
+    - if video.featured?
+      .featured
+        .notice
+          A featured video!
+
   .body
 
     .image

@@ -14,8 +14,18 @@ class VideosController < ApplicationController
   def show
     @path = lambda { |opts| opts == {} ? video_path( @video ) \
                                        : video_path( @video, opts ) }
+
+
+    class << @video
+      def record_timestamps; false; end
+    end
+    
     @video.views += 1
     @video.save
+
+    class << @video
+      remove_method :record_timestamps
+    end
   end
 
   def download

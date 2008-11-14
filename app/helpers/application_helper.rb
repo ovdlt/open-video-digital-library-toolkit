@@ -219,4 +219,32 @@ EOS
     search_path search
   end
 
+  def featured_videos
+    Video.find :all, :conditions => { :featured => true,
+                                     #  :public => true,
+                                     },
+                            :order => "featured_on desc"
+  end
+
+  def featured_collections
+    Collection.find :all, :conditions => { :featured => true,
+                                             :public => true },
+                            :order => "featured_on desc"
+  end
+
+  def feature_rank object
+    klass = object.class
+    total = klass.count :conditions => { :featured => true }
+    objects = klass.find :all, :conditions => { :featured => true },
+                             :order => "featured_on desc"
+    i = 1
+    objects.each do |v|
+      if v == object
+        break
+      end
+      i+=1
+    end
+    "(#{i} of #{total})"
+  end
+
 end

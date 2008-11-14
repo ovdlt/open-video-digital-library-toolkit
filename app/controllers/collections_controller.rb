@@ -101,7 +101,8 @@ class CollectionsController < ApplicationController
   def find_and_verify_user
     if !params[:id] or
         !(@collection = Collection.find_by_id params[:id]) or
-        ((!current_user or @collection.user_id != current_user.id))
+        (!current_user or ( @collection.user_id != current_user.id and
+                            !current_user.has_role?([:admin,:cataloger]) ))
       render_missing
       return
     end
