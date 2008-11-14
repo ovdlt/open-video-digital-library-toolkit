@@ -122,7 +122,9 @@
               :textile
                 #{video.rights_holder}
         %div= h video.rights.statement
-        %div= video.rights.html
+        %div
+          :textile
+            #{video.rights.html}
 
       .details_list
         - show_tabs.each do |tab|
