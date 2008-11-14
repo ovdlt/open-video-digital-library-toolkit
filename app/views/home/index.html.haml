@@ -33,7 +33,8 @@
                 .title
                   = link_to h(video.title), video_path( video )
                 .duration= int_to_duration( video.duration )
-                %span.between |
+                %span.between
+                  |
                 .created&= video.created_at.to_date
                 .description&= video.abstract || video.sentence
               .clear  
