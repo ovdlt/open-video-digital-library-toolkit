@@ -94,14 +94,21 @@
           /= yield
         .clear
         #footer
-          .left
-            .copyright
-              :textile
-                #{@library.copyright}
-          .right
-            .ts_and_cs
+          %ul
+            %li.first
+              = link_to "Home", url_for( :controller => :home, :action => :index )
+            %li
+              = link_to "About", url_for( :controller => :home, :action => :about )
+            %li
+              = link_to "Contact", url_for( :controller => :home, :action => :contact )
+            %li
+              = link_to "News", url_for( :controller => :home, :action => :news )
+            %li
               = link_to "Privacy Policy &amp; Terms of Use", |
-                        url_for( :controller => :home, :action => :tcs_and_cs ) |
-          .clear
+                         url_for( :controller => :home, :action => :tcs_and_cs ) |
+          .copyright
+            :textile
+              #{@library.copyright}
           .open_video
+            Powered by
             = link_to "Open Video", "http://open-video.org/"
