@@ -39,7 +39,9 @@
           s1.write('flash');
         
     - if !video.abstract.blank?
-      .abstract&= video.abstract
+      .abstract
+        :textile
+          #{video.abstract}
     - elsif !video.sentence.blank?
       .sentence&= video.sentence
 
@@ -116,7 +118,9 @@
         - if !video.rights_holder.blank?
           .detail
             .type Rights Holder:
-            .value&= video.rights_holder
+            .value
+              :textile
+                #{video.rights_holder}
         %div= h video.rights.statement
         %div= video.rights.html
 
@@ -129,10 +133,14 @@
           %fieldset
             %legend Video Information
             %dl.wide
-              - vd.each do |dt,dd|
+              - vd.each do |dt,dd,textile|
                 %dt&= dt
-                %dd&= dd
-
+                %dd
+                  - if textile
+                    :textile
+                      #{dd}
+                  - else
+                    &= dd
     .clear
 
 .sidebar

@@ -88,7 +88,11 @@ class Video < ActiveRecord::Base
 
     video.properties.each { |p| texts << p.value }
 
-    vf.text = texts.join(" ")
+    texts = texts.join(" ")
+
+    texts.tr!("_*?@-+^~%{}:;<>'\"()|.", " ")
+
+    vf.text = texts
     vf.save
   end
 
@@ -224,7 +228,12 @@ class Video < ActiveRecord::Base
 
         # FIX: check for safety of sql escaping
 
-        p = criterion.text.gsub(/\\/, '\&\&').gsub(/'/, "''") 
+        p = criterion.text
+
+        p.tr!("_*?@-+^~%{}:;<>'\"()|.", " ")
+        
+        p.gsub!(/\\/, '\&\&')
+        p.gsub!(/'/, "''") 
         
         select << "match ( vfs.text ) against ( '#{p}' ) as r"
         joins << "video_fulltexts vfs"
@@ -437,8 +446,6 @@ class Video < ActiveRecord::Base
 
   def validate_duration
     duration = attributes_before_type_cast["duration"]
-    p "DDDD", duration
-    p "DDDDX", self.duration
     if String === duration and self.duration.to_s != duration
       if duration !~ DURATION_REGEX
         errors.add :duration, "#{duration} is not a valid duration"
