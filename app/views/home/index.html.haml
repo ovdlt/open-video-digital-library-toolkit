@@ -1,0 +1,66 @@
+#home
+  .search
+    = @library.video_count
+    videos
+    .form
+      - form_for Search.new, :url => videos_path, :html => { :method => :get, :id => nil } do |form|
+        %span.input
+          = form.criterion :text, :size => 40, :id => nil
+          = image_submit_tag "mag.png"
+        = form.submit "Search"
+  .divider
+    .graphic
+  .main
+    .left
+      .content
+        .column_title
+          Browse
+        .category
+          = render :partial => "shared/axes", :locals => { :max => 3, :browse => true }
+
+    .center
+      .content
+        - first = true
+        - featured_videos.each do |video|
+          .video
+            %div{:class =>(first ? "first" : "other")}
+              - first = false
+              .image
+                %a{:href => video_path( video.id )}
+                  -if poster_path = video.poster_path
+                    %img{:src=>poster_path,:alt => "video #{video.id}"}
+              .details
+                .title
+                  = link_to h(video.title), video_path( video )
+                - if !(d = video_created ( video )).blank?
+                  .duration= int_to_duration( video.duration )
+                  %span.between
+                    |
+                    .created
+                      &= video_created ( video ).to_s(:long)
+                - if !video.sentence.blank?
+                  .description&= video.sentence
+              .clear  
+
+    .right
+      .content
+        .column_title
+          .size
+            = link_to "All", collections_collections_path
+            == [#{public_collections_count}]
+          Collections
+
+        - featured_collections.each do |collection|
+          .collection
+            .title
+              = link_to h(collection.title), collection_path( collection )
+            .videos
+              = collection.size
+              videos
+            .description
+              &= collection.description
+
+        .all_collections
+          = link_to "View all collections >>", collections_collections_path
+
+    .clear

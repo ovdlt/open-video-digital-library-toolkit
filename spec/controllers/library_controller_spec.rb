@@ -596,7 +596,7 @@ describe LibraryController do
 
       reference =  {
         "library" => {
-          "title" => "NHF Digital Video Library",
+          "title" => "Northeast Historic Film Archives",
           "subtitle" =>
           "a digital library for the Northeast Historic Film archives",
           "my" => "My NHF",
@@ -604,7 +604,11 @@ describe LibraryController do
           "playlists_title" => "NHF Public Playlists",
           "collections_login" => "collections",
           "logo_url" =>
-          "http://www.oldfilm.org/themes/oldfilm/images/nhflogo.jpg"
+          "http://www.oldfilm.org/themes/oldfilm/images/nhflogo.jpg",
+          "org_link" =>
+          '"Northeast Historic Film":http://www.oldfilm.org/',
+          "copyright" =>
+          "&copy; Northeast Historic Film. All Rights Reserved.",
         },
 
         "property_class" =>

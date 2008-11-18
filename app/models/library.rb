@@ -41,5 +41,10 @@ class Library < ActiveRecord::Base
     ( self.find :first ).playlists_title
   end
 
+  def video_count
+    Video.count
+  end
+
+
 end
 

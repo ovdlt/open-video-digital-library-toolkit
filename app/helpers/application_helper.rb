@@ -85,6 +85,20 @@ EOS
     "mailto:?subject=#{subject}&amp;body=#{body}"
   end
 
+  def mail_video_issue video
+    subject = url_encode( h( "Issues with video entitled #{video.title}" ) )
+    body = url_encode( h( <<EOS ) )
+Video: #{video_url(video)}
+#{Library.title}: #{root_url}
+
+Issue:
+EOS
+    to = @library.emails
+    # to.tr! ",", " "
+    # to.tr! ";", " "
+    "mailto:#{url_encode(@library.emails)}?subject=#{subject}&amp;body=#{body}"
+  end
+
   def bookmark_options( video )
     options = current_user.collections.map do |c|
       disabled = ""
@@ -210,5 +224,76 @@ EOS
   def p_template
     PropertyTemplate.new
   end
+
+  def descriptor_value_search dv
+    search = Search.new
+    search.criteria <<
+      Criterion.new( :property_type_id => dv.property_type_id,
+                      :integer_value => dv.id )
+    search_path search
+  end
+
+  def featured_videos
+    Video.find :all, :conditions => { :featured => true,
+                                     #  :public => true,
+                                     },
+                            :order => "featured_on desc"
+  end
+
+  def featured_collections
+    Collection.find :all, :conditions => { :featured => true,
+                                             :public => true },
+                            :order => "featured_on desc"
+  end
+
+  def feature_rank object
+    klass = object.class
+    total = klass.count :conditions => { :featured => true }
+    objects = klass.find :all, :conditions => { :featured => true },
+                             :order => "featured_on desc"
+    i = 1
+    objects.each do |v|
+      if v == object
+        break
+      end
+      i+=1
+    end
+    "(#{i} of #{total})"
+  end
+
+  def video_created video
+    created =  PropertyType.find_by_name( "Creation" )
+    date = nil
+    if created
+      if p = video.properties.find_by_property_type_id( created.id )
+        date = p.value
+      end
+    else
+      date = video.created_at
+    end
+    date ? date.to_date : nil
+  end
+
+  def collections_flag
+    if CollectionsController === controller 
+      if params[:action] == "collections"
+        "on"
+      elsif params[:id]
+        collection = Collection.find params[:id]
+        ( collection and collection.user.login == @library.collections_login ) ? "on" : "off"
+      else
+        "off"
+      end
+    end
+  end
+
+  def playlists_flag
+    if CollectionsController === controller 
+      collections_flag == "off" ? "on" : "off"
+    else
+      "off"
+    end
+  end
+
 
 end

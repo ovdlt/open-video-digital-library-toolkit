@@ -14,8 +14,18 @@ class VideosController < ApplicationController
   def show
     @path = lambda { |opts| opts == {} ? video_path( @video ) \
                                        : video_path( @video, opts ) }
+
+
+    class << @video
+      def record_timestamps; false; end
+    end
+    
     @video.views += 1
     @video.save
+
+    class << @video
+      remove_method :record_timestamps
+    end
   end
 
   def download
@@ -339,7 +349,6 @@ class VideosController < ApplicationController
   before_filter :load
 
   def load
-    @library = Library.find :first
     @property_classes = PropertyClass.find :all
     @property_types = PropertyType.find :all
     @rights_details = RightsDetail.find :all
@@ -348,6 +357,9 @@ class VideosController < ApplicationController
     @properties = Property.find_all_by_video_id params[:id]
 
     @search = Search.new params[:search]
+    if params[:search]
+      session[:search] = @search
+    end
 
     if ptid = params[:property_type_menu_id]
       @property_type_menu = PropertyType.find_by_id ptid

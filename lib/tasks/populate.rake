@@ -40,9 +40,16 @@ namespace :db do
 
     # generate videos
 
+    creation = PropertyType.find_by_name "Creation"
+
     number.times do
       v = Factory(:video)
-      v.year = years[rand(years.size)]
+      
+      if creation
+        date = Date::ordinal( years[rand(years.size)], rand(365) )
+        v.properties << Property.new( :property_type_id => creation.id, :date_value => date )
+      end
+
       types.each do |type|
         v.properties << values[type.id][ rand(values[type.id].size) ]
       end

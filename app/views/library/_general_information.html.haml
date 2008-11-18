@@ -25,6 +25,18 @@
 
       .label
         %label
+          Organization Link Content
+          %br
+          = @form.text_field :org_link, :size => 80, :maxlength => 255
+
+      .label
+        %label
+          Site Copyright Content
+          %br
+          = @form.text_field :copyright, :size => 80, :maxlength => 255
+
+      .label
+        %label
           My Library Tab
           %br
           = @form.text_field :my, :size => 80, :maxlength => 255
@@ -46,5 +58,11 @@
           Collections Login
           %br
           = @form.text_field :collections_login, :size => 80, :maxlength => 255
+
+      .label
+        %label
+          Contact Email
+          %br
+          = @form.text_field :emails, :size => 80, :maxlength => 255
 
     .clear

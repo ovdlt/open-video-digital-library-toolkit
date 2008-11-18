@@ -57,6 +57,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :sessions
 
-  map.root :controller => 'videos'
+  map.connect 'home/:action', :controller => "home"
+  
+  map.root :controller => 'home'
   
 end

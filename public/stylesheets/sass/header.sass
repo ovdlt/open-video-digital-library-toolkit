@@ -1,8 +1,29 @@
+#superheader
+
+  :background-color rgb(170,0,0)
+  :border-bottom 1px solid white
+  :padding 3px
+  :padding-left 1em
+  :color white
+  :font-weight bold
+
+  .organization
+    :float left
+  .register, .login_out, .admin
+    :float right
+    :padding-left 1em
+    :padding-right 1em
+  .register
+    :border-right 1px solid white
+
 #header
 
-  :width 100%
-  :margin 25px 50px 0px 0px
   :position relative
+
+  :background-color rgb(51,51,51)
+
+  :padding 1em
+  :padding-bottom 0
 
   .content
     :float left
@@ -25,41 +46,27 @@
     :font-size 2em
 
   .subtitle
-    :clear left
     :float left
+    :clear left
     :color #fff
     :font-size 1.3em
     :font-style italic
 
-  .login_logout
+  .search
+
     :position absolute
-    :right 0
-    :top 0
-    :width 100%
-
-  .login_logout .user
-    :float right
-    :background-color #686d71
-    :color #b1d6ed
-    :font-weight normal
-    :margin 0
-    :padding 10px 15px
-
-  .login_logout .user .login
-    :font-weight bold
-
-  .login_logout .search
-
-    :clear right
-    :float right
-    :margin-top .2em
-    :margin-right -2em
+    :top .4em
+    :right .4em
 
     form
       input
         :font-size .8em
         :size 80
         :vertical-align middle
+
+      input[type=image]
+        :position absolute
+        :right 0px
 
   .button a:link, .button a:visited
     :color #FFFFFF
@@ -80,3 +87,45 @@
     :padding 8px !important
     :text-decoration none
     :text-transform uppercase
+
+#footer
+
+  :background-color rgb(51,51,51)
+  
+  :margin-top 1em
+  :padding .5em
+
+  :color white
+
+  .left
+    :float left
+    :width 50%
+    :text-align right
+
+  .copyright
+    :text-align center
+
+  .right
+    :float right
+    :width 50%
+
+  .ts_and_cs
+    :margin-left .5em
+
+  .open_video
+    :width 100%
+    :text-align center
+    :font-style italic
+
+  ul
+    :text-align center
+
+  li
+    :display inline
+    :border-left 1px solid white
+    :padding-left 1em
+    :padding-right 1em
+
+  li.first
+    :border-left none
+    

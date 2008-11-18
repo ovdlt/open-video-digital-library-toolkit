@@ -1,9 +1,11 @@
+- max ||= nil
+- browse ||= false
 .axes
+  - axis_index = 1
   - PropertyType.browse do |type|
     .axis
       .title= type.name
       %ul
-        / - type.descriptors_prioritized.each do |descriptor|
         - type.values.each do |descriptor|
           %li
             = link_to descriptor.text, |
@@ -12,3 +14,12 @@
         %li.all
           = link_to "All #{type.name.pluralize} >>", |
                     property_type_videos_path( type ) |
+    - if !max.nil? and axis_index >= max
+      - break
+    - else
+      - axis_index += 1
+  
+  - if browse
+    .browse
+      = link_to "More Categories >>", videos_path
+

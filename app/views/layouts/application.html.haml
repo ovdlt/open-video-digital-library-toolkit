@@ -12,6 +12,45 @@
   %body
     #page
       #container
+        #superheader
+          .organization
+            :textile
+              #{@library.org_link}
+          .login_out
+            - if logged_in?
+              .button= link_to "Logout", logout_path
+            - else
+              .button= link_to "Login", login_path
+            -#
+              .user
+                You're logged in as
+                %span.login= h current_user.login
+          - if !logged_in?
+            .register
+              .button= link_to "Register", signup_path
+          - if current_user and current_user.has_role?( "admin" )
+            .admin
+              .button= link_to "Administration", "/library"
+          /
+            .login_logout
+              - if logged_in?
+                .logout
+                  .button= link_to "LOGOUT", logout_path
+                .user
+                  You're logged in as
+                  %span.login= h current_user.login
+              - else
+                .login
+                  .button= link_to "LOGIN", login_path
+                .register
+                  .button= link_to "REGISTER", signup_path
+              .search
+                - form_for Search.new, :url => videos_path, :html => { :method => :get } do |form|
+                  = form.criterion :text, :size => 40, :id => nil
+                  = image_submit_tag "mag.png"
+
+          .clear
+
         #header
           - if Library.logo_url
             #logo
@@ -21,40 +60,31 @@
             .subtitle= Library.subtitle
             #navigation
               %ul
-                %li= link_to_unless VideosController === controller, |
-                     "<span>Videos</span>", videos_path |
+                %li
+                  .text= link_to "Home", url_for( :controller => :home, :action => :index ) |
+                  .flag{:class => ( HomeController === controller ? "on" : "off")}
               %ul
-                %li= link_to_unless CollectionsController === controller && |
-                                    params[:action] == "collections", |
-                     "<span>Collections</span>", collections_collections_path |
+                %li
+                  .text= link_to "Videos", videos_path
+                  .flag{:class => ( VideosController === controller ? "on" : "off")}
               %ul
-                %li= link_to_unless CollectionsController === controller && |
-                                    params[:action] == "playlists", |
-                     "<span>Playlists</span>", playlists_collections_path |
+                %li
+                  .text= link_to "Collections", collections_collections_path
+                  .flag{:class => collections_flag }
+              %ul
+                %li
+                  .text= link_to "Playlists", playlists_collections_path |
+                  .flag{:class => playlists_flag }
               - if current_user
                 %ul
-                  %li= link_to_unless MyController === controller, |
-                        "<span>#{my}</span>", my_path |
-              - if current_user && current_user.has_role?( "admin" )
-                %ul.tall
-                  %li= link_to_unless LibraryController === controller, |
-                       "<span>Collection<br />Administration</span>", "/library" |
-          .login_logout
-            - if logged_in?
-              .logout
-                .button= link_to "LOGOUT", logout_path
-              .user
-                You're logged in as
-                %span.login= h current_user.login
-            - else
-              .login
-                .button= link_to "LOGIN", login_path
-              .register
-                .button= link_to "REGISTER", signup_path
-            .search
-              - form_for Search.new, :url => videos_path, :html => { :method => :get } do |form|
-                = form.criterion :text, :size => 40, :id => nil
-                = image_submit_tag "mag.png"
+                  %li
+                    .text= link_to h(my), my_path
+                    .flag{:class => ( MyController === controller ? "on" : "off")}
+          .search
+            - form_for Search.new, :url => videos_path, :html => { :method => :get } do |form|
+              = form.criterion :text, :size => 40, :id => nil
+              = image_submit_tag "mag.png"
+          .clear
         #content
           - [:notice, :error].each do |type|
             - unless flash[type].blank?
@@ -62,3 +92,23 @@
                 = flash[type]
           = begin; render :partial => "layouts/#{controller.controller_name}"; rescue ActionView::MissingTemplate; yield; end
           /= yield
+        .clear
+        #footer
+          %ul
+            %li.first
+              = link_to "Home", url_for( :controller => :home, :action => :index )
+            %li
+              = link_to "About", url_for( :controller => :home, :action => :about )
+            %li
+              = link_to "Contact", url_for( :controller => :home, :action => :contact )
+            %li
+              = link_to "News", url_for( :controller => :home, :action => :news )
+            %li
+              = link_to "Privacy Policy &amp; Terms of Use", |
+                         url_for( :controller => :home, :action => :privacy ) |
+          .copyright
+            :textile
+              #{@library.copyright}
+          .open_video
+            Powered by
+            = link_to "Open Video", "http://open-video.org/"

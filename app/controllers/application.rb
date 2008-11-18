@@ -47,6 +47,13 @@ class ApplicationController < ActionController::Base
 
   protected
 
+  before_filter :load_library
+
+  def load_library
+    @library = Library.find :first
+  end
+
+
   # the prefix is used when generating emails so that we don't have to
   # hardcode the host and port
 

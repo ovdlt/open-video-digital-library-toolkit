@@ -194,10 +194,10 @@ $(function(){
         $(this).removeClass("pointer");
     })
     /* Firefox doesn't need this but IE does */
-    .click(function(){
-        $("input",this).click();
-        return false;
-    });
+        .click(function(){
+            $("input",this).click();
+            return false;
+        });
 
     $("div.bookmark.hidden").hide();
 
@@ -231,13 +231,13 @@ $(function(){
     /* video list buttons */
 
     var current_button_class =
-      $.cookie(".videos.list.partial.navigate.current");
+        $.cookie(".videos.list.partial.navigate.current");
     if ( current_button_class == null) {
-      current_button_class = "bg_thumbs";
-      $.cookie(".videos.list.partial.navigate.current",
-               current_button_class,
-               { path: '/' }
-              );
+        current_button_class = "bg_thumbs";
+        $.cookie(".videos.list.partial.navigate.current",
+                 current_button_class,
+                 { path: '/' }
+                );
     }
 
     $(".videos.list.partial").removeClass("bg_thumbs");
@@ -247,41 +247,41 @@ $(function(){
     $(".videos.list.partial").addClass(current_button_class);
 
     $(".videos.list.partial .navigate .button").each(function(){
-      if($(this).hasClass(current_button_class)){
-        $(this).addClass("current");
-        $(this).removeClass("pointer");
-      } else {
-        $(this).removeClass("current");
-        $(this).addClass("pointer");
-      }
+        if($(this).hasClass(current_button_class)){
+            $(this).addClass("current");
+            $(this).removeClass("pointer");
+        } else {
+            $(this).removeClass("current");
+            $(this).addClass("pointer");
+        }
     });
 
     $(".videos.list.partial .navigate .button").click(function(){
         var clicked = this;
         $("div.button",$(clicked).parents("div.navigate")[0]).each(function(){
-          if(this == clicked){
+            if(this == clicked){
 
-            var classes = $(this).attr("class").split(" ");
-            current = $.grep( classes, function(n){
-                                return n != "current" && n != "pointer"
-                              })[0];
-            $.cookie(".videos.list.partial.navigate.current",
-              current,
-              { path: '/' }
-            );
+                var classes = $(this).attr("class").split(" ");
+                current = $.grep( classes, function(n){
+                    return n != "current" && n != "pointer"
+                })[0];
+                $.cookie(".videos.list.partial.navigate.current",
+                         current,
+                         { path: '/' }
+                        );
 
-            $(".videos.list.partial").removeClass("bg_thumbs");
-            $(".videos.list.partial").removeClass("text_only");
-            $(".videos.list.partial").removeClass("sm_thumbs");
-            $(".videos.list.partial").removeClass("sm_thumbs_only");
-            $(".videos.list.partial").addClass(current);
+                $(".videos.list.partial").removeClass("bg_thumbs");
+                $(".videos.list.partial").removeClass("text_only");
+                $(".videos.list.partial").removeClass("sm_thumbs");
+                $(".videos.list.partial").removeClass("sm_thumbs_only");
+                $(".videos.list.partial").addClass(current);
 
-            $(this).addClass("current");
-            $(this).removeClass("pointer");
-          } else {
-            $(this).removeClass("current");
-            $(this).addClass("pointer");
-          }
+                $(this).addClass("current");
+                $(this).removeClass("pointer");
+            } else {
+                $(this).removeClass("current");
+                $(this).addClass("pointer");
+            }
         });
     });
 
@@ -303,6 +303,15 @@ $(function(){
     $("form .button.save_query a").click(function(){
         var form = $(this).parents("form")[0];
         $(".hidden",form).show();
+        return false;
+    });
+
+    $("div.featured input[type=checkbox]").click(function(){
+        $(this).parents("form")[0].submit();
+    });
+
+    $("div.back input").click(function(){
+        history.go(-1);
         return false;
     });
 
