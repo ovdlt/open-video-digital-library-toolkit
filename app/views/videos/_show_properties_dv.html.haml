@@ -6,6 +6,8 @@
     %dl
       - dts.each_with_index do |dt,i|
         - if dvs[i].length > 0
-          %dt&== #{dt.name}:
+          %dt
+            = link_to "#{h(dt.name)}:", property_type_videos_path( dt )
           %dd
-            &= dvs[i].map(&:value).map(&:text).join(", ")
+            = dvs[i].map(&:value).map { |dv| link_to h(dv.text), |
+                                             descriptor_value_search( dv) }.join(", ") |
