@@ -3,7 +3,7 @@ class MyController < ApplicationController
   before_filter :login
 
   def show
-    redirect_to favorites_my_path
+    redirect_to home_my_path
   end
 
   def favorites

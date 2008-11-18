@@ -1,0 +1,89 @@
+.sections
+
+
+  .right
+    .section
+      .header
+        .title
+          Saved Searches
+        .count
+          &== (#{current_user.searches.size})
+        .link
+          = link_to "view all &raquo;", saved_searches_my_path
+        .clear
+      .entries
+        - current_user.searches.each_with_index do |video,i|
+          - break if i > 4
+          .entry
+            .title
+              = link_to h(video.title), video_path( video.id )
+            .clear
+      .clear
+
+    .section
+      .header
+        .title
+          Downloaded
+        .count
+          &== (#{current_user.downloads.size})
+        .link
+          = link_to "view all &raquo;", downloaded_videos_my_path
+        .clear
+      .entries
+        - current_user.downloads.each_with_index do |video,i|
+          - break if i > 4
+          .entry
+            .image
+              %a{:href => video_path( video.id )}
+                -if poster_path = video.poster_path
+                  %img{:src=>poster_path,:alt => "video #{video.id}"}
+            .title
+              = link_to h(video.title), video_path( video.id )
+            .clear
+      .clear
+
+  .left
+
+    .section
+      .header
+        .title
+          Favorites
+        .count
+          &== (#{current_user.favorites.size})
+        .link
+          = link_to "view all &raquo;", favorites_my_path
+        .clear
+      .entries
+        - current_user.favorites.each_with_index do |video,i|
+          - break if i > 2
+          .entry
+            .image
+              %a{:href => video_path( video.id )}
+                -if poster_path = video.poster_path
+                  %img{:src=>poster_path,:alt => "video #{video.id}"}
+            .title
+              = link_to h(video.title), video_path( video.id )
+            .clear
+      .clear
+
+    .section
+      .header
+        .title
+          Playlists
+        .count
+          &== (#{current_user.playlists.size})
+        .link
+          = link_to "view all &raquo;", playlists_my_path
+        .clear
+      .entries
+        - current_user.playlists.each_with_index do |playlist,i|
+          - break if i > 2
+          .entry
+            .image
+              %a{:href => collection_path( playlist.id )}
+                -if poster_path = playlist.poster_path
+                  %img{:src=>poster_path,:alt => "playlist #{playlist.id}"}
+            .title
+              = link_to h(playlist.title), collection_path( playlist.id )
+            .clear
+      .clear

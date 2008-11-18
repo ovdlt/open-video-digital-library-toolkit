@@ -32,7 +32,7 @@ class User < ActiveRecord::Base
   end
 
   # needs to move ...
-  def playlists params
+  def playlists params = nil
     options = { :conditions =>
       [ "user_id = ? and id not in (#{favorites.id}, #{downloads.id})", id ] }
     method = :find

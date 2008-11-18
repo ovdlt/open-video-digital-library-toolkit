@@ -15,6 +15,14 @@ class Collection < ActiveRecord::Base
     bookmarks.size
   end
     
+  def each
+    videos.each { |v| yield v }
+  end
+
+  def each_with_index
+    videos.each_with_index { |v,i| yield v, i }
+  end
+
   def poster_path
     # this is fairly expensive (lots of little queries) but probably okay
     # for now(?) 
