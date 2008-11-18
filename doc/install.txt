@@ -1,74 +1,33 @@
-config/database.yml
-config/initializers/site_key.rb
+git clone git://github.com/ovdlt/open-video-digital-library-toolkit.git
 
-rake tmp:assets:clear
+cd to install directory
 
-cap
->>>
+  create config/database.yml (e.g., copy from database.yml.sample)
 
-  786  cap deprec:ssh:config_gen
-  787  cp /home/barronpark/smparkes/.ssh/id_rsa.pub config/ssh/authorized_keys/deploy_user
-  788  mv config/ssh/authorized_keys/deploy_user config/ssh/authorized_keys/smparkes
-  789  ls
-  790  cap deprec:ssh:config USER=smparkes HOSTS=bpovdlt
-  791  cap deprec:rails:install_rails_stack
-  792  ems
-  793  empw
-  794  cd ovdlt/
-  795  cap deprec:rails:install_rails_stack
-  796  top -d1
-  797  bpovdlt 
-  798  cap deprec:rails:install_rails_stack
-  799  cap deploy:setup
-  800  cap deploy
-  801  cap deploy:my_generate_database_yml
-  802  cap deprec:db:create
-  803  cap deploy
-  804  cap -T | fgrep gems
-  805  cap -T 
-  806  rake -T | fgrep install
-  807  rake gems:install
-  808  cap deploy:setup
-  809  cap deploy
-  810  cap deprec:db:create
-  811  cap deploy:setup
-  812  cap deprec:db:create
-  813  cap deprec:db:migrate
-  814  cap deprec:spec:db:fixtures:load
-  815  cap deprec:mongrel:restart
-  816  cap deprec:nginx:restart
-  817  bpcdd
-  818  cap deprec:mongrel:restart
-  819  bpcdd
-  820  cap deprec:mongrel:restart
-  821  h | fgrep cap
-  822  cap deploy:setup
-  823  h | fgrep cap
-  824  cap deploy
-  825  h
-  826  h | fgrep cap
-  827  cap deploy:my_generate_database_yml
-  828  h | fgrep cap
-  829  cap deprec:mongrel:restart
-  830  cap deprec:nginx:restart
-  831  ls config/initializers/
-  832  cap deprec:mongrel:restart
-  833  bpcdd
-  834  less spec/fixtures/users.yml 
-  835  h | fgrep cap
-  836  h > ~/foo
-  837  h > ~/foo.txt
+  create config/initializers/site_keys.rb (e.g., from site_keys.rb.example
+                                           but change the CHANGE THIS text)
 
-log permissions
-pid permissions
-database.yml
-site_keys.rb
-faker
-.gemrc
+  create database
+    env RAILS_ENV=production rake db:create
+    or
+    rake db:create:all
+    or
+    create with mysql commands
+  
+  create database objects
+    env RAILS_ENV=production rake db:migrate
 
-/videos
+  load test library info
 
-<<<  
+    cp -r spec/fixtures/assets public
+    cp -r spec/fixtures/surrogates public
 
-ft_min_word_len=1
-ft_stopword_file=""
+    env RAILS_ENV=production rake spec:db:fixtures:load
+
+  load test videos if you want
+
+    env RAILS_ENV=production rake db:populate
+    
+
+
+  

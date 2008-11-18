@@ -46,7 +46,9 @@ namespace :db do
       v = Factory(:video)
       
       if creation
-        date = Date::ordinal( years[rand(years.size)], rand(365) )
+        y = years[rand(years.size)]
+        d = 1+rand(364)
+        date = Date::ordinal( y, d )
         v.properties << Property.new( :property_type_id => creation.id, :date_value => date )
       end
 
