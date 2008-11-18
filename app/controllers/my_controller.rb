@@ -37,4 +37,44 @@ class MyController < ApplicationController
     end
   end
 
+  def password
+
+    @user = current_user
+
+    new_password = params[:new_password]
+    confirm_password = params[:confirm_password]
+
+    if new_password != confirm_password
+      flash.now[:error] = "password and password confirmation not the same"
+      render :action => :my_account
+      return
+    end
+
+    if new_password.blank?
+      flash.now[:error] = "new password cannot be blank"
+      render :action => :my_account
+      return
+    end
+
+    if !@user.authenticated? params[:old_password]
+      flash.now[:error] = "password incorrect"
+      render :action => :my_account
+      return
+    end
+
+    @user.password = new_password
+    @user.password_confirmation = confirm_password
+    @user.save
+
+    if !@user.errors.empty?
+      p @user.errors
+      flash.now[:error] = "Password #{@user.errors.on :password}"
+      render :action => :my_account
+      return
+    end
+
+    flash[:notice] = "password changed"
+    redirect_to url_for :action => :my_account
+  end
+
 end

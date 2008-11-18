@@ -2,25 +2,25 @@
   .account
     = h(current_user.login)
     Account Information
-  .summary.box
-    .title
-      Account Summary for
-      = h(current_user.login)
-    .registered
-      Registered since:
-      = current_user.created_at.to_date.to_s(:long)
-    .viewed
-      = link_to_if( (current_user.downloads.size > 0), "Videos viewed:", collection_path( current_user.downloads ) )
-      = current_user.downloads.size
-    .favorites
-      = link_to_if( (current_user.favorites.size > 0), "Favorites:", collection_path( current_user.favorites ) )
-      = current_user.favorites.videos.size
-    .playlists
-      Playlists:
-      = 0
-    .subscriptions
-      Subscriptions:
-      = 0
-    .saved_searches
-      Saved searches:
-      = current_user.searches.size
+  .registered
+    Registered since:
+    = current_user.created_at.to_date.to_s(:long)
+  .password
+    %fieldset
+      %legend
+        Change Password
+      - form_tag  url_for( :action => :password ), :method => :put do
+        .current
+          %label
+            %span.legend Current Password:
+            = password_field_tag :old_password
+        .new
+          %label
+            %span.legend New Password:
+            = password_field_tag :new_password
+        .verify
+          %label
+            %span.legend Verify New Password:
+            = password_field_tag :confirm_password
+        .submit
+          = submit_tag "change password"

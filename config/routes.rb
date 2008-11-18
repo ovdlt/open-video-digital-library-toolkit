@@ -47,7 +47,9 @@ ActionController::Routing::Routes.draw do |map|
                                  :my_account => :get,
                                  :saved_searches => :get,
                                  :downloaded_videos => :get,
-                                 :playlists => :get, }
+                                 :playlists => :get,
+                                 :password => :put,
+                               }
 
   map.resources :collections,
                 :collection => { :collections => :get,

@@ -75,47 +75,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def change_password
-
-    @user = User.find params[:id]
-
-    if @user != current_user
-      render :file => "#{RAILS_ROOT}/public/404.html",  
-             :status => 404
-      return
-    end
-
-    new_password = params[:new_password]
-    confirm_password = params[:confirm_password]
-
-    if new_password != confirm_password
-      flash.now[:error] = "password and password confirmation not the same"
-      render :action => :show
-      return
-    end
-
-    if new_password.blank?
-      flash.now[:error] = "new password cannot be blank"
-      render :action => :show
-      return
-    end
-
-    if !@user.authenticated? params[:old_password]
-      flash.now[:error] = "password incorrect"
-      render :action => :show
-      return
-    end
-
-    @user.password = new_password
-    @user.password_confirmation = confirm_password
-    @user.save!
-
-    flash.now[:notice] = "password changed"
-    render :action => :show
-
-  end
-
-
   def reset_password
 
     email = params["email"]
