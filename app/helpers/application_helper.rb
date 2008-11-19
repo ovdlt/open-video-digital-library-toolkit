@@ -310,7 +310,11 @@ EOS
   end
 
   def public_only?
-    !current_user or !current_user.has_role?([:admin,:cataloger])
+    begin
+      !current_user or !current_user.has_role?([:admin,:cataloger])
+    rescue
+      true
+    end
   end
 
 end

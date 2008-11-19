@@ -609,6 +609,11 @@ describe LibraryController do
           '"Northeast Historic Film":http://www.oldfilm.org/',
           "copyright" =>
           "&copy; Northeast Historic Film. All Rights Reserved.",
+          "about" => nil,
+          "contact" => nil,
+          "news" => nil,
+          "privacy" => nil,
+          "emails" => "librarian@foo.bar",
         },
 
         "property_class" =>

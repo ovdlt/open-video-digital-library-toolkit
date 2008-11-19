@@ -30,11 +30,12 @@ describe Video do
     fixtures :videos
 
     it "should return the most recent video (shortcut for .find ...)" do
-      Video.recent[0].should == ( Video.find :first, :order => "created_at desc" )
+      Video.recent(false)[0].
+        should == ( Video.find :first, :order => "created_at desc" )
     end
 
     it "should return the n most recent videos (shortcut for .find ...)" do
-      Video.recent(3).should ==
+      Video.recent(false,3).should ==
         ( Video.find :all, :order => "created_at desc", :limit => 3 )
     end
 

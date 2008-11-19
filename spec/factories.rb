@@ -41,4 +41,6 @@ Factory.define :video do |v|
     [ asset ]
   end
 
+  v.public true
+
 end
