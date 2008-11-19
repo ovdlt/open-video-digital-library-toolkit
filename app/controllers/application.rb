@@ -95,4 +95,25 @@ class ApplicationController < ActionController::Base
     current_user or redirect_to login_path
   end
 
+  def check_video_viz video
+    video.public? or ( current_user and current_user.has_role?([:admin,:cataloger]) )
+  end
+
+  def public_only?
+    !current_user or !current_user.has_role?([:admin,:cataloger])
+  end
+
+  def viz_condition
+    ( current_user and
+      current_user.has_role?([:admin,:cataloger]) ) ? {} : { :public => true }
+  end
+
+  def videos_method
+    public_only? ? :public_videos : :all_videos
+  end
+
+  def video_ids_method
+    public_only? ? :public_videos : :all_videos
+  end
+
 end

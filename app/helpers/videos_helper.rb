@@ -141,9 +141,9 @@ module VideosHelper
   end
 
   def random descriptor, shown
-    videos = descriptor.videos
+    videos = descriptor.videos(public_only?)
     return nil if videos.size == 0
-    candidates = descriptor.videos.map( &:id ) - shown.keys
+    candidates = videos.map( &:id ) - shown.keys
     return nil if candidates.size == 0
     selected = rand( candidates.size )
     shown[candidates[selected]] = true

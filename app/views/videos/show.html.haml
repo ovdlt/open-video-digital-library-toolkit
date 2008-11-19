@@ -1,7 +1,8 @@
 - video ||= @video
 .details
 
-  %h1.title= h video.title
+  %h1.title{:class=>video_vis_class(video)}
+    = h video.title
 
   - if current_user and current_user.has_role?(  [ :admin, :cataloger ] )
     .featured
@@ -19,6 +20,16 @@
       .featured
         .notice
           A featured video!
+
+  - if current_user and current_user.has_role?(  [ :admin, :cataloger ] )
+    .public
+      - form_for video, :html => { :id => nil } do |form|
+        %label
+          = form.check_box :public
+          - if !video.public?
+            Make this video public
+          - else
+            This video is public
 
   .body
 

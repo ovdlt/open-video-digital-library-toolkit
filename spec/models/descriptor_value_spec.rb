@@ -40,7 +40,7 @@ describe DescriptorValue do
 
   it "should return videos" do
     dv = DescriptorValue.find_by_text "Documentary"
-    dv.videos.map(&:id).should == [ 1 ]
+    dv.videos(true).map(&:id).should == [ 1 ]
   end
 
 end

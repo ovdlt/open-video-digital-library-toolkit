@@ -28,21 +28,31 @@ class DescriptorValue < ActiveRecord::Base
 
   end
 
-  def count
+  def count public
+    if public
+      public = "and videos.public = true"
+    else
+      public = ""
+    end
     Video.count :joins => ", properties ps",
                  :conditions =>
-                      "videos.id = ps.video_id and " +
-                      "ps.property_type_id = #{property_type_id} and " +
-                      "ps.integer_value = #{id}"
+                      "videos.id = ps.video_id and " \
+                      "ps.property_type_id = #{property_type_id} and " \
+                      "ps.integer_value = #{id} #{public}"
   end
 
-  def videos
+  def videos public
+    if public
+      public = "and videos.public = true"
+    else
+      public = ""
+    end
     Video.find :all,
                 :joins => ", properties ps",
                 :conditions =>
-                      "videos.id = ps.video_id and " +
-                      "ps.property_type_id = #{property_type_id} and " +
-                      "ps.integer_value = #{id}"
+                      "videos.id = ps.video_id and " \
+                      "ps.property_type_id = #{property_type_id} and " \
+                      "ps.integer_value = #{id} #{public}"
   end
 
 end

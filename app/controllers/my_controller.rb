@@ -74,7 +74,7 @@ class MyController < ApplicationController
     end
 
     flash[:notice] = "password changed"
-    redirect_to url_for :action => :my_account
+    redirect_to url_for( :action => :my_account )
   end
 
 end

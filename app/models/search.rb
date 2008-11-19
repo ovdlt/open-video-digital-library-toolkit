@@ -20,7 +20,6 @@ class Search < ActiveRecord::Base
         criteria << Criterion.new( k => v )
       end
     end
-
   end
 
   def as_inputs hash, name
@@ -52,8 +51,12 @@ class Search < ActiveRecord::Base
         v.each do |pt_id,dvs|
           dvs.each do |dv_id|
             !dv_id.blank? and criteria << Criterion.new( :property_type_id => pt_id,
-                                                            :integer_value => dv_id )
+                                                           :integer_value => dv_id )
           end
+        end
+      when "public"
+        v.each do |d|
+          criteria << ( cx = Criterion.new( :public => d ) )
         end
       when "duration"
         v.each do |d|

@@ -22,6 +22,11 @@ class Criterion < ActiveRecord::Base
     write_attribute "property_type_id", pt_id
   end
 
+  def public= v
+    self.criterion_type = "public"
+    write_attribute "public", v
+  end
+
   def add_to_params hash
     save = hash
     case criterion_type
@@ -34,6 +39,11 @@ class Criterion < ActiveRecord::Base
       if !duration.blank?
         hash["duration"] ||= []
         hash["duration"] << duration
+      end
+    when "public";
+      if [true,false].include?(public)
+        hash["public"] ||= []
+        hash["public"] << public
       end
     when "property_type";
       if !integer_value.blank?

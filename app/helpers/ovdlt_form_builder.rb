@@ -5,6 +5,7 @@ class OvdltFormBuilder < ActionView::Helpers::FormBuilder
 
   def criterion field, options = {}
     case field
+
     when :text
       v = object.criteria.detect do |criterion| 
         criterion.criterion_type.to_s == "text"
@@ -33,6 +34,25 @@ class OvdltFormBuilder < ActionView::Helpers::FormBuilder
                                         [ "longer than 1 hour", 6 ],
                                       ], v )
       
+      name = "#{object_name}[criteria][#{field}][]"
+
+      @template.content_tag( :select,
+                             options,
+                             :name => name )
+
+    when :public
+      current = object.criteria.detect do |criterion| 
+        criterion.criterion_type.to_s == "public"
+      end
+
+      current = current.public if current
+
+      options =
+        @template.options_for_select( [ [ "-- any visibility --", nil ],
+                                        [ "public", true ],
+                                        [ "private", false ],
+                                      ], current )
+
       name = "#{object_name}[criteria][#{field}][]"
 
       @template.content_tag( :select,

@@ -5,7 +5,8 @@ class FavoritesController < ApplicationController
       flash[:error] = "You must be logged in to save a search"
     else
       p current_user.favorites
-      if v = Video.find_by_id( params[:video_id] )
+      if v = Video.find_by_id( params[:video_id] ) and
+         check_video_viz( v )
          ( current_user.favorites.videos << v ) and
          current_user.favorites.save and
          current_user.save

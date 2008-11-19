@@ -35,6 +35,12 @@ class VideosController < ApplicationController
       return
     end
 
+    if !@assert.video.public? and
+       (!current_user or !current_user.has_role?[:admin,:cataloger])
+      render_missing
+      return
+    end
+
     if current_user and
        current_user.downloads.videos.find_by_id(@video.id).nil?
       current_user.downloads.videos << @video
@@ -53,7 +59,8 @@ class VideosController < ApplicationController
   end
 
   def recent
-    @search = Search.new
+    @search = Search.new 
+    current_user and @search.user_id = current_user.id
     search
   end
 
@@ -338,7 +345,7 @@ class VideosController < ApplicationController
 
   def find_video
     @video = Video.find_by_id(params[:id])
-    if @video.nil?
+    if @video.nil? or !check_video_viz( @video )
       flash[:error] = "Video could not be found"
       redirect_to videos_path
     end
@@ -357,6 +364,7 @@ class VideosController < ApplicationController
     @properties = Property.find_all_by_video_id params[:id]
 
     @search = Search.new params[:search]
+    current_user and @search.user_id = current_user.id
     if params[:search]
       session[:search] = @search
     end

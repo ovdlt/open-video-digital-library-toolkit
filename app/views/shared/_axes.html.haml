@@ -10,7 +10,7 @@
           %li
             = link_to descriptor.text, |
               descriptor_value_search( descriptor ) |
-            %span.count= "[#{descriptor.videos.size}]"
+            %span.count= "[#{descriptor.videos(public_only?).size}]"
         %li.all
           = link_to "All #{type.name.pluralize} &raquo;", |
                     property_type_videos_path( type ) |

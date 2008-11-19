@@ -8,4 +8,4 @@
       = link_to_unless @current == descriptor, |
                     h(descriptor.text), |
                     descriptor_value_search( descriptor ) |
-      == [#{descriptor.count}]
+      == [#{descriptor.count(public_only?)}]

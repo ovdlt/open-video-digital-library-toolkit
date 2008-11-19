@@ -12,11 +12,11 @@
           = link_to "view all &raquo;", saved_searches_my_path
         .clear
       .entries
-        - current_user.searches.each_with_index do |video,i|
+        - current_user.searches.each_with_index do |search,i|
           - break if i > 4
           .entry
             .title
-              = link_to h(video.title), video_path( video.id )
+              = link_to h(search.title), search_path( Search.find search.id )
             .clear
       .clear
 
@@ -25,7 +25,7 @@
         .title
           Downloaded
         .count
-          &== (#{current_user.downloads.size})
+          &== (#{current_user.downloads.size(public_only?)})
         .link
           = link_to "view all &raquo;", downloaded_videos_my_path
         .clear
@@ -49,7 +49,7 @@
         .title
           Favorites
         .count
-          &== (#{current_user.favorites.size})
+          &== (#{current_user.favorites.size(public_only?)})
         .link
           = link_to "view all &raquo;", favorites_my_path
         .clear
@@ -81,7 +81,7 @@
           .entry
             .image
               %a{:href => collection_path( playlist.id )}
-                -if poster_path = playlist.poster_path
+                -if poster_path = playlist.poster_path(public_only?)
                   %img{:src=>poster_path,:alt => "playlist #{playlist.id}"}
             .title
               = link_to h(playlist.title), collection_path( playlist.id )

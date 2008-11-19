@@ -93,7 +93,7 @@ class CollectionsController < ApplicationController
     @collection.views += 1
     @collection.save
 
-    @videos = @collection.videos.paginate :page => params[:page],
+    @videos = @collection.send(videos_method).paginate :page => params[:page],
                                           :per_page => 20,
                                           :order => "videos.created_at desc"
   end

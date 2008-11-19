@@ -1,4 +1,4 @@
-- if current_user.favorites.video_ids.include? alter_favorites.id
+- if current_user.favorites.send(video_ids_method).include? alter_favorites.id
   - form_tag favorite_path( alter_favorites.id ), :method => :delete, |
                                        :class => :inline do |
     %label.button

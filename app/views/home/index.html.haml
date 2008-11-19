@@ -1,6 +1,6 @@
 #home
   .search
-    = @library.video_count
+    = @library.video_count public_only?
     videos
     .form
       - form_for Search.new, :url => videos_path, :html => { :method => :get, :id => nil } do |form|
@@ -30,7 +30,7 @@
                   -if poster_path = video.poster_path
                     %img{:src=>poster_path,:alt => "video #{video.id}"}
               .details
-                .title
+                .title{:class=>video_vis_class(video)}
                   = link_to h(video.title), video_path( video )
                 - if !(d = video_created ( video )).blank?
                   .duration= int_to_duration( video.duration )
@@ -55,7 +55,7 @@
             .title
               = link_to h(collection.title), collection_path( collection )
             .videos
-              = collection.size
+              = collection.size(public_only?)
               videos
             .description
               &= collection.description

@@ -5,7 +5,7 @@
       -if poster_path = video.poster_path
         %img{:src=>poster_path,:alt => "video #{video.id}"}
   .details
-    .title
+    .title{:class=>video_vis_class(video)}
       = link_to h(video.title), video_path( video.id )
 
     - if !(date = video_created(video)).blank?

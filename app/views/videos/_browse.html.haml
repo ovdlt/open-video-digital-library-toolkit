@@ -18,7 +18,8 @@
                       %img{:src=>poster_path, :alt => "video #{v.id}"}
                 .clear
                 .text
-                  .title= link_to h(v.title), video_path( v.id )
+                  .title{:class=>video_vis_class(v)}
+                    = link_to h(v.title), video_path( v.id )
                   = link_to "more in<br />#{h descriptor.text}", "#"
               - i += 1
               - break if i > 4

@@ -116,8 +116,11 @@ class Video < ActiveRecord::Base
     descriptors.each { |d| properties << d }
   end
 
-  def self.recent number = nil
+  def self.recent public, number = nil
     options = { :order => "created_at desc" }
+    if public
+      options.merge! :conditions => { :public => true }
+    end
     if number
       options[:limit] = number
     end
@@ -138,74 +141,6 @@ class Video < ActiveRecord::Base
       sort { |a,b| a.priority - b.priority }
   end
 
-  def self._search options = {}
-
-    options = options.dup
-    
-    method = options[:method] || :find
-    options.delete :method
-
-    if method == :paginate
-      options[:page] ||= nil
-    end
-
-    conditions = [ [], [] ]
-    joins = []
-    select = [ "videos.*" ]
-
-    if !options[:query].blank?
-
-      # FIX: check for safety ...
-
-      p = options[:query].gsub(/\\/, '\&\&').gsub(/'/, "''") 
-      
-      select <<
-        "match ( vfs.text ) against ( '#{p}' ) as r"
-      joins << "video_fulltexts vfs"
-
-      p = ( p.split(/\s+/).map { |v| "+" + v } ).join(" ")
-        
-      conditions[0] <<
-        "( match ( vfs.text ) " +
-          "against ( '#{p}' in boolean mode ))"
-      conditions[0] << "(videos.id = vfs.video_id)"
-      options[:order] ||= "r desc"
-
-    end
-    options.delete :query
-
-    if options[:descriptor_value_id]
-      joins << "properties dvs"
-      
-      conditions[0] << "(videos.id = dvs.video_id)"
-      
-      conditions[0] << "(dvs.integer_value = ?)"
-      conditions[1] << options[:descriptor_value_id]
-
-      dv = DescriptorValue.find options[:descriptor_value_id]
-      
-      conditions[0] << "(dvs.property_type_id = ?)"
-      conditions[1] << dv.property_type_id
-    end
-    options.delete :descriptor_value_id
-    
-    options[:order] ||= "videos.created_at desc"
-
-    if joins != []
-      options[:joins] = "join " + joins.join(", ")
-    end
-
-    if conditions != [ [], [] ]
-      options[:conditions] =
-        [ "(" + conditions[0].join("AND") + ")" ] + conditions[1]
-    end
-
-    options[:select] = select.join(", ")
-
-    self.send method, :all, options
-
-  end
-
   def self.search options = {}
 
     options = options.dup
@@ -220,6 +155,12 @@ class Video < ActiveRecord::Base
     conditions = [ [], [] ]
     joins = []
     select = [ "videos.*" ]
+
+    user_id = options[:search][:user_id]
+    user = User.find_by_id user_id
+    if user.nil? or !user.has_role? [ :admin, :cataloger ]
+      conditions[0] << "videos.public = true"
+    end
 
     options[:search].criteria.each do |criterion|
 
@@ -255,6 +196,14 @@ class Video < ActiveRecord::Base
           "dvs.property_type_id = ? )"
         conditions[1] << criterion.integer_value
         conditions[1] << criterion.property_type_id
+
+      when "public"
+
+        if [ true, false ].include?( criterion.public ) and
+            !user.nil? and user.has_role? [ :admin, :cataloger ]
+          conditions[0] << "videos.public = ?"
+          conditions[1] << criterion.public
+        end
 
       when "duration"
 

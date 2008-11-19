@@ -2,8 +2,8 @@
 .collection.page.show
   .collection
     .image
-      - if p = collection.poster_path
-        %img{:src=>collection.poster_path,:alt => "sample image from collection"}
+      - if p = collection.poster_path( public_only? )
+        %img{:src=>p,:alt => "sample image from collection"}
     .details
       .title
         - if current_user and current_user.id == collection.user_id
@@ -48,7 +48,7 @@
       .attribute.videos
         .separator &bull;
         .legend Videos:
-        .value= collection.size
+        .value= collection.size( public_only? )
       .attribute.views
         .separator &bull;
         .legend Views:

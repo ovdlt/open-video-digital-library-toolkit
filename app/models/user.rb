@@ -5,8 +5,8 @@ class User < ActiveRecord::Base
   has_many :permissions, :dependent => :destroy  
   has_many :roles, :through => :permissions
 
-  has_many :searches
-  has_many :collections
+  has_many :searches, :order => "created_at desc"
+  has_many :collections, :order => "created_at desc"
 
   has_one :favorites, :class_name => "Collection", :dependent => :destroy
   has_one :downloads, :class_name => "Collection", :dependent => :destroy
@@ -33,8 +33,9 @@ class User < ActiveRecord::Base
 
   # needs to move ...
   def playlists params = nil
-    options = { :conditions =>
-      [ "user_id = ? and id not in (#{favorites.id}, #{downloads.id})", id ] }
+    options = { :conditions => 
+                        [ "user_id = ? and id not in (#{favorites.id}, #{downloads.id})", id ],
+                :order => "created_at desc" }
     method = :find
     if params
       method = :paginate

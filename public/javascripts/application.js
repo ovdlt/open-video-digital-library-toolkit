@@ -310,6 +310,10 @@ $(function(){
         $(this).parents("form")[0].submit();
     });
 
+    $("div.public input[type=checkbox]").click(function(){
+        $(this).parents("form")[0].submit();
+    });
+
     $("div.back input").click(function(){
         history.go(-1);
         return false;

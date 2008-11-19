@@ -24,7 +24,7 @@ class HomeController < ApplicationController
 
     if params[:commit] == "save"
       @library.save
-      redirect_to url_for :action => attribute
+      redirect_to url_for( :action => attribute )
     else
       self.send attribute
     end

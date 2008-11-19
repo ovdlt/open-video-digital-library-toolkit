@@ -102,7 +102,7 @@ EOS
   def bookmark_options( video )
     options = current_user.collections.map do |c|
       disabled = ""
-      if c.video_ids.include? video.id
+      if c.send(video_ids_method).include? video.id
         disabled = ' disabled="disabled"'
       end
       "<option value=\"#{c.id}\"#{disabled}>#{h c.title}</option>"
@@ -234,22 +234,23 @@ EOS
   end
 
   def featured_videos
-    Video.find :all, :conditions => { :featured => true,
-                                     #  :public => true,
-                                     },
+    Video.find :all, :conditions => { :featured => true }.
+                                        merge( viz_condition ),
                             :order => "featured_on desc"
   end
 
   def featured_collections
-    Collection.find :all, :conditions => { :featured => true,
-                                             :public => true },
+    Collection.find :all, :conditions => { :featured => true }.
+                                                merge( viz_condition ),
                             :order => "featured_on desc"
   end
 
   def feature_rank object
     klass = object.class
-    total = klass.count :conditions => { :featured => true }
-    objects = klass.find :all, :conditions => { :featured => true },
+    total = klass.count :conditions => { :featured => true }.
+                                                merge( viz_condition )
+    objects = klass.find :all, :conditions => { :featured => true }.
+                                                merge( viz_condition ),
                              :order => "featured_on desc"
     i = 1
     objects.each do |v|
@@ -295,5 +296,21 @@ EOS
     end
   end
 
+  def viz_condition
+    ( current_user and
+      current_user.has_role?([:admin,:cataloger]) ) ? {} : { :public => true }
+  end
+
+  def video_vis_class v
+    v.public? ? "public" : "private"
+  end
+
+  def video_ids_method
+    public_only? ? :public_videos : :all_videos
+  end
+
+  def public_only?
+    !current_user or !current_user.has_role?([:admin,:cataloger])
+  end
 
 end

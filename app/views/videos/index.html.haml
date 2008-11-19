@@ -40,6 +40,11 @@
             %label
               = form.criterion type
               %span.text&== #{type.name}:
+        - if current_user and current_user.has_role?([:admin,:cataloger])
+          %li
+            %label
+              = form.criterion :public
+              %span.text Visibility:
         %li= form.submit "refine"
   - if current_user
     .entry
@@ -52,7 +57,7 @@
             - form_tag saved_queries_path, :method => :post do
               %label.button.save_query
                 = link_to "Save this search", "#"
-              = to_form_inputs ( @search.add_to_params( {}, :search ) )
+              = to_form_inputs( @search.add_to_params( {}, :search ) )
               .save_query
                 .title.hidden
                   %label

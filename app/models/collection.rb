@@ -2,8 +2,15 @@ class Collection < ActiveRecord::Base
 
   belongs_to :user
   has_many :bookmarks, :dependent => :destroy
-  has_many :videos, :through => :bookmarks,
-                    :order => "bookmarks.created_at desc"
+
+  has_many :public_videos, :through => :bookmarks,
+                           :source => :video,
+                           :order => "bookmarks.created_at desc",
+                           :conditions => { :public => true }
+
+  has_many :all_videos, :through => :bookmarks,
+                        :source => :video,
+                        :order => "bookmarks.created_at desc"
 
   validates_presence_of :user_id
   validates_presence_of :title
@@ -11,24 +18,24 @@ class Collection < ActiveRecord::Base
     c.user_id and c.user_id > 0
   }
 
-  def size
-    bookmarks.size
+  def size public
+    self.send(assoc_select(public)).count
   end
     
-  def each
-    videos.each { |v| yield v }
+  def each public
+    self.send(assoc_select(public)).each { |v| yield v }
   end
 
   def each_with_index
-    videos.each_with_index { |v,i| yield v, i }
+    self.send(assoc_select(public)).each_with_index { |v,i| yield v, i }
   end
 
-  def poster_path
+  def poster_path public
     # this is fairly expensive (lots of little queries) but probably okay
     # for now(?) 
     if false
       videos = bookmarks.map { |bookmark| bookmark.video }
-      paths = videos.map { |v| v.poster_path }.compact
+      paths = self.send(assoc_select(public)).map { |v| v.poster_path }.compact
       paths.empty? ? nil : paths[rand(paths.size)]
     else
       marks = bookmarks.find :all,
@@ -56,6 +63,10 @@ class Collection < ActiveRecord::Base
     if featured? and featured_changed?
       self.featured_on = Time::now
     end
+  end
+
+  def assoc_select public
+    public ? :public_videos : :all_videos
   end
 
 end

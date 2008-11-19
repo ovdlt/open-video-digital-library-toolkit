@@ -3,6 +3,7 @@ class BookmarksController < ApplicationController
   def create
     if  !(params[:video_id]) or
         !(video = Video.find_by_id params[:video_id]) or
+        !check_video_viz(video) or
         !(collection_id = params[:bookmark_into_id]) or
         !(collection = Collection.find_by_id collection_id) or
         ((!current_user or collection.user_id != current_user.id))

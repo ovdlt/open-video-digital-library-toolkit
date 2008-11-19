@@ -2,7 +2,7 @@
   .title.block Recent Videos
   .content.block
     .videos
-      - Video.recent(5).each do |video|
+      - Video.recent(public_only?,5).each do |video|
         .video
           .image
             %a{:href => video_path( video.id )}
@@ -10,7 +10,8 @@
                 %img{:src=>poster_path,:alt => "video #{video.id}"}
           .clear
           .text
-            .title= link_to h(video.title), video_path( video.id )
+            .title{:class=>video_vis_class(video)}
+              = link_to h(video.title), video_path( video.id )
             .description= h video.sentence
     .clear
   .footer.block.last= link_to "See more recent videos &raquo;", recent_videos_path
