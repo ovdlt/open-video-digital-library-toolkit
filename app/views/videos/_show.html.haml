@@ -12,6 +12,10 @@
       .year= "(#{h date.year})"
 
     .sentence=h video.sentence
+    - if !video.tags.empty?
+      .tags
+        Tags:
+        = tags_html( video.tags )
     .menu
       = link_to "View video details", video_path( video )
       &nbsp;&bull;&nbsp;

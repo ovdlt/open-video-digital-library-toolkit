@@ -282,6 +282,11 @@ class VideosController < ApplicationController
           v.delete( :public )
         end
 
+        if v[:tags]
+          okay = false if !@video.update_tags( v[:tags] )
+          v.delete :tags
+        end
+
         okay = false if !@video.update_attributes(v)
       end
 

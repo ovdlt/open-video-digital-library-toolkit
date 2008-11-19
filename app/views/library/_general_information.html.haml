@@ -65,4 +65,9 @@
           %br
           = @form.text_field :emails, :size => 80, :maxlength => 255
 
+      .label
+        %label
+          = @form.check_box :user_tagging_enabled
+          Enable user tagging
+
     .clear

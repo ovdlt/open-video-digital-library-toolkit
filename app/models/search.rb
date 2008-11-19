@@ -62,6 +62,10 @@ class Search < ActiveRecord::Base
         v.each do |d|
           !d.blank? and criteria << Criterion.new( :duration => d )
         end
+      when "tag"
+        v.each do |t|
+          !t.blank? and criteria << Criterion.new( :tag => t )
+        end
       else raise "hell #{k}"
       end
     end

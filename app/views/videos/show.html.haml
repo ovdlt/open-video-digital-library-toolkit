@@ -161,6 +161,20 @@
     .clear
 
 .sidebar
+  - if !video.tags.empty? or @library.user_tagging_enabled?
+    .entry
+      .title Tags
+      - if current_user and @library.user_tagging_enabled?
+        - form_tag url_for( :controller => :tagging, :action => :create ) do
+          = text_field_tag :tags
+          = hidden_field_tag :video_id, video.id
+          = submit_tag "add tags"
+      = tags_html( video.tags )
+      - if !current_user and @library.user_tagging_enabled?
+        .tell_login
+          = link_to "Login", login_path
+          to add tags
+      %div &nbsp;
 
   .entry
     .title Other Videos

@@ -57,6 +57,15 @@
     .column
 
       %fieldset
+        %legend Tags
+
+        .tags
+          .label= @form.label :tags
+          %div= text_area_tag "video[tags]", |
+                               @video.tag_string, :cols => 38, :rows => 3 |
+          = error_message_on @video, :tags
+        
+      %fieldset
         %legend Description
 
         .duration.required

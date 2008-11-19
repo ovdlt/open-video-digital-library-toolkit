@@ -62,6 +62,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.connect 'home/:action', :controller => "home"
   
+  map.connect "tagging/:action", :controller => "tagging"
+
   map.root :controller => 'home'
   
 end

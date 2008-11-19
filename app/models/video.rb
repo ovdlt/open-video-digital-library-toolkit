@@ -2,6 +2,9 @@ class Video < ActiveRecord::Base
 
   has_many :assets, :dependent => :destroy
 
+  has_many :taggings
+  has_many :tags, :through => :taggings
+
   has_many :properties, :dependent => :destroy do
 
     def << v
@@ -88,6 +91,8 @@ class Video < ActiveRecord::Base
 
     video.properties.each { |p| texts << p.value }
 
+    video.tags.each { |tag| texts << tag.text }
+
     texts = texts.join(" ")
 
     texts.tr!("_*?@-+^~%{}:;<>'\"()|.", " ")
@@ -103,6 +108,34 @@ class Video < ActiveRecord::Base
         vf.destroy
       end
     end
+  end
+
+  def tag_string
+    tags.map {|t| h(t.text) }.join(", ")
+  end
+
+  def add_tags tags
+    tags = tags.split(",")
+    tags.map! {|tag| tag.downcase.strip.gsub(/\s+/, " ") }
+    tags.each do |text|
+      next if text.blank?
+      tag = Tag.find_by_text text
+      if !tag
+        tag = Tag.new :text => text
+      end
+      if tag and !tag.new_record? and self.tags.find_by_id( tag.id )
+        tag = nil
+      end
+      if tag
+        self.tags << tag
+      end
+    end
+  end
+
+  def update_tags string
+    self.tags.clear
+    add_tags string
+    true
   end
 
   def descriptors
@@ -203,6 +236,14 @@ class Video < ActiveRecord::Base
             !user.nil? and user.has_role? [ :admin, :cataloger ]
           conditions[0] << "videos.public = ?"
           conditions[1] << criterion.public
+        end
+
+      when "tag"
+
+        if tag = Tag.find_by_id( criterion.tag )
+          joins << "taggings"
+          conditions[0] << "taggings.tag_id = ? and  taggings.video_id = videos.id"
+          conditions[1] << tag.id
         end
 
       when "duration"

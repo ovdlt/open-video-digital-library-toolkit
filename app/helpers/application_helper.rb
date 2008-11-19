@@ -317,4 +317,12 @@ EOS
     end
   end
 
+  def tags_html tags
+    tags = tags.to_a
+    tags.map! do |tag|
+      link_to h(tag.text), search_path( Search.new( :tag => tag.id ) )
+    end
+    tags.join(", ")
+  end
+
 end

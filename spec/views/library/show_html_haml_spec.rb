@@ -15,7 +15,8 @@ describe "library/show.html.haml" do
   it "should contain all the library attributes" do
     attributes = @library.attributes
     reject = { "updated_at" => true, "created_at" => true, "id" => true,
-      "contact" => true, "about" => true, "news" => true, "privacy" => true }
+      "contact" => true, "about" => true, "news" => true, "privacy" => true,
+      "user_tagging_enabled" => true}
     attributes.reject! { |k,v| reject[k] }
     attributes.each do |k,v|
       response.should have_tag( %(input[name='library[#{k}]'][value='#{h v}']) )

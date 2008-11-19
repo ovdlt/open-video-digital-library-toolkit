@@ -17,6 +17,11 @@ class Criterion < ActiveRecord::Base
     write_attribute "duration", d
   end
 
+  def tag= t
+    self.criterion_type = "tag"
+    write_attribute "tag", t
+  end
+
   def property_type_id= pt_id
     self.criterion_type = "property_type"
     write_attribute "property_type_id", pt_id
@@ -39,6 +44,11 @@ class Criterion < ActiveRecord::Base
       if !duration.blank?
         hash["duration"] ||= []
         hash["duration"] << duration
+      end
+    when "tag";
+      if !tag.blank?
+        hash["tag"] ||= []
+        hash["tag"] << tag
       end
     when "public";
       if [true,false].include?(public)
