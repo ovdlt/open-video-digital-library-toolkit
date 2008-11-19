@@ -21,7 +21,7 @@
         .notice
           A featured video!
 
-  - if current_user and current_user.has_role?(  [ :admin, :cataloger ] )
+  - if current_user and current_user.has_role?( :admin )
     .public
       - form_for video, :html => { :id => nil } do |form|
         %label
@@ -30,6 +30,10 @@
             Make this video public
           - else
             This video is public
+  - elsif current_user and current_user.has_role?(  :cataloger )
+    .public
+      This video is
+      = video.public? ? "public" : "private"
 
   .body
 
