@@ -13,12 +13,12 @@
             Type:
             = fields.collection_select :property_type_id, |
                property_types_by_class( property_class ), |
-               :id, :name, {}, :id => "id_#{rand(32768)}" |
+               :id, :name, {}, :id => gen_id |
             %span.delete= link_to "delete", "#"
         .value
           %label
             Value:
-            = fields.text_field :value, :id => "id_#{rand(32768)}"
+            = fields.text_field :value, :id => gen_id
         = error_messages_for 'property', :object => p_string
         = hidden_field_tag "property[#{type_id(p_string)}][deleted]", |
                              false, :id => nil, :class => :deleted |

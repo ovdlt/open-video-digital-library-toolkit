@@ -134,4 +134,12 @@ module LibraryHelper
     RightsDetailTemplate.new self
   end
 
+  def theme_choices
+    options_for_select @library.available_themes, @library.theme
+  end
+
+  def theme_chooser
+    select "library", "theme", theme_choices
+  end
+
 end

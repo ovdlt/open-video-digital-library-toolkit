@@ -325,4 +325,12 @@ EOS
     tags.join(", ")
   end
 
+  # Not thread safe, for what it's worth
+
+  @@id = 0
+
+  def gen_id
+    "gen_id_#{@@id+=1}"
+  end
+
 end

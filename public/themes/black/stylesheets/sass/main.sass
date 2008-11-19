@@ -1,0 +1,921 @@
+*
+  :padding 0
+  :margin 0
+
+body
+  / :background #fafafa url(/themes/black/images/backgrounds/body-default.jpg) 0 0 repeat-x
+  / :color #333
+  :font
+    :family "helvetica neue", helvetica, "lucida grande", verdana, sans-serif
+    :size 62.5%
+
+#page
+  :font-size 1.2em
+
+#container
+  :margin-left auto
+  :margin-right auto
+  :min-height 100%
+  :width 900px
+  :position relative
+
+a
+  :text-decoration none
+  :padding 0px 0px 1px 0px
+  &:visited, &:link
+    / :border-bottom 1px solid #60acda
+    :color #60acda
+  &:hover, &:active
+    :background-color #cdeafb
+    /* :border-bottom 1px solid #457ea1 */
+    :color #457ea1
+
+.ui-tabs-hide
+  :display none
+
+.ui-tabs-nav
+
+  li
+    :display inline
+    :margin 0
+    :padding 0
+    :font-weight bold
+    :font-size .9em
+
+    a:hover span
+      color: #FF9834
+
+    a:hover
+      background-position: 0% -42px
+
+    a:hover span
+      background-position: 100% -42px
+
+    a
+      float: left
+      background: url(/themes/black/images/tableftG.gif) no-repeat left top
+      margin: 0
+      padding: 0 0 0 4px
+      text-decoration: none
+
+      span
+        float: left
+        display: block
+        background: url(/themes/black/images/tabrightG.gif) no-repeat right top
+        padding: 5px 15px 4px 6px
+        color: #666
+
+  .ui-tabs-selected
+    a
+      :background-position 0% -42px
+
+      span
+        :background-position 100% -42px
+
+.tabs
+
+  ul
+    margin: 0
+    padding: 10px 10px 0 10px
+    list-style: none
+
+.ui-tabs-panel
+  :clear both
+
+.form
+  :clear both
+  :border 1px solid #ccc
+  :padding 1em
+  :margin-bottom 1em
+
+.tabs .form
+  .label
+    :margin-top .5em
+
+.tabs .form .column
+  :width 42%
+  :float left
+  :margin-left 2em
+  :margin-right 2em
+
+._library .tabs li a
+  :display block
+  :max-width 12%
+  :text-align center
+  :font-size .9em
+  :height 42px
+  :overflow hidden
+
+  span
+    :display block
+    :height 100%
+
+.pagination
+  :text-align center
+
+.form fieldset
+
+.assets td
+  :padding .5em
+
+fieldset
+  :padding-top 1em
+
+.right
+  :float right  
+
+.hidden
+  :display none
+
+#asset_pager
+  :font-size 1.1em
+  :text-align center
+
+  div, span, a
+    :padding .1em
+
+
+tbody.page .delete
+  :display none
+
+.my
+  .account
+    :font-size 2em
+    :font-weight bold
+    :padding .5em
+    :background #ccc
+    :margin-bottom .5em
+    :margin-top .5em
+
+  .box
+    :float left
+    :width 40%
+    :font-size 1.2em
+    :font-weight bold
+    :border 1px solid black
+    :padding 1em
+    :margin 2%
+
+    div.title
+      :font-size 1.1em
+      :margin-top 0em
+      :padding-bottom .5em  
+      :border-bottom 1px solid #888
+
+    div
+      :margin-top 1em
+
+    span.title
+      :font-style italic
+      :border none  
+
+    .controls
+      :margin 0
+
+      .delete
+        :padding 0px
+        :border 0px
+        :margin 0px
+        :margin-left 1em
+        :font-style italic
+        :font-size .9em
+
+  .favorites.box
+    :width 90%
+
+  .favorites .all
+    :text-align center
+
+.video_details
+  :float left
+  :width 445px
+
+div.inline
+  :display inline
+
+form.inline
+  :display inline
+
+form.inline div
+  :display inline
+    
+.image
+  :float left
+  :width 120px
+  :height 90px
+  :background #eee
+  :text-align center
+
+div.collection.videos
+
+  :padding-top 0
+  :border-left 2px solid black
+  :border-right 2px solid black
+  :border-top 2px solid black
+  :border-bottom 1px solid black
+
+  .video
+
+    :border-bottom 1px solid black
+
+    :padding .5em
+    :margin-top 0
+    :font-weight normal
+
+    .image
+      :float left
+      :width 120px
+      :height 90px
+      :background #eee
+      :margin-right 1em
+      :margin-left .5em
+      :text-align center
+
+      img
+        :width 120px
+        :height 90px
+
+    .title
+      :display inline
+      :font-size 1.2em
+      :font-weight bold
+    .year
+      :display inline
+      :font-size 1.2em
+      :font-weight bold
+
+    .video_details .sentence
+      :padding-right 1em
+
+    .video_descriptors
+      :float left
+      :width 250px
+
+      div
+        :margin 0
+
+      .type
+        :float left
+        :font-weight bold
+        :margin-right .5em
+        
+      .values
+        :float left
+
+.pointer
+  :cursor pointer
+  :background #eee
+
+.pagination_info
+  :text-align center
+
+.collections.index
+
+  .title
+    :font-size 2.5em
+    :font-weight bold
+    :background #eee
+    :border solid 1px #ccc
+    :padding .5em
+    :margin .1em
+
+  .collection
+
+    :border solid 1px black  
+    :margin-bottom 1em
+
+    .image
+      :float left
+      :border solid 1px black
+      :width 160px
+      :height 120px
+      :margin 1em
+      :text-align center
+      :background #eee
+
+      img
+        :width 160px
+        :height 120px
+
+    .details
+      :float left
+      :font-size 1.1em
+
+      .title
+        :background none
+        :border none
+        :font-size 1.2em
+        :color #888
+        :padding 0
+        :padding-bottom .4em
+       
+      .attribute
+        :display inline
+        .value
+          :display inline
+        .legend
+          :display inline
+          :font-weight bold
+      
+      .description
+        :margin-top .5em
+        :margin-bottom .5em
+     
+      .menu
+        div
+          :display inline
+
+
+.collections
+  .contents
+    .pagination
+      :font-size 1.2em
+
+#content .collection.page .collection
+  
+  :margin-bottom 1em
+
+  .image
+    :float left
+    :border solid 1px black
+    :width 160px
+    :height 120px
+    :margin 1em
+    :text-align center
+    :margin-left 0
+    :padding-left 0
+    :background #eee
+    img
+      :width 160px
+      :height 120px
+
+  .description
+    :margin-top .5em
+    :margin-bottom .5em
+    :float left
+
+  .details
+    :float left
+    :font-size 1.1em
+
+    .title
+      :width 100%
+      :background none
+      :border none
+      :font-size 1.4em
+      :padding none
+      :background #eee
+      :border 1px solid #ccc
+     
+    .description
+      :padding-right 2em
+
+  .menu
+    :float left
+    :width 20%
+    :margin-top 1em
+    :font-size 1.1em
+    .attribute
+      :float left
+      :width 100%
+      .legend
+        :float left
+        :font-weight bold
+        :padding-right .5em
+      .value
+        :float left
+      .value.right
+        :float right
+
+
+#content .playlist
+  
+  :margin-bottom 1em
+
+  .image
+    :float left
+    :border solid 1px black
+    :width 160px
+    :height 120px
+    :text-align center
+    :margin-left 0
+    :background #eee
+    :margin 1em
+
+    img
+      :width 160px
+      :height 120px
+
+  .description
+    :margin-top .5em
+    :margin-bottom .5em
+    :float left
+
+  .details
+    :float left
+    :font-size 1.1em
+    :width 55%
+
+    .title
+      :background none
+      :border none
+      :font-size 1.4em
+      :padding-left 1em
+      :padding-right 1em
+      :margin-right 1em
+      :padding-bottom .4em
+      :background #eee
+      :border 1px solid #ccc
+     
+    .description
+      :padding-right 2em
+
+    .menu
+      :width 100%
+      :margin 0
+      :margin-bottom .5em
+
+      div
+        :display inline
+        :padding-left 1em
+        :padding-right 1em
+      
+  .menu
+    :float left
+    :width 22%
+    :margin-top 1em
+    :font-size 1.1em
+    .attribute
+      :float left
+      :width 100%
+      .legend
+        :float left
+        :font-weight bold
+        :padding-right .5em
+      .value
+        :float left
+      .value.right
+        :float right
+
+
+#content .details .body .storyboard
+  .image
+    :width 88px
+    :height 66px
+    :margin 0
+    :margin-top 10px
+    :margin-left 10px
+    img
+      :width 88px
+      :height 66px
+
+.actions
+  :text-align center
+  :display inline-block
+  :vertical-align middle
+
+.bookmark select option
+  :font-size .8em
+
+.images
+  .image
+    :margin-top .1em
+    :margin-right .1em
+  img
+    :width 120px
+    :height 90px
+
+#descriptor_types
+
+  .dt
+    :font-size 1.2em
+
+  .d
+    :margin-left 1em
+ 
+  li.d
+    :margin-left 0
+
+  a
+    :display inline
+
+  span.edit  a
+    :margin-left 1em
+
+  ul
+    :padding 0
+    :margin-bottom 1em
+
+  li.dt
+    :float left
+    :padding 1em
+    :width 40%
+
+  li.dt.new
+    :clear left
+
+# NEW
+
+.videos.list.partial
+
+  :border none
+  :padding-top 0
+
+.videos.list.partial
+
+  .navigate
+    :border-top 1px solid #bbb
+    :border-bottom 1px solid #bbb
+    :padding-top 4px
+    :padding-bottom 4px
+    :margin 0
+    :margin-top 4px
+
+    .button
+      :float right
+      :margin 2px
+      :background #ccc
+      :border 1px solid #bbb
+      
+    .button.current img
+      :visibility hidden
+
+.videos.list.partial
+  :width 610px
+
+.videos.list.partial.bg_thumbs
+
+  .video
+    a
+      :padding 0
+
+    :padding-top 8px
+    :padding-bottom 8px
+    :border-bottom 1px dotted #888
+
+    .image
+      :width 122px
+      :height 92px
+      :border 1px solid #888
+      :padding 1px
+
+      img
+        :width 120px
+        :height 90px
+
+    .details
+      :float left
+      :margin-left 4px
+      :margin-top 0
+
+      .title
+        :background none
+        :font-size 1.2em
+        :font-weight bold
+        :display inline
+        :padding 0
+
+      .year
+        :display inline
+
+      .sentence
+        :margin-bottom 0
+
+.videos.list.partial.text_only
+
+  .video
+    a
+      :padding 0
+
+    :padding-top 6px
+    :padding-bottom 1px
+    :border-bottom 1px dotted #888
+
+    .image
+      :float none
+      :display inline-block
+      :width 40px
+      :height 30px
+      :border 1px solid #888
+      :margin 0
+
+      img
+        :width 40px
+        :height 30px
+
+    .clear
+      :display none
+
+    .details
+      :float none
+      :display inline
+      :vertical-align top
+      :margin-left 2px
+      :margin-top 0
+
+      .title
+        :background none
+        :font-weight bold
+        :display inline
+        :padding 0
+
+      .year
+        :display inline
+
+      .sentence
+        :display none
+
+      .menu 
+        :display none
+
+.videos.list.partial.sm_thumbs
+
+  .video
+
+    :float left
+    :margin 4px
+    :width 23%
+    :height 130px
+
+    a
+      :padding 0
+
+    :padding-top 8px
+    :padding-bottom 8px
+
+    .image
+      :width 122px
+      :height 92px
+      :border 1px solid #888
+      :padding 1px
+      :margin-left 8px
+      :text-align center
+
+      img
+        :width 120px
+        :height 90px
+
+    .details
+      :margin-top 0
+      :width 100%
+
+      .title
+        :background none
+        :font-weight bold
+        :padding 0
+        :width 100%
+        a
+          :display block
+          :text-align center
+
+      .year
+        :display none
+
+      .sentence
+        :display none
+
+      .menu
+        :display none
+
+.videos.list.partial.sm_thumbs_only
+
+  .navigate
+    :margin-bottom 4px
+
+  .list
+    :padding-left 0
+
+  .video
+
+    :float left
+    :margin 0
+    :padding 0
+
+    .image
+      :width 120px
+      :height 90px
+      :border 0px none
+      :margin 0
+
+      img
+        :width 120px
+        :height 90px
+
+    .details
+      :display none
+
+.details
+  :float left
+  .attribute
+    :float left
+    div
+      :display inline
+    .separator
+      :padding-left .5em
+      :padding-right .2em
+    .legend
+      :font-weight bold
+
+.collection.show
+  .title
+    :margin-bottom 8px
+    .created_by
+      :font-size .7em
+      .value
+        :display inline
+        :font-style italic
+  .details
+    .attribute.created_on .separator
+      :display none
+    .attribute.videos
+      :padding-top 0
+      :clear left
+      .separator
+        :display none
+
+.collections .collection .details
+  .attribute.size .separator
+    :display none
+  .description
+    :clear both
+    :padding-top 1em
+
+.collections.content
+  .created_by
+    :display none
+
+.my
+  .collections
+    :float left
+    :width 610px
+
+    .details
+
+      .attribute.created_on, .attribute.updated_on
+        :font-size .9em
+
+      .attribute.created_on .separator
+        :display none
+
+      .br.views
+        :clear both
+
+.collections.content
+  :float left
+
+.collections.show .content
+  :float left
+  :width 610px
+
+.my.content
+  :float left
+  :width 610px
+
+.collections.index.partial
+  .details
+    .owned_by
+      :padding-left 1em
+      :float right
+      .owner
+        :display inline
+        :font-style italic
+  .pagination_info
+    :font-size 1.1em
+    :margin-bottom .2em
+    :margin-top .2em
+
+.library .ui-tabs_panel .property-type
+
+  .display
+    :display inline
+
+    span.edit
+      a
+        :font-size 5em
+        :display inline
+        :margin-left 1em
+
+  .delete
+    :display inline
+
+div.error
+  :border 1px solid red
+  :padding .1em
+  :padding-left .4em
+
+.ui-tabs-nav li span.error
+  :color red
+
+#errorExplanation
+  h2, p
+    :display none
+  ul
+    :font-color red
+
+#rights_statements li.delete
+  :padding-bottom 1em
+
+li.delete li.delete
+  :margin-left 1em
+
+.details_list dt
+  :font-weight bold
+  :float left
+  :clear left
+  :width 30%
+.details_list dd
+  :float left
+  :width 60%
+
+.details_list #show_descriptors dt
+  :width 30%
+
+.details_list #show_descriptors dd
+  :width 60%
+
+.details_list .wide dt
+  :width 30%
+
+.details_list .wide dd
+  :width 60%
+
+#content .sidebar .entry ul.refine
+  list-style: none
+
+  li
+    :margin 0
+    :padding-top 4px
+
+.refine
+  :font-size .8em
+
+.refine option
+  :font-size .8em
+
+.refine select
+  :float right
+
+div.save_query
+  :font-size .8em
+
+  .title
+    :padding-top .5em
+
+.required .label
+  :font-weight bold
+
+.featured
+  :margin-bottom .5em
+
+  input
+    :vertical-align middle
+
+  .notice
+    :font-style italic
+    :color red
+
+.collection .featured form
+  :font-size .8em
+
+.library_page
+
+  .preview
+    :float right
+
+  :font-size 2em
+ 
+  .input, .edit
+    :text-align center
+    :margin auto
+    :margin-top 1em
+
+  .content
+    :line-height normal
+
+    :font-size .6em
+    / :font-family serif
+
+    :list-style inside
+
+    h1, h2
+      :font-family sans-serif
+      :margin-bottom .5em
+
+.all_collections
+  :font-size 1.2em
+  :font-style italic
+
+#content .private.title
+
+  :color yellow
+  :background-color #333
+
+  a:visted, a:link
+    :color yellow
+
+img
+  :border none
+
+.tell_login
+  :font-size .7em
+  :font-style italic

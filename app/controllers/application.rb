@@ -48,11 +48,36 @@ class ApplicationController < ActionController::Base
   protected
 
   before_filter :load_library
-
+  
   def load_library
-    @library = Library.find :first
-  end
 
+    library = @library = Library.find(:first)
+    theme = library.theme
+
+    # this is sleezy ... may break with new rails ...
+
+    ActionView::Helpers::AssetTagHelper.module_eval do
+      remove_const(:STYLESHEETS_DIR) if const_defined? :STYLESHEETS_DIR
+      const_set :STYLESHEETS_DIR,
+        "#{ActionView::Helpers::AssetTagHelper::ASSETS_DIR}/" \
+        "themes/#{theme}/stylesheets"
+    end
+
+    ActionView::Helpers::AssetTagHelper::StylesheetAsset.module_eval do
+      remove_const(:DIRECTORY) if const_defined? :DIRECTORY
+      const_set :DIRECTORY, "themes/#{theme}/stylesheets".freeze
+    end
+
+    ActionView::Helpers::AssetTagHelper::ImageAsset.module_eval do
+      remove_const(:DIRECTORY) if const_defined? :DIRECTORY
+      const_set :DIRECTORY, "themes/#{theme}/images".freeze
+    end
+
+    Sass::Plugin.options =
+      { :template_location => "./public/themes/#{theme}/stylesheets/sass",
+        :css_location => "./public/themes/#{theme}/stylesheets", }
+
+  end
 
   # the prefix is used when generating emails so that we don't have to
   # hardcode the host and port

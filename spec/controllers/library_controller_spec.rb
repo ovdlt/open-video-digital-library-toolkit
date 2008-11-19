@@ -615,6 +615,7 @@ describe LibraryController do
           "privacy" => nil,
           "emails" => "librarian@foo.bar",
           "user_tagging_enabled" => true,
+          "theme" => "default",
         },
 
         "property_class" =>

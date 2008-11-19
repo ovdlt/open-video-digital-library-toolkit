@@ -70,4 +70,10 @@
           = @form.check_box :user_tagging_enabled
           Enable user tagging
 
+      .label
+        %label
+          Theme:
+          %select{:name => "library[theme]"}
+            = theme_choices
+
     .clear
