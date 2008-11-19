@@ -4,10 +4,9 @@ class FavoritesController < ApplicationController
     if current_user.nil?
       flash[:error] = "You must be logged in to save a search"
     else
-      p current_user.favorites
       if v = Video.find_by_id( params[:video_id] ) and
-         check_video_viz( v )
-         ( current_user.favorites.videos << v ) and
+         check_video_viz( v ) and
+         ( current_user.favorites.all_videos << v ) and
          current_user.favorites.save and
          current_user.save
         flash[:notice] = "Favorite saved"
@@ -30,7 +29,7 @@ class FavoritesController < ApplicationController
     end
 
     if v = Video.find( params[:id] )
-      current_user.favorites.videos.delete v
+      current_user.favorites.all_videos.delete v
       flash[:notice] = "Favorite removed"
     end
 

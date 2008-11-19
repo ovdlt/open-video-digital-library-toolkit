@@ -1,8 +1,8 @@
 .collection
 
   .image
-    - if p = collection.poster_path
-      %img{:src=>collection.poster_path,:alt => "sample image from collection"}
+    - if p = collection.poster_path(public_only?)
+      %img{:src=>p,:alt => "sample image from collection"}
   .details
     - if owner = owner_text( collection ) and owner != "my"
       .owned_by
@@ -12,7 +12,7 @@
     .title= collection.title
     .attribute.size
       .separator &bull;
-      .legend= collection.size
+      .legend= collection.size(public_only?)
       .value Videos
     .br.size
     .attribute.views

@@ -58,7 +58,7 @@ namespace :db do
       v.duration = rand(3*60*60)
 
       c = collections[rand(collections.size)]
-      c.videos << v
+      c.all_videos << v
       c.save!
       v.save!
     end

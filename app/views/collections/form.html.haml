@@ -2,8 +2,8 @@
 .collection.page
   - form_for @collection do |f|
     .image
-      - if p = collection.poster_path
-        %img{:src=>collection.poster_path,:alt => "sample image from collection"}
+      - if p = collection.poster_path(public_only?)
+        %img{:src=>p,:alt => "sample image from collection"}
     .details
       .title
         .label
@@ -29,9 +29,8 @@
       %div &nbsp;
       .clear
 
-      %label
-        = submit_tag @collection.new_record? ? "Create" : "Save" 
-    
+      = submit_tag @collection.new_record? ? "Create" : "Save" 
+
     .menu
       .attribute
         .legend Created on:
@@ -41,7 +40,7 @@
         .right.value= ua = collection.updated_at and ua.to_date.to_s(:medium)
       .attribute
         .legend Videos:
-        .value= collection.size
+        .value= collection.size(public_only?)
       .attribute
         .legend Views:
         .value= collection.views
@@ -49,4 +48,4 @@
     .clear
 
 
-= render :partial => "collections/videos", :object => @collection.videos
+= render :partial => "collections/videos", :object => @collection.send(videos_method)

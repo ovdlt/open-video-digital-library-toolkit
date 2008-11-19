@@ -36,14 +36,14 @@ class VideosController < ApplicationController
     end
 
     if !@assert.video.public? and
-       (!current_user or !current_user.has_role?[:admin,:cataloger])
+       (!current_user or !current_user.has_role?([:admin,:cataloger]))
       render_missing
       return
     end
 
     if current_user and
-       current_user.downloads.videos.find_by_id(@video.id).nil?
-      current_user.downloads.videos << @video
+       current_user.downloads.all_videos.find_by_id(@video.id).nil?
+      current_user.downloads.all_videos << @video
       current_user.downloads.save!
       current_user.save!
     end

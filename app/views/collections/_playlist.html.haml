@@ -1,8 +1,8 @@
 - collection = playlist
 .playlist.collection
   .image
-    - if p = collection.poster_path
-      %img{:src=>collection.poster_path,:alt => "sample image from collection"}
+    - if p = collection.poster_path(public_only?)
+      %img{:src=>p,:alt => "sample image from collection"}
   .details
     .title= h collection.title
     .description= h collection.description

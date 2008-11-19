@@ -31,24 +31,6 @@
           - if current_user and current_user.has_role?( "admin" )
             .admin
               .button= link_to "Administration", "/library"
-          /
-            .login_logout
-              - if logged_in?
-                .logout
-                  .button= link_to "LOGOUT", logout_path
-                .user
-                  You're logged in as
-                  %span.login= h current_user.login
-              - else
-                .login
-                  .button= link_to "LOGIN", login_path
-                .register
-                  .button= link_to "REGISTER", signup_path
-              .search
-                - form_for Search.new, :url => videos_path, :html => { :method => :get } do |form|
-                  = form.criterion :text, :size => 40, :id => nil
-                  = image_submit_tag "mag.png"
-
           .clear
 
         #header

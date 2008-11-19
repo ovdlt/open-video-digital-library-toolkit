@@ -30,15 +30,15 @@ class AssetsController < ApplicationController
       return
     end
 
-    if (!current_user or !current_user.has_role?[:admin,:cataloger]) and
+    if (!current_user or !current_user.has_role?([:admin,:cataloger])) and
         !@assert.video.public?
       render_missing
       return
     end
 
     if current_user and
-       current_user.downloads.videos.find_by_id(@asset.video_id).nil?
-      current_user.downloads.videos << @asset.video
+       current_user.downloads.all_videos.find_by_id(@asset.video_id).nil?
+      current_user.downloads.all_videos << @asset.video
       current_user.downloads.save!
       current_user.save!
     end

@@ -305,8 +305,12 @@ EOS
     v.public? ? "public" : "private"
   end
 
-  def video_ids_method
+  def videos_method
     public_only? ? :public_videos : :all_videos
+  end
+
+  def video_ids_method
+    public_only? ? :public_video_ids : :all_video_ids
   end
 
   def public_only?
