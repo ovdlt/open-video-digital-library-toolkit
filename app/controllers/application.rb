@@ -75,7 +75,8 @@ class ApplicationController < ActionController::Base
 
     Sass::Plugin.options =
       { :template_location => "./public/themes/#{theme}/stylesheets/sass",
-        :css_location => "./public/themes/#{theme}/stylesheets", }
+        :css_location => "./public/themes/#{theme}/stylesheets",
+      }
 
   end
 
