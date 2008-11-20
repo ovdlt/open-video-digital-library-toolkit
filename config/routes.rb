@@ -39,7 +39,13 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :assets, :collection => { :uncataloged => :any }
 
-  map.resource :library, :controller => :library
+  map.resource :library, :controller => :library,
+                         :member => { :users => :get,
+                                      :remove_users => :post,
+                                      :add_role => :post,
+                                      :remove_role => :post,
+                                    }
+
 
   map.resource :my, :controller => :my,
                     :member => { :home => :get,

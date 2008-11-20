@@ -208,6 +208,46 @@ class LibraryController < ApplicationController
 
   end
 
+  def remove_users
+    params[:users].split(/[,\s]+/).each do |user|
+      user = User.find_by_login user
+      if user and user.id != current_user.id
+        user.destroy
+      end
+    end
+    redirect_to url_for( :action => :users )
+  end
+
+  def remove_role
+    params[:users].split(/[,\s]+/).each do |user|
+      user = User.find_by_login user
+      role = Role.find_by_name params[:role]
+      if user and user.id != current_user.id and role
+        permission =
+          Permission.find_by_role_id_and_user_id( role.id, user.id )
+        if permission
+          permission.destroy
+        end
+      end
+    end
+    redirect_to url_for( :action => :users )
+  end
+
+  def add_role
+    params[:users].split(/[,\s]+/).each do |user|
+      user = User.find_by_login user
+      role = Role.find_by_name params[:role]
+      if user and user.id != current_user.id and role
+        permission =
+          Permission.find_by_role_id_and_user_id( role.id, user.id )
+        if !permission
+          Permission.create :role_id => role.id, :user_id => user.id
+        end
+      end
+    end
+    redirect_to url_for( :action => :users )
+  end
+
   private
 
   def parameters
