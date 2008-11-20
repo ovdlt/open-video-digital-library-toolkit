@@ -1,0 +1,31 @@
+.library
+  .users
+    %fieldset
+      %legend
+        Remove User
+      - form_tag :action => :remove_users do
+        %label
+          Users to remove:
+          = text_field_tag :users, nil, :id => nil
+        = submit_tag "remove"
+    %fieldset
+      %legend
+        Roles
+      - Role.find(:all).each do |role|
+        - role = role.name
+        %fieldset
+          %legend
+            Role:
+            &= role.humanize
+          - form_tag :action => :add_role do
+            %label
+              Users to add to role:
+              = text_field_tag :users, nil, :id => nil
+              = hidden_field_tag :role, role, :id => nil
+              = submit_tag "add"
+          - form_tag :action => :remove_role do
+            %label
+              Users to remove from role:
+              = text_field_tag :users, nil, :id => nil
+              = hidden_field_tag :role, role, :id => nil
+              = submit_tag "remove"
