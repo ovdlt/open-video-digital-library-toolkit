@@ -135,7 +135,7 @@ module LibraryHelper
   end
 
   def theme_choices
-    options_for_select @library.available_themes, @library.theme
+    options_for_select Library.available_themes, @library.theme
   end
 
   def theme_chooser

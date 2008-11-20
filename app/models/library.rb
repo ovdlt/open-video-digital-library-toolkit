@@ -49,7 +49,7 @@ class Library < ActiveRecord::Base
     end
   end
 
-  def available_themes
+  def self.available_themes
     dir = Dir.new( File.join(RAILS_ROOT,'public','themes') )
     themes = []
     dir.each do |entry|
