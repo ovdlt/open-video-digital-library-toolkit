@@ -21,3 +21,5 @@ config.action_controller.perform_caching             = true
 # config.action_mailer.raise_delivery_errors = false
 ASSET_DIR = File.join(RAILS_ROOT, 'public/assets')
 SURROGATE_DIR = File.join(RAILS_ROOT, 'public/surrogates')
+
+FileUtils.rm Dir.glob( File.join( "**", "all.css" ) )

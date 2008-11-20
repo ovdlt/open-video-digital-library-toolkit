@@ -59,8 +59,8 @@ class ApplicationController < ActionController::Base
     ActionView::Helpers::AssetTagHelper.module_eval do
       remove_const(:STYLESHEETS_DIR) if const_defined? :STYLESHEETS_DIR
       const_set :STYLESHEETS_DIR,
-        "#{ActionView::Helpers::AssetTagHelper::ASSETS_DIR}/" \
-        "themes/#{theme}/stylesheets"
+      "#{ActionView::Helpers::AssetTagHelper::ASSETS_DIR}/" \
+      "themes/#{theme}/stylesheets"
     end
 
     ActionView::Helpers::AssetTagHelper::StylesheetAsset.module_eval do
@@ -76,7 +76,24 @@ class ApplicationController < ActionController::Base
     Sass::Plugin.options =
       { :template_location => "./public/themes/#{theme}/stylesheets/sass",
         :css_location => "./public/themes/#{theme}/stylesheets",
-      }
+    }
+
+    if false
+
+      ActionView::Helpers::AssetTagHelper::AssetTag.class_eval do
+        cache = const_get :Cache
+        cache.each do |k,v|
+          if ActionView::Helpers::AssetTagHelper::StylesheetTag === k
+            v.public_path(true)
+            v.asset_file_path(true)
+          end
+        end
+      end
+
+      ActionView::Helpers::AssetTagHelper::StylesheetSources.
+        create( nil, nil, [ :all ], nil ).expand_path(true)
+
+    end
 
   end
 
