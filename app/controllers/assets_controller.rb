@@ -31,7 +31,7 @@ class AssetsController < ApplicationController
     end
 
     if (!current_user or !current_user.has_role?([:admin,:cataloger])) and
-        !@assert.video.public?
+        !@asset.video.public?
       render_missing
       return
     end
@@ -43,7 +43,9 @@ class AssetsController < ApplicationController
       current_user.save!
     end
       
-    redirect_to "/assets/" + @asset.relative_path
+    # There's got to be a better way to do this
+    redirect_to ( ActionController::Base.relative_url_root or "" ) +
+               '/assets/' + @asset.relative_path
   end
 
 end
