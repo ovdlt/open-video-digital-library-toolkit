@@ -48,7 +48,8 @@ class VideosController < ApplicationController
       current_user.save!
     end
       
-    redirect_to "/assets/" + @asset.relative_path
+    redirect_to ( ActionController::Base.relative_url_root or "" ) +
+               '/assets/' + @asset.relative_path
   end
 
   def per_page
