@@ -1,64 +1,57 @@
 --- 
 vendor/plugins/rspec: 
   squashed: true
-  url: git://github.com/dchelimsky/rspec.git
   type: git
+  url: git://github.com/dchelimsky/rspec.git
   revision: 920876c38831f098f43a3abc3d26dd1baa6f40f7
   branch: master
   remote: braid/vendor/plugins/rspec
 vendor/plugins/rspec_rails: 
   squashed: true
-  url: git://github.com/dchelimsky/rspec-rails.git
   type: git
+  url: git://github.com/dchelimsky/rspec-rails.git
   revision: 4a08a2d4683f314f3c7b076cb551574bea524051
   branch: master
   remote: braid/vendor/plugins/rspec-rails
 vendor/rails: 
   squashed: true
-  url: git://github.com/rails/rails.git
   type: git
+  url: git://github.com/rails/rails.git
   revision: 408c7227575e0c395a45605783cade1ba3b51e02
   branch: master
   remote: braid/vendor/rails
-vendor/gems/deprec: 
-  squashed: true
-  type: git
-  url: git://github.com/mbailey/deprec.git
-  revision: 873678a20661fbd10a8cfe97e5219af5c10ea199
-  branch: master
-  remote: braid/vendor/gems/deprec
 vendor/plugins/role_requirement: 
   squashed: true
-  url: git://github.com/negonicrac/role_requirement.git
   type: git
+  url: git://github.com/negonicrac/role_requirement.git
   revision: 0140050d6676ffa8519e5b1f7c146bd72c02e1da
   branch: master
   remote: braid/vendor/plugins/role-requirement
 vendor/plugins/exception_notification: 
   squashed: true
-  type: git
   url: git://github.com/rails/exception_notification.git
+  type: git
   revision: ed0b914ff493f9137abc4f68ee08e3c3cd7a3211
   branch: master
   remote: braid/vendor/plugins/exception-notification
 vendor/plugins/will_paginate: 
   squashed: true
-  url: git://github.com/mislav/will_paginate.git
   type: git
+  url: git://github.com/mislav/will_paginate.git
   revision: f161d99c0cd4517b4954db214e49ba606ec70277
   branch: master
   remote: braid/vendor/plugins/will-paginate
 vendor/plugins/restful_authentication: 
   squashed: true
-  url: git://github.com/technoweenie/restful-authentication.git
   type: git
+  url: git://github.com/technoweenie/restful-authentication.git
   revision: 5846e652407eb26f54f85062cd4fe5cda68daf61
   branch: master
   remote: braid/vendor/plugins/restful-authentication
 vendor/plugins/aasm: 
   squashed: true
-  type: git
   url: git://github.com/rubyist/aasm.git
+  type: git
   revision: 02cacead7e7f159416f9754bd8bdf79d5519bcc6
   branch: master
   remote: braid/vendor/plugins/aasm
