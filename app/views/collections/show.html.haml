@@ -7,7 +7,7 @@
       %ul
         %li
           = link_to "Browse all #{containers_text( @collection )}", |
-            "/collections/#{containers_text( @collection )}" |
+            send( "#{containers_text( @collection )}_collections_path".to_sym ) |
         /
           - if owner = owner_text( @collection )
             %li
