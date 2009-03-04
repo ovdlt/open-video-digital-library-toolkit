@@ -30,10 +30,10 @@
               .button= link_to "Register", signup_path
           - if current_user and current_user.has_role?( "admin" )
             .admin
-              .button= link_to "Users", "/library/users"
+              .button= link_to "Users", users_library_path
           - if current_user and current_user.has_role?( "admin" )
             .admin
-              .button= link_to "Administration", "/library"
+              .button= link_to "Administration", library_path
           .clear
 
         #header
