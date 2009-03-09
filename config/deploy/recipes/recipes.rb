@@ -7,21 +7,26 @@ after 'deploy:setup', :roles => [ :app, :web ] do
   end
   
   run "mkdir -p #{shared_path}/config/initializers"
-  put `erb config/initializers/site_keys.rb.erb`, "#{shared_path}/config/initializers/site_keys.rb.new"
+  put `erb config/initializers/site_keys.rb.erb`, "#shared_path}/config/initializers/site_keys.rb.new"
   
   run <<EOS
-if [ -e #{shared_path}/config/initializers/site_keys.rb ];
+bash -c 'if [ -e #{shared_path}/config/initializers/site_keys.rb ];
 then
  rm #{shared_path}/config/initializers/site_keys.rb.new;
 else
  mv #{shared_path}/config/initializers/site_keys.rb.new #{shared_path}/config/initializers/site_keys.rb;
-fi
+fi'
 EOS
 
 end
 
+on :load do
+  after 'deploy:update_code', :roles => :app do
+    sudo "bash -c '(cd #{release_path} && rake gems:install)'"
+  end
+end
+
 after 'deploy:symlink', :roles => :app do
-  sudo "bash -c '(cd #{current_path} && rake gems:install)'"
   shared_dirs.each do |dir|
     run "ln -nfs #{shared_path}/#{dir} #{release_path}/#{dir}"
   end
