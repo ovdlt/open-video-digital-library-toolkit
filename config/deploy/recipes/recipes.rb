@@ -1,8 +1,3 @@
-# Because of themes, etc., Cap's native timestamping isn't going to work anyway ...
-# Note that this failure seems benign
-
-# set :normalize_asset_timestamps, false
-
 set :shared_dirs, [ "public/assets", "public/surrogates" ]
 
 after 'deploy:setup', :roles => [ :app, :web ] do
@@ -43,3 +38,29 @@ namespace :sass do
   # Generate all the stylesheets manually (from their Sass templates) before each restart.
   before 'deploy:restart', 'sass:update'
 end
+
+namespace :deploy do
+
+  namespace :first_time do
+       
+    desc "All first time setup tasks"
+    task :default, :roles => :db do
+      deploy.migrations
+      fixtures
+      populate    
+    end
+
+    desc "Sets up library with sample data that can then be changed"
+    task :fixtures, :roles => :db do
+      run "cd #{current_path} && env RAILS_ENV=#{rails_env} rake spec:db:fixtures:load"
+    end
+
+    desc "Adds dummy data to the library"
+    task :populate, :roles => :db do
+      run "cd #{current_path} && env RAILS_ENV=#{rails_env} rake db:populate"
+    end
+
+  end
+
+end
+
