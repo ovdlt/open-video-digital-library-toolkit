@@ -1,0 +1,14 @@
+development: &defaults
+  adapter: mysql
+  database: ovdlt-development
+  encoding: utf8
+  timeout: 5000
+  username: root
+
+test:
+  database: ovdlt-test
+  <<: *defaults
+
+production:
+  database: ovdlt-production
+  <<: *defaults
