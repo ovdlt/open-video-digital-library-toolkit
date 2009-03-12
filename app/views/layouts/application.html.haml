@@ -39,9 +39,11 @@
         #header
           - if Library.logo_url
             #logo
-              = image_tag Library.logo_url
+              %a{ :href => url_for( :controller => :home, :action => :index ) }
+                = image_tag Library.logo_url
           .content
-            .title= title
+            .title
+              = link_to title, url_for( :controller => :home, :action => :index )
             .subtitle= Library.subtitle
             #navigation
               %ul
@@ -97,3 +99,10 @@
           .open_video
             Powered by
             = link_to "Open Video", "http://open-video.org/"
+    -# after a page loads, immediately highlight any flash messages (changes bg to yellow, then fade back to white)
+    -# a little later, fade out and remove the message completely
+    :javascript
+      $(document).ready( function() { 
+        setTimeout( '$(".flash").effect("highlight", {}, 4000 );', 400 );
+        setTimeout( '$(".flash.notice").fadeOut( 2000 );' , 5000 );
+      } );
