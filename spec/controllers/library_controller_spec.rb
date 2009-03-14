@@ -369,6 +369,7 @@ describe LibraryController do
         @new_rd["deleted"] = "deleted"
 
         post :update, @params
+        
         response.should redirect_to(library_path)
       
         RightsDetail.find_by_id(@new_rd_id).should be_nil

@@ -56,6 +56,8 @@ class ApplicationController < ActionController::Base
 
     # this is sleezy ... may break with new rails ...
 
+    # require 'action_view/helpers/asset_tag_helper'
+
     ActionView::Helpers::AssetTagHelper.module_eval do
       remove_const(:STYLESHEETS_DIR) if const_defined? :STYLESHEETS_DIR
       const_set :STYLESHEETS_DIR,
@@ -63,6 +65,7 @@ class ApplicationController < ActionController::Base
       "themes/#{theme}/stylesheets"
     end
 
+    if false
     ActionView::Helpers::AssetTagHelper::StylesheetAsset.module_eval do
       remove_const(:DIRECTORY) if const_defined? :DIRECTORY
       const_set :DIRECTORY, "themes/#{theme}/stylesheets".freeze
@@ -71,6 +74,7 @@ class ApplicationController < ActionController::Base
     ActionView::Helpers::AssetTagHelper::ImageAsset.module_eval do
       remove_const(:DIRECTORY) if const_defined? :DIRECTORY
       const_set :DIRECTORY, "themes/#{theme}/images".freeze
+    end
     end
 
     Sass::Plugin.options =
