@@ -78,23 +78,6 @@ class ApplicationController < ActionController::Base
         :css_location => "./public/themes/#{theme}/stylesheets",
     }
 
-    if false
-
-      ActionView::Helpers::AssetTagHelper::AssetTag.class_eval do
-        cache = const_get :Cache
-        cache.each do |k,v|
-          if ActionView::Helpers::AssetTagHelper::StylesheetTag === k
-            v.public_path(true)
-            v.asset_file_path(true)
-          end
-        end
-      end
-
-      ActionView::Helpers::AssetTagHelper::StylesheetSources.
-        create( nil, nil, [ :all ], nil ).expand_path(true)
-
-    end
-
   end
 
   # the prefix is used when generating emails so that we don't have to
