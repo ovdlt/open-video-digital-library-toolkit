@@ -1,4 +1,5 @@
 require 'spec/runner/formatter/base_formatter'
+require 'fileutils'
 
 module Spec
   module Runner
@@ -14,6 +15,7 @@ module Spec
         def initialize(options, where)
           super
           if where.is_a?(String)
+            FileUtils.mkdir_p(File.dirname(where))
             @output = File.open(where, 'w')
           else
             @output = where
@@ -22,27 +24,31 @@ module Spec
         end
         
         def example_pending(example, message, pending_caller)
-          @pending_examples << [example.__full_description, message, pending_caller]
+          @pending_examples << ["#{@example_group.description} #{example.description}", message, pending_caller]
         end
         
         def dump_failure(counter, failure)
           @output.puts
           @output.puts "#{counter.to_s})"
-          @output.puts colourise("#{failure.header}\n#{failure.exception.message}", failure)
+          @output.puts colorize_failure("#{failure.header}\n#{failure.exception.message}", failure)
           @output.puts format_backtrace(failure.exception.backtrace)
           @output.flush
         end
         
-        def colourise(s, failure)
-          if(failure.expectation_not_met?)
-            red(s)
-          elsif(failure.pending_fixed?)
-            blue(s)
-          else
-            magenta(s)
-          end
+        def colorize_failure(message, failure)
+          failure.pending_fixed? ? blue(message) : red(message)
         end
-      
+        
+        def colourise(message, failure)
+          Kernel.warn <<-NOTICE
+DEPRECATED: BaseTextFormatter#colourise is deprecated and will be
+removed from a future version of RSpec.
+
+Please use colorize_failure instead.
+NOTICE
+          colorize_failure(message, failure)
+        end
+        
         def dump_summary(duration, example_count, failure_count, pending_count)
           return if dry_run?
           @output.puts
@@ -69,17 +75,15 @@ module Spec
             @output.puts
             @output.puts "Pending:"
             @pending_examples.each do |pending_example|
-              @output.puts "#{pending_example[0]} (#{pending_example[1]})" 
-              @output.puts "  Called from #{pending_example[2]}"
+              @output.puts "\n#{pending_example[0]} (#{pending_example[1]})"
+              @output.puts "#{pending_example[2]}\n"
             end
           end
           @output.flush
         end
         
         def close
-          if IO === @output && @output != $stdout
-            @output.close 
-          end
+          @output.close  if (IO === @output) & (@output != $stdout)
         end
         
         def format_backtrace(backtrace)
@@ -90,11 +94,15 @@ module Spec
       protected
 
         def colour?
-          @options.colour ? true : false
+          !!@options.colour
         end
 
         def dry_run?
-          @options.dry_run ? true : false
+          !!@options.dry_run
+        end
+        
+        def autospec?
+          !!@options.autospec
         end
         
         def backtrace_line(line)
@@ -102,7 +110,7 @@ module Spec
         end
 
         def colour(text, colour_code)
-          return text unless colour? && output_to_tty?
+          return text unless ENV['RSPEC_COLOR'] || (colour? & (autospec? || output_to_tty?))
           "#{colour_code}#{text}\e[0m"
         end
 
@@ -116,10 +124,18 @@ module Spec
         
         def green(text); colour(text, "\e[32m"); end
         def red(text); colour(text, "\e[31m"); end
-        def magenta(text); colour(text, "\e[35m"); end
         def yellow(text); colour(text, "\e[33m"); end
         def blue(text); colour(text, "\e[34m"); end
-        
+
+        def magenta(text)
+          Kernel.warn <<-NOTICE
+DEPRECATED: BaseTextFormatter#magenta is deprecated and will be
+removed from a future version of RSpec.
+
+Please use red instead (it is red/green/refactor after all).
+NOTICE
+          red(text)
+        end
       end
     end
   end

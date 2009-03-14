@@ -3,50 +3,37 @@ module Spec
     class InvalidMatcherError < ArgumentError; end        
     
     class ExpectationMatcherHandler        
-      class << self
-        def handle_matcher(actual, matcher, &block)
-          ::Spec::Matchers.last_should = "should"
-          return Spec::Matchers::PositiveOperatorMatcher.new(actual) if matcher.nil?
+      def self.handle_matcher(actual, matcher, &block)
+        ::Spec::Matchers.last_should = :should
+        ::Spec::Matchers.last_matcher = matcher
+        return ::Spec::Matchers::PositiveOperatorMatcher.new(actual) if matcher.nil?
 
-          unless matcher.respond_to?(:matches?)
-            raise InvalidMatcherError, "Expected a matcher, got #{matcher.inspect}."
-          end
-          
-          match = matcher.matches?(actual, &block)
-          ::Spec::Matchers.last_matcher = matcher
-          Spec::Expectations.fail_with(matcher.failure_message) unless match
-          match
-        end
+        match = matcher.matches?(actual, &block)
+        return match if match
+
+        ::Spec::Expectations.fail_with matcher.respond_to?(:failure_message_for_should) ?
+                                       matcher.failure_message_for_should :
+                                       matcher.failure_message
       end
     end
 
     class NegativeExpectationMatcherHandler
-      class << self
-        def handle_matcher(actual, matcher, &block)
-          ::Spec::Matchers.last_should = "should not"
-          return Spec::Matchers::NegativeOperatorMatcher.new(actual) if matcher.nil?
-          
-          unless matcher.respond_to?(:matches?)
-            raise InvalidMatcherError, "Expected a matcher, got #{matcher.inspect}."
-          end
+      def self.handle_matcher(actual, matcher, &block)
+        ::Spec::Matchers.last_should = :should_not
+        ::Spec::Matchers.last_matcher = matcher
 
-          unless matcher.respond_to?(:negative_failure_message)
-            Spec::Expectations.fail_with(
-<<-EOF
-Matcher does not support should_not.
-See Spec::Matchers for more information
-about matchers.
-EOF
-)
-          end
-          match = matcher.matches?(actual, &block)
-          ::Spec::Matchers.last_matcher = matcher
-          Spec::Expectations.fail_with(matcher.negative_failure_message) if match
-          match
-        end
+        return ::Spec::Matchers::NegativeOperatorMatcher.new(actual) if matcher.nil?
+        
+        match = matcher.respond_to?(:does_not_match?) ?
+                !matcher.does_not_match?(actual, &block) :
+                matcher.matches?(actual, &block)
+        return match unless match
+
+        ::Spec::Expectations.fail_with matcher.respond_to?(:failure_message_for_should_not) ?
+                                       matcher.failure_message_for_should_not :
+                                       matcher.negative_failure_message
       end
     end
-
   end
 end
 

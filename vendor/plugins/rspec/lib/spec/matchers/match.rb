@@ -1,41 +1,40 @@
 module Spec
   module Matchers
-    
-    class Match #:nodoc:
-      def initialize(regexp)
-        @regexp = regexp
+    class Match
+      def initialize(expected)
+        @expected = expected
       end
-      
-      def matches?(given)
-        @given = given
-        return true if given =~ @regexp
-        return false
+
+      def matches?(actual)
+        @actual = actual
+        actual =~ @expected
       end
-      
-      def failure_message
-        return "expected #{@given.inspect} to match #{@regexp.inspect}", @regexp, @given
+
+      def failure_message_for_should
+        return "expected #{@actual.inspect} to match #{@expected.inspect}", @expected, @actual
       end
-      
-      def negative_failure_message
-        return "expected #{@given.inspect} not to match #{@regexp.inspect}", @regexp, @given
+
+      def failure_message_for_should_not
+        return "expected #{@actual.inspect} not to match #{@expected.inspect}", @expected, @actual
       end
-      
+
       def description
-        "match #{@regexp.inspect}"
+        "match #{@expected.inspect}"
       end
     end
+    
     
     # :call-seq:
     #   should match(regexp)
     #   should_not match(regexp)
     #
-    # Given a Regexp, passes if given =~ regexp
+    # Given a Regexp, passes if actual =~ regexp
     #
     # == Examples
     #
-    #   email.should match(/^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i)
-    def match(regexp)
-      Matchers::Match.new(regexp)
+    #   email.should match(/^([^\s]+)((?:[-a-z0-9]+\.)+[a-z]{2,})$/i)
+    def match(expected)
+      Match.new(expected)
     end
   end
 end

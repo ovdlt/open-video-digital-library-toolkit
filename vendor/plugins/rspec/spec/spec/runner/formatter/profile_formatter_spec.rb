@@ -10,6 +10,7 @@ module Spec
           @io = StringIO.new
           options = mock('options')
           options.stub!(:colour).and_return(true)
+          options.stub!(:autospec).and_return(true)
           @formatter = ProfileFormatter.new(options, io)
         end
         
@@ -28,7 +29,7 @@ module Spec
         it "should correctly record a passed example" do
           now = Time.now
           Time.stub!(:now).and_return(now)
-          parent_example_group = Class.new(ExampleGroup).describe('Parent')
+          parent_example_group = Class.new(::Spec::Example::ExampleGroupDouble).describe('Parent')
           child_example_group = Class.new(parent_example_group).describe('Child')
 
           formatter.add_example_group(child_example_group)
