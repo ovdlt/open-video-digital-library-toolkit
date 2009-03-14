@@ -70,6 +70,25 @@ describe AASM, '- class level definitions' do
 end
 
 
+describe AASM, '- subclassing' do
+  before(:each) do
+    @parent = Class.new do
+      include AASM
+    end
+  end
+
+  it 'should invoke the original inherited callback' do
+    @parent.should_receive(:inherited)
+    Class.new(@parent)
+  end
+
+  it 'should have a unique states hash' do
+    child = Class.new(@parent)
+    child.aasm_states.equal?(@parent.aasm_states).should be_false
+  end
+end
+
+
 describe AASM, '- aasm_states_for_select' do
   it "should return a select friendly array of states in the form of [['Friendly name', 'state_name']]" do
     Foo.aasm_states_for_select.should == [['Open', 'open'], ['Closed', 'closed']]
