@@ -7,6 +7,7 @@ Remotely, i.e., via/with Capistrano
     git clone git://github.com/ovdlt/open-video-digital-library-toolkit.git
     cd open-video-digital-library-toolkit
     deploy project via Studio (or deploy any project via Studio)
+    enable root access on cloud site in Studio
     sudo gem sources -a http://gems.aptana.com
     sudo gem install aptana_cloud
     apcloudify .
@@ -19,4 +20,6 @@ Remotely, i.e., via/with Capistrano
     apcloud public deploy:first_time
 
     Fixing gem errors
-      Install gems it can't install on its own
+      ssh into the site and use "sudo gem install <gem>" to install gems it can't install on its own
+
+Locally, i.e., on the machine in one directory with Rake
