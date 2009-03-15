@@ -70,6 +70,12 @@ class ApplicationController < ActionController::Base
         compute_public_path(source, "themes/#{theme}/stylesheets", 'css')
       end
 
+      define_method :compute_stylesheet_paths do |*args|
+        expand_stylesheet_sources(*args).collect do |source|
+          compute_public_path(source, "themes/#{theme}/stylesheets", 'css', false)
+        end
+      end
+
       define_method :path_to_image do |source|
         compute_public_path(source, "themes/#{theme}/images")
       end
@@ -90,10 +96,9 @@ class ApplicationController < ActionController::Base
     end
     end
 
-    Sass::Plugin.options =
-      { :template_location => "./public/themes/#{theme}/stylesheets/sass",
-        :css_location => "./public/themes/#{theme}/stylesheets",
-    }
+    Sass::Plugin.options.merge!( { :template_location => "./public/themes/#{theme}/stylesheets/sass",
+                                    :css_location => "./public/themes/#{theme}/stylesheets",
+                                   } )
 
   end
 
