@@ -59,11 +59,24 @@ class ApplicationController < ActionController::Base
     # require 'action_view/helpers/asset_tag_helper'
 
     ActionView::Helpers::AssetTagHelper.module_eval do
+
       remove_const(:STYLESHEETS_DIR) if const_defined? :STYLESHEETS_DIR
+
       const_set :STYLESHEETS_DIR,
       "#{ActionView::Helpers::AssetTagHelper::ASSETS_DIR}/" \
       "themes/#{theme}/stylesheets"
+
+      define_method :path_to_stylesheet do |source|
+        compute_public_path(source, "themes/#{theme}/stylesheets", 'css')
+      end
+
+      define_method :path_to_image do |source|
+        compute_public_path(source, "themes/#{theme}/images")
+      end
+
     end
+
+
 
     if false
     ActionView::Helpers::AssetTagHelper::StylesheetAsset.module_eval do
