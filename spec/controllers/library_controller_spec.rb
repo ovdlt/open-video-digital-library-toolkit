@@ -316,7 +316,7 @@ describe LibraryController do
         @params["rights_detail"] =
           controller.send(:parameters)["rights_detail"]
 
-        @rd_id = @params["rights_detail"].keys[4]
+        @rd_id = @params["rights_detail"].keys.sort[4]
         @rd = @params["rights_detail"][@rd_id]
 
         @new_rd = @params["rights_detail"].select do |k,v|
