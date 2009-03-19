@@ -1,11 +1,11 @@
 - videos = index
 .videos.list.partial
 
-  .pagination_info
-    = page_entries_info videos
 
   - if videos.size > 0
     .navigate
+      .pagination_info
+        = page_entries_info videos
       - [ :bg_thumbs, |
           :text_only, |
           :sm_thumbs, |
