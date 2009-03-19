@@ -1,0 +1,65 @@
+.jcarousel-container
+  :position relative
+
+
+.jcarousel-clip
+  :z-index 2
+  :padding 0
+  :margin 0
+  :overflow hidden
+  :position relative
+
+
+.jcarousel-list
+  :z-index 1
+  :overflow hidden
+  :position relative
+  :top 0
+  :left 0
+  :margin 0
+  :padding 0
+
+
+  li
+    :float left
+    :list-style none
+    :width 75px
+    :height 75px
+
+  .video .public.title
+    :background #DDD
+
+
+.jcarousel-item
+  :float left
+  :list-style none
+  :width 75px
+  :height 75px
+
+.jcarousel-next
+  :z-index 3
+  :display none
+
+
+.jcarousel-prev
+  :z-index 3
+  :display none
+
+!carousel_pages = 4
+!page_button_width = 15px
+!page_button_margin = 15px
+!page_button_border = 1px
+
+.carousel_pager
+  :width = (2*(!page_button_margin + !page_button_border) + !page_button_width ) * !carousel_pages
+  :margin 10px auto 15px
+  :text-align center
+.carousel_pager div 
+  :width = !page_button_width
+  :height = !page_button_width
+  :border = solid !page_button_border #777
+  :background-color white
+  :float left
+  :margin = 0 !page_button_margin
+.carousel_pager .active
+  :background #777
