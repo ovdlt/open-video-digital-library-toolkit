@@ -6,7 +6,9 @@
     .axis
       -# TODO add some arrow icons (> and V) here as hint to the accordion UI
       .title
-        %a{ :href => "#" }= type.name
+        %a{ :href => "#" }
+          .icon
+          = type.name
       .axis_content
         %ul
           - type.values.each do |descriptor|
@@ -29,11 +31,5 @@
 :javascript
   $(".axes").accordion( { 
     header: ".title",
-    icons: { 
-      // 'header': 'ui-icon-triangle-1-e', 
-      'header': 'ui-icon-plus',
-      // 'headerSelected': 'ui-icon-triangle-1-s' 
-      'headerSelected': 'ui-icon-minus',
-      },
   });
 
