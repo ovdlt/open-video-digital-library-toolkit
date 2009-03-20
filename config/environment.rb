@@ -92,6 +92,8 @@ ActionView::Helpers::AssetTagHelper.
   register_javascript_include_default "jquery.pagination"
 ActionView::Helpers::AssetTagHelper.
   register_javascript_include_default "jquery.livequery"
+ActionView::Helpers::AssetTagHelper.
+  register_javascript_include_default "jquery.carousel.pack"
 
 ActionView::Base.field_error_proc = Proc.new do |html_tag, instance|
   error_class = "fieldWithErrors"
