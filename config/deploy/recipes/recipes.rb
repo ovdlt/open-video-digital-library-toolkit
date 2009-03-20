@@ -7,7 +7,7 @@ after 'deploy:setup', :roles => [ :app, :web ] do
   end
   
   run "mkdir -p #{shared_path}/config/initializers"
-  put `erb config/initializers/site_keys.rb.erb`, "#shared_path}/config/initializers/site_keys.rb.new"
+  put `erb config/initializers/site_keys.rb.erb`, "#{shared_path}/config/initializers/site_keys.rb.new"
   
   run <<EOS
 bash -c 'if [ -e #{shared_path}/config/initializers/site_keys.rb ];
