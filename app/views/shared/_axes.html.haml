@@ -4,22 +4,36 @@
   - axis_index = 1
   - PropertyType.browse do |type|
     .axis
-      .title= type.name
-      %ul
-        - type.values.each do |descriptor|
-          %li
-            = link_to descriptor.text, |
-              descriptor_value_search( descriptor ) |
-            %span.count= "[#{descriptor.videos(public_only?).size}]"
-        %li.all
-          = link_to "All #{type.name.pluralize} &raquo;", |
-                    property_type_videos_path( type ) |
+      -# TODO add some arrow icons (> and V) here as hint to the accordion UI
+      .title
+        %a{ :href => "#" }= type.name
+      .axis_content
+        %ul
+          - type.values.each do |descriptor|
+            %li
+              = link_to descriptor.text, |
+                descriptor_value_search( descriptor ) |
+              %span.count= "[#{descriptor.videos(public_only?).size}]"
+          %li.all
+            = link_to "All #{type.name.pluralize} &raquo;", |
+                      property_type_videos_path( type ) |
     - if !max.nil? and axis_index >= max
       - break
     - else
       - axis_index += 1
-  
+   
   - if browse
     .browse
       = link_to "More Categories &raquo;", videos_path
+
+:javascript
+  $(".axes").accordion( { 
+    header: ".title",
+    icons: { 
+      // 'header': 'ui-icon-triangle-1-e', 
+      'header': 'ui-icon-plus',
+      // 'headerSelected': 'ui-icon-triangle-1-s' 
+      'headerSelected': 'ui-icon-minus',
+      },
+  });
 
