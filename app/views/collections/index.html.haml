@@ -2,5 +2,15 @@
   = render :partial => "collections/index", :object => @collections, |
            :locals => { :title => @title, |
                         :subtitle => @subtitle } |
+:javascript
+  $(document).ready( function() {
+    $(".contents").sortable({
+      axis: 'y',
+      cursor: 'move',
+      placeholder : "placeholder",
+      tolerance: 'intersect',
+      containment: 'document'
+    })
+  });
 
 
