@@ -49,18 +49,34 @@
             = link_to "All", collections_collections_path
             == [#{public_collections_count}]
           Collections
-
-        - featured_collections.each do |collection|
-          .collection
-            .title
-              = link_to h(collection.title), collection_path( collection )
-            .videos
-              = collection.size(public_only?)
-              videos
-            .description
-              &= collection.description
+        #featured_collections
+          - featured_collections.each do |collection|
+            %div{ :class => 'collection', :id => "collection_#{collection.id}" }
+              .title
+                = link_to h(collection.title), collection_path( collection )
+              .videos
+                = collection.size(public_only?)
+                videos
+              .description
+                &= collection.description
 
         .all_collections
           = link_to "View all collections &raquo;", collections_collections_path
+    - if current_user and current_user.has_role?( "admin" )
+      :javascript
+        $(document).ready( function() {
+          $("#featured_collections").sortable({
+            axis: 'y',
+            cursor: 'move',
+            placeholder : "placeholder",
+            tolerance: 'pointer',
+            // TODO need some AJAX here to send the new order to the server to be saved in the db
+            // update: function() { 
+              // var order = $("#featured_collections").sortable( 'serialize') ;
+              // alert(" new order is " +  order );
+            // }
+          });
+        });
 
     .clear
+
