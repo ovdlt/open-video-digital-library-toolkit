@@ -1,0 +1,47 @@
+.content.block
+  .videos
+    #popular_carousel.jcarousel-skin-tango
+      %ul
+        -# If you change these numbers, make sure to also update the values in jquery.jcarousel.sass
+        - carousel_pages = 4
+        - carousel_items_per_page = 5
+        - Video.popular(public_only?, carousel_items_per_page * carousel_pages).each do |video|
+          %li.video
+            .image
+              %a{:href => video_path( video.id )}
+                - if poster_path = video.poster_path
+                  %img{:src=>poster_path,:alt => "video #{video.id}"}
+            .clear
+            .text
+              .title{:class=>video_vis_class(video)}
+                = link_to h(video.title), video_path( video.id )
+              .description= h video.sentence
+      .carousel_pager
+        - carousel_pages.times do |n|
+          %a{ :href => "#" }
+            %div{ :class => "carousel_page_#{n}", :page => n }
+  .clear
+.footer.block.last= link_to "See more popular videos &raquo;", popular_videos_path
+:javascript
+  function popular_carousel_initCallback( popular_carousel ) {
+    $("#popular_carousel .carousel_pager div").bind("click", function() { 
+      popular_carousel.scroll( $.jcarousel.intval( $(this).attr("page")*#{carousel_items_per_page}+1 ) );
+      return false;
+    } );
+  }
+  function popular_carousel_updatePagerCallback( popular_carousel, item, index, action ) {
+    $("#popular_carousel .carousel_pager div").removeClass("active");
+    page = $.jcarousel.intval( (index - 1) / #{carousel_items_per_page} );
+    $("#popular_carousel .carousel_pager .carousel_page_" + page ).addClass("active");
+  }
+  $("#popular_carousel").jcarousel( 
+  {
+    visible: #{carousel_items_per_page},
+    scroll: #{carousel_items_per_page},
+    wrap: "both",
+    initCallback: popular_carousel_initCallback,
+    itemFirstInCallback:  {
+      onBeforeAnimation: null,
+      onAfterAnimation: popular_carousel_updatePagerCallback
+    }
+  });
