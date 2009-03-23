@@ -12,10 +12,11 @@ Remotely, i.e., via/with Capistrano
     sudo gem install aptana_cloud
     apcloudify .
     edit config/deploy.rb (see config/deploy.rb.ac)
-      set scm to git
-      set repository 
-      deploy via remote cache
-      copy exlude .git
+      set :scm, :git
+      set :repository,
+          "git://github.com/ovdlt/open-video-digital-library-toolkit.git"
+      set :deploy_via, :remote_cache
+      set :copy_exlude, %w(.git)
     apcloud cloud:setup  
     apcloud public deploy:first_time
 
