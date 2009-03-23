@@ -54,12 +54,48 @@
   :width = (2*(!page_button_margin + !page_button_border) + !page_button_width ) * !carousel_pages
   :margin 10px auto 15px
   :text-align center
-.carousel_pager div 
-  :width = !page_button_width
-  :height = !page_button_width
-  :border = solid !page_button_border #777
-  :background-color white
+  div 
+    :width = !page_button_width
+    :height = !page_button_width
+    :border = solid !page_button_border #777
+    :background-color white
+    :float left
+    :margin = 0 !page_button_margin
+  .active
+    :background #777
+
+.tab_content
+  :z-index -1
+  :position relative
   :float left
-  :margin = 0 !page_button_margin
-.carousel_pager .active
-  :background #777
+.tab_content.active
+  :z-index 10
+
+.tabs
+  :z-index 20
+  :margin-top 20px
+  :margin-left 40px
+  :list-style none
+  // :border-bottom solid #333 1px
+  li.tab
+    :text-align center
+    :display inline 
+    :margin 0 10px 0
+    :padding 0.2em 1em 1em
+    :border solid #333 1px
+    :border-bottom solid transparent 1px
+  li.tab.active, li.tab.active a:hover
+    :background #DDD
+    :border none
+    :border-bottom solid #DDD 1px
+
+.tab_content
+  :position absolute
+  :top 210px
+  :left 10px
+#popular.tab_content
+  / :margin-top -260px
+  / :top -260px
+
+.tab_contents
+  :height 260px
