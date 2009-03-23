@@ -2,7 +2,7 @@
 
 require 'aptana_cloud'
 
-set :application, "ovdltn"
+set :application, "ovdlt"
 set :domain, "#{application}.aptanacloud.com"
 
 server domain, :app, :web, :db, :primary => true
@@ -17,5 +17,4 @@ set :scm, :git
 set :repository, "git://github.com/ovdlt/open-video-digital-library-toolkit.git"
 
 set :deploy_via, :remote_cache
-set :copy_exclude, [ ".git" ] # note: has the (good) side affect for forcing rsync
-                              # which works around a solaris issue
+set :copy_exclude, %w(.git)
