@@ -13,6 +13,13 @@ vendor/plugins/rspec_rails:
   revision: f44ee9def699b730bbd59109289a7f78f9c2c308
   branch: master
   remote: braid/vendor/plugins/rspec-rails
+vendor/rails: 
+  squashed: true
+  url: git://github.com/rails/rails.git
+  type: git
+  revision: dc88847e5ce392eed210b97525c14fca55852867
+  branch: 2-3-stable
+  remote: braid/vendor/rails
 vendor/plugins/role_requirement: 
   squashed: true
   url: git://github.com/negonicrac/role_requirement.git
