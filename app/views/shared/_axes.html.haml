@@ -4,7 +4,6 @@
   - axis_index = 1
   - PropertyType.browse do |type|
     .axis
-      -# TODO add some arrow icons (> and V) here as hint to the accordion UI
       .title
         %a{ :href => "#" }
           .icon
@@ -16,9 +15,6 @@
               = link_to descriptor.text, |
                 descriptor_value_search( descriptor ) |
               %span.count= "[#{descriptor.videos(public_only?).size}]"
-          %li.all
-            = link_to "All #{type.name.pluralize} &raquo;", |
-                      property_type_videos_path( type ) |
     - if !max.nil? and axis_index >= max
       - break
     - else
