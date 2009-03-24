@@ -171,6 +171,17 @@ class Video < ActiveRecord::Base
     self.find :all, options
   end
 
+  def self.random public, number = nil
+    options = { :order => "rand()" }
+    if public
+      options.merge! :conditions => { :public => true }
+    end
+    if number
+      options[:limit] = number
+    end
+    self.find :all, options
+  end
+
   def self.per_page
     10
   end
