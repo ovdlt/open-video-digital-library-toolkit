@@ -6,11 +6,15 @@
       %a{ :href => "" } Recent
     %li.title.block.tab{ :onclick => "$('.tab_content, .tabs li').removeClass('active'); $('#popular.tab_content').addClass('active');  $(this).addClass('active'); return false;" }
       %a{ :href => "" } Popular
+    %li.title.block.tab{ :onclick => "$('.tab_content, .tabs li').removeClass('active'); $('#random.tab_content').addClass('active');  $(this).addClass('active'); return false;" }
+      %a{ :href => "" } Random
   .tab_contents
     #recent.tab_content.active
       =render :partial => "recent"
     #popular.tab_content
       =render :partial => "popular"
+    #random.tab_content
+      =render :partial => "random"
 .clear
 = render :partial => "browse"
 - logger.info recent_videos_path.inspect
