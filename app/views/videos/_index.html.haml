@@ -15,7 +15,9 @@
       .clear
       
     .list        
-      = render :partial => "videos/show", :collection => videos
+      = highlight(  |
+          (render :partial => "videos/show", :collection => videos), |
+          params[:search][:criteria][:text] ) |
     .clear
 
     .pagination

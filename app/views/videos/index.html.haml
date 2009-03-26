@@ -14,9 +14,7 @@
           &mdash;
           = h(descriptor.text)
 
-  = highlight( |
-    ( render :partial => "videos/index", :object => @videos ), |
-    params[:search][:criteria][:text] ) |
+  = render :partial => "videos/index", :object => @videos 
 
 .sidebar
   .entry
