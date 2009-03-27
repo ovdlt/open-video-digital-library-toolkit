@@ -47,26 +47,26 @@
             .subtitle= Library.subtitle
             #navigation
               %ul
-                %li
+                %li{:class => ( HomeController === controller ? "on" : "off")}
                   .text= link_to "Home", url_for( :controller => :home, :action => :index ) |
-                  .flag{:class => ( HomeController === controller ? "on" : "off")}
+                  .flag
               %ul
-                %li
+                %li{:class => ( VideosController === controller ? "on" : "off")}
                   .text= link_to "Videos", videos_path
-                  .flag{:class => ( VideosController === controller ? "on" : "off")}
+                  .flag
               %ul
-                %li
+                %li{:class => collections_flag }
                   .text= link_to "Collections", collections_collections_path
-                  .flag{:class => collections_flag }
+                  .flag
               %ul
-                %li
+                %li{:class => playlists_flag }
                   .text= link_to "Playlists", playlists_collections_path |
-                  .flag{:class => playlists_flag }
+                  .flag
               - if current_user
                 %ul
-                  %li
+                  %li{:class => ( MyController === controller ? "on" : "off")}
                     .text= link_to h(my), my_path
-                    .flag{:class => ( MyController === controller ? "on" : "off")}
+                    .flag
           .search
             - form_for Search.new, :url => videos_path, :html => { :method => :get } do |form|
               = form.criterion :text, :size => 40, :id => nil

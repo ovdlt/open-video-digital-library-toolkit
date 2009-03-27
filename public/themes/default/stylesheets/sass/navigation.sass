@@ -14,6 +14,12 @@
     :display inline
     :margin 0
     :padding 0
+    .flag
+      :height .5em
+  li.on .flag
+    :background white
+  li.on .text a:visited, a:link
+    :color #ddd
   
   ul li
     :float left
@@ -29,11 +35,6 @@
       :padding 12px
       :padding-bottom 5px
 
-    .flag
-      :height .5em
-
-    .flag.on
-      :background white
 
     a:visited, a:link
       :color white
