@@ -2,15 +2,17 @@
   = render :partial => "collections/index", :object => @collections, |
            :locals => { :title => @title, |
                         :subtitle => @subtitle } |
-:javascript
-  $(document).ready( function() {
-    $(".contents").sortable({
-      axis: 'y',
-      cursor: 'move',
-      placeholder : "placeholder",
-      tolerance: 'intersect',
-      containment: 'document'
-    })
-  });
-
+- if current_user and current_user.has_role?( "admin" )
+  :javascript
+    $(document).ready( function() {
+      $(".contents").sortable({
+        items: '.collection',
+        axis: 'y',
+        cursor: 'move',
+        placeholder : "placeholder",
+        tolerance: 'intersect',
+        containment: 'document'
+      })
+    });
+  
 
