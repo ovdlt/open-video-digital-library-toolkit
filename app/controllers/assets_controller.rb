@@ -25,7 +25,7 @@ class AssetsController < ApplicationController
 
   def show
     @asset = Asset.find params[:id]
-    if !@asset
+    if !@asset or !@asset.video
       render_missing
       return
     end

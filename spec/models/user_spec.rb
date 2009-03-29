@@ -233,10 +233,18 @@ describe User do
     users(:quentin).remember_token_expires_at.between?(before, after).should be_true
   end
 
+  it "should allow reasonable emails" do
+    "user@a.utexas.edu".should =~ Authentication.email_regex
+    "user@a.a.utexas.edu".should =~ Authentication.email_regex
+    "user@a.a.a.utexas.edu".should =~ Authentication.email_regex
+  end
+
 protected
+
   def create_user(options = {})
     record = User.new({ :login => 'quire', :email => 'quire@example.com', :password => 'quire69', :password_confirmation => 'quire69' }.merge(options))
     record.save
     record
   end
+
 end
