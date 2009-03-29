@@ -21,7 +21,7 @@ describe "library/show.html.haml" do
     }
     attributes.reject! { |k,v| reject[k] }
     attributes.each do |k,v|
-      response.should have_tag( %(input[name='library[#{k}]'][value='#{h v}']) )
+      response.should have_tag( %(input[name='library[#{k}]'][value='#{template.send(:h,v)}']) )
     end
   end
 

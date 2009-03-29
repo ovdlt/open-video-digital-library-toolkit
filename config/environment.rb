@@ -5,7 +5,7 @@
 # ENV['RAILS_ENV'] ||= 'production'
 
 # Specifies gem version of Rails to use when vendor/rails is not present
-RAILS_GEM_VERSION = '2.1.2' unless defined? RAILS_GEM_VERSION
+RAILS_GEM_VERSION = '2.3.2' unless defined? RAILS_GEM_VERSION
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
@@ -25,7 +25,9 @@ Rails::Initializer.run do |config|
   # config.gem "bj"
   # config.gem "hpricot", :version => '0.6', :source => "http://code.whytheluckystiff.net"
   # config.gem "aws-s3", :lib => "aws/s3"
-  config.gem "haml"
+  config.gem "mysql", :version => "2.7" # may require "gem install mysql -- --with-mysql-config"
+  config.gem "haml", :version => "2.0.9"
+  config.gem "faker", :version => "0.3.1"
   config.gem "thoughtbot-factory_girl", 
              :lib => "factory_girl",
              :source => "http://gems.github.com"
@@ -71,6 +73,7 @@ Rails::Initializer.run do |config|
   # Activate observers that should always be running
   # config.active_record.observers = :cacher, :garbage_collector
   config.active_record.observers = :user_observer
+
 end
 
 ExceptionNotifier.exception_recipients = %w(smparkes@smparkes.net)

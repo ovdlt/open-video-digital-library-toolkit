@@ -11,7 +11,7 @@ class BookmarksController < ApplicationController
       return
     end
     
-    collection.alL_videos << video
+    collection.all_videos << video
     collection.save!
 
     redirect_to :back

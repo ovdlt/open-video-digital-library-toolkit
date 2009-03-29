@@ -5,10 +5,13 @@ require File.join(File.dirname(__FILE__), 'persistence')
 
 module AASM
   def self.Version
-    '0.0.2'
+    '2.0.5'
   end
 
   class InvalidTransition < RuntimeError
+  end
+
+  class UndefinedState < RuntimeError
   end
   
   def self.included(base) #:nodoc:
@@ -18,15 +21,14 @@ module AASM
     base.extend AASM::ClassMethods
     AASM::Persistence.set_persistence(base)
     AASM::StateMachine[base] = AASM::StateMachine.new('')
-
-    base.class_eval do
-      def base.inherited(klass)
-        AASM::StateMachine[klass] = AASM::StateMachine[self].dup
-      end
-    end
   end
 
   module ClassMethods
+    def inherited(klass)
+      AASM::StateMachine[klass] = AASM::StateMachine[self].clone
+      super
+    end
+
     def aasm_initial_state(set_state=nil)
       if set_state
         AASM::StateMachine[self].initial_state = set_state
@@ -118,7 +120,9 @@ module AASM
   end
 
   def aasm_state_object_for_state(name)
-    self.class.aasm_states.find {|s| s == name}
+    obj = self.class.aasm_states.find {|s| s == name}
+    raise AASM::UndefinedState, "State :#{name} doesn't exist" if obj.nil?
+    obj
   end
 
   def aasm_fire_event(name, persist, *args)
@@ -132,7 +136,7 @@ module AASM
       persist_successful = true
       if persist
         persist_successful = set_aasm_current_state_with_persistence(new_state)
-        self.send(self.class.aasm_events[name].success) if persist_successful && self.class.aasm_events[name].success
+        self.class.aasm_events[name].execute_success_callback(self) if persist_successful
       else
         self.aasm_current_state = new_state
       end

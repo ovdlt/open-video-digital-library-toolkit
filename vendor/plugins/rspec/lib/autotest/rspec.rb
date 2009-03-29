@@ -21,14 +21,14 @@ class Autotest::Rspec < Autotest
 
   def initialize
     super
-    self.failed_results_re = /^\d+\)\n(?:\e\[\d*m)?(?:.*?Error in )?'([^\n]*)'(?: FAILED)?(?:\e\[\d*m)?\n(.*?)\n\n/m
+    self.failed_results_re = /^\d+\)\n(?:\e\[\d*m)?(?:.*?in )?'([^\n]*)'(?: FAILED)?(?:\e\[\d*m)?\n(.*?)\n\n/m
     self.completed_re = /\n(?:\e\[\d*m)?\d* examples?/m
   end
   
   def consolidate_failures(failed)
     filters = new_hash_of_arrays
     failed.each do |spec, trace|
-      if trace =~ /\n(\.\/)?(.*spec\.rb):[\d]+:\Z?/
+      if trace =~ /\n(\.\/)?(.*spec\.rb):[\d]+:/
         filters[$2] << spec
       end
     end
@@ -37,7 +37,8 @@ class Autotest::Rspec < Autotest
 
   def make_test_cmd(files_to_test)
     return '' if files_to_test.empty?
-    return "#{ruby} -S #{files_to_test.keys.flatten.join(' ')} #{add_options_if_present}"
+    spec_program = File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'bin', 'spec'))
+    return "#{ruby} #{spec_program} --autospec #{files_to_test.keys.flatten.join(' ')} #{add_options_if_present}"
   end
   
   def add_options_if_present # :nodoc:

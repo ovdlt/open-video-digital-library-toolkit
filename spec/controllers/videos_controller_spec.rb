@@ -168,6 +168,7 @@ describe VideosController do
   end
   
   describe "#edit" do
+
     before(:each) do
       login_as_admin
       @video = Factory(:video)
@@ -328,4 +329,124 @@ describe VideosController do
       flash[:error].should_not be_nil
     end
   end
+
+  describe "#public_only?" do
+
+    it "should be true if not logged in" do
+      get :index
+      controller.send(:public_only?).should be_true
+    end
+
+    it "should be false if logged in as admin" do
+      login_as_admin
+      get :index
+      controller.send(:public_only?).should be_false
+    end
+
+    it "should be false if logged in as cataloger" do
+      login_as_cataloger
+      get :index
+      controller.send(:public_only?).should be_false
+    end
+
+  end
+
+  describe "#video_ids_method" do
+
+    it "should return public videos if public_only?" do
+      get :index
+      controller.send(:video_ids_method).should == :public_videos
+    end
+
+    it "should return all videos if !public_only?" do
+      login_as_cataloger
+      get :index
+      controller.send(:video_ids_method).should == :all_videos
+    end
+
+  end
+
+  describe "#videos_method" do
+
+    it "should return public videos if public_only?" do
+      get :index
+      controller.send(:videos_method).should == :public_videos
+    end
+
+    it "should return all videos if !public_only?" do
+      login_as_cataloger
+      get :index
+      controller.send(:videos_method).should == :all_videos
+    end
+
+  end
+
+  describe "#viz_condition" do
+
+    it "should return empty if !public_only?" do
+      login_as_cataloger
+      get :index
+      controller.send(:viz_condition).should be_empty
+    end
+
+    it "should restrict videos if public_only?" do
+      get :index
+      controller.send(:viz_condition).should == { :public => true }
+    end
+
+  end
+
+  describe "#duration_to_int_value" do
+
+    it "nil if nil" do
+      get :index
+      controller.send(:duration_to_int, nil, Object, "key").should be_nil
+    end
+
+    it "nil if empty" do
+      get :index
+      controller.send(:duration_to_int, "", Object, "key").should be_nil
+    end
+
+    it "nil if blank" do
+      get :index
+      controller.send(:duration_to_int, " \t", Object, "key").should be_nil
+    end
+
+    it "should add errors if bogus" do
+      get :index
+      Object.should_receive(:errors).and_return(Object)
+      Object.should_receive(:add).once
+      controller.send(:duration_to_int, "a", Object, "key").should be_nil
+    end
+
+    it "should convert correctly if clean" do
+      get :index
+      controller.send(:duration_to_int, "02:03:04", Object, "key").should == 7384
+    end
+
+  end
+
+  describe "#render_nothing" do
+    integrate_views
+    it "should render nothing" do
+      login_as_cataloger
+      get :home, :style => "none"
+      response.code.should == "200"
+      response.body.should be_blank
+    end
+  end
+
+  describe "pretty 404s" do
+    it "should raise pretty 404" do
+      pending
+      login_as_admin
+      rescue_action_in_public!
+      ExceptionNotifier.should_receive(:deliver_exception_notification)
+      controller.should_receive(:edit).and_raise(ActionController::UnknownAction)
+      get :edit, :id => 1
+      response.code.should == "404"
+    end
+  end
+
 end

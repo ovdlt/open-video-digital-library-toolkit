@@ -3,13 +3,27 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 module Spec
   module Mocks
     describe Mock do
-
       before(:each) do
         @mock = mock("test mock")
       end
       
       after(:each) do
         @mock.rspec_reset
+      end
+      
+      describe "deprecated #stub_everything method" do
+        before(:each) do
+          Kernel.stub!(:warn)
+        end
+        
+        it "creates a mock that behaves as a null object" do
+          stub_everything.should be_null_object
+        end
+        
+        it "provides deprecation warning" do
+          Kernel.should_receive(:warn).with(/DEPRECATION: stub_everything.* is deprecated./)
+          stub_everything
+        end
       end
       
       it "should report line number of expectation of unreceived message" do
@@ -101,7 +115,7 @@ module Spec
         lambda {
           @mock.something("a","d","c")
           @mock.rspec_verify
-        }.should raise_error(MockExpectationError, "Mock 'test mock' expected :something with (\"a\", \"b\", \"c\") but received it with (\"a\", \"d\", \"c\")")
+        }.should raise_error(MockExpectationError, "Mock 'test mock' expected :something with (\"a\", \"b\", \"c\") but received it with ([\"a\", \"d\", \"c\"])")
       end
            
       it "should raise exception if args don't match when method called even when using null_object" do
@@ -110,7 +124,7 @@ module Spec
         lambda {
           @mock.something("a","d","c")
           @mock.rspec_verify
-        }.should raise_error(MockExpectationError, "Mock 'test mock' expected :something with (\"a\", \"b\", \"c\") but received it with (\"a\", \"d\", \"c\")")
+        }.should raise_error(MockExpectationError, "Mock 'test mock' expected :something with (\"a\", \"b\", \"c\") but received it with ([\"a\", \"d\", \"c\"])")
       end
            
       it "should fail if unexpected method called" do
@@ -227,7 +241,7 @@ module Spec
       it "should yield 0 args to blocks that take a variable number of arguments" do
         @mock.should_receive(:yield_back).with(no_args()).once.and_yield
         a = nil
-        @mock.yield_back {|*a|}
+        @mock.yield_back {|*x| a = x}
         a.should == []
         @mock.rspec_verify
       end
@@ -245,7 +259,7 @@ module Spec
       it "should yield one arg to blocks that take a variable number of arguments" do
         @mock.should_receive(:yield_back).with(no_args()).once.and_yield(99)
         a = nil
-        @mock.yield_back {|*a|}
+        @mock.yield_back {|*x| a = x}
         a.should == [99]
         @mock.rspec_verify
       end
@@ -264,7 +278,7 @@ module Spec
       it "should yield many args to blocks that take a variable number of arguments" do
         @mock.should_receive(:yield_back).with(no_args()).once.and_yield(99, 27, "go")
         a = nil
-        @mock.yield_back {|*a|}
+        @mock.yield_back {|*x| a = x}
         a.should == [99, 27, "go"]
         @mock.rspec_verify
       end
@@ -283,7 +297,7 @@ module Spec
       it "should yield single value" do
         @mock.should_receive(:yield_back).with(no_args()).once.and_yield(99)
         a = nil
-        @mock.yield_back {|a|}
+        @mock.yield_back {|x| a = x}
         a.should == 99
         @mock.rspec_verify
       end
@@ -302,7 +316,7 @@ module Spec
       it "should yield two values" do
         @mock.should_receive(:yield_back).with(no_args()).once.and_yield('wha', 'zup')
         a, b = nil
-        @mock.yield_back {|a,b|}
+        @mock.yield_back {|x,y| a=x; b=y}
         a.should == 'wha'
         b.should == 'zup'
         @mock.rspec_verify
@@ -549,6 +563,16 @@ module Spec
         mock = mock("Dog")
         valid_html_str = "#{mock}"
         valid_html_str.should_not include('<')
+      end
+    end
+    
+    describe "==" do
+      it "sends '== self' to the comparison object" do
+        first = mock('first')
+        second = mock('second')
+        
+        first.should_receive(:==).with(second)
+        second == first
       end
     end
   end

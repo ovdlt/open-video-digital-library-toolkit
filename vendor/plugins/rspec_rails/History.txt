@@ -1,8 +1,103 @@
-=== Maintenance
+=== Version 1.1.99.x (in git)
 
-* 1 bug fix
+IMPORTANT: See Upgrade.markdown for information about upgrading to rspec-rails-1.1.99.4
+
+IMPORTANT: This release includes the following backwards-compatibility-breaking changes.
+
+* rspec-rails supports rails 2.0.2, 2.1.2 and 2.2.2.
+  
+  * We are no longer supporting 1.x versions of rails.
+
+* expect_render and stub_render have been removed.
+
+  * Both of these methods were deprecated in rspec-rails-1.1.5, released in Sept, 2008.
+  
+* { route_for(args).should == "/path" } now delegates to assert_generates (in rails)
+
+  * see Upgrade.txt for more information
+  
+* deprecations
+
+  * controller.use_rails_error_handling! is deprecated
+    * use rescue_action_in_public! (from rails) instead
+  
+* enhancements
+
+  * Adding status codes to redirect_to matcher (Damian Janowski). Closes #570.
+  * Initialize current URL before executing any examples in a ViewExampleGroup (Wilson Bilkovich). Closes #654.
+  * Support query strings in params_from (Wilson Bilkovich). Closes #652.
+  * delegate route_for to assert_recognizes (less brittle)
+  * it { should be_valid } (Kakutani). Closes #665.
+  * controller is implicit subject in controller specs (Joe Ferris). #686.
+  * template is implicit subject in view specs (Joe Ferris). #686.
+  * redirect_to and render_template matchers can accept controller or response (Joe Ferris). Closes #686. 
+  * generated specs use declarative docstrings
+  * rspec_scaffold generator generates layout and stylesheet (per Rails-2.3)
+  * add bypass_rescue for controller specs
+  * infer template path from the first arg passed to describe in view specs
+  * separate routing specs (in spec/routing)
+  
+* bug fixes
+
+  * you no longer *have* to load ActionMailer to get specs to run. Closes #650.
+  * query_params are now parsed by Rack::Utils.parse_query in redirect_to matcher. Closes #684.
+  * cleaned up spec_server (there was a bunch of pre-rails 2.0 material). Closes #685.
+  * rspec's rake tasks are not loaded when running "rake gems" or any of its subtasks
+  * only warn when rspec is not installed when trying to invoke an rspec rake task
+  * support 2 arg version of ActionController::Base#render (reported by Nathan Wilmes)
+  * rake spec:server:start doesn't choke if there is no tmp directory
+  * force cache_classes = false when running with spec_server. Closes #287.
+  * keep spec_server working against edge rails (Jonathan Tron). Closes #685.
+  * create lib/tasks if not present when running script/generate rspec. Closes #687.
+  * fixed regression (and added spec so it won't regress again) where
+    render => :inline didn't render unless integrate_views was set
+  * fixed nil.with_output_buffer bug in helper specs. Closes #719.
+
+=== Version 1.1.12 / 2009-01-11
+
+* 2 deprecations
+
+  * TestResponse#[] is deprecated if you're using Rails <= 2.2.x and removed if you're using Rails 2.3
+  * add_stubs(model, {:method => value}) is deprecated. Use model.stub!(:method => value) instead.
+
+* 2 major enhancements
+
+  * support controller and action path params in view specs (Mike Vincent).
+  * use ActiveSupport::TestCase when available, else Test::Unit::TestCase - supports Rails 1.2.6 (Brandon Keepers). Closes #620.
+  * support form tag helpers in helpers (Ivo Dancet). Closes #641.
+
+* 3 minor enhancements
+
+  * improve rdoc for render_template (Patch from Andrew Premdas). Fixes #571.
+  * use more liberal globs to allow for specs in symlinked dirs (Martin Luder). Closes #361.
+  * Enable loading fixtures from arbitrary locations (Jacek Becela). Closes #464.
+  
+* 7 bug fixes
+
+  * Attempt to load application_controller before falling back to application (Geoff Garside). Closes #626.
+  * Include _id and reduce quoting of default values in view specs (Steen Lehmann). Closes #598.
+  * Record calls to render and check rendered[:template] and rendered[:partial] for edge rails (> v2.2.2). Closes #633.
+  * config.gem 'rspec' can't be unpacked. Closes #629.
+  * spec_server not working with Rails 2.2.2 (Andreas Wolff). Closes #631.
+  * redirect_to doesn't work with http method constrained urls (Maxim Kulkin). Closes #648.
+  * rescue_with declarations are no longer by-passed (Brandon Keepers). #85
+
+=== Version 1.1.11 / 2008-10-24
+
+* No changes to rspec-rails - release to align with bug-fix release in rspec ... again :(
+
+=== Version 1.1.10 / 2008-10-24
+
+* No changes to rspec-rails - release to align with bug-fix release in rspec
+
+=== Version 1.1.9 / 2008-10-20
+
+* 4 bug fixes
 
   * require 'rubygems' in script/spec
+  * fix failure message for error_on and errors_on (Patch from Mike Vincent). Fixes #566.
+  * fix issues that arise in view spec if passing actual template name to render (Patch from Mike Vincent). Fixes #551.
+  * fixed bug accessing assigns from helper examples
 
 === Version 1.1.8 / 2008-10-03
 

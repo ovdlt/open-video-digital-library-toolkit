@@ -4,10 +4,9 @@ namespace :sass do
 
     Library.available_themes.each do |theme|
 
-      Sass::Plugin.options =
-        { :template_location => "#{RAILS_ROOT}/public/themes/#{theme}/stylesheets/sass",
-          :css_location => "#{RAILS_ROOT}/public/themes/#{theme}/stylesheets",
-        }
+      Sass::Plugin.options.merge!( { :template_location => "#{RAILS_ROOT}/public/themes/#{theme}/stylesheets/sass",
+                                      :css_location => "#{RAILS_ROOT}/public/themes/#{theme}/stylesheets",
+                                     } )
 
       Sass::Plugin.update_stylesheets
 

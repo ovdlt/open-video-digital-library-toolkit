@@ -1,0 +1,26 @@
+Remotely, i.e., via/with Capistrano
+
+  Generic
+
+  Aptana Cloud
+
+    git clone git://github.com/ovdlt/open-video-digital-library-toolkit.git
+    cd open-video-digital-library-toolkit
+    deploy project via Studio (or deploy any project via Studio)
+    enable root access on cloud site in Studio
+    sudo gem sources -a http://gems.aptana.com
+    sudo gem install aptana_cloud
+    apcloudify .
+    edit config/deploy.rb (see config/deploy.rb.ac)
+      set :scm, :git
+      set :repository,
+          "git://github.com/ovdlt/open-video-digital-library-toolkit.git"
+      set :deploy_via, :remote_cache
+      set :copy_exlude, %w(.git)
+    apcloud cloud:setup  
+    apcloud public deploy:first_time
+
+    Fixing gem errors
+      ssh into the site and use "sudo gem install <gem>" to install gems it can't install on its own
+
+Locally, i.e., on the machine in one directory with Rake
