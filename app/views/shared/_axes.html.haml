@@ -15,6 +15,10 @@
               = link_to descriptor.text, |
                 descriptor_value_search( descriptor ) |
               %span.count= "[#{descriptor.videos(public_only?).size}]"
+          - unless HomeController === controller
+            %li.all
+              = link_to "All #{type.name.pluralize} &raquo;", |
+                        property_type_videos_path( type ) |
     - if !max.nil? and axis_index >= max
       - break
     - else
@@ -27,5 +31,6 @@
 :javascript
   $(".axes").accordion( { 
     header: ".title",
+    autoHeight: false
   });
 
