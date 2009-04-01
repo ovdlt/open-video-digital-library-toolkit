@@ -15,7 +15,10 @@
       .clear
       
     .list        
-      = highlight(  |
+      - if params[:search].nil? || params[:search][:criteria].nil? || params[:search][:criteria][:text].nil? 
+        = render :partial => "videos/show", :collection => videos
+      - else
+        = highlight(  |
           (render :partial => "videos/show", :collection => videos), |
           params[:search][:criteria][:text] ) |
     .clear
