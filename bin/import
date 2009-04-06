@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+
+require File.dirname(__FILE__) + '/../config/boot'
+require RAILS_ROOT + '/config/environment'
+
+require File.dirname(__FILE__) + '/../lib/import'
+
+if ARGV.length < 1
+   puts "usage: $0 csv_file [map]"
+   exit 1
+end     
+
+import *ARGV
+
+
+# Local Variables:
+# mode:ruby
+# End:
