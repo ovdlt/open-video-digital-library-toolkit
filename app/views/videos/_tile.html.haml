@@ -7,8 +7,8 @@
   .clear
   .text
     .title=h video.title
-    - if !video.year.blank?
-      .year= "(#{h video.year})"
+    - if !(date = video_created(video)).blank?
+      .year= "(#{h date.year})"
   %ul
     %li= link_to "View video details", video_path( video )
     - if current_user

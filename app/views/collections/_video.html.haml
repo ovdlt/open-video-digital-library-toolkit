@@ -4,8 +4,8 @@
       %img{:src=>video.poster_path,:alt => "video #{video.id}"}
   .video_details
     .title=h video.title
-    - if !video.year.blank?
-      .year= "(#{h video.year})"
+    - if !(date = video_created(video)).blank?
+      .year= "(#{h date.year})"
     .sentence=h video.sentence
     .menu
       = link_to "View video details", video_path( video )
@@ -21,10 +21,10 @@
   .video_descriptors
     - browse_descriptors_and_types( video ).each do |dt|
       .descriptor 
-        .type= "#{dt[0].title}:"
+        .type= "#{dt[0].name}:"
         .values
           - dt[1].each do |d|
-            .value= d.text
+            .value= d.value.text
       .clear
     .descriptor 
       .type Duration:

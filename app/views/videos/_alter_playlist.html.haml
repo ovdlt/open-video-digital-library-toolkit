@@ -1,5 +1,5 @@
 - video = alter_playlist
-- if @collection and @collection.video_ids.include? video.id
+- if @collection and @collection.public_video_ids.include? video.id
   - form_tag collection_bookmark_path( @collection.id, :from_params ), |
                                      :method => :delete, |
                                      :class => :inline do |

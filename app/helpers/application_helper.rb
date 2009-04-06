@@ -42,10 +42,10 @@ module ApplicationHelper
   end
 
   def browse_descriptors_and_types video
-    descriptors = video.descriptors
-    types = ( descriptors.map { |d| d.descriptor_type } ).uniq
-    types = DescriptorType.browse.select { |dt| types.include? dt }
-    types.map { |t| [ t, descriptors.select { |d| d.descriptor_type == t } ] }
+    properties = video.properties
+    types = ( properties.map { |d| d.property_type } ).uniq
+    types = PropertyType.browse.select { |dt| types.include? dt }
+    types.map { |t| [ t, properties.select { |d| d.property_type == t } ] }
   end
 
   def property_types_by_class pc
