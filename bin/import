@@ -3,7 +3,9 @@
 require File.dirname(__FILE__) + '/../config/boot'
 require RAILS_ROOT + '/config/environment'
 
-require File.dirname(__FILE__) + '/../lib/import'
+require File.dirname(__FILE__) + '/../lib/ovdlt/import'
+
+include OVDLT
 
 if ARGV.length < 1
    puts "usage: $0 csv_file [map]"
