@@ -15,7 +15,7 @@
       .clear
       
     .list        
-      - if params[:search].nil? || params[:search][:criteria].nil? || params[:search][:criteria][:text].nil? 
+      - if params[:search].nil? || params[:search][:criteria].nil? || params[:search][:criteria][:text].nil? || params[:search][:criteria][:text].length == 1
         = render :partial => "videos/show", :collection => videos
       - else
         = highlight(  |
