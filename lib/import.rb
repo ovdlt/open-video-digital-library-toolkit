@@ -38,4 +38,6 @@ def import basename_or_csv, map_file = nil
     exit 1
   end
 
+  map = OVDLT::Import::Map.new map
+
 end
