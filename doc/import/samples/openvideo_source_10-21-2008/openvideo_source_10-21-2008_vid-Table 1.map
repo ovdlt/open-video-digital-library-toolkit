@@ -8,12 +8,11 @@ statsText: nil
 numberOfFrames: nil
 verified?:
   public:
-    Yes: true
-    No: false
+    "Yes": true
+    "No": false
 timestamp: nil
 keywords:
-  tags:
-    split: ";"
+  tags: <%= %r{;} %>
 posterframe: nil
 duration: duration
 restricted?: nil
@@ -43,8 +42,9 @@ genrePrimaryID:
     3: Historical
 genreSecondaryID: nil
 RightsInformationID:
-  RightsStatement:
-    1:  nil
+  1:
+    RightsDetail:
+      License: All Rights Reserved
 
 # Local Variables:
 # mode:yaml
