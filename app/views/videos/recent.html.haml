@@ -1,13 +1,27 @@
 .category.featured
   -# really not happy with the way I implemented this, but wanted to have something in this week
   -# There's a lot of refactoring that could happen here ...
+  :javascript
+    function activateTab( tab, tabname )
+    {
+      $('.tab_content, .tabs li').removeClass('active'); 
+      $('#' + tabname + '.tab_content').addClass('active'); 
+      $(tab).addClass('active'); 
+      $('.seemore a').text('See more ' + tabname + ' videos');
+      //if ( tabname == 'recent' ) { $('.seemore a').href( #{recent_videos_path} ); }
+      //if ( tabname == 'popular' ) { $('.seemore a').href( #{popular_videos_path} ); }
+      //if ( tabname == 'random' ) { $('.seemore a').href( #random_videos_path ); }
+      //if ( tabname == 'random' ) { $('.seemore a').href( '' ); }
+      return false;
+    }
   %ul.tabs
-    %li.title.block.tab.active{ :onclick => "$('.tab_content, .tabs li').removeClass('active'); $('#recent.tab_content').addClass('active'); $(this).addClass('active'); return false;" }
-      %a{ :href => "" } Recent
-    %li.title.block.tab{ :onclick => "$('.tab_content, .tabs li').removeClass('active'); $('#popular.tab_content').addClass('active');  $(this).addClass('active'); return false;" }
-      %a{ :href => "" } Popular
-    %li.title.block.tab{ :onclick => "$('.tab_content, .tabs li').removeClass('active'); $('#random.tab_content').addClass('active');  $(this).addClass('active'); return false;" }
-      %a{ :href => "" } Random
+    %li.title.block.tab.active{ :onclick => "activateTab( $(this), 'recent' ); "  }
+      %a{ :href => "#" } Recent
+    %li.title.block.tab{ :onclick => "activateTab( $(this), 'popular' ); "  }
+      %a{ :href => "#" } Popular
+    %li.title.block.tab{ :onclick => "activateTab( $(this), 'random' ); "  }
+      %a{ :href => "#" } Random
+    %li.title.block.tab.seemore= link_to "See more recent videos &raquo;", recent_videos_path
   .tab_contents
     #recent.tab_content.active
       =render :partial => "recent"

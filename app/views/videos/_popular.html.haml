@@ -21,7 +21,6 @@
           %a{ :href => "#" }
             %div{ :class => "carousel_page_#{n}", :page => n }
   .clear
-.footer.block.last= link_to "See more popular videos &raquo;", popular_videos_path
 :javascript
   function popular_carousel_initCallback( popular_carousel ) {
     $("#popular_carousel .carousel_pager div").bind("click", function() { 
