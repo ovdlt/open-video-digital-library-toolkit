@@ -116,15 +116,24 @@ $(function(){
         $.each(tbody.data("assets"),function(){
             c = row.clone();
             input = $("td.input input", c);
-            id = input.attr("id");
-            input.attr("id", id.replace(/:id:/,this.id));
-            input.attr("value", this.id);
+
             a = $("a.uri", c);
             a.text(this.uri);
             href = a.attr("href");
-            a.attr("href",href.replace(/:id:/,this.id));
             $("td.format",c).text(this.asset_format);
             $("td.size",c).text(this.size);
+
+            if( this.id == null ) {
+                input.attr("id","uncataloged_assests");
+                input.attr("value",this.uri);
+                input.attr("name","new_assets[]");
+                a.attr("href","javascript:return(false);");
+            } else {
+                id = input.attr("id");
+                input.attr("id", id.replace(/:id:/,this.id));
+                input.attr("value", this.id);
+                a.attr("href",href.replace(/:id:/,this.id));
+            }
             tbody.append(c);
         });
 

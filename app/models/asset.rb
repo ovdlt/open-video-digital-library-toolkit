@@ -120,6 +120,13 @@ class Asset < ActiveRecord::Base
     end
   end
 
+  def to_json options = nil
+    hash = attributes.dup
+    hash["size"] = ( size or File.size(absolute_path) )
+    hash["asset_format"] = asset_format
+    { "asset" => hash }.to_json( options )
+  end
+
   private
   
   def must_have_valid_path
