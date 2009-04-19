@@ -1,8 +1,8 @@
 --- 
 vendor/plugins/rspec: 
   squashed: true
-  url: git://github.com/dchelimsky/rspec.git
   branch: master
+  url: git://github.com/dchelimsky/rspec.git
   type: git
   revision: 552d027131af65856f5a7c342bb15cdc5e5b08b7
   remote: braid/vendor/plugins/rspec
@@ -11,47 +11,47 @@ vendor/plugins/rspec_rails:
   branch: master
   url: git://github.com/dchelimsky/rspec-rails.git
   type: git
-  revision: f44ee9def699b730bbd59109289a7f78f9c2c308
+  revision: 84d2d8d05a6e08ef7f788e661dd6927b9dcdd8c7
   remote: braid/vendor/plugins/rspec-rails
-vendor/plugins/restful_authentication: 
-  squashed: true
-  branch: master
-  url: git://github.com/technoweenie/restful-authentication.git
-  type: git
-  revision: 2ae4c22f5a42100458f8be89c9f366b4099a4451
-  remote: braid/vendor/plugins/restful-authentication
 vendor/rails: 
   squashed: true
-  branch: 2-3-stable
   url: git://github.com/rails/rails.git
+  branch: 2-3-stable
   type: git
   revision: dc88847e5ce392eed210b97525c14fca55852867
   remote: braid/vendor/rails
-vendor/plugins/will_paginate: 
+vendor/plugins/restful_authentication: 
   squashed: true
+  url: git://github.com/technoweenie/restful-authentication.git
   branch: master
-  url: git://github.com/mislav/will_paginate.git
   type: git
-  revision: 8888651be8d6656bdf2378731d91a8badbaa2556
-  remote: braid/vendor/plugins/will-paginate
+  revision: 2ae4c22f5a42100458f8be89c9f366b4099a4451
+  remote: braid/vendor/plugins/restful-authentication
 vendor/plugins/role_requirement: 
   squashed: true
-  branch: master
   url: git://github.com/negonicrac/role_requirement.git
+  branch: master
   type: git
   revision: 0140050d6676ffa8519e5b1f7c146bd72c02e1da
   remote: braid/vendor/plugins/role-requirement
+vendor/plugins/will_paginate: 
+  squashed: true
+  url: git://github.com/mislav/will_paginate.git
+  branch: master
+  type: git
+  revision: 8888651be8d6656bdf2378731d91a8badbaa2556
+  remote: braid/vendor/plugins/will-paginate
 vendor/plugins/exception_notification: 
   squashed: true
-  branch: master
   url: git://github.com/rails/exception_notification.git
+  branch: master
   type: git
   revision: e8b603e523c14f145da7b3a1729f5cc06eba2dd1
   remote: braid/vendor/plugins/exception-notification
 vendor/plugins/aasm: 
   squashed: true
-  branch: master
   url: git://github.com/rubyist/aasm.git
+  branch: master
   type: git
   revision: baceb4b53e296cd45ac3acbd5df291e14b2993aa
   remote: braid/vendor/plugins/aasm

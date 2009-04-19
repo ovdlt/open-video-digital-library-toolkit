@@ -1,10 +1,49 @@
-=== Version 1.1.99.x (in git)
+=== Version 1.2.4 / 2009-03-13
 
-IMPORTANT: See Upgrade.markdown for information about upgrading to rspec-rails-1.1.99.4
+No changes in this release, but aligns with the rspec-1.2.4 release. Someday
+soon, this binding of rspec/rspec-rails versions needs to end!
+
+=== Version 1.2.3 / 2009-03-13
+
+No changes in this release, but aligns with the rspec-1.2.3 release.
+
+=== Version 1.2.2 / 2009-03-22
+
+No changes in this release, but aligns with the rspec-1.2.2 release.
+
+=== Version 1.2.1 / 2009-03-22
+
+This is a bug-fix release, recommended for anybody who has already upgraded to
+rspec-rails-1.2.0 or is upgrading to rails-2.3.2
+
+See Upgrade.rdoc for information about upgrading to rspec-rails-1.2.1
+
+* enhancements
+
+  * more cleanup of internals (reducing dependency on rspec-core)
+  * don't require config/environments more than once
+  * autotest includes spec/routing directory (Matt Peterson). Closes #739.
+  * display helpful messages when installing rspec-rails running script/generate rspec
+    * thanks for Dr Nic for the pointers
+  * restored require 'rubygems' where needed
+    * export NO_RUBYGEMS=true if you don't use rubygems
+    
+* bug fixes
+
+  * fix scoping issues in rspec-rails' own suite for ruby 1.9.1 (Matthias
+    Hennemeyer). Closes #717.
+  * rake stats no longer hides test directories. Closes #748.
+  * fixed regression that was introduced in 1.2 in which controller_name
+    failed to override the controller class passed to describe() (patches from
+    Aaron Gibralter and Zach Dennis). Closes #732.
+
+=== Version 1.2.0 / 2009-03-15
+
+IMPORTANT: See Upgrade.rdoc for information about upgrading to rspec-rails-1.2.0
 
 IMPORTANT: This release includes the following backwards-compatibility-breaking changes.
 
-* rspec-rails supports rails 2.0.2, 2.1.2 and 2.2.2.
+* rspec-rails supports rails 2.0.2, 2.1.2, 2.2.2 and 2.3.2
   
   * We are no longer supporting 1.x versions of rails.
 
