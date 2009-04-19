@@ -5,6 +5,9 @@ module Spec
   module Runner
     module Formatter
       describe ProgressBarFormatter do
+        
+        treats_method_missing_as_private
+
         before(:each) do
           @io = StringIO.new
           @options = mock('options')
@@ -30,7 +33,7 @@ module Spec
             end
           end
           example = example_group.examples.first
-          @formatter.add_example_group(example_group)
+          @formatter.example_group_started(Spec::Example::ExampleGroupProxy.new(example_group))
           @formatter.example_pending(example, "message", "#{__FILE__}:#{__LINE__}")
           @io.rewind
           @formatter.dump_summary(3, 2, 1, 1)
@@ -97,17 +100,11 @@ EOE
           end
           example = example_group.examples.first
           file = __FILE__
-          line = __LINE__ + 2
-          @formatter.add_example_group(example_group)
+          line = __LINE__ - 5
+          @formatter.example_group_started(Spec::Example::ExampleGroupProxy.new(example_group))
           @formatter.example_pending(example, "message", "#{__FILE__}:#{__LINE__}")
           @formatter.dump_pending
-          @io.string.should ==(<<-HERE)
-*
-Pending:
-
-example_group example (message)
-#{file}:#{line}
-HERE
+          @io.string.should =~ /Pending:\n\nexample_group example \(message\)\n#{file}:#{line}/m
         end
       end
       

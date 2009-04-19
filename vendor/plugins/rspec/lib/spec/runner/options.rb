@@ -1,3 +1,5 @@
+require 'ostruct'
+
 module Spec
   module Runner
     class Options
@@ -6,8 +8,8 @@ module Spec
       }
 
       EXAMPLE_FORMATTERS = { # Load these lazily for better speed
-                'silent' => ['spec/runner/formatter/base_formatter',                   'Formatter::BaseFormatter'],
-                     'l' => ['spec/runner/formatter/base_formatter',                   'Formatter::BaseFormatter'],
+                'silent' => ['spec/runner/formatter/silent_formatter',                 'Formatter::SilentFormatter'],
+                     'l' => ['spec/runner/formatter/silent_formatter',                 'Formatter::SilentFormatter'],
                'specdoc' => ['spec/runner/formatter/specdoc_formatter',                'Formatter::SpecdocFormatter'],
                      's' => ['spec/runner/formatter/specdoc_formatter',                'Formatter::SpecdocFormatter'],
                 'nested' => ['spec/runner/formatter/nested_text_formatter',            'Formatter::NestedTextFormatter'],
@@ -34,6 +36,7 @@ module Spec
         :dry_run,
         :profile,
         :heckle_runner,
+        :debug,
         :line_number,
         :loadby,
         :reporter,
@@ -57,6 +60,7 @@ module Spec
         @colour = false
         @profile = false
         @dry_run = false
+        @debug = false
         @reporter = Reporter.new(self)
         @context_lines = 3
         @diff_format  = :unified
@@ -67,6 +71,8 @@ module Spec
         @examples_should_be_run = nil
         @user_input_for_runner = nil
         @after_suite_parts = []
+        @files_loaded = false
+        @out_used = nil
       end
 
       def add_example_group(example_group)
@@ -77,7 +83,13 @@ module Spec
         @example_groups.delete(example_group)
       end
 
+      def require_ruby_debug
+        require 'rubygems' unless ENV['NO_RUBYGEMS']
+        require 'ruby-debug'
+      end
+
       def run_examples
+        require_ruby_debug if debug
         return true unless examples_should_be_run?
         success = true
         begin
@@ -142,6 +154,7 @@ module Spec
         if @colour && RUBY_PLATFORM =~ /mswin|mingw/ ;\
           begin ;\
             replace_output = @output_stream.equal?($stdout) ;\
+            require 'rubygems' unless ENV['NO_RUBYGEMS'] ;\
             require 'Win32/Console/ANSI' ;\
             @output_stream = $stdout if replace_output ;\
           rescue LoadError ;\
@@ -197,8 +210,16 @@ module Spec
           else
             load_class(format, 'formatter', '--format')
           end
-          formatter_type.new(self, where)
+          formatter_type.new(formatter_options, where)
         end
+      end
+      
+      def formatter_options
+        @formatter_options ||= OpenStruct.new(
+          :colour   => colour,
+          :autospec => autospec,
+          :dry_run  => dry_run
+        )
       end
 
       def load_heckle_runner(heckle)
@@ -308,7 +329,7 @@ module Spec
       end
 
       def default_differ
-        require 'spec/expectations/differs/default'
+        require 'spec/runner/differs/default'
         self.differ_class = ::Spec::Expectations::Differs::Default
       end
 
@@ -316,18 +337,18 @@ module Spec
         if examples.empty?
           if files.length == 1
             if File.directory?(files[0])
-              error_stream.puts "You must specify one file, not a directory when using the --line option"
+              error_stream.puts "You must specify one file, not a directory when providing a line number"
               exit(1) if stderr?
             else
               example = SpecParser.new(self).spec_name_for(files[0], line_number)
               @examples = [example]
             end
           else
-            error_stream.puts "Only one file can be specified when using the --line option: #{files.inspect}"
+            error_stream.puts "Only one file can be specified when providing a line number: #{files.inspect}"
             exit(3) if stderr?
           end
         else
-          error_stream.puts "You cannot use both --line and --example"
+          error_stream.puts "You cannot use --example and specify a line number"
           exit(4) if stderr?
         end
       end

@@ -1,6 +1,8 @@
 module Spec
   module Runner
     class Configuration
+      include Spec::Example::ArgsAndOptions
+      
       # Chooses what mock framework to use. Example:
       #
       #   Spec::Runner.configure do |config|
@@ -74,8 +76,8 @@ module Spec
       #     # *Will* include ControllerExampleHelpers
       #   end
       #
-      def include(*args)
-        include_or_extend(:include, *args)
+      def include(*modules_and_options)
+        include_or_extend(:include, *modules_and_options)
       end
       
       # :call-seq:
@@ -85,10 +87,45 @@ module Spec
       #
       # Works just like #include, but extends the example groups
       # with the modules rather than including them.
-      def extend(*args)
-        include_or_extend(:extend, *args)
+      def extend(*modules_and_options)
+        include_or_extend(:extend, *modules_and_options)
       end
       
+      # Appends a global <tt>before</tt> block to all example groups.
+      # <tt>scope</tt> can be any of <tt>:each</tt> (default), <tt>:all</tt>, or
+      # <tt>:suite</tt>. When <tt>:each</tt>, the block is executed before each
+      # example. When <tt>:all</tt>, the block is executed once per example
+      # group, before any of its examples are run. When <tt>:suite</tt> the
+      # block is run once before the entire suite is run.
+      def append_before(scope = :each, options={}, &proc)
+        add_callback(:append_before, scope, options, &proc)
+      end
+      alias_method :before, :append_before
+
+      # Prepends a global <tt>before</tt> block to all example groups.
+      # 
+      # See <tt>append_before</tt> for scoping semantics.
+      def prepend_before(scope = :each, options={}, &proc)
+        add_callback(:prepend_before, scope, options, &proc)
+      end
+      
+      # Prepends a global <tt>after</tt> block to all example groups.
+      # 
+      # See <tt>append_before</tt> for scoping semantics.
+      def prepend_after(scope = :each, options={}, &proc)
+        add_callback(:prepend_after, scope, options, &proc)
+      end
+      alias_method :after, :prepend_after
+      
+      # Appends a global <tt>after</tt> block to all example groups.
+      # 
+      # See <tt>append_before</tt> for scoping semantics.
+      def append_after(scope = :each, options={}, &proc)
+        add_callback(:append_after, scope, options, &proc)
+      end
+
+      # DEPRECATED - use Spec::Matchers::DSL instead
+      #
       # Defines global predicate matchers. Example:
       #
       #   config.predicate_matchers[:swim] = :can_swim?
@@ -98,48 +135,13 @@ module Spec
       #   person.should swim # passes if person.can_swim? returns true
       #
       def predicate_matchers
-        @predicate_matchers ||= {}
+        @predicate_matchers ||= Spec::HashWithDeprecationNotice.new("predicate_matchers", "the new Matcher DSL")
       end
       
-      # Prepends a global <tt>before</tt> block to all example groups.
-      # See #append_before for filtering semantics.
-      def prepend_before(*args, &proc)
-        add_callback(:prepend_before, *args, &proc)
-      end
-      
-      # Appends a global <tt>before</tt> block to all example groups.
-      #
-      # If you want to restrict the block to a subset of all the example
-      # groups then specify this in a Hash as the last argument:
-      #
-      #   config.prepend_before(:all, :type => :farm)
-      #
-      # or
-      #
-      #   config.prepend_before(:type => :farm)
-      #
-      def append_before(*args, &proc)
-        add_callback(:append_before, *args, &proc)
-      end
-      alias_method :before, :append_before
-
-      # Prepends a global <tt>after</tt> block to all example groups.
-      # See #append_before for filtering semantics.
-      def prepend_after(*args, &proc)
-        add_callback(:prepend_after, *args, &proc)
-      end
-      alias_method :after, :prepend_after
-      
-      # Appends a global <tt>after</tt> block to all example groups.
-      # See #append_before for filtering semantics.
-      def append_after(*args, &proc)
-        add_callback(:append_after, *args, &proc)
-      end
-
     private
     
       def include_or_extend(action, *args)
-        modules, options = Spec::Example.args_and_options(*args)
+        modules, options = args_and_options(*args)
         [get_type_from_options(options)].flatten.each do |required_example_group|
           required_example_group = required_example_group.to_sym if required_example_group
           modules.each do |mod|
@@ -149,7 +151,7 @@ module Spec
       end
 
       def add_callback(sym, *args, &proc)
-        scope, options = Spec::Example.scope_and_options(*args)
+        scope, options = scope_and_options(*args)
         example_group = Spec::Example::ExampleGroupFactory[get_type_from_options(options)]
         example_group.__send__(sym, scope, &proc)
       end
@@ -160,6 +162,15 @@ module Spec
     
       def mock_framework_path(framework_name)
         File.expand_path(File.join(File.dirname(__FILE__), "/../adapters/mock_frameworks/#{framework_name}"))
+      end
+
+      def scope_and_options(*args) # :nodoc:
+        args, options = args_and_options(*args)
+        return scope_from(*args), options
+      end
+
+      def scope_from(*args) # :nodoc:
+        args[0] || :each
       end
     end
   end

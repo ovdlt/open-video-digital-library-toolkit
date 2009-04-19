@@ -9,7 +9,11 @@ module Spec
   module Runner
     module Formatter
       describe HtmlFormatter do
+
+        treats_method_missing_as_private
+
         attr_reader :root, :expected_file, :expected_html
+          
         before do
           @root = File.expand_path("#{File.dirname(__FILE__)}/../../../..")
           suffix = jruby? ? '-jruby' : ''

@@ -28,6 +28,43 @@ module Spec
         end
       end
       
+      it "is not diffable by default" do
+        matcher = Spec::Matchers::Matcher.new(:name) do
+          match {|actual|}
+        end
+        matcher.matches?(0)
+        matcher.should_not be_diffable
+      end
+      
+      it "is diffable when told to be" do
+        matcher = Spec::Matchers::Matcher.new(:name) do
+          match {|actual|}
+          diffable
+        end
+        matcher.matches?(0)
+        matcher.should be_diffable
+      end
+      
+      it "provides expected" do
+        matcher = Spec::Matchers::Matcher.new(:name, 'expected string') do
+          match {|actual|}
+        end
+        
+        matcher.matches?('actual string')
+        
+        matcher.expected.should == ['expected string']
+      end
+      
+      it "provides actual" do
+        matcher = Spec::Matchers::Matcher.new(:name, 'expected string') do
+          match {|actual|}
+        end
+        
+        matcher.matches?('actual string')
+        
+        matcher.actual.should == 'actual string'
+      end
+      
       context "with overrides" do
         before(:each) do
           @matcher = Spec::Matchers::Matcher.new(:be_boolean, true) do |boolean|
@@ -90,8 +127,76 @@ module Spec
         end
       end
 
-      context "matching with overrides" do
+      context "with no args" do
+        before(:each) do
+          @matcher = Spec::Matchers::Matcher.new(:matcher_name) do 
+            match do |actual|
+              actual == 5
+            end
+          end 
+        end
+        
+        it "matches" do
+          @matcher.matches?(5).should be_true
+        end
+        
+        it "describes" do
+          @matcher.description.should == "matcher name"
+        end
       end
+      
+      context "with 1 arg" do
+        before(:each) do
+          @matcher = Spec::Matchers::Matcher.new(:matcher_name, 1) do |expected|
+            match do |actual|
+              actual == 5 && expected == 1
+            end
+          end
+        end
+        
+        it "matches" do
+          @matcher.matches?(5).should be_true
+        end
+        
+        it "describes" do
+          @matcher.description.should == "matcher name 1"
+        end
+      end
+      
+      context "with multiple args" do
+        before(:each) do
+          @matcher = Spec::Matchers::Matcher.new(:matcher_name, 1, 2, 3, 4) do |a,b,c,d|
+            match do |sum|
+              a + b + c + d == sum
+            end
+          end
+        end
+        
+        it "matches" do
+          @matcher.matches?(10).should be_true
+        end
+        
+        it "describes" do
+          @matcher.description.should == "matcher name 1, 2, 3, and 4"
+        end
+      end
+      
+      context "with helper methods" do
+        it "does something" do
+          matcher = Spec::Matchers::Matcher.new(:be_similar_to, [1,2,3]) do |sample|
+            match do |actual|
+              similar?(sample, actual)
+            end
+
+            def similar?(a, b)
+              a.sort == b.sort
+            end
+          end
+          
+          matcher.matches?([2,3,1]).should be_true
+        end
+      end
+
     end
   end
 end

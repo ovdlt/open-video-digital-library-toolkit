@@ -142,39 +142,14 @@ module Spec
   #    end
   #  end
   module Example
-    class << self
-      def args_and_options(*args) # :nodoc:
-        with_options_from(args) do |options|
-          return args, options
-        end
-      end
-
-      def scope_from(*args) # :nodoc:
-        args[0] || :each
-      end
-
-      def scope_and_options(*args) # :nodoc:
-        args, options = args_and_options(*args)
-        return scope_from(*args), options
-      end
-
-      def add_spec_path_to(args) # :nodoc:
-        args << {} unless Hash === args.last
-        args.last[:spec_path] ||= caller(0)[2]
-      end
-
-    private
-    
-      def with_options_from(args)
-        yield Hash === args.last ? args.pop : {} if block_given?
-      end
-    end
   end
 end
 
 require 'timeout'
+require 'spec/example/args_and_options'
 require 'spec/example/predicate_matchers'
-require 'spec/example/example_description'
+require 'spec/example/example_group_proxy'
+require 'spec/example/example_proxy'
 require 'spec/example/subject'
 require 'spec/example/before_and_after_hooks'
 require 'spec/example/pending'

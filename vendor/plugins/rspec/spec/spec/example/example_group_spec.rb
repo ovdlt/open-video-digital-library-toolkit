@@ -108,6 +108,21 @@ module Spec
           reporter.should_not_receive(:add_example_group)
           example_group.run(options)
         end
+
+        it "should report the start of an example run" do
+          reporter.should_receive(:example_started) do |example|
+            example.should equal(example_group.examples[0])
+          end
+          example_group.run(options)
+        end
+
+        it "should report the end of an example run" do
+          reporter.should_receive(:example_finished) do |example, execution_error|
+            example.should equal(example_group.examples[0])
+            execution_error.should be_nil
+          end
+          example_group.run(options)
+        end
       
         describe "when before_each fails" do
           before(:each) do
@@ -263,9 +278,9 @@ module Spec
             ExampleGroupFactory.reset
           end
 
-          it "should send reporter add_example_group" do
+          it "should send reporter example_group_started" do
+            reporter.should_receive(:example_group_started)
             example_group.run(options)
-            reporter.example_groups.should == [example_group]
           end
 
           it "should run example on run" do

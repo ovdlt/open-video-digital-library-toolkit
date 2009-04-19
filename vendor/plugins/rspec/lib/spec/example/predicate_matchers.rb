@@ -30,7 +30,7 @@ module Spec
       #     end
       #   end
       def predicate_matchers
-        @predicate_matchers ||= {}
+        @predicate_matchers ||= Spec::HashWithDeprecationNotice.new("predicate_matchers", "the new Matcher DSL")
       end
 
       def define_methods_from_predicate_matchers # :nodoc:
