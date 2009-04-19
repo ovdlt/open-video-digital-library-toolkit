@@ -66,6 +66,12 @@ class Video < ActiveRecord::Base
     video.send :update_featured_on
   end
 
+  before_save do |video|
+    if video.featured and video.changed.include?( "featured" ) and !video.changed.include?( "featured_priority" )
+      video.featured_priority = Video.maximum("featured_priority");
+    end
+  end
+
   after_save do |video|
 
     video.send :save_rights
