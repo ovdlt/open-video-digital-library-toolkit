@@ -9,7 +9,8 @@
         Created by
         .owner
           = owner
-    .title= collection.title
+    .title
+      = link_to collection.title, collection_path( collection )
 
     - if current_user and current_user.has_role?(  [ :admin, :cataloger ] )
       .featured
