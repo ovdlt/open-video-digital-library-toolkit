@@ -45,7 +45,7 @@ class CollectionsController < ApplicationController
       params["collection"] and params["collection"].delete "title"
     end
     if @collection.update_attributes params["collection"]
-      redirect_to collection_path( @collection.id )
+      redirect_to :back
     else
       render :template => "collections/form"
     end
