@@ -2,7 +2,7 @@ class Video < ActiveRecord::Base
 
   has_many :assets, :dependent => :destroy
 
-  has_many :taggings
+  has_many :taggings, :dependent => :destroy
   has_many :tags, :through => :taggings
 
   has_many :properties, :dependent => :destroy do
@@ -67,6 +67,7 @@ class Video < ActiveRecord::Base
   end
 
   after_save do |video|
+    ENV["smp"] and p "as"
 
     video.send :save_rights
 
@@ -99,6 +100,8 @@ class Video < ActiveRecord::Base
 
     vf.text = texts
     vf.save
+
+    ENV["smp"] and p "asx"
   end
 
   after_destroy do |video|

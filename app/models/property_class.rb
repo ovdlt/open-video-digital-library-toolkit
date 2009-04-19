@@ -134,14 +134,23 @@ class PropertyClass < ActiveRecord::Base
         Date.parse( property.value )
         return true
       rescue ArgumentError => ae
-        property.errors.add :value, ae.to_s
+        result = ActiveRecord::Base.connection().select_one("select date('#{property.value}')")
+        if result.values.first != nil
+          return true
+        end
+        property.errors.add :value, "(#{property.value}) is an #{ae}"
         return false
       end
 
     end
       
     def translate_date property
-      property.date_value = Date.parse( property.value )
+      begin
+        property.date_value = Date.parse( property.value )
+      rescue ArgumentError => ae
+        property.raw_date_value = property.value
+      end
+
     end
       
     def retrieve_date property
@@ -149,12 +158,15 @@ class PropertyClass < ActiveRecord::Base
     end
 
     def validate_rights property
-      !!RightsDetail.find_by_id( property.value )
+      !!( RightsDetail.find_by_id( property.value ) or
+          RightsDetail.find_by_license( property.value ) )
     end
 
     def translate_rights property
       begin
-        property.integer_value = property.value.to_i
+        rd = RightsDetail.find_by_id( property.value ) ||
+             RightsDetail.find_by_license( property.value )
+        property.integer_value = rd.id
       rescue
       end
     end

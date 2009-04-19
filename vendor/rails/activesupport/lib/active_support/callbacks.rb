@@ -172,6 +172,7 @@ module ActiveSupport
 
       private
         def evaluate_method(method, *args, &block)
+          ENV["smp"] and p "eval", method
           case method
             when Symbol
               object = args.shift

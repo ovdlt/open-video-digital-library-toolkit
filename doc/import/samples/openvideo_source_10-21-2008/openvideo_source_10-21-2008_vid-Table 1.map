@@ -12,39 +12,49 @@ verified?:
     "No": false
 timestamp: nil
 keywords:
-  tags: <%= %r{;} %>
+  tags: !!Proc >
+    do |tags|
+      tags.sub! /^\s+/, ""
+      tags.sub! /\s+$/, ""
+      tags.gsub! /\s*;\s*/, ";"
+      tags.gsub! /\s+/, "_"
+      tags = tags.split(';').uniq
+      tags = tags.map do |tag|
+        Tag.find_by_text( tag ) or Tag.new( :text => tag )
+      end
+      tags
+    end
 posterframe: nil
 duration: duration
 restricted?: nil
-creationdate: Created
+creationdate: Creation
 framerate: nil
 sound:
   Sound:
-    Yes: Sound
-    No: Silent
+    "Yes": Sound
+    "No": Silent
 color:
   Color:
-    Yes: Color
-    No: Black and White
+    "Yes": Color
+    "No": Black and White
 edited?: nil
 segmentation: nil
 sponsorname: nil
 contribOrgID: nil
 languageid:
   Language:
-    1: English
+    "1": English
 frameDimensionID: nil
 digitizOrgID: nil
 genrePrimaryID:
   Genre:
-    1: Documentary
-    2: Corporate
-    3: Historical
+    "1": Documentary
+    "2": Corporate
+    "3": Historical
 genreSecondaryID: nil
 RightsInformationID:
-  1:
-    RightsDetail:
-      License: All Rights Reserved
+  Rights Statement:
+    "1": All Rights Reserved
 
 # Local Variables:
 # mode:yaml
