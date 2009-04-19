@@ -236,13 +236,13 @@ EOS
   def featured_videos
     Video.find :all, :conditions => { :featured => true }.
                                         merge( viz_condition ),
-                            :order => "featured_on desc"
+                            :order => "featured_priority desc, featured_on desc"
   end
 
   def featured_collections
     Collection.find :all, :conditions => { :featured => true }.
                                                 merge( viz_condition ),
-                            :order => "featured_on desc"
+                            :order => "featured_priority desc, featured_on desc"
   end
 
   def feature_rank object
@@ -251,7 +251,7 @@ EOS
                                                 merge( viz_condition )
     objects = klass.find :all, :conditions => { :featured => true }.
                                                 merge( viz_condition ),
-                             :order => "featured_on desc"
+                             :order => "featured_priority desc, featured_on desc"
     i = 1
     objects.each do |v|
       if v == object

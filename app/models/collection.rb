@@ -1,16 +1,18 @@
 class Collection < ActiveRecord::Base
 
+  default_scope :order => "collections.priority desc, collections.updated_at desc"
+
   belongs_to :user
   has_many :bookmarks, :dependent => :destroy
 
   has_many :public_videos, :through => :bookmarks,
                            :source => :video,
-                           :order => "bookmarks.created_at desc",
+                           :order => "bookmarks.priority desc, bookmarks.created_at desc",
                            :conditions => { :public => true }
 
   has_many :all_videos, :through => :bookmarks,
                         :source => :video,
-                        :order => "bookmarks.created_at desc"
+                        :order => "bookmarks.priority desc, bookmarks.created_at desc"
 
   validates_presence_of :user_id
   validates_presence_of :title
