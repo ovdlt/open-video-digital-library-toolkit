@@ -66,8 +66,13 @@ class Video < ActiveRecord::Base
     video.send :update_featured_on
   end
 
+  before_save do |video|
+    if video.featured and video.changed.include?( "featured" ) and !video.changed.include?( "featured_priority" )
+      video.featured_priority = Video.maximum("featured_priority");
+    end
+  end
+
   after_save do |video|
-    ENV["smp"] and p "as"
 
     video.send :save_rights
 
@@ -100,8 +105,6 @@ class Video < ActiveRecord::Base
 
     vf.text = texts
     vf.save
-
-    ENV["smp"] and p "asx"
   end
 
   after_destroy do |video|
@@ -461,7 +464,7 @@ class Video < ActiveRecord::Base
       if ( m = duration.match( DURATION_REGEX ) )
         new_value = ((m[1].to_i*60)+m[2].to_i)*60+m[3].to_i
       end
-      update_attribute( :duration, new_value )
+      attributes["duration"] = new_value
     end
   end
 

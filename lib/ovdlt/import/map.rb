@@ -122,12 +122,7 @@ module Import
               Video.find_all_by_local_id( video.local_id ).each { |v| v.destroy }
             end
 
-            p video.tags
-            
-            p "a"
-            x = video.save
-            p "b"
-            if !x
+            if !video.save
               puts "Could not create video"
               if !video.errors.empty?
                 puts "Video Errors:"

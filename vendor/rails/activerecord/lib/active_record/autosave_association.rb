@@ -279,12 +279,10 @@ module ActiveRecord
     # ActiveRecord::Base after the AutosaveAssociation module, which it does by default.
     def save_collection_association(reflection)
       if association = association_instance_get(reflection.name)
-        ENV["smp"] and p "smp", association
         autosave = reflection.options[:autosave]
 
         if records = associated_records_to_validate_or_save(association, @new_record_before_save, autosave)
           records.each do |record|
-            ENV["smp"] and p "smpy", record, autosave, @new_record_before_save, record.new_record?
             if autosave && record.marked_for_destruction?
               association.destroy(record)
             elsif @new_record_before_save || record.new_record?
