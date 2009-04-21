@@ -18,18 +18,20 @@ module Spec
       #   description
       #   => "should start with a balance of 0"
       def description
-        @_defined_description || ::Spec::Matchers.generated_description || "NO NAME"
+        if description = @_proxy.description || ::Spec::Matchers.generated_description
+          description
+        else
+          raise Spec::Example::NoDescriptionError.new("example", @_proxy.location)
+        end
       end
       
       def options # :nodoc:
-        @_options
+        @_proxy.options
       end
 
       def execute(run_options, instance_variables) # :nodoc:
-        # FIXME - there is no reason to have example_started pass a name
-        # - in fact, it would introduce bugs in cases where no docstring
-        # is passed to it()
-        run_options.reporter.example_started("")
+        puts caller unless caller(0)[1] =~ /example_group_methods/
+        run_options.reporter.example_started(@_proxy)
         set_instance_variables_from_hash(instance_variables)
         
         execution_error = nil
@@ -47,7 +49,7 @@ module Spec
           end
         end
 
-        run_options.reporter.example_finished(ExampleDescription.new(description, options), execution_error)
+        run_options.reporter.example_finished(@_proxy.update(description), execution_error)
         success = execution_error.nil? || ExamplePendingError === execution_error
       end
 
@@ -77,26 +79,12 @@ module Spec
       def set_instance_variables_from_hash(ivars) # :nodoc:
         ivars.each do |variable_name, value|
           # Ruby 1.9 requires variable.to_s on the next line
-          unless ['@_defined_description', '@_options', '@_implementation', '@method_name'].include?(variable_name.to_s)
+          unless ['@_proxy', '@_implementation', '@method_name'].include?(variable_name.to_s)
             instance_variable_set variable_name, value
           end
         end
       end
 
-      # Provides the backtrace up to where this example was declared.
-      def backtrace
-        @_backtrace
-      end
-      
-      # Deprecated - use +backtrace()+
-      def implementation_backtrace
-        Kernel.warn <<-WARNING
-ExampleMethods#implementation_backtrace is deprecated and will be removed
-from a future version. Please use ExampleMethods#backtrace instead.
-WARNING
-        backtrace
-      end
-      
       # Run all the before(:each) blocks for this example
       def run_before_each
         example_group_hierarchy.run_before_each(self)
@@ -107,9 +95,8 @@ WARNING
         example_group_hierarchy.run_after_each(self)
       end
 
-      def initialize(description, options={}, &implementation)
-        @_options = options
-        @_defined_description = description
+      def initialize(example_proxy, &implementation)
+        @_proxy = example_proxy
         @_implementation = implementation
         @_backtrace = caller
       end
@@ -119,19 +106,19 @@ WARNING
       include Matchers
       include Pending
       
-      def before_each_example # :nodoc:
+      def before_each_example
         setup_mocks_for_rspec
         run_before_each
       end
 
-      def after_each_example # :nodoc:
+      def after_each_example
         run_after_each
         verify_mocks_for_rspec
       ensure
         teardown_mocks_for_rspec
       end
 
-      def described_class # :nodoc:
+      def described_class
         self.class.described_class
       end
       

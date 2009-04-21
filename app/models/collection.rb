@@ -1,22 +1,31 @@
 class Collection < ActiveRecord::Base
 
+  default_scope :order => "collections.priority desc, collections.updated_at desc"
+
   belongs_to :user
+
   has_many :bookmarks, :dependent => :destroy
 
   has_many :public_videos, :through => :bookmarks,
                            :source => :video,
-                           :order => "bookmarks.created_at desc",
+                           :order => "bookmarks.priority desc, bookmarks.created_at desc",
                            :conditions => { :public => true }
 
   has_many :all_videos, :through => :bookmarks,
                         :source => :video,
-                        :order => "bookmarks.created_at desc"
+                        :order => "bookmarks.priority desc, bookmarks.created_at desc"
 
   validates_presence_of :user_id
   validates_presence_of :title
   validate { |c|
     c.user_id and c.user_id > 0
   }
+
+  before_save do |collection|
+    if collection.featured and collection.changed.include?( "featured" ) and !collection.changed.include?( "featured_priority" )
+      collection.featured_priority = Collection.maximum("featured_priority");
+    end
+  end
 
   def size public
     self.send(assoc_select(public)).count

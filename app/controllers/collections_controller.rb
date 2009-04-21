@@ -45,7 +45,7 @@ class CollectionsController < ApplicationController
       params["collection"] and params["collection"].delete "title"
     end
     if @collection.update_attributes params["collection"]
-      redirect_to collection_path( @collection.id )
+      redirect_to :back
     else
       render :template => "collections/form"
     end
@@ -94,8 +94,7 @@ class CollectionsController < ApplicationController
     @collection.save
 
     @videos = @collection.send(videos_method).paginate :page => params[:page],
-                                          :per_page => 20,
-                                          :order => "videos.created_at desc"
+                                                       :per_page => 20
   end
 
   def find_and_verify_user

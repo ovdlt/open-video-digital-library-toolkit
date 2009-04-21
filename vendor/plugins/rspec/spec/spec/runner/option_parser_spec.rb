@@ -24,6 +24,28 @@ describe "OptionParser" do
     options.filename_pattern.should == "foo"
   end
   
+  it "should accept debugger option" do
+    options = parse(["--debugger"])
+    options.debug.should be_true
+  end
+  
+  it "should accept -u form of debugger option" do
+    options = parse(["-u"])
+    options.debug.should be_true
+  end
+  
+  it "should turn off the debugger option if drb is specified later" do
+    @parser.stub!(:parse_drb).with(no_args).and_return(true)
+    options = parse(["-u", "--drb"])
+    options.debug.should be_false
+  end
+  
+  it "should turn off the debugger option if drb is specified first" do
+    @parser.stub!(:parse_drb).with(no_args).and_return(true)
+    options = parse(["--drb", "-u"])
+    options.debug.should be_false
+  end
+  
   it "should accept dry run option" do
     options = parse(["--dry-run"])
     options.dry_run.should be_true
@@ -61,7 +83,7 @@ describe "OptionParser" do
     Spec::Runner::OptionParser.stub!(:spec_command?).and_return(true)
     options = parse([])
     @out.rewind
-    @out.read.should match(/Usage: spec \(FILE\|DIRECTORY\|GLOB\)\+ \[options\]/m)
+    @out.read.should match(/Usage: spec \(FILE\(:LINE\)\?\|DIRECTORY\|GLOB\)\+ \[options\]/m)
   end
     
   it "should not print help to stdout if no args and NOT spec_command?" do
@@ -74,7 +96,7 @@ describe "OptionParser" do
   it "should print help to stdout" do
     options = parse(["--help"])
     @out.rewind
-    @out.read.should match(/Usage: spec \(FILE\|DIRECTORY\|GLOB\)\+ \[options\]/m)
+    @out.read.should match(/Usage: spec \(FILE\(:LINE\)\?\|DIRECTORY\|GLOB\)\+ \[options\]/m)
   end
   
   it "should print instructions about how to require missing formatter" do
@@ -149,14 +171,14 @@ describe "OptionParser" do
     options.formatters[0].class.should equal(Spec::Runner::Formatter::HtmlFormatter)
   end
   
-  it "should use base formatter when format is s" do
+  it "should use silent formatter when format is s" do
     options = parse(["--format", "l"])
-    options.formatters[0].class.should equal(Spec::Runner::Formatter::BaseFormatter)
+    options.formatters[0].class.should equal(Spec::Runner::Formatter::SilentFormatter)
   end
   
-  it "should use base formatter when format is silent" do
+  it "should use silent formatter when format is silent" do
     options = parse(["--format", "silent"])
-    options.formatters[0].class.should equal(Spec::Runner::Formatter::BaseFormatter)
+    options.formatters[0].class.should equal(Spec::Runner::Formatter::SilentFormatter)
   end
   
   it "should use html formatter with explicit output when format is html:test.html" do
@@ -259,40 +281,87 @@ describe "OptionParser" do
       options.filename_pattern = "*_fixture.rb"
       options
     end
-  
-    it "should support --line to identify spec" do
-      options = parse([file, "--line", "13"])
-      options.line_number.should == 13
-      options.examples.should be_empty
-      options.run_examples
-      options.examples.should eql(["d"])
-    end
-  
-    it "should fail with error message if file is dir along with --line" do
-      options = parse([dir, "--line", "169"])
-      options.line_number.should == 169
-      options.run_examples
-      @err.string.should match(/You must specify one file, not a directory when using the --line option/n)
-    end
-  
-    it "should fail with error message if file does not exist along with --line" do
-      options = parse(["some file", "--line", "169"])
-      proc do
+
+    describe 'with the --line flag' do
+      it "should correctly identify the spec" do
+        options = parse([file, "--line", "13"])
+        options.line_number.should == 13
+        options.examples.should be_empty
         options.run_examples
-      end.should raise_error
+        options.examples.should eql(["d"])
+      end
+
+      it "should fail with error message if specified file is a dir" do
+        options = parse([dir, "--line", "169"])
+        options.line_number.should == 169
+        options.run_examples
+        @err.string.should match(/You must specify one file, not a directory when providing a line number/n)
+      end
+   
+    
+      it "should fail with error message if file does not exist" do
+        options = parse(["some file", "--line", "169"])
+        proc do
+          options.run_examples
+        end.should raise_error
+      end
+    
+      it "should fail with error message if more than one files are specified" do
+        options = parse([file, file, "--line", "169"])
+        options.run_examples
+        @err.string.should match(/Only one file can be specified when providing a line number/n)
+      end
+    
+      it "should fail with error message if using simultaneously with --example" do
+        options = parse([file, "--example", "some example", "--line", "169"])
+        options.run_examples
+        @err.string.should match(/You cannot use --example and specify a line number/n)
+      end
     end
-  
-    it "should fail with error message if more than one files are specified along with --line" do
-      options = parse([file, file, "--line", "169"])
-      options.run_examples
-      @err.string.should match(/Only one file can be specified when using the --line option/n)
+
+    describe 'with the colon syntax (filename:LINE_NUMBER)' do
+
+      it "should strip the line number from the file name" do
+        options = parse(["#{file}:13"])
+        options.files.should include(file)
+      end
+
+      it "should correctly identify the spec" do
+        options = parse(["#{file}:13"])
+        options.line_number.should == 13
+        options.examples.should be_empty
+        options.run_examples
+        options.examples.should eql(["d"])
+      end
+
+      it "should fail with error message if specified file is a dir" do
+        options = parse(["#{dir}:169"])
+        options.line_number.should == 169
+        options.run_examples
+        @err.string.should match(/You must specify one file, not a directory when providing a line number/n)
+      end
+   
+    
+      it "should fail with error message if file does not exist" do
+        options = parse(["some file:169"])
+        proc do
+          options.run_examples
+        end.should raise_error
+      end
+    
+      it "should fail with error message if more than one files are specified" do
+        options = parse([file, "#{file}:169"])
+        options.run_examples
+        @err.string.should match(/Only one file can be specified when providing a line number/n)
+      end
+    
+      it "should fail with error message if using simultaneously with --example" do
+        options = parse(["#{file}:169", "--example", "some example"])
+        options.run_examples
+        @err.string.should match(/You cannot use --example and specify a line number/n)
+      end
     end
-  
-    it "should fail with error message if --example and --line are used simultaneously" do
-      options = parse([file, "--example", "some example", "--line", "169"])
-      options.run_examples
-      @err.string.should match(/You cannot use both --line and --example/n)
-    end
+
   end
   
   if [/mswin/, /java/].detect{|p| p =~ RUBY_PLATFORM}
@@ -330,11 +399,30 @@ describe "OptionParser" do
     options = parse(["--options", File.dirname(__FILE__) + "/spec_drb.opts"])    
   end
 
-  it "should send all the arguments others than --drb back to the parser after parsing options" do
+  it "should send all the arguments other than --drb back to the parser after parsing options" do
     Spec::Runner::DrbCommandLine.should_receive(:run).and_return do |options|
       options.argv.should == ["example_file.rb", "--colour"]
     end
     options = parse(["example_file.rb", "--options", File.dirname(__FILE__) + "/spec_drb.opts"])    
+  end
+  
+  it "runs specs locally if no drb is running when --drb is specified" do
+    Spec::Runner::DrbCommandLine.should_receive(:run).and_return(false)
+    options = parse(["example_file.rb", "--options", File.dirname(__FILE__) + "/spec_drb.opts"])    
+    options.__send__(:examples_should_be_run?).should be_true
+  end
+
+  it "says its running specs locally if no drb is running when --drb is specified" do
+    Spec::Runner::DrbCommandLine.should_receive(:run).and_return(false)
+    options = parse(["example_file.rb", "--options", File.dirname(__FILE__) + "/spec_drb.opts"])    
+    options.error_stream.rewind
+    options.error_stream.string.should =~ /Running specs locally/
+  end
+
+  it "does not run specs locally if drb is running when --drb is specified" do
+    Spec::Runner::DrbCommandLine.should_receive(:run).and_return(true)
+    options = parse(["example_file.rb", "--options", File.dirname(__FILE__) + "/spec_drb.opts"])    
+    options.__send__(:examples_should_be_run?).should be_false
   end
 
   it "should read spaced and multi-line options from file when --options is specified" do

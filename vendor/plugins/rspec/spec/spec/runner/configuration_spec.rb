@@ -5,6 +5,7 @@ module Spec
     describe Configuration do
       with_sandboxed_options do
         with_sandboxed_config do
+          
           describe "#mock_with" do
             it "should default mock framework to rspec" do
               config.mock_framework.should =~ /\/spec\/adapters\/mock_frameworks\/rspec$/
@@ -179,7 +180,7 @@ module Spec
               config.append_before(:all, :type => :special_child) do
                 order << :special_child_append_before_all
               end
-              config.append_before(:each) do
+              config.append_before do # default is :each
                 order << :append_before_each
               end
               config.append_before(:each, :type => :special) do
@@ -293,7 +294,16 @@ module Spec
                 :append__after_all
               ]
             end
+
           end
+          
+          describe "#predicate_matchers (DEPRECATED)" do
+            it "is deprecated" do
+              Spec.should_receive(:deprecate)
+              config.predicate_matchers[:foo] = :bar?
+            end
+          end
+
         end
       end
     end

@@ -8,23 +8,28 @@ module Spec
       # non-text based ones too - just ignore the +output+ constructor
       # argument.
       class BaseTextFormatter < BaseFormatter
-        attr_reader :output, :pending_examples
-        # Creates a new instance that will write to +where+. If +where+ is a
+        attr_reader :output, :example_group
+        # Creates a new instance that will write to +output+. If +output+ is a
         # String, output will be written to the File with that name, otherwise
-        # +where+ is exected to be an IO (or an object that responds to #puts and #write).
-        def initialize(options, where)
-          super
-          if where.is_a?(String)
-            FileUtils.mkdir_p(File.dirname(where))
-            @output = File.open(where, 'w')
+        # +output+ is exected to be an IO (or an object that responds to #puts
+        # and #write).
+        def initialize(options, output)
+          @options = options
+          if String === output
+            FileUtils.mkdir_p(File.dirname(output))
+            @output = File.open(output, 'w')
           else
-            @output = where
+            @output = output
           end
           @pending_examples = []
         end
+
+        def example_group_started(example_group_proxy)
+          @example_group = example_group_proxy
+        end
         
-        def example_pending(example, message, pending_caller)
-          @pending_examples << ["#{@example_group.description} #{example.description}", message, pending_caller]
+        def example_pending(example, message, ignore)
+          @pending_examples << ["#{@example_group.description} #{example.description}", message, example.location]
         end
         
         def dump_failure(counter, failure)
@@ -40,12 +45,7 @@ module Spec
         end
         
         def colourise(message, failure)
-          Kernel.warn <<-NOTICE
-DEPRECATED: BaseTextFormatter#colourise is deprecated and will be
-removed from a future version of RSpec.
-
-Please use colorize_failure instead.
-NOTICE
+          Spec::deprecate("BaseTextFormatter#colourise", "colorize_failure")
           colorize_failure(message, failure)
         end
         
@@ -126,14 +126,9 @@ NOTICE
         def red(text); colour(text, "\e[31m"); end
         def yellow(text); colour(text, "\e[33m"); end
         def blue(text); colour(text, "\e[34m"); end
-
+        
         def magenta(text)
-          Kernel.warn <<-NOTICE
-DEPRECATED: BaseTextFormatter#magenta is deprecated and will be
-removed from a future version of RSpec.
-
-Please use red instead (it is red/green/refactor after all).
-NOTICE
+          Spec::deprecate("BaseTextFormatter#magenta")
           red(text)
         end
       end

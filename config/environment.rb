@@ -25,7 +25,10 @@ Rails::Initializer.run do |config|
   # config.gem "bj"
   # config.gem "hpricot", :version => '0.6', :source => "http://code.whytheluckystiff.net"
   # config.gem "aws-s3", :lib => "aws/s3"
+
   config.gem "mysql", :version => "2.7" # may require "gem install mysql -- --with-mysql-config"
+  config.gem "erubis", :version => "2.6.4"
+  config.gem "fastercsv", :version => "1.4.0"
   config.gem "haml", :version => "2.0.9"
   config.gem "faker", :version => "0.3.1"
   config.gem "thoughtbot-factory_girl", 

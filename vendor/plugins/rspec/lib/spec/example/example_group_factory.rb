@@ -3,6 +3,8 @@ module Spec
     
     class ExampleGroupFactory
       module ClassMethods
+        include Spec::Example::ArgsAndOptions
+        
         def reset
           @example_group_types = nil
           default(ExampleGroup)
@@ -19,14 +21,12 @@ module Spec
         end
 
         def create_shared_example_group(*args, &example_group_block) # :nodoc:
-          ::Spec::Example::add_spec_path_to(args)
           ::Spec::Example::SharedExampleGroup.register(*args, &example_group_block)
         end
         
         def create_example_group(*args, &block)
-          raise ArgumentError if args.empty?
-          raise ArgumentError unless block
-          Spec::Example::add_spec_path_to(args)
+          raise ArgumentError if args.empty? || block.nil?
+          add_options(args)
           superclass = determine_superclass(args.last)
           superclass.describe(*args, &block)
         end
@@ -62,16 +62,12 @@ module Spec
           @example_group_types[key]
         end
 
-        def assign_scope(scope, args)
-          args.last[:scope] = scope
-        end
-
       protected
 
         def determine_superclass(opts)
           if type = opts[:type]
             self[type]
-          elsif opts[:spec_path] =~ /spec(\\|\/)(#{@example_group_types.keys.sort_by{|k| k.to_s.length}.reverse.join('|')})/
+          elsif opts[:location] =~ /spec(\\|\/)(#{@example_group_types.keys.sort_by{|k| k.to_s.length}.reverse.join('|')})/
             self[$2 == '' ? nil : $2.to_sym]
           else
             self[nil]

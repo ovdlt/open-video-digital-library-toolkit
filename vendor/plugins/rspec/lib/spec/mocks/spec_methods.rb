@@ -20,10 +20,10 @@ module Spec
       #   stub_person = stub("thing", :name => "Joe", :email => "joe@domain.com")
       #   stub_person.name => "Joe"
       #   stub_person.email => "joe@domain.com"
-      def mock(name, stubs_and_options={})
-        Spec::Mocks::Mock.new(name, stubs_and_options)
+      def mock(*args)
+        Spec::Mocks::Mock.new(*args)
       end
-      
+
       alias :stub :mock
 
       # DEPRECATED - use mock('name').as_null_object instead
@@ -32,7 +32,7 @@ module Spec
       # to any message it receives that it hasn't been explicitly instructed
       # to respond to.
       def stub_everything(name = 'stub')
-        Kernel.warn(<<-WARNING)
+        Spec.warn(<<-WARNING)
 
 DEPRECATION: stub_everything('#{name}') is deprecated and will be removed
 from a future version of rspec. Please use mock('#{name}').as_null_object
@@ -41,10 +41,10 @@ or stub('#{name}').as_null_object instead.
 WARNING
         mock(name, :null_object => true)
       end
-      
+
       # Disables warning messages about expectations being set on nil.
       #
-      # By default warning messages are issued when expectations are set on nil.  This is to 
+      # By default warning messages are issued when expectations are set on nil.  This is to
       # prevent false-positives and to catch potential bugs early on.
       def allow_message_expectations_on_nil
         Proxy.allow_message_expectations_on_nil

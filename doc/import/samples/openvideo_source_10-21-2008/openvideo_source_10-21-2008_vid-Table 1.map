@@ -1,0 +1,51 @@
+videoid: local_id
+title: title
+description: abstract
+digitizationdate: Digitization
+amtMotion: nil
+transcriptText: nil
+statsText: nil
+numberOfFrames: nil
+verified?:
+  public:
+    "Yes": true
+    "No": false
+timestamp: nil
+keywords:
+  tags: <%= %r{;} %>
+posterframe: nil
+duration: duration
+restricted?: nil
+creationdate: Created
+framerate: nil
+sound:
+  Sound:
+    Yes: Sound
+    No: Silent
+color:
+  Color:
+    Yes: Color
+    No: Black and White
+edited?: nil
+segmentation: nil
+sponsorname: nil
+contribOrgID: nil
+languageid:
+  Language:
+    1: English
+frameDimensionID: nil
+digitizOrgID: nil
+genrePrimaryID:
+  Genre:
+    1: Documentary
+    2: Corporate
+    3: Historical
+genreSecondaryID: nil
+RightsInformationID:
+  1:
+    RightsDetail:
+      License: All Rights Reserved
+
+# Local Variables:
+# mode:yaml
+# End:

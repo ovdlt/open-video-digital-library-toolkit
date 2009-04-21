@@ -2,9 +2,12 @@ module Spec
   module Matchers
     
     class Be #:nodoc:
+      include Spec::Matchers::Pretty
+      
       def initialize(*args)
         @expected = args.empty? ? true : set_expected(args.shift)
         @args = args
+        @comparison_method = nil
       end
       
       def matches?(actual)
@@ -38,12 +41,12 @@ module Spec
         else
           message = <<-MESSAGE
 'should_not be #{@comparison_method} #{expected}' not only FAILED,
-it reads really poorly.
+it is a bit confusing.
           MESSAGE
           
           raise message << ([:===,:==].include?(@comparison_method) ?
-            "Why don't you try expressing it without the \"be\"?" :
-            "Why don't you try expressing it in the positive?")
+            "It might be more clearly expressed without the \"be\"?" :
+            "It might be more clearly expressed in the positive?")
         end
       end
       
@@ -98,6 +101,9 @@ it reads really poorly.
         end
         
         def prefix
+          # FIXME - this is a bit goofy - but we get failures
+          # if just defining @prefix = nil in initialize
+          @prefix = nil unless defined?(@prefix)
           @prefix
         end
 
@@ -107,7 +113,9 @@ it reads really poorly.
         
         def handling_predicate?
           return false if [true, false, nil].include?(expected)
-          return @handling_predicate
+          # FIXME - this is a bit goofy - but we get failures
+          # if just defining @handling_predicate = nil or false in initialize
+          return defined?(@handling_predicate) ? @handling_predicate : nil
         end
 
         def predicate
@@ -142,19 +150,8 @@ it reads really poorly.
           split_words(prefix)
         end
 
-        def split_words(sym)
-          sym.to_s.gsub(/_/,' ')
-        end
-
         def args_to_sentence
-          case @args.length
-            when 0
-              ""
-            when 1
-              " #{@args[0]}"
-            else
-              " #{@args[0...-1].join(', ')} and #{@args[-1]}"
-          end
+          to_sentence(@args)
         end
         
     end
@@ -163,9 +160,9 @@ it reads really poorly.
     #   should be_true
     #   should be_false
     #   should be_nil
-    #   should be_arbitrary_predicate(*args)
+    #   should be_[arbitrary_predicate](*args)
     #   should_not be_nil
-    #   should_not be_arbitrary_predicate(*args)
+    #   should_not be_[arbitrary_predicate](*args)
     #
     # Given true, false, or nil, will pass if actual value is
     # true, false or nil (respectively). Given no args means

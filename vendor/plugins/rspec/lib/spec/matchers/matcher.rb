@@ -1,21 +1,26 @@
 module Spec
   module Matchers
     class Matcher
-      def initialize(name, expected=nil, &block_passed_to_init)
+      include Spec::Matchers::Pretty
+      
+      attr_reader :expected, :actual
+      
+      def initialize(name, *expected, &declarations)
         @name = name
         @expected = expected
-        @block = block_passed_to_init
+        @declarations = declarations
+        @diffable = false
         @messages = {
-          :description => lambda {"#{name_to_sentence} #{expected}"},
-          :failure_message_for_should => lambda {|actual| "expected #{actual} to #{name_to_sentence} #{expected}"},
-          :failure_message_for_should_not => lambda {|actual| "expected #{actual} not to #{name_to_sentence} #{expected}"}
+          :description => lambda {"#{name_to_sentence}#{expected_to_sentence}"},
+          :failure_message_for_should => lambda {|actual| "expected #{actual.inspect} to #{name_to_sentence}#{expected_to_sentence}"},
+          :failure_message_for_should_not => lambda {|actual| "expected #{actual.inspect} not to #{name_to_sentence}#{expected_to_sentence}"}
         }
       end
       
       def matches?(actual)
         @actual = actual
-        instance_exec @expected, &@block
-        instance_exec @actual, &@match_block
+        instance_exec(*@expected, &@declarations)
+        instance_exec(@actual,    &@match_block)
       end
       
       def description(&block)
@@ -34,16 +39,27 @@ module Spec
         @match_block = block
       end
       
+      def diffable?
+        @diffable
+      end
+      
+      def diffable
+        @diffable = true
+      end
+      
     private
 
       def cache_or_call_cached(key, actual=nil, &block)
-        block ? @messages[key] = block :
-                actual.nil? ? @messages[key].call :
-                              @messages[key].call(actual)
+        block ? @messages[key] = block : 
+                actual.nil? ? @messages[key].call : @messages[key].call(actual)
       end
     
       def name_to_sentence
-        @name_to_sentence ||= @name.to_s.gsub(/_/,' ')
+        split_words(@name)
+      end
+      
+      def expected_to_sentence
+        to_sentence(@expected)
       end
     
     end
