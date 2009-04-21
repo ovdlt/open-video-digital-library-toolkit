@@ -94,6 +94,8 @@ ActionView::Helpers::AssetTagHelper.
   register_javascript_include_default "jquery.livequery"
 ActionView::Helpers::AssetTagHelper.
   register_javascript_include_default "jquery.carousel.pack"
+ActionView::Helpers::AssetTagHelper.
+  register_javascript_include_default "facebox"
 
 ActionView::Base.field_error_proc = Proc.new do |html_tag, instance|
   error_class = "fieldWithErrors"

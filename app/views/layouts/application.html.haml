@@ -20,7 +20,7 @@
             - if logged_in?
               .button= link_to "Logout", logout_path
             - else
-              .button= link_to "Login", login_path
+              .button= link_to "Login", login_path, { :rel => "facebox" }
             -#
               .user
                 You're logged in as
@@ -105,4 +105,5 @@
       $(document).ready( function() { 
         setTimeout( '$(".flash").effect("highlight", {}, 1000 );', 500 );
         setTimeout( '$(".flash.notice").fadeOut( 2000 );' , 2000 );
+        $('a[rel*=facebox]').facebox({opacity:0.5})
       } );
