@@ -21,7 +21,6 @@
           %a{ :href => "#" }
             %div{ :class => "carousel_page_#{n}", :page => n }
   .clear
-.footer.block.last= link_to "See more recent videos &raquo;", recent_videos_path
 :javascript
   function recent_carousel_initCallback( recent_carousel ) {
     $("#recent_carousel .carousel_pager div").bind("click", function() { 
