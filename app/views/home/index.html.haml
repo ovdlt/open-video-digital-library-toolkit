@@ -59,11 +59,17 @@
                 videos
               .description
                 &= collection.description
-
+        .save_new_order
+          click here to save the new order of featured collections 
         .all_collections
           = link_to "View all collections &raquo;", collections_collections_path
     - if current_user and current_user.has_role?( "admin" )
       :javascript
+        var original_order;
+        function send_new_order() {
+          var order = $("#featured_collections").sortable( 'serialize') ;
+          alert(" new order is " +  order );
+        }
         $(document).ready( function() {
           $("#featured_collections").sortable({
             axis: 'y',
@@ -71,11 +77,19 @@
             placeholder : "placeholder",
             tolerance: 'pointer',
             // TODO need some AJAX here to send the new order to the server to be saved in the db
-            // update: function() { 
-              // var order = $("#featured_collections").sortable( 'serialize') ;
-              // alert(" new order is " +  order );
-            // }
+            update: function() { 
+              var new_order = $("#featured_collections").sortable( 'serialize') ;
+              if ( original_order == new_order)
+              {
+                $(".save_new_order").fadeOut(500);
+              } else {
+                $(".save_new_order").show();
+                $(".save_new_order").effect("highlight", {}, 1000 );
+              }
+            }
           });
+          original_order = $("#featured_collections").sortable('serialize');
+          $(".save_new_order").bind("click", send_new_order);
         });
 
     .clear
