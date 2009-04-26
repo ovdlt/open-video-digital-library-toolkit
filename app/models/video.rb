@@ -464,7 +464,6 @@ class Video < ActiveRecord::Base
       if ( m = duration.match( DURATION_REGEX ) )
         new_value = ((m[1].to_i*60)+m[2].to_i)*60+m[3].to_i
       end
-      # update_attribute( :duration, new_value )
       attributes["duration"] = new_value
     end
   end
