@@ -130,6 +130,24 @@ class PropertyClass < ActiveRecord::Base
 
       return false if !validate_not_blank( property )
 
+      v = property.value
+
+      v.gsub! /(\D)00(\D)/, '\101\2'
+      v.gsub! /(\D)00$/, '\101'
+
+      if property.value != v
+        property.value = v
+      end
+
+      begin
+        Date.parse( property.value )
+        return true
+      rescue ArgumentError => ae
+        property.errors.add :value, "(#{property.value}) is an #{ae}"
+        return false
+      end
+
+      # skip for now ...
       begin
         Date.parse( property.value )
         return true
@@ -145,8 +163,9 @@ class PropertyClass < ActiveRecord::Base
     end
       
     def translate_date property
+      property.date_value = Date.parse( property.value )
+      return
       begin
-        property.date_value = Date.parse( property.value )
       rescue ArgumentError => ae
         property.raw_date_value = property.value
       end
