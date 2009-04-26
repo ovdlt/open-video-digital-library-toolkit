@@ -62,6 +62,20 @@ class Collection < ActiveRecord::Base
     v
   end
 
+ def trivial_save
+   saved = false
+   class << self
+     def record_timestamps; false; end
+   end
+   p "don't update"
+   saved = save
+   p "update"
+   class << self
+     remove_method :record_timestamps
+   end
+   saved
+  end
+
   private
 
   before_save do |collection|
