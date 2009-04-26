@@ -1,13 +1,22 @@
 class CollectionsController < ApplicationController
 
   before_filter :find_and_verify_public_or_user,
-                :except => [ :collections, :playlists, :new, :create ]
+                :except => [ :collections,
+                             :playlists,
+                             :new,
+                             :create, 
+                             :featured_order,
+                             :edit,
+                             :update,
+                             :desroy ]
 
   before_filter :find_and_verify_user, :only => [ :edit,
                                                   :update,
                                                   :desroy ]
 
-  before_filter :login, :only => [ :new, :create ]
+  before_filter :login, :only => [ :new, :create, :featured_order ]
+
+  require_role [ :admin ], :for => [ :featured_order ]
 
   def new
     @collection = Collection.new
@@ -85,6 +94,12 @@ class CollectionsController < ApplicationController
       "The #{Library.title} currently contains "+
       "#{@collections.total_entries} public playlists"
     render :action => :index
+  end
+
+  def featured_order
+    ids = params["order"].split(/[,\s]+/).map(&:to_i)
+    Collection.featured_order = ids
+    render_nothing
   end
 
   private

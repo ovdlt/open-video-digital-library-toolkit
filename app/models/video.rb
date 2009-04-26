@@ -68,7 +68,7 @@ class Video < ActiveRecord::Base
 
   before_save do |video|
     if video.featured and video.changed.include?( "featured" ) and !video.changed.include?( "featured_priority" )
-      video.featured_priority = Video.maximum("featured_priority");
+      video.featured_priority = Video.maximum("featured_priority") + 1;
     end
   end
 
