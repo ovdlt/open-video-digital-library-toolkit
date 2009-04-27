@@ -22,7 +22,7 @@
       .content
         - first = true
         - featured_videos.each do |video|
-          .video
+          .video{ :id => "video_#{video.id}" }
             %div{:class =>(first ? "first" : "other")}
               - first = false
               .image
@@ -51,7 +51,7 @@
           Collections
         #featured_collections
           - featured_collections.each do |collection|
-            %div{ :class => 'collection', :id => "collection_#{collection.id}" }
+            .collection{ :id => "collection_#{collection.id}" }
               .title
                 = link_to h(collection.title), collection_path( collection )
               .videos
@@ -70,7 +70,14 @@
         var handle_obj;
         function send_new_order() {
           var order = $("#featured_collections").sortable( 'serialize') ;
+          order = "order=" + order.replace( /(&)?collection\[\]=/g, " ");
           alert(" new order is " +  order );
+          jQuery.post("http://localhost:3000/collections/featured/order", order, new_order_saved );
+        }
+        function new_order_saved( data, textStatus ) {
+          alert( "data is " + data + " \n status is " + textStatus );
+          // TODO new_order = 
+          $(".save_new_order").fadeOut(500);
         }
         $(document).ready( function() {
           $("#featured_collections .collection").bind("mouseover", function(e) { $("#featured_collections .handle").hide(); $(this).children(".handle").show()             } );
