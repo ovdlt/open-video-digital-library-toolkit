@@ -102,7 +102,6 @@ class Collection < ActiveRecord::Base
     priorities = objects.map(&:featured_priority)
     priorities = priorities.sort.reverse
     objects.each { |o| o.featured_priority = priorities.shift }
-    p ids, priorities, objects.map(&:featured_priority)
     # this should be transactional, but ...
     objects.each { |o| o.save! }
   end

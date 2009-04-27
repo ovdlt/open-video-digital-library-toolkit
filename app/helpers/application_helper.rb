@@ -234,14 +234,12 @@ EOS
   end
 
   def featured_videos
-    Video.find :all, :conditions => { :featured => true }.
-                                        merge( viz_condition ),
-                            :order => "featured_priority desc, featured_on desc"
+    Video.find :all, :conditions => { :featured => true }.merge( viz_condition ),
+                      :order => "featured_priority desc, featured_on desc"
   end
 
   def featured_collections
-    Collection.find :all, :conditions => { :featured => true }.
-                                                merge( viz_condition ),
+    Collection.find :all, :conditions => { :featured => true }.merge( viz_condition ),
                             :order => "featured_priority desc, featured_on desc"
   end
 

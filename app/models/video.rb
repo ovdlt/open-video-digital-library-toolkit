@@ -429,6 +429,11 @@ class Video < ActiveRecord::Base
     v
   end
 
+  def self.featured
+    find :all, :conditions => "featured = true",
+               :order => "featured_priority desc"
+  end
+
   private
 
   def descriptors_must_be_unique
@@ -479,6 +484,15 @@ class Video < ActiveRecord::Base
       @rights_property.video_id = id
       @rights_property.save
     end
+  end
+
+  def self.featured_order= ids
+    objects = self.find ids
+    priorities = objects.map(&:featured_priority)
+    priorities = priorities.sort.reverse
+    objects.each { |o| o.featured_priority = priorities.shift }
+    # this should be transactional, but ...
+    objects.each { |o| o.save! }
   end
 
 end

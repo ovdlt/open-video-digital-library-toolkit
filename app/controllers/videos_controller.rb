@@ -11,6 +11,8 @@ class VideosController < ApplicationController
                                                            :show,
                                                            :recent ]
 
+  require_role [ :admin ], :for => [ :featured_order ]
+
   def show
     @path = lambda { |opts| opts == {} ? video_path( @video ) \
                                        : video_path( @video, opts ) }
@@ -137,6 +139,12 @@ class VideosController < ApplicationController
     redirect_to videos_path
   end
   
+  def featured_order
+    ids = params["order"].split(/[,\s]+/).map(&:to_i)
+    Video.featured_order = ids
+    render_nothing
+  end
+
   before_filter :handle_category,
                 :only => [ :general_information,
                            :digital_files,

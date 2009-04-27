@@ -6,6 +6,8 @@ video1:
   updated_at: <%=(Time.now + 1.minute).utc.to_s(:db)%>
   duration: 7
   public: true
+  featured: true
+  featured_priority: 1
 
 video2:
   id: 2
@@ -15,6 +17,8 @@ video2:
   updated_at: <%=(Time.now + 2.minutes).utc.to_s(:db)%>
   duration: 7
   public: true
+  featured: true
+  featured_priority: 2
 
 video3:
   id: 3
@@ -24,6 +28,8 @@ video3:
   updated_at: <%=(Time.now + 4.minutes).utc.to_s(:db)%>
   public: true
   duration: 7
+  featured: true
+  featured_priority: 3
 
 video4:
   id: 4
@@ -33,6 +39,8 @@ video4:
   updated_at: <%=(Time.now + 8.minutes).utc.to_s(:db)%>
   duration: 6
   public: true
+  featured: true
+  featured_priority: 4
 
 video5:
   id: 5
