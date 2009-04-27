@@ -4,8 +4,28 @@
 .ui-sortable .ui-sortable-helper
   :background-color transparent
   :background-image url(../images/75alpha.png)
- 
+
+#featured_collections .collection .handle
+  :width 20px
+  :height 40px
+  :display none
+  :position absolute
+  :top 0px
+  :left 0px
+  :background-color #ddd
+  .handle_image
+    :width 15px
+    :height 15px
+    :margin-left 4px
+    :margin-top 10px
+    :background-color transparent
+    :background-image url(../images/ui-icons_222222_256x240.png)
+    :background-position -130px -50px
+   
 #featured_collections.ui-sortable 
+  .collection
+    :position relative
+    :padding-left 20px
   .ui-sortable-helper
     :margin-left 15px
 
@@ -24,3 +44,9 @@
     :height 1em
     :width 110%
     :margin-left -5%
+
+.ui-sortable + .save_new_order
+  :border solid 1px #777
+  :display none
+  :cursor pointer
+  :padding 5px
