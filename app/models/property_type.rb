@@ -24,7 +24,7 @@ class PropertyType < ActiveRecord::Base
   end
 
   def self.browse &block
-    options = { :order => "priority asc, name asc",
+    options = { :order => "priority desc, name asc",
                 :conditions => [ "browsable = true" ] }
     if block
       ( self.find :all, options ).each &block
@@ -34,7 +34,7 @@ class PropertyType < ActiveRecord::Base
   end
 
   def self.descriptor_types
-    find :all, :order => "pts.priority asc, pts.name asc",
+    find :all, :order => "pts.priority desc, pts.name asc",
                :select => "pts.*",
                :joins => "pts, property_classes pcs",
                :conditions => "property_class_id = pcs.id and " +

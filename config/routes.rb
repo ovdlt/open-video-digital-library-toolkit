@@ -65,6 +65,10 @@ ActionController::Routing::Routes.draw do |map|
                                         :action => "featured_order",
                                         :conditions => { :method => :post }
 
+  map.connect "/library/property_type/order", :controller => "library",
+                                              :action => "property_type_order",
+                                              :conditions => { :method => :post }
+
   map.resources :collections,
                 :collection => { :collections => :get,
                                  :playlists => :get,

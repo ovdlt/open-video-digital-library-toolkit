@@ -32,19 +32,41 @@ module Import
 
       begin
         csv = FasterCSV.new file
-        
+
         headers = []
 
         csv.each do |row|
 
           header = true
+          non_header = true
 
           next if row.compact.empty?
 
           row.each do |value|
-            if !value.nil? and !@map.has_key? value
-              header = false
+            if !value.nil?
+              value.sub! /^\s+/, ""
+              value.sub! /\s+$/, ""
+              if !@map.has_key? value
+                header = false
+              else
+                non_header = false
+              end
             end
+          end
+
+          if !header and !non_header
+            row.each do |value|
+              if !value.nil?
+                value.sub! /^\s+/, ""
+                value.sub! /\s+$/, ""
+                if !@map.has_key? value
+                  puts "#{value}: not header"
+                else
+                  puts "#{value}: header"
+                end
+              end
+            end
+            raise "row has mixture of header and non-header values"
           end
 
           if header

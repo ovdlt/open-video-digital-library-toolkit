@@ -1,4 +1,5 @@
 videoid: local_id
+locationurl: nil
 title: title
 description: abstract
 digitizationdate: Digitization
