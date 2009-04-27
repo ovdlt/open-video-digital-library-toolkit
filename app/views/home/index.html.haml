@@ -23,6 +23,7 @@
         - first = true
         - featured_videos.each do |video|
           .video
+            .hidden.id= video.id
             %div{:class =>(first ? "first" : "other")}
               - first = false
               .image
@@ -52,6 +53,7 @@
         #featured_collections
           - featured_collections.each do |collection|
             %div{ :class => 'collection', :id => "collection_#{collection.id}" }
+              .hidden.id= collection.id
               .title
                 = link_to h(collection.title), collection_path( collection )
               .videos

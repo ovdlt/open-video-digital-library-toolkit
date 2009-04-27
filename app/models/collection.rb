@@ -23,8 +23,13 @@ class Collection < ActiveRecord::Base
 
   before_save do |collection|
     if collection.featured and collection.changed.include?( "featured" ) and !collection.changed.include?( "featured_priority" )
-      collection.featured_priority = Collection.maximum("featured_priority");
+      collection.featured_priority = Collection.maximum("featured_priority") + 1;
     end
+  end
+
+  def self.featured
+    find :all, :conditions => "featured = true",
+               :order => "featured_priority desc"
   end
 
   def size public
@@ -62,6 +67,20 @@ class Collection < ActiveRecord::Base
     v
   end
 
+ def trivial_save
+   saved = false
+   class << self
+     def record_timestamps; false; end
+   end
+   p "don't update"
+   saved = save
+   p "update"
+   class << self
+     remove_method :record_timestamps
+   end
+   saved
+  end
+
   private
 
   before_save do |collection|
@@ -76,6 +95,15 @@ class Collection < ActiveRecord::Base
 
   def assoc_select public
     public ? :public_videos : :all_videos
+  end
+
+  def self.featured_order= ids
+    objects = self.find ids
+    priorities = objects.map(&:featured_priority)
+    priorities = priorities.sort.reverse
+    objects.each { |o| o.featured_priority = priorities.shift }
+    # this should be transactional, but ...
+    objects.each { |o| o.save! }
   end
 
 end

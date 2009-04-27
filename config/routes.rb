@@ -58,11 +58,21 @@ ActionController::Routing::Routes.draw do |map|
                                  :password => :put,
                                }
 
+  map.connect "/collections/featured/order", :controller => "collections",
+                                              :action => "featured_order",
+                                              :conditions => { :method => :post }
+
+  map.connect "/videos/featured/order", :controller => "videos",
+                                        :action => "featured_order",
+                                        :conditions => { :method => :post }
+
   map.resources :collections,
                 :collection => { :collections => :get,
                                  :playlists => :get,
                                } do |collections|
+
     collections.resources :bookmarks
+
   end
 
   map.resources :sessions

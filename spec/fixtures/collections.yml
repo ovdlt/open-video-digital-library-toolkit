@@ -6,6 +6,8 @@ id_1:
   title: Real Videos
   description: A collection of real (non-synthetic) videos
   public: true
+  featured: true
+  featured_priority: 1
 
 id_2:
   id: 2
@@ -13,6 +15,8 @@ id_2:
   title: I like real videos
   description: "The only videos I like because the rest aren't real"
   public: true
+  featured: true
+  featured_priority: 2
 
 id_3:
   id: 3
@@ -20,6 +24,8 @@ id_3:
   title: I like real videos but I hide them
   description: "The only videos I like because the rest aren't real"
   public: false
+  featured: true
+  featured_priority: 3
 
 id_4:
   id: 4
@@ -27,6 +33,8 @@ id_4:
   title:  <%= Faker::Lorem.words(8).map(&:capitalize).join(" ") %>
   description: <%= Faker::Lorem.sentences(3).join(" ") %>
   public: true
+  featured: true
+  featured_priority: 4
 
 id_5:
   id: 5

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 module ActiveRecord
   # AutosaveAssociation is a module that takes care of automatically saving
   # your associations when the parent is saved. In addition to saving, it

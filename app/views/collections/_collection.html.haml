@@ -17,8 +17,8 @@
       .featured
         - form_for collection, :html => { :id => nil } do |form|
           %label
-            = form.check_box :featured
-            - if !collection.featured?
+            = form.check_box :featured, :id => gen_id
+            - if !collection.featured? 
               Feature this collection
             - else
               This collection featured on

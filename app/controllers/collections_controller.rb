@@ -1,13 +1,22 @@
 class CollectionsController < ApplicationController
 
   before_filter :find_and_verify_public_or_user,
-                :except => [ :collections, :playlists, :new, :create ]
+                :except => [ :collections,
+                             :playlists,
+                             :new,
+                             :create, 
+                             :featured_order,
+                             :edit,
+                             :update,
+                             :desroy ]
 
   before_filter :find_and_verify_user, :only => [ :edit,
                                                   :update,
                                                   :desroy ]
 
-  before_filter :login, :only => [ :new, :create ]
+  before_filter :login, :only => [ :new, :create, :featured_order ]
+
+  require_role [ :admin ], :for => [ :featured_order ]
 
   def new
     @collection = Collection.new
@@ -44,7 +53,15 @@ class CollectionsController < ApplicationController
     if current_user.special_collection? @collection
       params["collection"] and params["collection"].delete "title"
     end
-    if @collection.update_attributes params["collection"]
+
+    @collection.attributes = params["collection"]
+
+    if @collection.changed == [ "featured" ]
+      saved = @collection.trivial_save
+    else
+      saved = @collection.save
+    end
+    if saved
       redirect_to :back
     else
       render :template => "collections/form"
@@ -79,6 +96,12 @@ class CollectionsController < ApplicationController
     render :action => :index
   end
 
+  def featured_order
+    ids = params["order"].split(/[,\s]+/).map(&:to_i)
+    Collection.featured_order = ids
+    render_nothing
+  end
+
   private
 
   def find_and_verify_public_or_user
@@ -91,7 +114,7 @@ class CollectionsController < ApplicationController
     end
     
     @collection.views += 1
-    @collection.save
+    @collection.trivial_save
 
     @videos = @collection.send(videos_method).paginate :page => params[:page],
                                                        :per_page => 20
