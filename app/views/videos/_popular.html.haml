@@ -18,13 +18,12 @@
               .description= h video.sentence
       .carousel_pager
         - carousel_pages.times do |n|
-          %a{ :href => "#" }
-            %div{ :class => "carousel_page_#{n}", :page => n }
+          %div{ :class => "carousel_page_#{n}" }
   .clear
 :javascript
   function popular_carousel_initCallback( popular_carousel ) {
     $("#popular_carousel .carousel_pager div").bind("click", function() { 
-      popular_carousel.scroll( $.jcarousel.intval( $(this).attr("page")*#{carousel_items_per_page}+1 ) );
+      popular_carousel.scroll( $.jcarousel.intval( $(this).attr("class").replace(/carousel_page_/,'')*#{carousel_items_per_page}+1 ) );
       return false;
     } );
   }

@@ -6,7 +6,6 @@
     .axis
       .title
         %a{ :href => "#" }
-          .icon
           = type.name
       .axis_content
         %ul
@@ -29,6 +28,7 @@
       = link_to "More Categories &raquo;", videos_path
 
 :javascript
+  $(".axes .axis .title a").prepend('<span class="icon"><\/span> ');
   $(".axes").accordion( { 
     header: ".title",
     autoHeight: false
