@@ -13,7 +13,14 @@ class DescriptorValue < ActiveRecord::Base
     end
   end
 
+  before_save do |dv|
+    if !dv.attributes.include? "priority"
+      dv.priority = DescriptorValue.maximum("priority")+1;
+    end
+  end
+
   belongs_to :property_type
+  default_scope :order => "priority desc, text asc"
 
   has_many :properties,
            :through => :property_type do
@@ -53,6 +60,17 @@ class DescriptorValue < ActiveRecord::Base
                       "videos.id = ps.video_id and " \
                       "ps.property_type_id = #{property_type_id} and " \
                       "ps.integer_value = #{id} #{public}"
+  end
+
+  def self.browse_order= ids
+    objects = {}
+    self.find( ids ).each { |object| objects[object.id] = object }
+    objects = ids.map { |id| objects[id] }
+    priorities = objects.map(&:priority)
+    priorities = priorities.sort.reverse
+    objects.each { |o| o.priority = priorities.shift }
+    # this should be transactional, but ...
+    objects.each { |o| o.save! }
   end
 
 end

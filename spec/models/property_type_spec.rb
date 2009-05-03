@@ -98,21 +98,21 @@ describe PropertyType do
     it "should return a list of descriptors for descriptor types" do
       pt = PropertyType.find_by_name "Genre"
       pt.values.map(&:text).
-        should ==  [ "Corporate", "Documentary", "Ephemeral",
-                     "Historical", "Lecture" ]
+        should ==  [ "Corporate", "Documentary",
+                     "Historical",  "Ephemeral", "Lecture" ]
     end
 
     it "should obey offset and limit" do
       pt = PropertyType.find_by_name "Genre"
       pt.values( :offset => 1, :limit => 2 ).map(&:text).
-        should ==  [ "Documentary", "Ephemeral" ]
+        should ==  [ "Documentary", "Historical" ]
     end
 
     it "should obey order" do
       pt = PropertyType.find_by_name "Genre"
       pt.values( :order => "priority asc" ).map(&:text).
-        should ==  [ "Documentary", "Corporate", "Historical",
-                     "Ephemeral", "Lecture" ]
+        should ==  [ "Corporate", "Documentary", "Historical",
+                     "Ephemeral", "Lecture" ].reverse
     end
 
   end
@@ -144,8 +144,8 @@ describe PropertyType do
     it "should return the descriptor_values for a property" do
       pt = PropertyType.find_by_name "Genre"
       pt.descriptor_values.map(&:text).
-        should == [ "Corporate", "Documentary", "Ephemeral",
-                    "Historical", "Lecture" ]
+        should == [ "Corporate", "Documentary",
+                    "Historical",  "Ephemeral", "Lecture" ]
     end
 
   end

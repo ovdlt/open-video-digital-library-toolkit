@@ -886,4 +886,35 @@ describe LibraryController do
 
   end
 
+  describe "dv pri order" do
+
+    it "should require login" do
+      put :descriptor_value_order, :order => "1 2, 3"
+      response.should redirect_to login_path
+    end
+
+    it "should not allow user" do
+      login_as_user
+      put :descriptor_value_order, :order => "1 2, 3"
+      response.should be_missing
+    end
+
+    it "should not allow cataloger" do
+      login_as_cataloger
+      put :descriptor_value_order, :order => "1 2, 3"
+      response.should be_missing
+    end
+
+    it "should reorder the list" do
+      login_as_admin
+      PropertyType.find(38).values.map(&:id).should == [ 2, 1, 3, 4, 5 ]
+      
+      put :descriptor_value_order, :order => "5, 4, 3, 2, 1"
+      response.should be_success
+
+      PropertyType.find(38).values.map(&:id).should == [ 5, 4, 3, 2, 1 ]
+    end
+
+  end
+
 end

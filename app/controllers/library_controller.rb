@@ -254,6 +254,12 @@ class LibraryController < ApplicationController
     render_nothing
   end
 
+  def descriptor_value_order
+    ids = params["order"].split(/[,\s]+/).map(&:to_i)
+    DescriptorValue.browse_order = ids
+    render_nothing
+  end
+
   private
 
   def parameters

@@ -69,6 +69,10 @@ ActionController::Routing::Routes.draw do |map|
                                               :action => "property_type_order",
                                               :conditions => { :method => :post }
 
+  map.connect "/library/descriptor_value/order", :controller => "library",
+                                                 :action => "descriptor_value_order",
+                                                 :conditions => { :method => :post }
+
   map.resources :collections,
                 :collection => { :collections => :get,
                                  :playlists => :get,
