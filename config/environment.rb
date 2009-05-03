@@ -98,7 +98,6 @@ ActionView::Helpers::AssetTagHelper.
 
 ActionView::Base.field_error_proc = Proc.new do |html_tag, instance|
   error_class = "fieldWithErrors"
-  p "?", html_tag
   if html_tag =~ /<(input|textarea|select)[^>]+class=/
     class_attribute = html_tag =~ /class=['"]/
     html_tag.insert(class_attribute + 7, "#{error_class} ")
@@ -116,4 +115,4 @@ ActiveSupport::Inflector.inflections do |inflect|
   inflect.irregular 'criterion', 'criteria'
 end
 
-ActionView::Base.default_form_builder = OvdltFormBuilder
+# ActionView::Base.default_form_builder = OvdltFormBuilder

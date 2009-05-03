@@ -66,7 +66,10 @@
                     .text= link_to h(my), my_path
                     .flag{:class => ( MyController === controller ? "on" : "off")}
           .search
-            - form_for Search.new, :url => videos_path, :html => { :method => :get } do |form|
+            - form_for Search.new, |
+                      :url => videos_path, |
+                      :html => { :method => :get }, |
+                      :builder => OvdltFormBuilder do |form| |
               = form.criterion :text, :size => 40, :id => nil
               = image_submit_tag "mag.png"
           .clear
