@@ -835,4 +835,55 @@ describe LibraryController do
 
   end
 
+  describe "pt pri order" do
+
+    it "should require login" do
+      put :property_type_order, :order => "1 2, 3"
+      response.should redirect_to login_path
+    end
+
+    it "should not allow user" do
+      login_as_user
+      put :property_type_order, :order => "1 2, 3"
+      response.should be_missing
+    end
+
+    it "should not allow cataloger" do
+      login_as_cataloger
+      put :property_type_order, :order => "1 2, 3"
+      response.should be_missing
+    end
+
+    it "should reorder the list" do
+      login_as_admin
+      PropertyType.browse.map(&:id).should == [ 38, 39, 42, 40 ]
+      
+      put :property_type_order, :order => "39, 42, 40, 38"
+      response.should be_success
+
+      PropertyType.browse.map(&:id).should == [ 39, 42, 40, 38 ]
+    end
+
+    it "should handle multiple reorders" do
+      login_as_admin
+      PropertyType.browse.map(&:id).should == [ 38, 39, 42, 40 ]
+      
+      put :property_type_order, :order => "39, 42, 40, 38"
+      response.should be_success
+
+      PropertyType.browse.map(&:id).should == [ 39, 42, 40, 38 ]
+
+      put :property_type_order, :order => "40, 42"
+      response.should be_success
+
+      PropertyType.browse.map(&:id).should == [ 39, 40, 42, 38 ]
+
+      put :property_type_order, :order => "38, 39"
+      response.should be_success
+
+      PropertyType.browse.map(&:id).should == [ 38, 40, 42, 39 ] 
+    end
+
+  end
+
 end

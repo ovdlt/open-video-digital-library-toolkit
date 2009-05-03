@@ -129,4 +129,15 @@ class PropertyType < ActiveRecord::Base
     object_id
   end
 
+  def self.browse_order= ids
+    objects = {}
+    self.find( ids ).each { |object| objects[object.id] = object }
+    objects = ids.map { |id| objects[id] }
+    priorities = objects.map(&:priority)
+    priorities = priorities.sort.reverse
+    objects.each { |o| o.priority = priorities.shift }
+    # this should be transactional, but ...
+    objects.each { |o| o.save! }
+  end
+
 end

@@ -162,5 +162,45 @@ describe PropertyType do
 
   end
 
+  describe "order" do
+
+    it "should return the collections" do
+      PropertyType.browse.map(&:id).should == [ 38, 39, 42, 40 ]
+    end
+
+    it "should reorder the whole collection" do
+      PropertyType.browse.map(&:id).should == [ 38, 39, 42, 40 ]
+      PropertyType.browse_order = [ 39, 42, 40, 38 ] 
+      PropertyType.browse.map(&:id).should == [ 39, 42, 40, 38 ] 
+    end
+
+    it "should reorder the beginning of the collection" do
+      PropertyType.browse.map(&:id).should == [ 38, 39, 42, 40 ]
+      PropertyType.browse_order = [ 39, 38 ]
+      PropertyType.browse.map(&:id).should ==  [ 39, 38, 42, 40 ]
+    end
+
+    it "should reorder the end of the collection" do
+      PropertyType.browse.map(&:id).should == [ 38, 39, 42, 40 ]
+      PropertyType.browse_order = [ 40, 42 ]
+      PropertyType.browse.map(&:id).should == [ 38, 39, 40, 42 ]
+    end
+
+    it "should reorder the middle of the collection" do
+      PropertyType.browse.map(&:id).should == [ 38, 39, 42, 40 ]
+      PropertyType.browse_order = [ 42, 39 ]
+      PropertyType.browse.map(&:id).should == [ 38, 42, 39, 40 ]
+    end
+
+    it "should reorder aribtrarilty collection" do
+      PropertyType.browse.map(&:id).should == [ 38, 39, 42, 40 ]
+      PropertyType.browse_order =  [ 40, 38 ]
+      PropertyType.browse.map(&:id).should == [ 40, 39, 42, 38 ]
+    end
+
+  end
+
+
+
 end
 
