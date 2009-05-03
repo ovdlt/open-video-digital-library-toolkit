@@ -19,6 +19,10 @@ class DescriptorValue < ActiveRecord::Base
     end
   end
 
+  def to_s
+    text
+  end
+
   belongs_to :property_type
   default_scope :order => "priority desc, text asc"
 
