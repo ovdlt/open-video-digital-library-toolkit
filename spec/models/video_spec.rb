@@ -409,7 +409,7 @@ describe Video do
 
     it "should reorder the whole video" do
       Video.featured.map(&:id).should == [ 4, 3, 2, 1 ]
-      Video.featured_order =  [ 4, 3, 2, 1 ]
+      Video.featured_order =  [ 1, 2, 3, 4 ]
       Video.featured.map(&:id).should == [ 1, 2, 3, 4 ]
     end
 
