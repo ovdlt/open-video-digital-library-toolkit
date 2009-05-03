@@ -20,7 +20,7 @@ describe Collection do
 
     it "should reorder the whole collection" do
       Collection.featured.map(&:id).should == [ 4, 3, 2, 1 ]
-      Collection.featured_order =  [ 4, 3, 2, 1 ]
+      Collection.featured_order =  [ 1, 2, 3, 4 ]
       Collection.featured.map(&:id).should == [ 1, 2, 3, 4 ]
     end
 

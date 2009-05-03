@@ -98,7 +98,9 @@ class Collection < ActiveRecord::Base
   end
 
   def self.featured_order= ids
-    objects = self.find ids
+    objects = {}
+    self.find( ids ).each { |object| objects[object.id] = object }
+    objects = ids.map { |id| objects[id] }
     priorities = objects.map(&:featured_priority)
     priorities = priorities.sort.reverse
     objects.each { |o| o.featured_priority = priorities.shift }
@@ -107,4 +109,5 @@ class Collection < ActiveRecord::Base
   end
 
 end
+
 
