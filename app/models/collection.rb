@@ -6,6 +6,16 @@ class Collection < ActiveRecord::Base
 
   has_many :bookmarks, :dependent => :destroy
 
+  has_many :all_bookmarks, :class_name => "Bookmark",
+                           :order => "priority desc, bookmarks.created_at desc",
+                           :include => :video,
+                           :conditions => "bookmarks.video_id = videos.id"
+
+  has_many :public_bookmarks, :class_name => "Bookmark",
+                              :order => "priority desc, bookmarks.created_at desc",
+                              :include => :video,
+                              :conditions => "bookmarks.video_id = videos.id and videos.public"
+
   has_many :public_videos, :through => :bookmarks,
                            :source => :video,
                            :order => "bookmarks.priority desc, bookmarks.created_at desc",

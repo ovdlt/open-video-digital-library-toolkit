@@ -82,6 +82,8 @@ ActionController::Routing::Routes.draw do |map|
 
   end
 
+  map.resources :bookmarks, :collection => { :order => :put }
+
   map.resources :sessions
 
   map.connect 'home/:action', :controller => "home"

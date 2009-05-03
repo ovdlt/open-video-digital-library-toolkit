@@ -1,5 +1,7 @@
 class BookmarksController < ApplicationController
 
+  before_filter :find_and_verify_user, :only => [ :update ]
+
   def create
     if  !(params[:video_id]) or
         !(video = Video.find_by_id params[:video_id]) or
@@ -36,6 +38,40 @@ class BookmarksController < ApplicationController
 
     redirect_to :back
 
+  end
+
+  def update
+    @bookmark.attributes = params[:bookmark]
+    @bookmark.save!
+    redirect_to :back
+  end
+  
+  def order
+    if !current_user
+      render_missing
+      return
+    end
+
+    ids = params["order"].split(/[,\s]+/).map(&:to_i)
+
+    if Bookmark.set_order current_user.id, ids
+      render_nothing
+    else
+      render_missing
+    end
+
+  end
+
+  private
+
+  def find_and_verify_user
+    if !params[:id] or
+        !(@bookmark = Bookmark.find_by_id params[:id]) or
+        (!current_user or ( @bookmark.user.id != current_user.id and
+                            !current_user.has_role?([:admin,:cataloger]) ))
+      render_missing
+      return
+    end
   end
 
 end

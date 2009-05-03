@@ -30,6 +30,7 @@
       .clear
 
       = submit_tag @collection.new_record? ? "Create" : "Save" 
+      = submit_tag "Done"
 
     .menu
       .attribute
@@ -47,4 +48,8 @@
 
     .clear
 
-= render :partial => "collections/videos", :object => @collection.send(videos_method)
+= render :partial => "collections/videos", |
+        :object => @collection.send(bookmarks_method), |
+        :locals => { :collection => collection } |
+
+

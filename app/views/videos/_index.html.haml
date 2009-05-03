@@ -2,7 +2,7 @@
 .videos.list.partial
 
   .pagination_info
-    = page_entries_info videos
+    = page_entries_info videos, :entry_name => "video"
 
   - if videos.size > 0
     .navigate

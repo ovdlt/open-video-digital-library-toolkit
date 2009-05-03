@@ -62,7 +62,11 @@ class CollectionsController < ApplicationController
       saved = @collection.save
     end
     if saved
-      redirect_to :back
+      if params[:commit] == "Done"
+        redirect_to collection_path( @collection )
+      else
+        redirect_to :back
+      end
     else
       render :template => "collections/form"
     end
@@ -116,8 +120,8 @@ class CollectionsController < ApplicationController
     @collection.views += 1
     @collection.trivial_save
 
-    @videos = @collection.send(videos_method).paginate :page => params[:page],
-                                                       :per_page => 20
+    @bookmarks = @collection.send(bookmarks_method).paginate :page => params[:page],
+                                                             :per_page => 20
   end
 
   def find_and_verify_user
