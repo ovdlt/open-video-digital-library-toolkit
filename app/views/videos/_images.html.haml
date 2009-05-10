@@ -1,0 +1,30 @@
+- property_type ||= nil
+- srand Time.parse("0:0").to_i
+- shown = {}
+- if property_type
+  - collection = [ property_type ]
+- else
+  - collection = PropertyType.browse.to_a
+.axis
+  - index = 0
+  - (0..3).each do |row|
+    .clear
+    - type = collection[ row % collection.size ]
+    - index = 0 if collection.size > 1
+    - values = type.values()
+    - (0..4).each do |col|
+      - descriptor = values[ index % values.size ]
+      - v = random( descriptor, shown )
+      - if v
+        .video
+          .image
+            %a{:href => video_path( v.id )}
+              - if poster_path = v.poster_path
+                %img{:src=>poster_path, :alt => "video #{v.id}"}
+          .clear
+          .text
+            .title{:class=>video_vis_class(v)}
+              = link_to h(v.title), video_path( v.id )
+            = link_to "more in #{h descriptor.text}", "#"
+      - index += 1
+- srand

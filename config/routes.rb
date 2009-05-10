@@ -27,7 +27,8 @@ ActionController::Routing::Routes.draw do |map|
     
   map.resources :videos, :collection => { :recent => :get,
                                           :cancel => :get,
-                                          :clear => :get },
+                                          :clear => :get,
+                                          :images => :get },
                          :member => { :download => :get,
                                       :reset => :get,
                          } do |videos|

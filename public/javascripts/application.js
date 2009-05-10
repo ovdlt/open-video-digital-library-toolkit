@@ -328,4 +328,15 @@ $(function(){
         return false;
     });
 
+    $("div#content div.axis").click(function(){
+        $("body").css("cursor","wait");
+        pt_id = $(this).attr("id").replace("property_type_","");
+        $.get(relative_url_root + "/videos/images?property_type=" + pt_id, function(data){
+            $("div#browse div.videos").fadeOut("fast",function(){
+                $("div#browse div.videos").html(data);
+                $("div#browse div.videos").fadeIn("fast");
+                $("body").css("cursor","default");
+            });
+        });
+    });
 });

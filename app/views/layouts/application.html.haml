@@ -9,6 +9,7 @@
     = javascript_include_tag :all, :cache => "cache/all"
     = javascript_tag "var AUTH_TOKEN = #{form_authenticity_token.inspect};" |
       if protect_against_forgery? |
+    = javascript_tag "var relative_url_root = '#{ActionController::Base.relative_url_root}'"
   %body
     #page
       #container
@@ -19,7 +20,7 @@
           .login_out
             - if logged_in?
               .button= link_to "Logout", logout_path
-            - else
+              - else
               .button= link_to "Login", login_path
             -#
               .user

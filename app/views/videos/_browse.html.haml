@@ -1,27 +1,7 @@
-.category
+#browse.category
   .title.block Browse Videos
   .content.block.last
     = render :partial => "shared/axes"
-    .videos
-      - srand Time.parse("0:0").to_i
-      - shown = {}
-      - PropertyType.browse do |type|
-        .axis
-          - i = 0
-          - type.values().each do |descriptor|
-            - v = random( descriptor, shown )
-            - if v
-              .video
-                .image
-                  %a{:href => video_path( v.id )}
-                    - if poster_path = v.poster_path
-                      %img{:src=>poster_path, :alt => "video #{v.id}"}
-                .clear
-                .text
-                  .title{:class=>video_vis_class(v)}
-                    = link_to h(v.title), video_path( v.id )
-                  = link_to "more in<br />#{h descriptor.text}", "#"
-              - i += 1
-              - break if i > 4
-      - srand
+    #videos.videos
+      = render :partial => "videos/images"
     .clear

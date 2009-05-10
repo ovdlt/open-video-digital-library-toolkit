@@ -9,7 +9,8 @@ class VideosController < ApplicationController
 
   require_role [ :admin, :cataloger], :for_all_except => [ :index,
                                                            :show,
-                                                           :recent ]
+                                                           :recent,
+                                                           :images ]
 
   require_role [ :admin ], :for => [ :featured_order ]
 
@@ -84,6 +85,15 @@ class VideosController < ApplicationController
       return
     end
     render :template => "videos/#{params[:style]}"
+  end
+
+  def images
+    @property_type =
+      params[:property_type] &&
+      PropertyType.find_by_id( params[:property_type] )
+    render_missing if !@property_type
+    render( :partial => "images",
+            :locals => { :property_type => @property_type } ) if @property_type
   end
 
   def search
