@@ -74,9 +74,14 @@ class CollectionsController < ApplicationController
 
   def collections
     user = User.find_by_login Library.collections_login;
+    per_page = 5
+    if params[:page] == "all"
+      params[:page] = 1
+      per_page = 9999
+    end
     @collections =
       Collection.paginate :page => params[:page],
-                           :per_page => 5,
+                           :per_page => per_page,
                            :conditions => [ "user_id = ? and public is true",
                                             user ]
     @title = Library.collections_title
@@ -88,9 +93,14 @@ class CollectionsController < ApplicationController
 
   def playlists
     user = User.find_by_login Library.collections_login;
+    per_page = 5
+    if params[:page] == "all"
+      params[:page] = 1
+      per_page = 9999
+    end
     @collections =
       Collection.paginate :page => params[:page],
-                           :per_page => 5,
+                           :per_page => per_page,
                            :conditions => [ "user_id <> ? and public is true",
                                             user ]
     @title = Library.playlists_title
@@ -120,8 +130,14 @@ class CollectionsController < ApplicationController
     @collection.views += 1
     @collection.trivial_save
 
+    per_page = 5
+    if params[:page] == "all"
+      params[:page] = 1
+      per_page = 9999
+    end
+
     @bookmarks = @collection.send(bookmarks_method).paginate :page => params[:page],
-                                                             :per_page => 20
+                                                             :per_page => per_page
   end
 
   def find_and_verify_user

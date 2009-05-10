@@ -16,7 +16,6 @@ module ActiveSupport #:nodoc:
         end
 
         def to_date
-          p "smp", self
           ::Date.new(*::Date._parse(self, false).values_at(:year, :mon, :mday))
         end
 

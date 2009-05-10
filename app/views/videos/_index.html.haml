@@ -6,6 +6,9 @@
 
   - if videos.size > 0
     .navigate
+      - if @collection and WillPaginate::ViewHelpers.total_pages_for_collection( videos ) > 1
+        .show_all
+          = link_to "show all", collection_path( @collection, :page => "all" )
       - [ :bg_thumbs, |
           :text_only, |
           :sm_thumbs, |

@@ -2,8 +2,14 @@
 - collections = index
 .collections.index.partial
 
-  .title= title
-
+  .title
+    - if WillPaginate::ViewHelpers.total_pages_for_collection( collections ) > 1
+      .show_all
+        = link_to "show all", |
+          url_for( :controller => request.path_parameters['controller'], |
+                   :action => request.path_parameters['action'], |
+                   :page => "all" ) |
+    = title
   .contents
 
     - if subtitle
