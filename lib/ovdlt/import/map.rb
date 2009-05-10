@@ -17,10 +17,21 @@ module Import
     end
 
     def set object, field, value
-      if object.attributes.has_key? field
-        object[field] = value
+      if Array === value
+        values = value
+        values.each do |value|
+          if object.attributes.has_key? field
+            object[field] << value
+          else
+            ( object.send field.to_sym ).send :"<<", value
+          end
+        end
       else
-        object.send "#{field}=".to_sym, value
+        if object.attributes.has_key? field
+          object[field] = value
+        else
+          object.send "#{field}=".to_sym, value
+        end
       end
     end
 
@@ -88,7 +99,9 @@ module Import
                   case header
                   when String
                     if header =~ /^[A-Z]/
-                      video.properties << (p = Property.build( header, value ))
+                      value.split(/[\s;]+/).each do |v|
+                        video.properties << (p = Property.build( header, v ))
+                      end
                     elsif header != "nil"
                       set video, header, value
                     end
@@ -98,30 +111,33 @@ module Import
                       range = header.values.first
                       if key =~ /^[a-z]/
                         case range
+                        when String
+                          set video, key, Object.const_get(range).map(value)
                         when Hash
                           if range.has_key? value
                             set video, key, range[value]
                           else
-                            pp range
                             raise "can't map #{value} for #{key}"
                           end
                         when Proc;
                           set video, key, range.call( value )
                         else
-                          raise "hell range #{range.class} #{range}"
+                          raise "cannot map range #{range.class} #{range}"
                         end
                       elsif key =~ /^[A-Z]/
-                        case range
-                        when String;
-                        when Hash;
-                          if range.has_key? value
-                            value = range[value]
-                          else
-                            raise "can't map #{value} for #{key}"
+                        value.split(/[\s;]+/).each do |v|
+                          case range
+                          when String;
+                          when Hash;
+                            if range.has_key? v
+                              v = range[v]
+                            else
+                              raise "can't map #{v} for #{key}"
+                            end
+                          else raise "bad range: #{range} (for #{key})"
                           end
-                        else raise "bad range: #{range} (for #{key})"
+                          video.properties << (p = Property.build( key, v ))
                         end
-                        video.properties << (p = Property.build( key, value ))
                       else
                         raise "hell #{key}"
                       end

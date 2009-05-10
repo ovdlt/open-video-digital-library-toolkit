@@ -13,18 +13,7 @@ verified?:
     "No": false
 timestamp: nil
 keywords:
-  tags: !!Proc >
-    do |tags|
-      tags.sub! /^\s+/, ""
-      tags.sub! /\s+$/, ""
-      tags.gsub! /\s*;\s*/, ";"
-      tags.gsub! /\s+/, "_"
-      tags = tags.split(';').uniq
-      tags = tags.map do |tag|
-        Tag.find_by_text( tag ) or Tag.new( :text => tag )
-      end
-      tags
-    end
+  tags: Tag
 posterframe: nil
 duration: duration
 restricted?: nil
@@ -52,7 +41,15 @@ genrePrimaryID:
     "1": Documentary
     "2": Corporate
     "3": Historical
-genreSecondaryID: nil
+    "4": Ephemeral
+    "5": Lecture
+genreSecondaryID:
+  Genre:
+    "1": Documentary
+    "2": Corporate
+    "3": Historical
+    "4": Ephemeral
+    "5": Lecture
 RightsInformationID:
   Rights Statement:
     "1": All Rights Reserved
