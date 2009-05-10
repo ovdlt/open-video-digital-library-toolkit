@@ -301,38 +301,20 @@ class Video < ActiveRecord::Base
         path = attributes["poster_path"]
         if !path
           paths = assets.map(&:relative_path)
-          paths = paths.map do |path|
-            Dir.glob("#{Asset::SURROGATE_DIR}/#{path}/stills/*_poster*")
+          paths = paths.map do |p|
+            Dir.glob("#{Asset::SURROGATE_DIR}/#{p}/stills/*_poster*")
           end
           paths.flatten!
           if paths.size > 0
             path = paths[0]
           end
+        end
         if path
           path =
             ( ActionController::Base.relative_url_root or "" ) +
             path[Asset::SURROGATE_PREFIX.length,path.length]
         end
-      end
-      path
-    end
-  end
-
-  def _poster_path
-    @poster_path ||=
-      begin
-        paths = assets.map(&:relative_path)
-        paths = paths.map do |path|
-          Dir.glob("#{Asset::SURROGATE_DIR}/#{path}/stills/*_poster*")
-        end
-        paths.flatten!
-        if paths.size > 0
-          path = paths[0]
-          ( ActionController::Base.relative_url_root or "" ) +
-            path[Asset::SURROGATE_PREFIX.length,path.length]
-        else
-          nil
-        end
+        path
       end
   end
 
