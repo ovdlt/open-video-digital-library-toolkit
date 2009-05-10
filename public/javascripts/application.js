@@ -339,4 +339,11 @@ $(function(){
             });
         });
     });
+
+    $("div.poster.check").css("cursor","pointer");
+    $("div.poster.check").click(function(){
+        $("form",this).submit();
+    });
+
 });
+

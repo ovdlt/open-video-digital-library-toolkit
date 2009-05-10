@@ -298,6 +298,29 @@ class Video < ActiveRecord::Base
   def poster_path
     @poster_path ||=
       begin
+        path = attributes["poster_path"]
+        if !path
+          paths = assets.map(&:relative_path)
+          paths = paths.map do |path|
+            Dir.glob("#{Asset::SURROGATE_DIR}/#{path}/stills/*_poster*")
+          end
+          paths.flatten!
+          if paths.size > 0
+            path = paths[0]
+          end
+        if path
+          path =
+            ( ActionController::Base.relative_url_root or "" ) +
+            path[Asset::SURROGATE_PREFIX.length,path.length]
+        end
+      end
+      path
+    end
+  end
+
+  def _poster_path
+    @poster_path ||=
+      begin
         paths = assets.map(&:relative_path)
         paths = paths.map do |path|
           Dir.glob("#{Asset::SURROGATE_DIR}/#{path}/stills/*_poster*")

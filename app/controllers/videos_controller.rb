@@ -397,11 +397,15 @@ class VideosController < ApplicationController
             redirect_to videos_path
           end
         else
-          flash[:notice] = "#{@video.title} saved"
-          if params["submit"] == "save"
-            redirect_to edit_video_path( @video )
+          if params["video"] && params["video"]["poster_path"]
+            redirect_to video_path(@video, :details_format => "storyboard")
           else
-            redirect_to video_path( @video )
+            flash[:notice] = "#{@video.title} saved"
+            if params["submit"] == "save"
+              redirect_to edit_video_path( @video )
+            else
+              redirect_to video_path( @video )
+            end
           end
         end
       else
