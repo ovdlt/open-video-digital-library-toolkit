@@ -100,7 +100,15 @@ module Import
                   when String
                     if header =~ /^[A-Z]/
                       value.split(/[\s;]+/).each do |v|
-                        video.properties << (p = Property.build( header, v ))
+                        if header == 'Asset'
+                          asset = Asset.find_by_uri v
+                          if asset
+                            asset.delete
+                          end
+                          video.assets << Asset.new( :uri => v )
+                        else
+                          video.properties << (p = Property.build( header, v ))
+                        end
                       end
                     elsif header != "nil"
                       set video, header, value

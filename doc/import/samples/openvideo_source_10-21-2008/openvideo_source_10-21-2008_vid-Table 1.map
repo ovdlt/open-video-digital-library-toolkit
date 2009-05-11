@@ -1,4 +1,5 @@
 videoid: local_id
+asset: Asset
 locationurl: nil
 title: title
 description: abstract
