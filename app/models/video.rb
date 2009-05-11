@@ -308,11 +308,11 @@ class Video < ActiveRecord::Base
           if paths.size > 0
             path = paths[0]
           end
-        end
-        if path
-          path =
-            ( ActionController::Base.relative_url_root or "" ) +
-            path[Asset::SURROGATE_PREFIX.length,path.length]
+          if path
+            path =
+              ( ActionController::Base.relative_url_root or "" ) +
+              path[Asset::SURROGATE_PREFIX.length,path.length]
+          end
         end
         path
       end
