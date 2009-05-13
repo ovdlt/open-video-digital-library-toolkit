@@ -28,7 +28,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :videos, :collection => { :recent => :get,
                                           :popular => :get,
                                           :cancel => :get,
-                                          :clear => :get },
+                                          :clear => :get,
+                                          :images => :get },
                          :member => { :download => :get,
                                       :reset => :get,
                          } do |videos|
@@ -66,6 +67,14 @@ ActionController::Routing::Routes.draw do |map|
                                         :action => "featured_order",
                                         :conditions => { :method => :post }
 
+  map.connect "/library/property_type/order", :controller => "library",
+                                              :action => "property_type_order",
+                                              :conditions => { :method => :post }
+
+  map.connect "/library/descriptor_value/order", :controller => "library",
+                                                 :action => "descriptor_value_order",
+                                                 :conditions => { :method => :post }
+
   map.resources :collections,
                 :collection => { :collections => :get,
                                  :playlists => :get,
@@ -74,6 +83,8 @@ ActionController::Routing::Routes.draw do |map|
     collections.resources :bookmarks
 
   end
+
+  map.resources :bookmarks, :collection => { :order => :put }
 
   map.resources :sessions
 

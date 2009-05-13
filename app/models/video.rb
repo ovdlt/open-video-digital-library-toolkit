@@ -320,18 +320,23 @@ class Video < ActiveRecord::Base
   def poster_path
     @poster_path ||=
       begin
-        paths = assets.map(&:relative_path)
-        paths = paths.map do |path|
-          Dir.glob("#{Asset::SURROGATE_DIR}/#{path}/stills/*_poster*")
+        path = attributes["poster_path"]
+        if !path
+          paths = assets.map(&:relative_path)
+          paths = paths.map do |p|
+            Dir.glob("#{Asset::SURROGATE_DIR}/#{p}/stills/*_poster*")
+          end
+          paths.flatten!
+          if paths.size > 0
+            path = paths[0]
+          end
+          if path
+            path =
+              ( ActionController::Base.relative_url_root or "" ) +
+              path[Asset::SURROGATE_PREFIX.length,path.length]
+          end
         end
-        paths.flatten!
-        if paths.size > 0
-          path = paths[0]
-          ( ActionController::Base.relative_url_root or "" ) +
-            path[Asset::SURROGATE_PREFIX.length,path.length]
-        else
-          nil
-        end
+        path
       end
   end
 
@@ -509,7 +514,9 @@ class Video < ActiveRecord::Base
   end
 
   def self.featured_order= ids
-    objects = self.find ids
+    objects = {}
+    self.find( ids ).each { |object| objects[object.id] = object }
+    objects = ids.map { |id| objects[id] }
     priorities = objects.map(&:featured_priority)
     priorities = priorities.sort.reverse
     objects.each { |o| o.featured_priority = priorities.shift }

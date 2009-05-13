@@ -23,6 +23,10 @@ class RightsDetail < ActiveRecord::Base
     end
   end
 
+  def to_s
+    "#{license} #{statement}"
+  end
+
 end
 
 

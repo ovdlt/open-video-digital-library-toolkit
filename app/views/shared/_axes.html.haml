@@ -3,8 +3,9 @@
 .axes
   - axis_index = 1
   - PropertyType.browse do |type|
-    .axis
+    .axis{:id=>"property_type_#{type.id}"}
       .title
+        -# TODO fix this - div inside <a> not allowed
         %a{ :href => "#" }
           .icon
           = type.name
@@ -23,7 +24,7 @@
       - break
     - else
       - axis_index += 1
-   
+  
   - if browse
     .browse
       = link_to "More Categories &raquo;", videos_path

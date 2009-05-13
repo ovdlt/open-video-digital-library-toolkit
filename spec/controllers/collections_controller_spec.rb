@@ -26,7 +26,7 @@ describe CollectionsController do
       response.should be_missing
     end
 
-    it "should the list" do
+    it "should reorder the list" do
       login_as_admin
       Collection.featured.map(&:id).should == [ 4, 3, 2, 1 ]
       
@@ -34,6 +34,26 @@ describe CollectionsController do
       response.should be_success
 
       Collection.featured.map(&:id).should == [ 1, 2, 3, 4 ]
+    end
+
+    it "should handle multiple reorders" do
+      login_as_admin
+      Collection.featured.map(&:id).should == [ 4, 3, 2, 1 ]
+      
+      put :featured_order, :order => "1 2, 3  4"
+      response.should be_success
+
+      Collection.featured.map(&:id).should == [ 1, 2, 3, 4 ]
+
+      put :featured_order, :order => "3 2"
+      response.should be_success
+
+      Collection.featured.map(&:id).should == [ 1, 3, 2, 4 ]
+
+      put :featured_order, :order => "2 1 4 3"
+      response.should be_success
+
+      Collection.featured.map(&:id).should == [ 2, 1, 4, 3 ]
     end
 
   end

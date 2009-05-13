@@ -17,10 +17,21 @@ module Import
     end
 
     def set object, field, value
-      if object.attributes.has_key? field
-        object[field] = value
+      if Array === value
+        values = value
+        values.each do |value|
+          if object.attributes.has_key? field
+            object[field] << value
+          else
+            ( object.send field.to_sym ).send :"<<", value
+          end
+        end
       else
-        object.send "#{field}=".to_sym, value
+        if object.attributes.has_key? field
+          object[field] = value
+        else
+          object.send "#{field}=".to_sym, value
+        end
       end
     end
 
@@ -32,19 +43,41 @@ module Import
 
       begin
         csv = FasterCSV.new file
-        
+
         headers = []
 
         csv.each do |row|
 
           header = true
+          non_header = true
 
           next if row.compact.empty?
 
           row.each do |value|
-            if !value.nil? and !@map.has_key? value
-              header = false
+            if !value.nil?
+              value.sub! /^\s+/, ""
+              value.sub! /\s+$/, ""
+              if !@map.has_key? value
+                header = false
+              else
+                non_header = false
+              end
             end
+          end
+
+          if !header and !non_header
+            row.each do |value|
+              if !value.nil?
+                value.sub! /^\s+/, ""
+                value.sub! /\s+$/, ""
+                if !@map.has_key? value
+                  puts "#{value}: not header"
+                else
+                  puts "#{value}: header"
+                end
+              end
+            end
+            raise "row has mixture of header and non-header values"
           end
 
           if header
@@ -66,7 +99,17 @@ module Import
                   case header
                   when String
                     if header =~ /^[A-Z]/
-                      video.properties << (p = Property.build( header, value ))
+                      value.split(/[\s;]+/).each do |v|
+                        if header == 'Asset'
+                          asset = Asset.find_by_uri v
+                          if asset
+                            asset.delete
+                          end
+                          video.assets << Asset.new( :uri => v )
+                        else
+                          video.properties << (p = Property.build( header, v ))
+                        end
+                      end
                     elsif header != "nil"
                       set video, header, value
                     end
@@ -76,30 +119,33 @@ module Import
                       range = header.values.first
                       if key =~ /^[a-z]/
                         case range
+                        when String
+                          set video, key, Object.const_get(range).map(value)
                         when Hash
                           if range.has_key? value
                             set video, key, range[value]
                           else
-                            pp range
                             raise "can't map #{value} for #{key}"
                           end
                         when Proc;
                           set video, key, range.call( value )
                         else
-                          raise "hell range #{range.class} #{range}"
+                          raise "cannot map range #{range.class} #{range}"
                         end
                       elsif key =~ /^[A-Z]/
-                        case range
-                        when String;
-                        when Hash;
-                          if range.has_key? value
-                            value = range[value]
-                          else
-                            raise "can't map #{value} for #{key}"
+                        value.split(/[\s;]+/).each do |v|
+                          case range
+                          when String;
+                          when Hash;
+                            if range.has_key? v
+                              v = range[v]
+                            else
+                              raise "can't map #{v} for #{key}"
+                            end
+                          else raise "bad range: #{range} (for #{key})"
                           end
-                        else raise "bad range: #{range} (for #{key})"
+                          video.properties << (p = Property.build( key, v ))
                         end
-                        video.properties << (p = Property.build( key, value ))
                       else
                         raise "hell #{key}"
                       end

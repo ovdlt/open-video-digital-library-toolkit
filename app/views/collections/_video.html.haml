@@ -1,3 +1,5 @@
+- bookmark = video
+- video = bookmark.video
 .video
   .image
     %a{:href => video_path( video.id )}
@@ -6,7 +8,13 @@
     .title=h video.title
     - if !(date = video_created(video)).blank?
       .year= "(#{h date.year})"
-    .sentence=h video.sentence
+    - if current_user
+      - form_for bookmark do |f|
+        .sentence
+          = f.text_field :annotation, :size => 44, :id => "bookmark_#{bookmark.id}"
+          = f.submit "Save", :id => nil
+    - else
+      .sentence=h video.sentence
     .menu
       = link_to "View video details", video_path( video )
       &nbsp;&bull;&nbsp;

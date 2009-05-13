@@ -9,6 +9,7 @@
     = javascript_include_tag :all, :cache => "cache/all"
     = javascript_tag "var AUTH_TOKEN = #{form_authenticity_token.inspect};" |
       if protect_against_forgery? |
+    = javascript_tag "var relative_url_root = '#{ActionController::Base.relative_url_root}'"
   %body
     #page
       #container
@@ -68,7 +69,10 @@
                     .text= link_to h(my), my_path
                     .flag
           .search
-            - form_for Search.new, :url => videos_path, :html => { :method => :get } do |form|
+            - form_for Search.new, |
+                      :url => videos_path, |
+                      :html => { :method => :get }, |
+                      :builder => OvdltFormBuilder do |form| |
               = form.criterion :text, :size => 40, :id => nil
               = image_submit_tag "mag.png"
           .clear

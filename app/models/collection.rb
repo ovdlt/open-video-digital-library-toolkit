@@ -6,6 +6,16 @@ class Collection < ActiveRecord::Base
 
   has_many :bookmarks, :dependent => :destroy
 
+  has_many :all_bookmarks, :class_name => "Bookmark",
+                           :order => "priority desc, bookmarks.created_at desc",
+                           :include => :video,
+                           :conditions => "bookmarks.video_id = videos.id"
+
+  has_many :public_bookmarks, :class_name => "Bookmark",
+                              :order => "priority desc, bookmarks.created_at desc",
+                              :include => :video,
+                              :conditions => "bookmarks.video_id = videos.id and videos.public"
+
   has_many :public_videos, :through => :bookmarks,
                            :source => :video,
                            :order => "bookmarks.priority desc, bookmarks.created_at desc",
@@ -98,7 +108,9 @@ class Collection < ActiveRecord::Base
   end
 
   def self.featured_order= ids
-    objects = self.find ids
+    objects = {}
+    self.find( ids ).each { |object| objects[object.id] = object }
+    objects = ids.map { |id| objects[id] }
     priorities = objects.map(&:featured_priority)
     priorities = priorities.sort.reverse
     objects.each { |o| o.featured_priority = priorities.shift }
@@ -107,4 +119,5 @@ class Collection < ActiveRecord::Base
   end
 
 end
+
 

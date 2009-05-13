@@ -27,7 +27,8 @@
   .entry
     .title Refine Results
     - form_for @search, :url => videos_path, |
-                        :html => { :method => :get, :id => nil } do |form| |
+                        :html => { :method => :get, :id => nil }, |
+                        :builder => OvdltFormBuilder do |form| |
       %ul.refine
         %li
           = form.criterion :text, :size => 28

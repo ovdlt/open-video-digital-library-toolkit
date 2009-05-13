@@ -53,6 +53,10 @@ module LibraryHelper
       pt_id == "new_dt" ? "template_new_dv" : "new_dv"
     end
 
+    def browsable?
+      false
+    end
+
   end
 
   def dv_template property_type
@@ -66,6 +70,14 @@ module LibraryHelper
 
     def name
       nil
+    end
+
+    def browsable?
+      false
+    end
+
+    def browsable
+      false
     end
 
     def errors

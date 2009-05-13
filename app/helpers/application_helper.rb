@@ -307,6 +307,10 @@ EOS
     public_only? ? :public_videos : :all_videos
   end
 
+  def bookmarks_method
+    public_only? ? :public_bookmarks : :all_bookmarks
+  end
+
   def video_ids_method
     public_only? ? :public_video_ids : :all_video_ids
   end

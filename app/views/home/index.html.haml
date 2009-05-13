@@ -3,7 +3,10 @@
     = @library.video_count public_only?
     videos
     .form
-      - form_for Search.new, :url => videos_path, :html => { :method => :get, :id => nil } do |form|
+      - form_for Search.new, |
+                 :url => videos_path, |
+                 :html => { :method => :get, :id => nil }, |
+                 :builder => OvdltFormBuilder do |form| |
         %span.input
           = form.criterion :text, :size => 40, :id => nil
           = image_submit_tag "mag.png"
@@ -22,7 +25,7 @@
       .content
         - first = true
         - featured_videos.each do |video|
-          .video{ :id => "video_#{video.id}" }
+          .video{:id=>"video_#{video.id}"}
             %div{:class =>(first ? "first" : "other")}
               - first = false
               .image
@@ -49,6 +52,7 @@
             = link_to "All", collections_collections_path
             == [#{public_collections_count}]
           Collections
+
         #featured_collections
           - featured_collections.each do |collection|
             .collection{ :id => "collection_#{collection.id}" }

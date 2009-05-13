@@ -3,7 +3,7 @@ class CreatePropertyTypes < ActiveRecord::Migration
     create_table :property_types do |t|
       t.integer :property_class_id,     :null => false
       t.string  :name,                  :null => false
-      t.integer :priority,              :null => false, :default => 999
+      t.integer :priority,              :null => false, :default => 0
       t.boolean :browsable,             :null => false, :default => false
       t.timestamps
     end
