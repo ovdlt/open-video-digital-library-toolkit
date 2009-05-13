@@ -31,6 +31,7 @@ Rails::Initializer.run do |config|
   config.gem "fastercsv", :version => "1.4.0"
   config.gem "haml", :version => "2.0.9"
   config.gem "faker", :version => "0.3.1"
+  config.gem "RedCloth", :version => "4.1.9"
   config.gem "thoughtbot-factory_girl", 
              :lib => "factory_girl",
              :source => "http://gems.github.com"
