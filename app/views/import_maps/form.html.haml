@@ -1,0 +1,42 @@
+%fieldset.import_map
+
+  %legend
+    = @verb
+    Import Map
+
+  - form_for template_import_map_path( @import_map ), |
+             { :multipart => true } do |
+    -
+    %div{:style=>"text-align:center;width:100%"}
+      %div
+        %label
+          Upload template CSV File:
+          = file_field_tag "csv"
+          = submit_tag "upload"
+
+      %br
+
+      %hr{:style=>'width:75%;margin:0 auto 0 auto'}
+
+      %br
+        
+      = link_to "Edit YAML", yml_import_map_path( @import_map )
+
+      %br
+      %br
+
+      %hr{:style=>'width:75%;margin:0 auto 0 auto'}
+
+  %br
+
+  - form_for @import_map, { :multipart => true } do
+    
+    %div{:style => "margin-left: 5em;"}
+      - keys = @yml.keys.sort {|a,b| a.downcase <=> b.downcase || a <=> b }
+      - keys.each do |k|
+        - v = @yml[k]
+        = render :partial => "map_entry", :object => [k, v, nil]
+
+    %div
+      = submit_tag "save"
+      = link_to "cancel", import_path
