@@ -31,6 +31,10 @@ def login_as_user
   end
 end
 
+def login_as_10
+  self.current_user = User.find( 10 )
+end
+
 def login_as_other_user
   
   self.current_user = User.find( :all ).detect do

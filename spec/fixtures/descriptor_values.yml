@@ -2,104 +2,125 @@ documentary:
   id: 1
   property_type_id: 38
   text: Documentary
+  priority: -1
 
 corporate:
   id: 2
   property_type_id: 38
   text: Corporate
+  priority: 0
 
 historical:
   id: 3
   property_type_id: 38
   text: Historical
+  priority: -2
 
 ephemeral:
   id: 4
   property_type_id: 38
   text: Ephemeral
+  priority: -3
 
 lecture:
   id: 5
   property_type_id: 38
   text: Lecture
+  priority: -4
 
 spanish:
   id: 6
   property_type_id: 39
   text: Spanish
+  priority: -5
 
 french:
   id: 7
   property_type_id: 39
   text: French
+  priority: -6
 
 italian:
   id: 8
   property_type_id: 39
   text: Italian
+  priority: -7
 
 english:
   id: 9
   property_type_id: 39
   text: English
+  priority: -8
 
 japanese:
   id: 10
   property_type_id: 39
   text: Japanese
+  priority: -9
 
 north_america:
   id: 11
   property_type_id: 42
   text: North America
+  priority: -10
 
 africa:
   id: 38
   property_type_id: 42
   text: Africa
+  priority: -11
 
 europe:
   id: 39
   property_type_id: 42
   text: Europe
+  priority: -12
 
 central_america:
   id: 14
   property_type_id: 42
   text: Central America
+  priority: -13
 
 south_america:
   id: 15
   property_type_id: 42
   text: South America
+  priority: -14
 
 asia:
   id: 42
   property_type_id: 42
   text: Asia
+  priority: -15
 
 color:
   id: 17
   property_type_id: 40
   text: Color
+  priority: -16
 
 blank_and_white:
   id: 18
   property_type_id: 40
   text: Black and White
+  priority: -17
 
 colorized:
   id: 19
   property_type_id: 40
   text: Colorized
+  priority: -18
 
 sound:
   id: 20
   property_type_id: 41
   text: Sound
+  priority: -19
 
 silent:
   id: 21
   property_type_id: 41
   text: Silent
+  priority: -20
 

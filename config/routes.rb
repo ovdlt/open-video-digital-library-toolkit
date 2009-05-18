@@ -27,7 +27,8 @@ ActionController::Routing::Routes.draw do |map|
     
   map.resources :videos, :collection => { :recent => :get,
                                           :cancel => :get,
-                                          :clear => :get },
+                                          :clear => :get,
+                                          :images => :get },
                          :member => { :download => :get,
                                       :reset => :get,
                          } do |videos|
@@ -47,6 +48,13 @@ ActionController::Routing::Routes.draw do |map|
                                     }
 
 
+  map.resource :import, :controller => :import
+
+  map.resources :import_maps,
+                :member => { :yml => :get,
+                             :save_yml => :post,
+                             :template => :post }
+
   map.resource :my, :controller => :my,
                     :member => { :home => :get,
                                  :favorites => :get,
@@ -57,12 +65,32 @@ ActionController::Routing::Routes.draw do |map|
                                  :password => :put,
                                }
 
+  map.connect "/collections/featured/order", :controller => "collections",
+                                              :action => "featured_order",
+                                              :conditions => { :method => :post }
+
+  map.connect "/videos/featured/order", :controller => "videos",
+                                        :action => "featured_order",
+                                        :conditions => { :method => :post }
+
+  map.connect "/library/property_type/order", :controller => "library",
+                                              :action => "property_type_order",
+                                              :conditions => { :method => :post }
+
+  map.connect "/library/descriptor_value/order", :controller => "library",
+                                                 :action => "descriptor_value_order",
+                                                 :conditions => { :method => :post }
+
   map.resources :collections,
                 :collection => { :collections => :get,
                                  :playlists => :get,
                                } do |collections|
+
     collections.resources :bookmarks
+
   end
+
+  map.resources :bookmarks, :collection => { :order => :put }
 
   map.resources :sessions
 

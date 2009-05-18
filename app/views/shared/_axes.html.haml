@@ -3,7 +3,7 @@
 .axes
   - axis_index = 1
   - PropertyType.browse do |type|
-    .axis
+    .axis{:id=>"property_type_#{type.id}"}
       .title= type.name
       %ul
         - type.values.each do |descriptor|

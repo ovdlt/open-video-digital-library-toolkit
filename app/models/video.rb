@@ -2,7 +2,7 @@ class Video < ActiveRecord::Base
 
   has_many :assets, :dependent => :destroy
 
-  has_many :taggings
+  has_many :taggings, :dependent => :destroy
   has_many :tags, :through => :taggings
 
   has_many :properties, :dependent => :destroy do
@@ -68,7 +68,7 @@ class Video < ActiveRecord::Base
 
   before_save do |video|
     if video.featured and video.changed.include?( "featured" ) and !video.changed.include?( "featured_priority" )
-      video.featured_priority = Video.maximum("featured_priority");
+      video.featured_priority = Video.maximum("featured_priority") + 1;
     end
   end
 
@@ -298,18 +298,23 @@ class Video < ActiveRecord::Base
   def poster_path
     @poster_path ||=
       begin
-        paths = assets.map(&:relative_path)
-        paths = paths.map do |path|
-          Dir.glob("#{Asset::SURROGATE_DIR}/#{path}/stills/*_poster*")
+        path = attributes["poster_path"]
+        if !path
+          paths = assets.map(&:relative_path)
+          paths = paths.map do |p|
+            Dir.glob("#{Asset::SURROGATE_DIR}/#{p}/stills/*_poster*")
+          end
+          paths.flatten!
+          if paths.size > 0
+            path = paths[0]
+          end
+          if path
+            path =
+              ( ActionController::Base.relative_url_root or "" ) +
+              path[Asset::SURROGATE_PREFIX.length,path.length]
+          end
         end
-        paths.flatten!
-        if paths.size > 0
-          path = paths[0]
-          ( ActionController::Base.relative_url_root or "" ) +
-            path[Asset::SURROGATE_PREFIX.length,path.length]
-        else
-          nil
-        end
+        path
       end
   end
 
@@ -429,6 +434,11 @@ class Video < ActiveRecord::Base
     v
   end
 
+  def self.featured
+    find :all, :conditions => "featured = true",
+               :order => "featured_priority desc"
+  end
+
   private
 
   def descriptors_must_be_unique
@@ -464,7 +474,7 @@ class Video < ActiveRecord::Base
       if ( m = duration.match( DURATION_REGEX ) )
         new_value = ((m[1].to_i*60)+m[2].to_i)*60+m[3].to_i
       end
-      update_attribute( :duration, new_value )
+      attributes["duration"] = new_value
     end
   end
 
@@ -479,6 +489,17 @@ class Video < ActiveRecord::Base
       @rights_property.video_id = id
       @rights_property.save
     end
+  end
+
+  def self.featured_order= ids
+    objects = {}
+    self.find( ids ).each { |object| objects[object.id] = object }
+    objects = ids.map { |id| objects[id] }
+    priorities = objects.map(&:featured_priority)
+    priorities = priorities.sort.reverse
+    objects.each { |o| o.featured_priority = priorities.shift }
+    # this should be transactional, but ...
+    objects.each { |o| o.save! }
   end
 
 end

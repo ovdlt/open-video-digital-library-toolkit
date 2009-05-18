@@ -1,0 +1,15 @@
+- if !(errors = error_message_on @import_map, :yml).blank?
+  %div.flash.errors{:style=>"color:red"}
+    = errors
+
+- form_for @import_map do |form|
+
+  %div{:style=>"width:100%;text-align:center;"}
+    = form.text_area :yml, :rows => 50, |
+                           :style=>"width:80%;font-size:2em;" |
+
+  %br
+  %br
+
+  = form.submit "Save"
+  = link_to "Cancel", edit_import_map_path( @import_map )

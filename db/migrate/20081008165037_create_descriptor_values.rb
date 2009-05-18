@@ -3,7 +3,7 @@ class CreateDescriptorValues < ActiveRecord::Migration
     create_table :descriptor_values do |t|
       t.integer :property_type_id,      :null => false
       t.string  :text,                  :null => false
-      t.integer :priority,              :null => false, :default => 999
+      t.integer :priority,              :null => false, :default => 0
       t.timestamps
     end
 

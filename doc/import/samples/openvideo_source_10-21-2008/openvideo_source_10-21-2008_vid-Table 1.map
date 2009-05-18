@@ -1,4 +1,6 @@
 videoid: local_id
+asset: Asset
+locationurl: nil
 title: title
 description: abstract
 digitizationdate: Digitization
@@ -12,39 +14,46 @@ verified?:
     "No": false
 timestamp: nil
 keywords:
-  tags: <%= %r{;} %>
+  tags: Tag
 posterframe: nil
 duration: duration
 restricted?: nil
-creationdate: Created
+creationdate: Creation
 framerate: nil
 sound:
   Sound:
-    Yes: Sound
-    No: Silent
+    "Yes": Sound
+    "No": Silent
 color:
   Color:
-    Yes: Color
-    No: Black and White
+    "Yes": Color
+    "No": Black and White
 edited?: nil
 segmentation: nil
 sponsorname: nil
 contribOrgID: nil
 languageid:
   Language:
-    1: English
+    "1": English
 frameDimensionID: nil
 digitizOrgID: nil
 genrePrimaryID:
   Genre:
-    1: Documentary
-    2: Corporate
-    3: Historical
-genreSecondaryID: nil
+    "1": Documentary
+    "2": Corporate
+    "3": Historical
+    "4": Ephemeral
+    "5": Lecture
+genreSecondaryID:
+  Genre:
+    "1": Documentary
+    "2": Corporate
+    "3": Historical
+    "4": Ephemeral
+    "5": Lecture
 RightsInformationID:
-  1:
-    RightsDetail:
-      License: All Rights Reserved
+  Rights Statement:
+    "1": All Rights Reserved
 
 # Local Variables:
 # mode:yaml

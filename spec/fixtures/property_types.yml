@@ -187,27 +187,27 @@
   id: 38
   property_class_id: 4
   name: Genre
-  priority: 1
+  priority: 5
   browsable: true
 
 39:
   id: 39
   property_class_id: 4
   name: Language
-  priority: 2
+  priority: 4
   browsable: true
 
 40:
   id: 40
   property_class_id: 4
   name: Color
-  priority: 4
+  priority: 2
   browsable: true
 
 41:
   id: 41
   property_class_id: 4
-  priority: 5
+  priority: 1
   name: Sound
 
 42:

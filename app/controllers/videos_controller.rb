@@ -9,7 +9,10 @@ class VideosController < ApplicationController
 
   require_role [ :admin, :cataloger], :for_all_except => [ :index,
                                                            :show,
-                                                           :recent ]
+                                                           :recent,
+                                                           :images ]
+
+  require_role [ :admin ], :for => [ :featured_order ]
 
   def show
     @path = lambda { |opts| opts == {} ? video_path( @video ) \
@@ -84,6 +87,15 @@ class VideosController < ApplicationController
     render :template => "videos/#{params[:style]}"
   end
 
+  def images
+    @property_type =
+      params[:property_type] &&
+      PropertyType.find_by_id( params[:property_type] )
+    render_missing if !@property_type
+    render( :partial => "images",
+            :locals => { :property_type => @property_type } ) if @property_type
+  end
+
   def search
 
     @videos = Video.search :method => :paginate,
@@ -137,6 +149,12 @@ class VideosController < ApplicationController
     redirect_to videos_path
   end
   
+  def featured_order
+    ids = params["order"].split(/[,\s]+/).map(&:to_i)
+    Video.featured_order = ids
+    render_nothing
+  end
+
   before_filter :handle_category,
                 :only => [ :general_information,
                            :digital_files,
@@ -379,11 +397,15 @@ class VideosController < ApplicationController
             redirect_to videos_path
           end
         else
-          flash[:notice] = "#{@video.title} saved"
-          if params["submit"] == "save"
-            redirect_to edit_video_path( @video )
+          if params["video"] && params["video"]["poster_path"]
+            redirect_to video_path(@video, :details_format => "storyboard")
           else
-            redirect_to video_path( @video )
+            flash[:notice] = "#{@video.title} saved"
+            if params["submit"] == "save"
+              redirect_to edit_video_path( @video )
+            else
+              redirect_to video_path( @video )
+            end
           end
         end
       else

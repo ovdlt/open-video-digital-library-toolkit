@@ -35,6 +35,9 @@ Rails::Initializer.run do |config|
   config.gem "thoughtbot-factory_girl", 
              :lib => "factory_girl",
              :source => "http://gems.github.com"
+  config.gem "mislav-will_paginate", 
+             :lib => "will_paginate",
+             :source => "http://gems.github.com"
 
   # Only load the plugins named here, in the order given. By default, all plugins 
   # in vendor/plugins are loaded in alphabetical order.
@@ -99,7 +102,6 @@ ActionView::Helpers::AssetTagHelper.
 
 ActionView::Base.field_error_proc = Proc.new do |html_tag, instance|
   error_class = "fieldWithErrors"
-  p "?", html_tag
   if html_tag =~ /<(input|textarea|select)[^>]+class=/
     class_attribute = html_tag =~ /class=['"]/
     html_tag.insert(class_attribute + 7, "#{error_class} ")
@@ -117,4 +119,4 @@ ActiveSupport::Inflector.inflections do |inflect|
   inflect.irregular 'criterion', 'criteria'
 end
 
-ActionView::Base.default_form_builder = OvdltFormBuilder
+# ActionView::Base.default_form_builder = OvdltFormBuilder

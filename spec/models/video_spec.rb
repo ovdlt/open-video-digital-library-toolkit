@@ -401,4 +401,42 @@ describe Video do
     
   end
   
+  describe "featured" do
+
+    it "should return the videos" do
+      Video.featured.map(&:id).should == [ 4, 3, 2, 1 ]
+    end
+
+    it "should reorder the whole video" do
+      Video.featured.map(&:id).should == [ 4, 3, 2, 1 ]
+      Video.featured_order =  [ 1, 2, 3, 4 ]
+      Video.featured.map(&:id).should == [ 1, 2, 3, 4 ]
+    end
+
+    it "should reorder the beginning of the video" do
+      Video.featured.map(&:id).should == [ 4, 3, 2, 1 ]
+      Video.featured_order = [ 3, 4 ]
+      Video.featured.map(&:id).should ==  [ 3, 4, 2, 1 ]
+    end
+
+    it "should reorder the end of the video" do
+      Video.featured.map(&:id).should == [ 4, 3, 2, 1 ]
+      Video.featured_order = [ 1, 2 ]
+      Video.featured.map(&:id).should == [ 4, 3, 1, 2 ]
+    end
+
+    it "should reorder the middle of the video" do
+      Video.featured.map(&:id).should == [ 4, 3, 2, 1 ]
+      Video.featured_order = [ 2, 3 ]
+      Video.featured.map(&:id).should == [ 4, 2, 3, 1 ]
+    end
+
+    it "should reorder aribtrarilty video" do
+      Video.featured.map(&:id).should == [ 4, 3, 2, 1 ]
+      Video.featured_order =  [ 1, 4 ]
+      Video.featured.map(&:id).should == [ 1, 3, 2, 4 ]
+    end
+
+  end
+
 end

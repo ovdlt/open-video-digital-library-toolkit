@@ -80,7 +80,15 @@
         - images.each do |image|
           .image
             %img{:src=>image,:alt=>"storyboard image"}
-
+            - if current_user and current_user.has_role?(  [ :admin, :cataloger ] )
+              - if image == video.poster_path
+                .poster.checked
+              - else
+                .poster.check
+                  - form_for video, :html => { :id => nil } do |f|
+                    .hidden
+                      = f.text_field :poster_path, :value => image, :id => gen_id
+                      = f.submit "update", :id => nil
       .clear
 
     .downloads

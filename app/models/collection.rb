@@ -6,6 +6,16 @@ class Collection < ActiveRecord::Base
 
   has_many :bookmarks, :dependent => :destroy
 
+  has_many :all_bookmarks, :class_name => "Bookmark",
+                           :order => "priority desc, bookmarks.created_at desc",
+                           :include => :video,
+                           :conditions => "bookmarks.video_id = videos.id"
+
+  has_many :public_bookmarks, :class_name => "Bookmark",
+                              :order => "priority desc, bookmarks.created_at desc",
+                              :include => :video,
+                              :conditions => "bookmarks.video_id = videos.id and videos.public"
+
   has_many :public_videos, :through => :bookmarks,
                            :source => :video,
                            :order => "bookmarks.priority desc, bookmarks.created_at desc",
@@ -23,8 +33,13 @@ class Collection < ActiveRecord::Base
 
   before_save do |collection|
     if collection.featured and collection.changed.include?( "featured" ) and !collection.changed.include?( "featured_priority" )
-      collection.featured_priority = Collection.maximum("featured_priority");
+      collection.featured_priority = Collection.maximum("featured_priority") + 1;
     end
+  end
+
+  def self.featured
+    find :all, :conditions => "featured = true",
+               :order => "featured_priority desc"
   end
 
   def size public
@@ -62,6 +77,20 @@ class Collection < ActiveRecord::Base
     v
   end
 
+ def trivial_save
+   saved = false
+   class << self
+     def record_timestamps; false; end
+   end
+   p "don't update"
+   saved = save
+   p "update"
+   class << self
+     remove_method :record_timestamps
+   end
+   saved
+  end
+
   private
 
   before_save do |collection|
@@ -78,5 +107,17 @@ class Collection < ActiveRecord::Base
     public ? :public_videos : :all_videos
   end
 
+  def self.featured_order= ids
+    objects = {}
+    self.find( ids ).each { |object| objects[object.id] = object }
+    objects = ids.map { |id| objects[id] }
+    priorities = objects.map(&:featured_priority)
+    priorities = priorities.sort.reverse
+    objects.each { |o| o.featured_priority = priorities.shift }
+    # this should be transactional, but ...
+    objects.each { |o| o.save! }
+  end
+
 end
+
 

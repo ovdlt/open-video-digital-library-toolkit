@@ -24,7 +24,7 @@ class PropertyType < ActiveRecord::Base
   end
 
   def self.browse &block
-    options = { :order => "priority asc, name asc",
+    options = { :order => "priority desc, name asc",
                 :conditions => [ "browsable = true" ] }
     if block
       ( self.find :all, options ).each &block
@@ -34,7 +34,7 @@ class PropertyType < ActiveRecord::Base
   end
 
   def self.descriptor_types
-    find :all, :order => "pts.priority asc, pts.name asc",
+    find :all, :order => "pts.priority desc, pts.name asc",
                :select => "pts.*",
                :joins => "pts, property_classes pcs",
                :conditions => "property_class_id = pcs.id and " +
@@ -127,6 +127,17 @@ class PropertyType < ActiveRecord::Base
   # avoid the AR proxy getting in the way
   def real_object_id
     object_id
+  end
+
+  def self.browse_order= ids
+    objects = {}
+    self.find( ids ).each { |object| objects[object.id] = object }
+    objects = ids.map { |id| objects[id] }
+    priorities = objects.map(&:priority)
+    priorities = priorities.sort.reverse
+    objects.each { |o| o.priority = priorities.shift }
+    # this should be transactional, but ...
+    objects.each { |o| o.save! }
   end
 
 end

@@ -1,2 +1,5 @@
 .collection.videos
-  = render :partial => "collections/video", :collection => videos
+  / these are really bookmarks; sigh
+  = render :partial => "collections/video", |
+           :collection => videos, |
+           :locals => { :collection => collection } |

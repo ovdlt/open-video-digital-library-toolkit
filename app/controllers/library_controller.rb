@@ -248,6 +248,18 @@ class LibraryController < ApplicationController
     redirect_to url_for( :action => :users )
   end
 
+  def property_type_order
+    ids = params["order"].split(/[,\s]+/).map(&:to_i)
+    PropertyType.browse_order = ids
+    render_nothing
+  end
+
+  def descriptor_value_order
+    ids = params["order"].split(/[,\s]+/).map(&:to_i)
+    DescriptorValue.browse_order = ids
+    render_nothing
+  end
+
   private
 
   def parameters

@@ -7,4 +7,55 @@ describe CollectionsController do
     controller.should be_an_instance_of(CollectionsController)
   end
 
+  describe "featured order" do
+
+    it "should require login" do
+      put :featured_order, :order => "1 2, 3"
+      response.should redirect_to login_path
+    end
+
+    it "should not allow user" do
+      login_as_user
+      put :featured_order, :order => "1 2, 3"
+      response.should be_missing
+    end
+
+    it "should not allow cataloger" do
+      login_as_cataloger
+      put :featured_order, :order => "1 2, 3"
+      response.should be_missing
+    end
+
+    it "should reorder the list" do
+      login_as_admin
+      Collection.featured.map(&:id).should == [ 4, 3, 2, 1 ]
+      
+      put :featured_order, :order => "1 2, 3  4"
+      response.should be_success
+
+      Collection.featured.map(&:id).should == [ 1, 2, 3, 4 ]
+    end
+
+    it "should handle multiple reorders" do
+      login_as_admin
+      Collection.featured.map(&:id).should == [ 4, 3, 2, 1 ]
+      
+      put :featured_order, :order => "1 2, 3  4"
+      response.should be_success
+
+      Collection.featured.map(&:id).should == [ 1, 2, 3, 4 ]
+
+      put :featured_order, :order => "3 2"
+      response.should be_success
+
+      Collection.featured.map(&:id).should == [ 1, 3, 2, 4 ]
+
+      put :featured_order, :order => "2 1 4 3"
+      response.should be_success
+
+      Collection.featured.map(&:id).should == [ 2, 1, 4, 3 ]
+    end
+
+  end
+
 end

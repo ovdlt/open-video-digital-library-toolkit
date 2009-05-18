@@ -1,5 +1,10 @@
 - video = show
-.video
+- bookmark = nil
+- id_value = "#{video.class.name.tableize.singularize}_#{video.id}"
+- if Bookmark === video
+  - bookmark = video
+  - video = bookmark.video
+.video{:id => id_value}
   .image
     %a{:href => video_path( video.id )}
       -if poster_path = video.poster_path
@@ -11,7 +16,11 @@
     - if !(date = video_created(video)).blank?
       .year= "(#{h date.year})"
 
-    .sentence=h video.sentence
+    .sentence
+      - if bookmark
+        =h bookmark.sentence
+      - else 
+        =h video.sentence
     - if !video.tags.empty?
       .tags
         Tags:

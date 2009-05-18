@@ -234,14 +234,12 @@ EOS
   end
 
   def featured_videos
-    Video.find :all, :conditions => { :featured => true }.
-                                        merge( viz_condition ),
-                            :order => "featured_priority desc, featured_on desc"
+    Video.find :all, :conditions => { :featured => true }.merge( viz_condition ),
+                      :order => "featured_priority desc, featured_on desc"
   end
 
   def featured_collections
-    Collection.find :all, :conditions => { :featured => true }.
-                                                merge( viz_condition ),
+    Collection.find :all, :conditions => { :featured => true }.merge( viz_condition ),
                             :order => "featured_priority desc, featured_on desc"
   end
 
@@ -307,6 +305,10 @@ EOS
 
   def videos_method
     public_only? ? :public_videos : :all_videos
+  end
+
+  def bookmarks_method
+    public_only? ? :public_bookmarks : :all_bookmarks
   end
 
   def video_ids_method
