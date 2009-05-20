@@ -1,0 +1,72 @@
+- if list_selector and post_url |
+     and current_user and current_user.has_role?( "admin" ) |
+  :javascript
+    var original_order;
+    var sent_order;
+    var handle_obj;
+    function send_new_order() {
+      // Disable the sortable list until we receive confirmation from the server that new order was saved
+      $("#{list_selector}").sortable('disable');
+      sent_order = $("#{list_selector}").sortable( 'serialize') ;
+      //alert("sent order is " + sent_order );
+      var post_data = "order=" + sent_order.replace( /&[a-z]+\[\]=/g, ",").replace( /[a-z]+\[\]=/, "");
+      post_data += "&authenticity_token=" + encodeURIComponent(AUTH_TOKEN)  ;
+      // jQuery.post("http://localhost:3000/collections/featured/order", post_data, new_order_saved, "text" );
+      // alert("Full post url is " + relative_url_root + "#{post_url}" );
+      jQuery.ajax( {
+        url: relative_url_root + "#{post_url}",
+        type: "POST",
+        success: new_order_saved,
+        error: failed_saving_new_order,
+        dataType: "text",
+        data: post_data
+      });
+    }
+    
+    function failed_saving_new_order( xml_req, error, exception )
+    {
+      alert("Failed sending new order to server");
+      // TODO display a message telling the user we failed saving the order and what they do about it
+    }
+    function new_order_saved(data, textStatus ) {
+      //alert( "status = " + textStatus );
+      if ( textStatus == "success" ) {
+        // save the new order for this list
+        original_order = sent_order;
+        // $(".save_new_order").fadeOut(500);
+        // re-enable the sortable, now that new order is saved on the server
+        $("#{list_selector}").sortable('enable');
+      }
+    }
+    $(document).ready( function() {
+      $("#{list_selector} #{item_selector}").bind("mouseover", 
+        function(e) { 
+          $("#{list_selector} .handle").hide(); 
+          $(this).children(".handle").show()             
+        } );
+        // TODO generalize this:
+        $("#{list_selector}").bind("mouseout", function(e) { $("#content .collection .handle").hide() } );
+
+      $("#{list_selector}").sortable({
+        items: '#{item_selector}',
+        axis: 'y',
+        cursor: 'move',
+        placeholder : "placeholder",
+        tolerance: 'intersect',
+        handle: '.handle',
+        containment: 'document',
+        update: function() { 
+          var new_order = $("#{list_selector}").sortable('serialize') ;
+          if (original_order == new_order)
+          {
+            // $(".save_new_order").fadeOut(500);
+          } else {
+            // $(".save_new_order").fadeIn(250);
+            // $(".save_new_order").effect("highlight", {}, 2000 );
+            send_new_order();
+          }
+        }
+      });
+      original_order = $("#{list_selector}").sortable('serialize');
+      // $(".save_new_order").bind("click", send_new_order);
+    });
