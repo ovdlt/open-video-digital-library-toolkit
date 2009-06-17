@@ -1,0 +1,25 @@
+- form_tag( { :action => "create" }, { :multipart => true } ) do
+  
+  %fieldset.import
+    %legend Import Videos
+
+    %div
+      %label
+        Select Import Map:
+        %select{:name => "map"}
+          = options_for_select |
+            ( ImportMap.find(:all).to_a.map { |im| [ im.name, im.id ] } ) |
+      = submit_tag "Edit"
+      = submit_tag "New"
+    
+    %br
+    
+    %div
+      %label
+        Select CSV File:
+        = file_field_tag "csv"
+
+    %br
+
+    %div
+      = submit_tag "import"

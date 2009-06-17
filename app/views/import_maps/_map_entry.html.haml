@@ -1,0 +1,21 @@
+- ( key, value, set ) = map_entry
+- set ||= field_options
+%div
+  %label
+    %span.key{:style=>"display:inline-block;width:10em;"}
+      = "#{key}: "
+    %span.value
+      %select{:name => key}
+        = options_for_select set, primary(value)
+    / = debug(  secondary(value) )
+    - if sec = secondary(value) and |
+      primary(value) != "tags" and |
+      primary(value) != "public" |      
+      %div{:style=>"margin-left: 2em"}
+        - keys = sec.keys.sort {|a,b| a.downcase <=> b.downcase || a <=> b }
+        - keys.each do |k|
+          - v = sec[k]
+          = render :partial => "map_entry", |
+                               :object => [k, v, tertiary(primary(value) ) ] |
+
+

@@ -49,6 +49,13 @@ ActionController::Routing::Routes.draw do |map|
                                     }
 
 
+  map.resource :import, :controller => :import
+
+  map.resources :import_maps,
+                :member => { :yml => :get,
+                             :save_yml => :post,
+                             :template => :post }
+
   map.resource :my, :controller => :my,
                     :member => { :home => :get,
                                  :favorites => :get,
