@@ -112,9 +112,6 @@ class VideosController < ApplicationController
     else
       order = "videos.created_at desc"   
     end
-  end
-
-  def search
 
     @videos = Video.search :method => :paginate,
                             :page => params[:page],
