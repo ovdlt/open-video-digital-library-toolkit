@@ -347,8 +347,7 @@ $(function(){
 
 });
 
-// TODO / Question - when js is minified by rails, comments are removed, right?
-/* Function to make a list of collections or videos sortable
+/* Function to make a list (of collections, videos, etc) sortable
  * Parameters:
  *  list_selector - div id or other selector for the list that will become sortable
  *  item_selector - what elements should be draggable within this list
@@ -359,24 +358,35 @@ function make_sortable( options )
 {
       var list_selector = options.list_selector;
       var item_selector = options.item_selector;
-      var post_url =      options.post_url;
-      console.log("Making list sortable: " + list_selector );
+      var post_url      = options.post_url;
+      var handle        = (undefined == options.handle ) ? ".handle" : options.handle ;
+      var cancel        = options.cancel;
+
+      console.log("Making this list sortable --> " + list_selector );
+      //console.log("                       items are '" + item_selector + "'" );
+      
+      //console.log("                    : cancel is [" + cancel + "]" );
+      //console.log("                    : handle is [" + handle + "] -- options.handle = [" + options.handle + "]" );
+
       $(list_selector + " " + item_selector).bind("mouseover", 
         function(e) { 
           $(".ui-sortable .handle").hide(); 
           $(this).children(".handle").show()             
         } );
-        // TODO generalize this:
-        $(list_selector).bind("mouseout", function(e) { $("#content .collection .handle").hide() } );
+
+      // TODO generalize this
+      $(list_selector).bind("mouseout", function(e) { $("#content .collection .handle").hide() } );
+      //console.log("                    : mouseover bindings complete");
 
       $(list_selector).sortable({
         items: item_selector,
         axis: 'y',
+        cancel: cancel,
         revert: true,
         cursor: 'move',
         placeholder : "placeholder",
         //tolerance: 'intersect',
-        handle: '.handle',
+        handle: handle,
         containment: 'document',
         update: function() { 
           var new_order = get_sortable_order(list_selector) ;
@@ -388,23 +398,27 @@ function make_sortable( options )
             // $(".save_new_order").effect("highlight", {}, 2000 );
             send_new_order( list_selector, post_url, new_order );
           }
-
         }
       });
-      $(list_selector).attr("original_order", get_sortable_order(list_selector) );
+
+      //console.log("                    : sortable complete");
+
+      var orig_order =get_sortable_order(list_selector) ;
+      $(list_selector).attr("original_order", orig_order );
+      //console.log("                    : saved original order [" + orig_order + "]");
       // $(".save_new_order").bind("click", send_new_order);
 }
 
-function get_sortable_order( list_selector )
+function get_sortable_order( list )
 {
-  return $( list_selector ).sortable('serialize').replace( /&[a-z_]+\[\]=/ig, ",").replace( /[a-z_]+\[\]=/i, "");
+  return $( list ).sortable('serialize').replace( /&[a-z_]+\[\]=/ig, ",").replace( /[a-z_]+\[\]=/i, "");
 }
 
-function send_new_order( list_selector, post_url, new_order ) {
+function send_new_order( list, post_url, new_order ) {
   // disable the sortable list until we receive confirmation from the server that new order was saved
-  $(list_selector).sortable('disable');
+  $(list).sortable('disable');
 
-  console.log("order to send is " + new_order );
+  //console.log("order to send is " + new_order );
 
   var post_data = "order=" + new_order 
                 + "&authenticity_token=" + encodeURIComponent(AUTH_TOKEN);
@@ -415,12 +429,12 @@ function send_new_order( list_selector, post_url, new_order ) {
   jQuery.ajax( {
     url: relative_url_root + post_url,
     type: "POST",
-    success: new_order_saved(list_selector),
+    success: new_order_saved(list),
     error: failed_saving_new_order,
     dataType: "text",
     data: post_data
   });
-  console.log("Sent data: " + post_data );
+  //console.log("Sent data: " + post_data );
 }
 
 function new_order_saved( selector )
@@ -442,5 +456,5 @@ function new_order_saved( selector )
     function failed_saving_new_order( xml_req, error, exception )
     {
       console.log("failed sending new order to server");
-      // TODO display a message telling the user we failed saving the order and what they do about it
+      // TODO display a message telling the user we failed saving the order and what they can do about it ?
     }
