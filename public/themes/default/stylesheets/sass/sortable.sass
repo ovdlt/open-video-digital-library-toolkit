@@ -5,44 +5,46 @@
   :background-color transparent
   :background-image url(../images/75alpha.png)
 
-#featured_collections .collection .handle
-  :width 20px
-  :height 40px
-  :top 0px
-  :left 0px
-  :background-color #ddd
-.collections.index .collection 
+//#featured_collections .collection , #featured_videos .video
+.ui-sortable > *, .ui-sortable > * > *
   :position relative
+  .handle
+    :display none
+    :position absolute
+    :cursor move
+    :width 20px
+    :height 40px
+    :top 0px
+    :left 0px
+    :background-color #ddd
+    .handle_image
+      :margin-left 4px
+      :margin-top 10px
+      :width 15px
+      :height 15px
+      :background-color transparent
+      :background-image url(../images/ui-icons_222222_256x240.png)
+      :background-position -130px -50px
+
+//#featured_collections .collection, .collections.index .collection, #featured_videos .video
+//.ui-sortable
+//  .handle 
+//    .handle_image
+
+.collections.index .collection 
   .handle
     :width 37px
     :height 120px
     / :border solid 1px black
     :top 13px
     :left -25px
-.collections.index .collection .handle
-  .handle_image
-    :margin-left 12px
-    :margin-top 50px
-  
-#featured_collections .collection .handle
-  .handle_image
-    :margin-left 4px
-    :margin-top 10px
-
-#featured_collections .collection, .collections.index .collection 
-  .handle 
-    :display none
-    :position absolute
-    :cursor move
     .handle_image
-      :width 15px
-      :height 15px
-      :background-color transparent
-      :background-image url(../images/ui-icons_222222_256x240.png)
-      :background-position -130px -50px
+      :margin-left 12px
+      :margin-top 50px
+  
    
-#featured_collections.ui-sortable 
-  .collection
+#featured_collections.ui-sortable , #featured_videos.ui-sortable
+  .collection, .video
     :position relative
     :padding-left 20px
   .ui-sortable-helper

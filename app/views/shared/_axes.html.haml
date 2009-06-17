@@ -3,7 +3,9 @@
 .axes
   - axis_index = 1
   - PropertyType.browse do |type|
-    .axis{:id=>"property_type_#{type.id}"}
+    .axis.property_type{:id=>"property_type_#{type.id}"}
+      .handle
+        .handle_image
       .title
         -# TODO fix this - div inside <a> not allowed
         %a{ :href => "#" }

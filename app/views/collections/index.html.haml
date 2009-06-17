@@ -2,19 +2,8 @@
   = render :partial => "collections/index", :object => @collections, |
            :locals => { :title => @title, |
                         :subtitle => @subtitle } |
-- if current_user and current_user.has_role?( "admin" )
-  :javascript
-    $(document).ready( function() {
-      $(".collections.index .collection").bind("mouseover", function(e) { $(".collections.index .handle").hide(); $(this).children(".handle").show()             } );
-      $(".contents").sortable({
-        items: '.collection',
-        axis: 'y',
-        cursor: 'move',
-        placeholder : "placeholder",
-        tolerance: 'intersect',
-        containment: 'document',
-        handle: '.handle'
-      })
-    });
-  
-
+  - if current_user and current_user.has_role?( "admin" )  
+    :javascript
+      $(document).ready( function() {
+        make_sortable( { list_selector : "#all_collections", item_selector : ".collection" , post_url : "/collections/featured/order"}  );
+      });

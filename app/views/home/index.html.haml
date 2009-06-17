@@ -18,32 +18,35 @@
       .content
         .column_title
           Browse
-        .category
+        .category#browse_axes
           = render :partial => "shared/axes"
 
     .center
       .content
         - first = true
-        - featured_videos.each do |video|
-          .video{ :id => "video_#{video.id}" }
-            %div{:class =>(first ? "first" : "other")}
-              - first = false
-              .image
-                %a{:href => video_path( video.id )}
-                  -if poster_path = video.poster_path
-                    %img{:src=>poster_path,:alt => "video #{video.id}"}
-              .details
-                .title{:class=>video_vis_class(video)}
-                  = link_to h(video.title), video_path( video )
-                - if !(d = video_created( video )).blank?
-                  .duration= int_to_duration( video.duration )
-                  %span.between
-                    |
-                  .created
-                    &= video_created( video ).to_s(:long)
-                - if !video.sentence.blank?
-                  .description&= video.sentence
-              .clear  
+        #featured_videos
+          - featured_videos.each do |video|
+            .video{ :id => "video_#{video.id}" }
+              %div{:class =>(first ? "first" : "other")}
+                - first = false
+                .image
+                  %a{:href => video_path( video.id )}
+                    -if poster_path = video.poster_path
+                      %img{:src=>poster_path,:alt => "video #{video.id}"}
+                .details
+                  .title{:class=>video_vis_class(video)}
+                    = link_to h(video.title), video_path( video )
+                  - if !(d = video_created( video )).blank?
+                    .duration= int_to_duration( video.duration )
+                    %span.between
+                      |
+                    .created
+                      &= video_created( video ).to_s(:long)
+                  - if !video.sentence.blank?
+                    .description&= video.sentence
+                .clear  
+              .handle
+                .handle_image
 
     .right
       .content
@@ -68,46 +71,12 @@
         %input{ :type => "submit", :class => "save_new_order", :value => "Save new order" }
         .all_collections
           = link_to "View all collections &raquo;", collections_collections_path
-    - if current_user and current_user.has_role?( "admin" )
+    - if current_user and current_user.has_role?( "admin" )  
       :javascript
-        var original_order;
-        var sent_order;
-        var handle_obj;
-        function send_new_order() {
-          sent_order = $("#featured_collections").sortable( 'serialize') ;
-          var post_data = "order=" + sent_order.replace( /&collection\[\]=/g, ",").replace( /collection\[\]=/, "");
-          post_data += "&authenticity_token=" + encodeURIComponent("#{form_authenticity_token}") ;
-          jQuery.post("http://localhost:3000/collections/featured/order", post_data, new_order_saved, "text" );
-        }
-        function new_order_saved( data, textStatus ) {
-          if ( textStatus == "success" ) {
-            original_order = sent_order;
-            $(".save_new_order").fadeOut(500);
-          }
-        }
         $(document).ready( function() {
-          $("#featured_collections .collection").bind("mouseover", function(e) { $("#featured_collections .handle").hide(); $(this).children(".handle").show()             } );
-          $("#content").bind("mouseout", function(e) { $("#content .collection .handle").hide() } );
-          $("#featured_collections").sortable({
-            axis: 'y',
-            cursor: 'move',
-            placeholder : "placeholder",
-            tolerance: 'pointer',
-            handle: '.handle',
-            update: function() { 
-              var new_order = $("#featured_collections").sortable('serialize') ;
-              if (original_order == new_order)
-              {
-                $(".save_new_order").fadeOut(500);
-              } else {
-                $(".save_new_order").fadeIn(250);
-                $(".save_new_order").effect("highlight", {}, 2000 );
-              }
-            }
-          });
-          original_order = $("#featured_collections").sortable('serialize');
-          $(".save_new_order").bind("click", send_new_order);
+          make_sortable( { list_selector: "#featured_collections", item_selector: ".collection",    post_url: "/collections/featured/order" });
+          make_sortable( { list_selector: "#featured_videos",      item_selector: ".video",         post_url: "/videos/featured/order" });
+          make_sortable( { list_selector: "#browse_axes",          item_selector: ".property_type", post_url: "/library/property_type/order" });
         });
-
     .clear
 
