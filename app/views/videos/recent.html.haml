@@ -1,5 +1,4 @@
 .category.featured
-  -# really not happy with the way I implemented this, but wanted to have something in this week
   -# There's a lot of refactoring that could happen here ...
   :javascript
     function activateTab( tab, tabname )
@@ -8,9 +7,9 @@
       $('#' + tabname + '.tab_content').addClass('active'); 
       $(tab).addClass('active'); 
       $('.seemore a').text('See more ' + tabname + ' videos');
-      //if ( tabname == 'recent' ) { $('.seemore a').href( #{recent_videos_path} ); }
-      //if ( tabname == 'popular' ) { $('.seemore a').href( #{popular_videos_path} ); }
-      //if ( tabname == 'random' ) { $('.seemore a').href( #random_videos_path ); }
+      if ( tabname == 'recent' ) { $('.seemore a').attr('href', "#{recent_videos_path}" ); }
+      if ( tabname == 'popular' ) { $('.seemore a').attr('href', "#{popular_videos_path}" ); }
+      //if ( tabname == 'random' ) { $('.seemore a').href( "#random_videos_path}" ); }
       //if ( tabname == 'random' ) { $('.seemore a').href( '' ); }
       return false;
     }
