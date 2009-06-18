@@ -362,7 +362,7 @@ function make_sortable( options )
       var handle        = (undefined == options.handle ) ? ".handle" : options.handle ;
       var cancel        = options.cancel;
 
-      console.log("Making this list sortable --> " + list_selector );
+      //console.log("Making this list sortable --> " + list_selector );
       //console.log("                       items are '" + item_selector + "'" );
       
       //console.log("                    : cancel is [" + cancel + "]" );
@@ -390,8 +390,8 @@ function make_sortable( options )
         containment: 'document',
         update: function() { 
           var new_order = get_sortable_order(list_selector) ;
-          console.log( "Sortable: " + list_selector + " -- new order:  " + new_order );
-          console.log( "Sortable: " + list_selector + " -- old order:  " + $(list_selector).attr("original_order") );
+          //console.log( "Sortable: " + list_selector + " -- new order:  " + new_order );
+          //console.log( "Sortable: " + list_selector + " -- old order:  " + $(list_selector).attr("original_order") );
           if (($(list_selector).attr("original_order") != new_order))
           {
             // $(".save_new_order").fadeIn(250);
@@ -444,7 +444,7 @@ function new_order_saved( selector )
   return  function ( data, textstatus ) {
       //console.log( "status = " + textstatus );
       if ( textstatus == "success" ) {
-        console.log("success saving order");
+        //console.log("success saving order");
         // save the new order for this list
         list.attr("original_order", sent_order );
         // $(".save_new_order").fadeout(500);
@@ -455,6 +455,6 @@ function new_order_saved( selector )
 }
     function failed_saving_new_order( xml_req, error, exception )
     {
-      console.log("failed sending new order to server");
+      //console.log("failed sending new order to server");
       // TODO display a message telling the user we failed saving the order and what they can do about it ?
     }
