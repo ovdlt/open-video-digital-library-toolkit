@@ -20,26 +20,26 @@ Rails::Initializer.run do |config|
   # you must remove the Active Record framework.
   # config.frameworks -= [ :active_record, :active_resource, :action_mailer ]
 
-  # Specify gems that this application depends on. 
+  # Specify gems that this application depends on.
   # They can then be installed with "rake gems:install" on new installations.
   # config.gem "bj"
   # config.gem "hpricot", :version => '0.6', :source => "http://code.whytheluckystiff.net"
   # config.gem "aws-s3", :lib => "aws/s3"
 
-  config.gem "mysql", :version => "2.7" # may require "gem install mysql -- --with-mysql-config"
+  # config.gem "mysql", :version => "2.7" # may require "gem install mysql -- --with-mysql-config"
   config.gem "erubis", :version => "2.6.4"
   config.gem "fastercsv", :version => "1.4.0"
   config.gem "haml", :version => "2.0.9"
   config.gem "faker", :version => "0.3.1"
   config.gem "RedCloth", :version => "4.1.9"
-  config.gem "thoughtbot-factory_girl", 
+  config.gem "thoughtbot-factory_girl",
              :lib => "factory_girl",
              :source => "http://gems.github.com"
-  config.gem "mislav-will_paginate", 
+  config.gem "mislav-will_paginate",
              :lib => "will_paginate",
              :source => "http://gems.github.com"
 
-  # Only load the plugins named here, in the order given. By default, all plugins 
+  # Only load the plugins named here, in the order given. By default, all plugins
   # in vendor/plugins are loaded in alphabetical order.
   # :all can be used as a placeholder for all plugins not explicitly named
   # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
@@ -58,7 +58,7 @@ Rails::Initializer.run do |config|
 
   # Your secret key for verifying cookie session data integrity.
   # If you change this key, all old sessions will become invalid!
-  # Make sure the secret is at least 30 characters and all random, 
+  # Make sure the secret is at least 30 characters and all random,
   # no regular words or you'll be exposed to dictionary attacks.
   config.action_controller.session = {
     :session_key => '_open-video-digital-library-toolkit_session',
@@ -114,7 +114,7 @@ ActionView::Base.field_error_proc = Proc.new do |html_tag, instance|
     html_tag[first_whitespace] = " class='#{error_class}' "
   end
   html_tag
-end 
+end
 
 ActionView::Base.field_error_proc = Proc.new { |html_tag, instance|
 "<span class=\"fieldWithErrors\">#{html_tag}</span>" }

@@ -1,72 +1,66 @@
 
-SHELL = /opt/gentoo/bin/sh
+SHELL = /bin/sh
 
 #### Start of system configuration section. ####
 
 srcdir = .
-topdir = /opt/gentoo/usr/lib/ruby/1.8/i686-darwin9
+topdir = /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/universal-darwin9.0
 hdrdir = $(topdir)
 VPATH = $(srcdir):$(topdir):$(hdrdir)
+prefix = $(DESTDIR)/System/Library/Frameworks/Ruby.framework/Versions/1.8/usr
 exec_prefix = $(prefix)
-prefix = $(DESTDIR)/opt/gentoo/usr
-sharedstatedir = $(prefix)/com
-mandir = $(DESTDIR)/opt/gentoo/usr/share/man
-psdir = $(docdir)
-oldincludedir = $(DESTDIR)/usr/include
-localedir = $(datarootdir)/locale
-bindir = $(exec_prefix)/bin
-libexecdir = $(exec_prefix)/libexec
-sitedir = $(DESTDIR)/opt/gentoo/usr/lib/ruby/site_ruby
-htmldir = $(docdir)
-vendorarchdir = $(vendorlibdir)/$(sitearch)
-includedir = $(prefix)/include
-infodir = $(DESTDIR)/opt/gentoo/usr/share/info
-vendorlibdir = $(vendordir)/$(ruby_version)
-sysconfdir = $(DESTDIR)/opt/gentoo/etc
-libdir = $(exec_prefix)/lib
-sbindir = $(exec_prefix)/sbin
+sitedir = $(DESTDIR)/Library/Ruby/Site
 rubylibdir = $(libdir)/ruby/$(ruby_version)
 docdir = $(datarootdir)/doc/$(PACKAGE)
 dvidir = $(docdir)
-vendordir = $(libdir)/ruby/vendor_ruby
 datarootdir = $(prefix)/share
-pdfdir = $(docdir)
 archdir = $(rubylibdir)/$(arch)
+sbindir = $(exec_prefix)/sbin
+psdir = $(docdir)
+localedir = $(datarootdir)/locale
+htmldir = $(docdir)
+datadir = $(datarootdir)
+includedir = $(prefix)/include
+infodir = $(DESTDIR)/usr/share/info
+sysconfdir = $(prefix)/etc
+mandir = $(DESTDIR)/usr/share/man
+libdir = $(exec_prefix)/lib
+sharedstatedir = $(prefix)/com
+oldincludedir = $(DESTDIR)/usr/include
+pdfdir = $(docdir)
 sitearchdir = $(sitelibdir)/$(sitearch)
-datadir = $(DESTDIR)/opt/gentoo/usr/share
-localstatedir = $(DESTDIR)/opt/gentoo/var/lib
+bindir = $(exec_prefix)/bin
+localstatedir = $(prefix)/var
 sitelibdir = $(sitedir)/$(ruby_version)
+libexecdir = $(exec_prefix)/libexec
 
-CC = i686-apple-darwin9-gcc
+CC = gcc
 LIBRUBY = $(LIBRUBY_SO)
 LIBRUBY_A = lib$(RUBY_SO_NAME)-static.a
 LIBRUBYARG_SHARED = -l$(RUBY_SO_NAME)
-LIBRUBYARG_STATIC = -l$(RUBY_SO_NAME)-static
+LIBRUBYARG_STATIC = -l$(RUBY_SO_NAME)
 
 RUBY_EXTCONF_H = 
-CFLAGS   =  -fno-common -O2 -pipe -march=nocona -fno-strict-aliasing  -fno-common -pipe -fno-common $(cflags) -O2  
+CFLAGS   =  -fno-common -arch ppc -arch i386 -Os -pipe -fno-common -O2  
 INCFLAGS = -I. -I$(topdir) -I$(hdrdir) -I$(srcdir)
 DEFS     = 
-CPPFLAGS =   -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE $(DEFS) $(cppflags)
+CPPFLAGS =   $(DEFS)
 CXXFLAGS = $(CFLAGS) 
-ldflags  = -L. 
-dldflags = 
-archflag = 
-DLDFLAGS = $(ldflags) $(dldflags) $(archflag)
-LDSHARED = cc -dynamic -bundle -undefined suppress -flat_namespace
-AR = i686-apple-darwin9-ar
+DLDFLAGS = -L. -arch ppc -arch i386  
+LDSHARED = cc -arch ppc -arch i386 -pipe -bundle -undefined dynamic_lookup
+AR = ar
 EXEEXT = 
 
-RUBY_INSTALL_NAME = ruby18
-RUBY_SO_NAME = ruby18
-arch = i686-darwin9
-sitearch = i686-darwin9
+RUBY_INSTALL_NAME = ruby
+RUBY_SO_NAME = ruby
+arch = universal-darwin9.0
+sitearch = universal-darwin9.0
 ruby_version = 1.8
-ruby = /opt/gentoo/usr/bin/ruby18
+ruby = /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/bin/ruby
 RUBY = $(ruby)
 RM = rm -f
 MAKEDIRS = mkdir -p
-INSTALL = /opt/gentoo/usr/bin/install -c
+INSTALL = /usr/bin/install -c
 INSTALL_PROG = $(INSTALL) -m 0755
 INSTALL_DATA = $(INSTALL) -m 644
 COPY = cp
@@ -86,7 +80,7 @@ extout =
 extout_prefix = 
 target_prefix = 
 LOCAL_LIBS = 
-LIBS = $(LIBRUBYARG_SHARED)  -ldl -lobjc  
+LIBS = $(LIBRUBYARG_SHARED)  -lpthread -ldl -lm  
 SRCS = redcloth_attributes.c redcloth_inline.c redcloth_scan.c
 OBJS = redcloth_attributes.o redcloth_inline.o redcloth_scan.o
 TARGET = redcloth_scan
@@ -94,10 +88,9 @@ DLLIB = $(TARGET).bundle
 EXTSTATIC = 
 STATIC_LIB = 
 
-BINDIR        = $(bindir)
 RUBYCOMMONDIR = $(sitedir)$(target_prefix)
-RUBYLIBDIR = /Users/smparkes/ovdlt/vendor/gems/RedCloth-4.1.9/lib$(target_prefix)
-RUBYARCHDIR = /Users/smparkes/ovdlt/vendor/gems/RedCloth-4.1.9/lib$(target_prefix)
+RUBYLIBDIR = /Users/geisler/Sites/fusion/ovdlt/open-video-digital-library-toolkit/vendor/gems/RedCloth-4.1.9/lib$(target_prefix)
+RUBYARCHDIR = /Users/geisler/Sites/fusion/ovdlt/open-video-digital-library-toolkit/vendor/gems/RedCloth-4.1.9/lib$(target_prefix)
 
 TARGET_SO     = $(DLLIB)
 CLEANLIBS     = $(TARGET).bundle $(TARGET).il? $(TARGET).tds $(TARGET).map
@@ -118,7 +111,7 @@ install: install-so install-rb
 
 install-so: $(RUBYARCHDIR)
 install-so: $(RUBYARCHDIR)/$(DLLIB)
-$(RUBYARCHDIR)/$(DLLIB): $(RUBYARCHDIR) $(DLLIB)
+$(RUBYARCHDIR)/$(DLLIB): $(DLLIB)
 	$(INSTALL_PROG) $(DLLIB) $(RUBYARCHDIR)
 install-rb: pre-install-rb install-rb-default
 install-rb-default: pre-install-rb-default
