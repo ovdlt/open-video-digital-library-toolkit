@@ -13,40 +13,47 @@
     .wrapper
       .center
         .superheader
-          %ul
-            %li
-              %a{ :href => "#" }
-                Register
-            %li
-              |
-            %li
-              %span#login
-                Login
+          .login_out
+            - if logged_in?
+              .button= link_to "Logout", logout_path
+            - else
+              .button= link_to "Login", login_path, { :rel => "facebox" }
+            -#
+              .user
+                You're logged in as
+                %span.login= h current_user.login
+          - if !logged_in?
+            .register
+              .button= link_to "Register", signup_path, { :rel => "facebox" }
+          - if current_user and current_user.has_role?( "admin" )
+            .admin
+              .button= link_to "Administration", library_path
         /superheader end, div.header start
         .header
           .logo
             %h1
-              %a{ :href => "#" }
-                Northeast Historic Film Archives
+              = link_to title, url_for( :controller => :home, :action => :index )
             %h2
-              A Digital Library for the Northeast Historic Film Archives
+              .subtitle= Library.subtitle
+
           .navigation
             %ul
-              %li.on
-                %a{ :href => "#" }
-                  HOME
-              %li
-                %a{ :href => "#" }
-                  VIDEOS
-              %li
-                %a{ :href => "#" }
-                  COLLECTIONS
-              %li
-                %a{ :href => "#" }
-                  PLAYLISTS
-              %li
-                %a{ :href => "#" }
-                  MY NHF
+              %li{:class => ( HomeController === controller ? "on" : "off")}
+                .text= link_to "HOME", url_for( :controller => :home, :action => :index ) |
+                .flag
+              %li{:class => ( VideosController === controller ? "on" : "off")}
+                .text= link_to "VIDEOS", videos_path
+                .flag
+              %li{:class => collections_flag }
+                .text= link_to "COLLECTIONS", collections_collections_path
+                .flag
+              %li{:class => playlists_flag }
+                .text= link_to "PLAYLISTS", playlists_collections_path |
+                .flag
+              - if current_user
+                %li{:class => ( MyController === controller ? "on" : "off")}
+                  .text= link_to h(my), my_path
+                  .flag
             .search
               %form#new_search.new_search{ :action => "", :method => "get" }
                 %input.input-text{ :name => "search[criteria][text][]", :size => "40", :type => "text" }
