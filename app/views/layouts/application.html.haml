@@ -1,8 +1,7 @@
 - title ||= Library.title
 - my ||= Library.my
-!!! XML
 !!!
-%html
+%html{ :xmlns => "http://www.w3.org/1999/xhtml" }
   %head
     %title= title
     = stylesheet_link_tag :all, :cache => "cached"
@@ -11,104 +10,84 @@
       if protect_against_forgery? |
     = javascript_tag "var relative_url_root = '#{ActionController::Base.relative_url_root}'"
   %body
-    #page
-      #container
-        #superheader
-          .organization
-            :textile
-              #{@library.org_link}
-          .login_out
-            - if logged_in?
-              .button= link_to "Logout", logout_path
-            - else
-              .button= link_to "Login", login_path, { :rel => "facebox" }
-            -#
-              .user
-                You're logged in as
-                %span.login= h current_user.login
-          - if !logged_in?
-            .register
-              .button= link_to "Register", signup_path, { :rel => "facebox" }
-          - if current_user and current_user.has_role?( "admin" )
-            .admin
-              .button= link_to "Users", users_library_path
-          - if current_user and current_user.has_role?( "admin" )
-            .admin
-              .button= link_to "Administration", library_path
-            .admin
-              .button= link_to "Import", import_path
-          .clear
-
-        #header
-          - if Library.logo_url
-            #logo
-              %a{ :href => url_for( :controller => :home, :action => :index ) }
-                = image_tag Library.logo_url
-          .content
-            .title
-              = link_to title, url_for( :controller => :home, :action => :index )
-            .subtitle= Library.subtitle
-            #navigation
-              %ul
-                %li{:class => ( HomeController === controller ? "on" : "off")}
-                  .text= link_to "Home", url_for( :controller => :home, :action => :index ) |
-                  .flag
-              %ul
-                %li{:class => ( VideosController === controller ? "on" : "off")}
-                  .text= link_to "Videos", videos_path
-                  .flag
-              %ul
-                %li{:class => collections_flag }
-                  .text= link_to "Collections", collections_collections_path
-                  .flag
-              %ul
-                %li{:class => playlists_flag }
-                  .text= link_to "Playlists", playlists_collections_path |
-                  .flag
-              - if current_user
-                %ul
-                  %li{:class => ( MyController === controller ? "on" : "off")}
-                    .text= link_to h(my), my_path
-                    .flag
-          .search
-            - form_for Search.new, |
-                      :url => videos_path, |
-                      :html => { :method => :get }, |
-                      :builder => OvdltFormBuilder do |form| |
-              = form.criterion :text, :size => 40, :id => nil
-              = image_submit_tag "mag.png"
-          .clear
-        #content
-          - [:notice, :error].each do |type|
-            - unless flash[type].blank?
-              %div{:class => "flash #{type} clearfix"}
-                = flash[type]
-          = begin; render :partial => "layouts/#{controller.controller_name}"; rescue ActionView::MissingTemplate; yield; end
-          /= yield
-        .clear
-        #footer
+    .wrapper
+      .center
+        .superheader
           %ul
-            %li.first
-              = link_to "Home", url_for( :controller => :home, :action => :index )
             %li
-              = link_to "About", url_for( :controller => :home, :action => :about )
+              %a{ :href => "#" }
+                Register
             %li
-              = link_to "Contact", url_for( :controller => :home, :action => :contact )
+              |
             %li
-              = link_to "News", url_for( :controller => :home, :action => :news )
-            %li
-              = link_to "Privacy Policy &amp; Terms of Use", |
-                         url_for( :controller => :home, :action => :privacy ) |
-          .copyright
-            :textile
-              #{@library.copyright}
-          .open_video
-            Powered by the
-            = link_to "Open Video Toolkit", "http://www.open-video-toolkit.org/"
+              %span#login
+                Login
+        /superheader end, div.header start
+        .header
+          .logo
+            %h1
+              %a{ :href => "#" }
+                Northeast Historic Film Archives
+            %h2
+              A Digital Library for the Northeast Historic Film Archives
+          .navigation
+            %ul
+              %li.on
+                %a{ :href => "#" }
+                  HOME
+              %li
+                %a{ :href => "#" }
+                  VIDEOS
+              %li
+                %a{ :href => "#" }
+                  COLLECTIONS
+              %li
+                %a{ :href => "#" }
+                  PLAYLISTS
+              %li
+                %a{ :href => "#" }
+                  MY NHF
+            .search
+              %form#new_search.new_search{ :action => "", :method => "get" }
+                %input.input-text{ :name => "search[criteria][text][]", :size => "40", :type => "text" }
+                %input.btn{ :src => "images/sch.gif", :type => "image" }
+        /header end
+        .container
+          = yield
+    .footer
+      .center
+        %ul
+          %li
+            = link_to "Home", url_for( :controller => :home, :action => :index )
+          %li
+            |
+          %li
+            = link_to "About", url_for( :controller => :home, :action => :about )
+          %li
+            |
+          %li
+            = link_to "Contact", url_for( :controller => :home, :action => :contact )
+          %li
+            |
+          %li
+            = link_to "News", url_for( :controller => :home, :action => :news )
+          %li
+            |
+          %li
+            = link_to "Privacy Policy &amp; Terms of Use", |
+              url_for( :controller => :home, :action => :privacy ) |
+        .copyright
+          :textile
+            #{@library.copyright}
+        Powered by the
+        = link_to "Open Video Toolkit", "http://www.open-video-toolkit.org/"
+        /div.container end
+      /div.center end
+    /div.wrapper end
     -# after a page loads, immediately highlight any flash messages (changes bg to yellow, then fade back to white)
     -# a little later, fade out and remove the message completely
     :javascript
-      $(document).ready( function() { 
+      $(document).ready( function() {
         setTimeout( '$(".flash").effect("highlight", {}, 1000 );', 500 );
         setTimeout( '$(".flash.notice").fadeOut( 2000 );' , 2000 );
         $('a[rel*=facebox]').facebox({opacity:0.5})

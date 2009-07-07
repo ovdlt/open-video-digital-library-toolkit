@@ -1,38 +1,33 @@
 - max ||= nil
 - browse ||= false
-.axes
+%dl.category
   - axis_index = 1
   - PropertyType.browse do |type|
-    .axis.property_type{:id=>"property_type_#{type.id}"}
-      .handle
-        .handle_image
-      .title
-        -# TODO fix this - div inside <a> not allowed
-        %a{ :href => "#" }
-          = type.name
-      .axis_content
-        %ul
-          - type.values.each do |descriptor|
-            %li
-              = link_to descriptor.text, |
-                descriptor_value_search( descriptor ) |
-              %span.count= "[#{descriptor.videos(public_only?).size}]"
-          - unless HomeController === controller
-            %li.all
-              = link_to "All #{type.name.pluralize} &raquo;", |
-                        property_type_videos_path( type ) |
-    - if !max.nil? and axis_index >= max
-      - break
-    - else
-      - axis_index += 1
-  
-  - if browse
-    .browse
-      = link_to "More Categories &raquo;", videos_path
+    %dt
+      = type.name
+    %dd
+      %ul
+        - type.values.each do |descriptor|
+          %li
+            = link_to descriptor.text, |
+              descriptor_value_search( descriptor ) |
+            %span.count= "[#{descriptor.videos(public_only?).size}]"
+        - unless HomeController === controller
+          %li.all
+            = link_to "All #{type.name.pluralize} &raquo;", |
+                      property_type_videos_path( type ) |
+  - if !max.nil? and axis_index >= max
+    - break
+  - else
+    - axis_index += 1
+
+- if browse
+  .browse
+    = link_to "More Categories &raquo;", videos_path
 
 :javascript
   $(".axes .axis .title a").prepend('<span class="icon"><\/span> ');
-  $(".axes").accordion( { 
+  $(".axes").accordion( {
     header: ".title",
     autoHeight: false
   });
