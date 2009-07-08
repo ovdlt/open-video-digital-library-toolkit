@@ -1,7 +1,7 @@
 .collection{ :id => "collection_#{collection.id}" }
   .handle
     .handle_image
-  .image
+  .image{ :style => "background-color:#333;" }
     - if p = collection.poster_path(public_only?)
       %a{ :href => collection_path( collection )  }
         %img{:src=>p,:alt => "sample image from collection"}
@@ -11,52 +11,46 @@
         Created by
         .owner
           = owner
-    .title
+    %h5.title
       = link_to collection.title, collection_path( collection )
 
-    - if current_user and current_user.has_role?(  [ :admin, :cataloger ] )
-      .featured
-        - form_for collection, :html => { :id => nil } do |form|
-          %label
-            = form.check_box :featured, :id => gen_id
-            - if !collection.featured? 
-              Feature this collection
-            - else
-              This collection featured on
-              = collection.featured_on.to_time.localtime.strftime("%B %d, %Y at %I:%M %p")
-              = feature_rank( collection )
-    - else
-      - if collection.featured?
+      - if current_user and current_user.has_role?(  [ :admin, :cataloger ] )
         .featured
-          .notice
-            A featured collection!
+          - form_for collection, :html => { :id => nil } do |form|
+            %label
+              = form.check_box :featured, :id => gen_id
+              - if !collection.featured?
+                Feature this collection
+              - else
+                %label.featured
+                  Featured
+                  = feature_rank( collection )
+      - else
+        - if collection.featured?
+          %label.featured
+            Featured
 
-    .attribute.size
-      .separator &bull;
-      .legend= collection.size(public_only?)
-      .value Videos
-    .br.size
-    .attribute.views
-      .separator &bull;
-      .legend= collection.views
-      .value Views
-    .br.views
-    .attribute.created_on
-      .separator &bull;
-      .legend Added:
-      .value= collection.created_at.to_date.to_s(:long)
-    .br.created_on
-    .attribute.updated_on
-      .separator &bull;
-      .legend Last Updated:
-      .value= collection.updated_at.to_date.to_s(:long)
-    .br.updated_on
-    .description= collection.description
-    .menu
-      %div
-        = link_to "View " + container_text( collection ) + " videos", |
-          collection_path( collection ) |
-      &diams;
-      %div= link_to "Subscribe to " + container_text( collection ), |
-                    collection_path( collection, :format => "atom" ) |
-  .clear
+    %p
+      %strong
+        Videos:
+      = collection.size(public_only?)
+      %br
+      %strong
+        Views:
+      = collection.views
+      %br
+      %strong
+        Added:
+      = collection.created_at.to_date.to_s(:long)
+      %br
+      %strong
+        Last Updated:
+      = collection.updated_at.to_date.to_s(:long)
+      %p
+        = collection.description
+      %p
+      %strong
+        = link_to "View Collection", collection_path( collection )
+      |
+      %strong
+        = link_to "Subscribe", collection_path( collection, :format => "atom" )

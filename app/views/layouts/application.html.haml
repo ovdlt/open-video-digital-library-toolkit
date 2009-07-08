@@ -14,20 +14,25 @@
       .center
         .superheader
           .login_out
+            %ul
             - if logged_in?
-              .button= link_to "Logout", logout_path
+              %li
+                = link_to "Logout", logout_path
+              \|
             - else
-              .button= link_to "Login", login_path, { :rel => "facebox" }
+              %li
+                = link_to "Login", login_path, { :rel => "facebox" }
+              \|
             -#
-              .user
+              %li
                 You're logged in as
                 %span.login= h current_user.login
-          - if !logged_in?
-            .register
-              .button= link_to "Register", signup_path, { :rel => "facebox" }
-          - if current_user and current_user.has_role?( "admin" )
-            .admin
-              .button= link_to "Administration", library_path
+            - if !logged_in?
+              %li
+                = link_to "Register", signup_path, { :rel => "facebox" }
+            - if current_user and current_user.has_role?( "admin" )
+              %li
+                = link_to "Administration", library_path
         /superheader end, div.header start
         .header
           .logo
@@ -55,8 +60,11 @@
                   .text= link_to h(my), my_path
                   .flag
             .search
-              %form#new_search.new_search{ :action => "", :method => "get" }
-                %input.input-text{ :name => "search[criteria][text][]", :size => "40", :type => "text" }
+              - form_for Search.new, |
+                      :url => videos_path, |
+                      :html => { :method => :get }, |
+                      :builder => OvdltFormBuilder do |form| |
+                = form.criterion :text, :size => 40, :id => nil
                 %input.btn{ :src => "images/sch.gif", :type => "image" }
         /header end
         .container
