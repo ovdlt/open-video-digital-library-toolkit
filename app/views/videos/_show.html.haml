@@ -4,36 +4,34 @@
 - if Bookmark === video
   - bookmark = video
   - video = bookmark.video
-.video{:id => id_value}
+/ removed: .video{:id => id_value}
+%li
   .image
     %a{:href => video_path( video.id )}
       -if poster_path = video.poster_path
         %img{:src=>poster_path,:alt => "video #{video.id}"}
   .details
-    .title{:class=>video_vis_class(video)}
+    %h5.title{:class=>video_vis_class(video)}
       = link_to h(video.title), video_path( video.id )
+      - if !(date = video_created(video)).blank?
+        = "(#{h date.year})"
 
-    - if !(date = video_created(video)).blank?
-      .year= "(#{h date.year})"
-
-    .sentence
+    %p
       - if bookmark
         =h bookmark.sentence
-      - else 
+      - else
         =h video.sentence
     - if !video.tags.empty?
       .tags
         Tags:
         = tags_html( video.tags )
-    .menu
-      = link_to "View video details", video_path( video )
+    = link_to "View video details", video_path( video )
+    \|
+    - if current_user
+      .actions
+        .action
+          = render :partial => "videos/alter_favorites", :object => video
+        .action
+          = render :partial => "videos/add_to_playlist", :object => video
       &nbsp;&bull;&nbsp;
-      - if current_user
-        .actions
-          .action
-            = render :partial => "videos/alter_favorites", :object => video
-          .action
-            = render :partial => "videos/add_to_playlist", :object => video
-        &nbsp;&bull;&nbsp;
-      = link_to "Download", download_video_path( video )
-  .clear
+    = link_to "Download", download_video_path( video )

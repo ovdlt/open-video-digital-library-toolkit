@@ -1,4 +1,9 @@
-.library_page
+.one-column
+  .head
+    %span.left
+      Placeholder Title
+  .body.static-page
+
   %div{:class => @page}
     - if current_user and current_user.has_role? :admin and params[:edit]
       - form_tag url_for( :action => "update" ) do

@@ -1,79 +1,72 @@
-%div
+Library Settings
+%ul
+  %li
+    %label
+      Title
+      %br
+      = @form.text_field :title, :size => 50
 
-  .form
+  %li
+    %label
+      Subtitle
+      %br
+      = @form.text_field :subtitle, :size => 80
 
-    %fieldset
+  %li
+    %label
+      Logo URL
+      %br
+      = @form.text_field :logo_url, :size => 80, :maxlength => 255
 
-      %legend Library Information
-      .label
-        %label
-          Title
-          %br
-          = @form.text_field :title, :size => 50
+  %li
+    %label
+      Organization Link Content
+      %br
+      = @form.text_field :org_link, :size => 80, :maxlength => 255
 
-      .label
-        %label
-          Subtitle
-          %br
-          = @form.text_field :subtitle, :size => 80
+  %li
+    %label
+      Site Copyright Content
+      %br
+      = @form.text_field :copyright, :size => 80, :maxlength => 255
 
-      .label
-        %label
-          Logo URL
-          %br
-          = @form.text_field :logo_url, :size => 80, :maxlength => 255
+  %li
+    %label
+      My Library Tab
+      %br
+      = @form.text_field :my, :size => 80, :maxlength => 255
 
-      .label
-        %label
-          Organization Link Content
-          %br
-          = @form.text_field :org_link, :size => 80, :maxlength => 255
+  %li
+    %label
+      Collections Title
+      %br
+      = @form.text_field :collections_title, :size => 80, :maxlength => 255
 
-      .label
-        %label
-          Site Copyright Content
-          %br
-          = @form.text_field :copyright, :size => 80, :maxlength => 255
+  %li
+    %label
+      Playlists Title
+      %br
+      = @form.text_field :playlists_title, :size => 80, :maxlength => 255
 
-      .label
-        %label
-          My Library Tab
-          %br
-          = @form.text_field :my, :size => 80, :maxlength => 255
+  %li
+    %label
+      Collections Login
+      %br
+      = @form.text_field :collections_login, :size => 80, :maxlength => 255
 
-      .label
-        %label
-          Collections Title
-          %br
-          = @form.text_field :collections_title, :size => 80, :maxlength => 255
+  %li
+    %label
+      Contact Email
+      %br
+      = @form.text_field :emails, :size => 80, :maxlength => 255
 
-      .label
-        %label
-          Playlists Title
-          %br
-          = @form.text_field :playlists_title, :size => 80, :maxlength => 255
+  %li
+    %label
+      = @form.check_box :user_tagging_enabled
+      Enable user tagging
 
-      .label
-        %label
-          Collections Login
-          %br
-          = @form.text_field :collections_login, :size => 80, :maxlength => 255
-
-      .label
-        %label
-          Contact Email
-          %br
-          = @form.text_field :emails, :size => 80, :maxlength => 255
-
-      .label
-        %label
-          = @form.check_box :user_tagging_enabled
-          Enable user tagging
-
-      .label
-        %label
-          Theme:
-          %select{:name => "library[theme]"}
-            = theme_choices
-
-    .clear
+  %li
+    %label
+      Theme:
+      %select{:name => "library[theme]"}
+        = theme_choices

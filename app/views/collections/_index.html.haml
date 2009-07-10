@@ -15,6 +15,10 @@
   /div.collections start
   .collections
     .row
+      / - if subtitle
+      /   .pagination_info= subtitle
+      / - else
+      /   %div &nbsp;
 
 
       = render :partial => "collections/collection", :collection => collections

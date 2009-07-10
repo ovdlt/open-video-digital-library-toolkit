@@ -1,15 +1,69 @@
-.searches.box
-  .title Saved Searches
-  - if current_user.searches.size > 0
-    - current_user.searches.each do |search|
-      .search
-        %span.title Search:
-        %a{:href=>search_path(search)}
-          %span
-            = h search.title
-        .controls
-          .delete
-            - form_tag saved_query_path(search), :method => :delete do
-              %label.button
-                delete
-                = submit_tag "delete", :class => :hidden
+.account-page
+  .head
+    %span.left
+      My NHF » Saved Searches
+  .body
+    .col-main.left
+      .videos.saved-searches
+      - if current_user.searches.size > 0
+        .smaller-head
+          My Saved Searches
+          /can we add count here?
+        .list
+          %ul
+          - current_user.searches.each do |search|
+            %li
+              .details
+                %h5.title
+                  "
+                  %a{:href=>search_path(search)}
+                    = h search.title
+                  "
+                %p
+                  %span.remove
+                    %a{ :href => "#" }
+                      Edit
+                    |
+                    %a{ :href => "#" }
+                      Remove
+    /left col end
+    .col-right
+      %dl
+        %dt
+          %img{ :src => "/images/icon-user.gif", :alt => "user's icon avatar" }
+          MY PROFILE
+        %dd
+          .my-profile
+            .username
+              Username
+            Registered since April 14, 2009
+            %a{ :href => "#" }
+              Manage Account
+        %dt
+          %img{ :src => "/images/icon-tool.gif", :alt => "TOOLS &amp; SERVICES" }
+          My NHF
+        %dd
+          %ul
+            %li.menu-home
+              %span.icon
+              Home
+            %li.menu-favorites
+              %span.icon
+              %a{ :href => "#" }
+                Favorites
+            %li.menu-playlists
+              %span.icon
+              %a{ :href => "#" }
+                Playlists
+            %li.menu-create
+              %span.icon
+              %a{ :href => "#" }
+                Create New Playlist
+            %li.menu-searches.on
+              %span.icon
+              %a{ :href => "#" }
+                Saved Searches
+            %li.menu-downloaded
+              %span.icon
+              %a{ :href => "#" }
+                Downloaded Videos

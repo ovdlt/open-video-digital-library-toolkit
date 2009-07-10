@@ -1,68 +1,77 @@
-.hitlist
-
-  %h1
-    Search / Browse Results
-
-    - if params[:descriptor_value_id]
-      %br
-      %br
-      %div
+.one-column
+  .head
+    %span.left
+      Search/Browse Results
+  /head end
+  .body
+    .col-main.left
+      - if params[:descriptor_value_id]
         - descriptor = DescriptorValue.find( params[:descriptor_value_id] )
-        .search-within
-          In
-          = h(descriptor.property_type.name)
-          &mdash;
-          = h(descriptor.text)
-
-  = render :partial => "videos/index", :object => @videos 
-
-.sidebar
-  .entry
-    .title Other videos
-    %ul
-      %li= link_to "Browse all videos", videos_path
-    - if @property_type_menu
-      .entry
-        = render :partial => "shared/axis", :object => @property_type_menu
-  .entry
-    .title Refine Results
-    - form_for @search, :url => videos_path, |
-                        :html => { :method => :get, :id => nil }, |
+        In
+        = h(descriptor.property_type.name)
+        &mdash;
+        = h(descriptor.text)
+      = render :partial => "videos/index", :object => @videos
+      /left end
+    .col-right
+      %dl
+        %dt
+          %img{ :src => "/images/icon-video.gif", :alt => "video" }
+          MORE VIDEOS
+        %dd
+          %ul
+            %li
+              = link_to "Browse All Videos »", videos_path
+          - if @property_type_menu
+            = render :partial => "shared/axis", :object => @property_type_menu
+        %dt
+          %img{ :src => "/images/icon-refine.gif", :alt => "video" }
+          REFINE RESULTS
+        %dd
+        - form_for @search, :url => videos_path, |
+                        :html => { :method => :get, :id => nil, :class => "refineForm" }, |
                         :builder => OvdltFormBuilder do |form| |
-      %ul.refine
-        %li
-          = form.criterion :text, :size => 28
-        %li
-          %label
+          %p
+            Additional Search Terms
+          %p
+            = form.criterion :text, :size => 28
+          %p
+            Duration
+          %p
             = form.criterion :duration
-            %span.text Duration:
-        - PropertyType.browse do |type|
-          %li
-            %label
+          - PropertyType.browse do |type|
+            %p
+              &== #{type.name}
+            %p
               = form.criterion type
-              %span.text&== #{type.name}:
-        - if current_user and current_user.has_role?([:admin,:cataloger])
-          %li
-            %label
+          - if current_user and current_user.has_role?([:admin,:cataloger])
+            %p
+              Visibility
+            %p
               = form.criterion :public
-              %span.text Visibility:
-        %li= form.submit "refine"
-  - if current_user
-    .entry
-      .title Tools and Services
-      %ul
-        - if current_user && current_user.has_role?( [ :admin, :cataloger ] )
-          %li= link_to "<span>Add new video</span>", "/videos/new"
-        - if current_user and params[:search]
-          %li
-            - form_tag saved_queries_path, :method => :post do
-              %label.button.save_query
-                = link_to "Save this search", "#"
-              = to_form_inputs( @search.add_to_params( {}, :search ) )
-              .save_query
-                .title.hidden
-                  %label
-                    Title:
-                    = text_field_tag 'search[title]', nil, :id => nil
-                    = submit_tag "Save", :class => :hidden
-.clear
+          %p{ :align => "right" }
+            %input{ :id => "search_submit", :name => "commit", :src => "/images/btn-refine.gif", :type => "image", :value => "refine" }
+      - if current_user
+        %dt
+          %img{ :src => "/images/icon-video.gif", :alt => "video" }
+          Tools and Services
+        %dd
+          %ul
+          - if current_user && current_user.has_role?( [ :admin, :cataloger ] )
+            %li.menu-create
+              %span.icon
+              = link_to "Create New Record", new_video_path
+          - if current_user and params[:search]
+            %li.menu-embed
+              %span.icon
+              - form_tag saved_queries_path, :method => :post do
+                %label.button.save_query
+                  = link_to "Save this search", "#"
+                = to_form_inputs( @search.add_to_params( {}, :search ) )
+                .save_query
+                  .title.hidden
+                    %label
+                      Title:
+                      = text_field_tag 'search[title]', nil, :id => nil
+                      = submit_tag "Save", :class => :hidden
+      /right end

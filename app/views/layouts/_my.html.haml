@@ -3,7 +3,7 @@
     = yield
   .my.sidebar
     .entry
-      .title 
+      .title
         = h(current_user.login)
       = "Registered since " + current_user.created_at.to_date.to_s(:long)
       %br/

@@ -1,31 +1,27 @@
 - videos = index
-.videos.list.partial
-
-
-  - if videos.size > 0
-    .navigate
-      .pagination_info
+- if videos.size > 0
+  .videos.bg-thumbs
+    /just change the name of 'bg-thumbs' to 'text-only','sm-thumbs' or 'thumbs-only' when listing type changed
+    .smaller-head
+      %span.left
         = page_entries_info videos, :entry_name => "video"
       - if @collection and WillPaginate::ViewHelpers.total_pages_for_collection( videos ) > 1
         .show_all
           = link_to "show all", collection_path( @collection, :page => "all" )
-      - [ :bg_thumbs, |
-          :text_only, |
-          :sm_thumbs, |
-          :sm_thumbs_only ].reverse.each do |format| |
-        .button{:class => "#{format} pointer"}
-          = image_tag "results_#{format}.gif"
-      .clear
-      
-    .list        
-      - if params[:search].nil? || params[:search][:criteria].nil? || params[:search][:criteria][:text].nil? || params[:search][:criteria][:text].length == 1
-        = render :partial => "videos/show", :collection => videos
-      - else
-        = highlight(  |
-          (render :partial => "videos/show", :collection => videos), |
-          params[:search][:criteria][:text] ) |
-    .clear
-
+      .listby
+        - [ :bg_thumbs, |
+            :text_only, |
+            :sm_thumbs, |
+            :thumbs_only ].reverse.each do |format| |
+          .button{:class => "#{format} pointer"}
+            = image_tag "results_#{format}.gif"
+    .list
+      %ul
+        - if params[:search].nil? || params[:search][:criteria].nil? || params[:search][:criteria][:text].nil? || params[:search][:criteria][:text].length == 1
+          = render :partial => "videos/show", :collection => videos
+        - else
+          = highlight(  |
+            (render :partial => "videos/show", :collection => videos), |
+            params[:search][:criteria][:text] ) |
     .pagination
       = will_paginate videos
-

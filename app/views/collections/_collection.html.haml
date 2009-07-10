@@ -6,13 +6,13 @@
       %a{ :href => collection_path( collection )  }
         %img{:src=>p,:alt => "sample image from collection"}
   .details
-    - if owner = owner_text( collection ) and owner != "my"
-      .owned_by
-        Created by
-        .owner
-          = owner
     %h5.title
       = link_to collection.title, collection_path( collection )
+      - if owner = owner_text( collection ) and owner != "my"
+        %span
+          Created by
+          %strong
+            = owner
 
       - if current_user and current_user.has_role?(  [ :admin, :cataloger ] )
         .featured
@@ -50,7 +50,8 @@
         = collection.description
       %p
       %strong
-        = link_to "View Collection", collection_path( collection )
-      |
+        = link_to "View " + container_text( collection ) + " ", |
+          collection_path( collection ) |
+      \|
       %strong
         = link_to "Subscribe", collection_path( collection, :format => "atom" )

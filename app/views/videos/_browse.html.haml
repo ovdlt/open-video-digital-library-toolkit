@@ -1,7 +1,9 @@
-#browse.category
-  .title.block Browse Videos
-  .content.block.last
-    = render :partial => "shared/axes"
-    #videos.videos
-      = render :partial => "videos/images"
-    .clear
+.col-left
+  .head
+    %span.left
+      BROWSE
+  = render :partial => "shared/axes"
+/left col end, right col start
+.main.left
+  = render :partial => "videos/images"
+/right col end

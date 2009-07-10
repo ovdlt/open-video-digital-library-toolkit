@@ -1,66 +1,74 @@
 - collection = show
-.collection.page.show
-  .collection
-    .image
-      - if p = collection.poster_path( public_only? )
-        %img{:src=>p,:alt => "sample image from collection"}
-    .details
-      .title
-        %span.label= container_text( collection ).capitalize + ": "
+/head start
+.head
+  %span.left= container_text( collection ).capitalize + ": " + collection.title
+  %label.featured.left
+    FEATURED
+  %span.right.rss
+    %img{ :src => "/images/icon-rss.gif", :alt => "rss" }
+    %a{ :href => "#" }
+      Subscribe to this Collection
+/head end
+.body
+  .col-main.left
+    /collection single start
+    .collection-single
+      .image{ :style => "background-color:#333" }
+      .details
+        %p
+          %strong
+            Videos:
+          = collection.size( public_only? )
+          %br
+          %strong
+            Views:
+          = collection.views
+          %br
+          %strong
+            Added:
+          = collection.created_at.to_date.to_s(:medium)
+          by
+          = h collection.user.login
+          %br
+          %strong
+            Last Updated:
+          = collection.created_at.to_date.to_s(:medium)
+        %p
+          = h collection.description
+
         - if current_user and current_user.id == collection.user_id
           .right
             = link_to "edit", edit_collection_path( collection )
           .clear
           .right
             = link_to "delete", collection_path( collection ), |
-                 :method => :delete, |
-                 :confirm => "are you sure you want to delete this collection?" |
-        - else
-          .created_by.right
-            Created by
-            .value= h collection.user.login
-        = h collection.title
-
-      - if current_user and current_user.has_role?(  [ :admin, :cataloger ] )
-        .featured
-          - form_for collection, :html => { :id => nil } do |form|
-            %label
-              = form.check_box :featured
-              - if !collection.featured?
-                Feature this collection
-              - else
-                This collection featured on
-                = collection.featured_on.to_time.localtime.strftime("%B %d, %Y at %I:%M %p")
-                = feature_rank( collection )
-      - else
-        - if collection.featured?
-          .featured
-            .notice
-              A featured collection!
-
-      .attribute.created_on
-        .separator &bull;
-        .legend Created on:
-        .value= collection.created_at.to_date.to_s(:medium)
-      .attribute.updated_on
-        .separator &bull;
-        .legend Last updated:
-        .value= collection.created_at.to_date.to_s(:medium)
-      .attribute.videos
-        .separator &bull;
-        .legend Videos:
-        .value= collection.size( public_only? )
-      .attribute.views
-        .separator &bull;
-        .legend Views:
-        .value= collection.views
-      .clear
-      .description= h collection.description
+               :method => :delete, |
+               :confirm => "are you sure you want to delete this collection?" |
       - if current_user and current_user.id == collection.user_id
-        .clear
         .public
-          This playlist is 
+          This playlist is
           = collection.public? ? "public." : "private."
-
-  .clear
-  = render :partial => "videos/index", :object => bookmarks
+      /collection single end
+    = render :partial => "videos/index", :object => bookmarks
+    /col left end
+    /code below would be better in collections/show but HAML nesting wont work there
+  .col-right
+    %dl
+      %dt
+        %img{ :src => "/images/icon-video.gif", :alt => "video" }
+        MORE COLLECTIONS
+      %dd
+        %ul
+          %li
+            = link_to "Browse All #{containers_text( @collection )} »", |
+              send( "#{containers_text( @collection )}_collections_path".to_sym ) |
+          /
+            - if owner = owner_text( @collection )
+              %li
+                All
+                = owner
+                = containers_text( @collection )
+          /
+            %li
+              Related
+              = containers_text( @collection )

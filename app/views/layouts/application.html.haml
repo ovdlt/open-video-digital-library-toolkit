@@ -1,5 +1,6 @@
 - title ||= Library.title
 - my ||= Library.my
+!!! XML
 !!!
 %html{ :xmlns => "http://www.w3.org/1999/xhtml" }
   %head
@@ -15,24 +16,24 @@
         .superheader
           .login_out
             %ul
-            - if logged_in?
-              %li
-                = link_to "Logout", logout_path
-              \|
-            - else
-              %li
-                = link_to "Login", login_path, { :rel => "facebox" }
-              \|
-            -#
-              %li
-                You're logged in as
-                %span.login= h current_user.login
-            - if !logged_in?
-              %li
-                = link_to "Register", signup_path, { :rel => "facebox" }
-            - if current_user and current_user.has_role?( "admin" )
-              %li
-                = link_to "Administration", library_path
+              - if logged_in?
+                %li
+                  = link_to "Logout", logout_path
+                \|
+              - else
+                %li
+                  = link_to "Login", login_path, { :rel => "facebox" }
+                \|
+              -#
+                %li
+                  You're logged in as
+                  %span.login= h current_user.login
+              - if !logged_in?
+                %li
+                  = link_to "Register", signup_path, { :rel => "facebox" }
+              - if current_user and current_user.has_role?( "admin" )
+                %li
+                  = link_to "Administration", library_path
         /superheader end, div.header start
         .header
           .logo
@@ -64,8 +65,8 @@
                       :url => videos_path, |
                       :html => { :method => :get }, |
                       :builder => OvdltFormBuilder do |form| |
-                = form.criterion :text, :size => 40, :id => nil
-                %input.btn{ :src => "images/sch.gif", :type => "image" }
+                = form.criterion :text, :size => 40, :id => nil, :class => 'input-text'
+                = image_submit_tag "sch.gif", :class => 'btn'
         /header end
         .container
           = yield

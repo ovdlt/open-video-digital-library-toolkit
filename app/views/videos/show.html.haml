@@ -1,47 +1,46 @@
 - video ||= @video
-.details
+.one-column
+  .head
+    %span.left{:class=>video_vis_class(video)}
+      = h video.title
 
-  %h1.title{:class=>video_vis_class(video)}
-    = h video.title
+    - if current_user and current_user.has_role?(  [ :admin, :cataloger ] )
+      %label
+        - form_for video, :html => { :id => nil } do |form|
+          %label
+            = form.check_box :featured
+            - if !video.featured?
+              Feature this video
+            - else
+              This video featured on
+              = video.featured_on.to_time.localtime.strftime("%B %d, %Y at %I:%M %p")
+              = feature_rank( video )
+    - else
+      - if video.featured?
+        %label.featured
+          FEATURED
 
-  - if current_user and current_user.has_role?(  [ :admin, :cataloger ] )
-    .featured
-      - form_for video, :html => { :id => nil } do |form|
-        %label
-          = form.check_box :featured
-          - if !video.featured?
-            Feature this video
-          - else
-            This video featured on
-            = video.featured_on.to_time.localtime.strftime("%B %d, %Y at %I:%M %p")
-            = feature_rank( video )
-  - else
-    - if video.featured?
-      .featured
-        .notice
-          A featured video!
-
-  - if current_user and current_user.has_role?( :admin )
-    .public
-      - form_for video, :html => { :id => nil } do |form|
-        %label
-          = form.check_box :public
-          - if !video.public?
-            Make this video public
-          - else
-            This video is public
-  - elsif current_user and current_user.has_role?(  :cataloger )
-    .public
-      This video is
-      = video.public? ? "public" : "private"
+    - if current_user and current_user.has_role?( :admin )
+      .public
+        - form_for video, :html => { :id => nil } do |form|
+          %label
+            = form.check_box :public
+            - if !video.public?
+              Make this video public
+            - else
+              This video is public
+    - elsif current_user and current_user.has_role?(  :cataloger )
+      .label
+        This video is
+        = video.public? ? "public" : "private"
 
   .body
-
-    .image
+    /left col start
+    .col-left
 
       - if p = select_flash_path(video)
 
-        %p#flash
+        %p.miniplayer#flash
 
         %script{:type => "text/javascript", :src=>"/javascripts/swfobject.js"}
         %script{:type => "text/javascript"}
@@ -52,172 +51,191 @@
           = "'file=#{p}&image=#{video.poster_path}'"
           );
           s1.write('flash');
-        
-    - if !video.abstract.blank?
-      .abstract
-        :textile
-          #{video.abstract}
-    - elsif !video.sentence.blank?
-      .sentence&= video.sentence
 
-    .navigate
-
-      .view.first
-        %div{current(:details)}= link_to_details :details
-      .view
-        %div{current(:fast_forward)}= link_to_details :fast_forward
-      .view
-        %div{current(:excerpt)}= link_to_details :excerpt
-      .view.last
-        %div{current(:storyboard)}= link_to_details :storyboard
-
-      .clear
-
-    - if params[:details_format] == "storyboard" and |
-         images = video.storyboard |
-      .storyboard
-        
-        - images.each do |image|
-          .image
-            %img{:src=>image,:alt=>"storyboard image"}
-            - if current_user and current_user.has_role?(  [ :admin, :cataloger ] )
-              - if image == video.poster_path
-                .poster.checked
-              - else
-                .poster.check
-                  - form_for video, :html => { :id => nil } do |f|
-                    .hidden
-                      = f.text_field :poster_path, :value => image, :id => gen_id
-                      = f.submit "update", :id => nil
-      .clear
-
-    .downloads
-
-      .legend Download
-
-      .download_list
-
-        - video.assets.each do |asset|
-        
-          .download
-
+      .details
+        .full-screen
+          - video.assets.each do |asset|
             %a{:href => asset_path( asset  )}
-              = asset.filename
-            &diams;
-            .format= h asset.asset_format
-            &loz;
-            .size= number_to_human_size(asset.size)
+              %img{ :src => "/images/icon-full-size.gif", :alt => "" }
+              Watch Full Size Video
 
-      .clear
-
-    .details
-
-      .legend Video Details
-
-      .details_list
-
-        .detail
-          .type Added:
-          .value= video.created_at.to_date.to_s(:long)
-
-          .type Updated:
-          .value= video.updated_at.to_date.to_s(:long)
-
-        %br
-        %br
-
-        /
-          - video.descriptor_types.each do |type|
-
-            .detail
-              - descriptors = video.properties.find_all_by_property_type( type )
-              .type= h( descriptors.size > 1 ? type.name.pluralize : |
-                                                 type.name ) + ":" |
-              - descriptors.each do |descriptor|
-                .value= h descriptor.value.text
-              .clear
-
-      .details_list
-        - if !video.rights_holder.blank?
-          .detail
-            .type Rights Holder:
-            .value
-              :textile
-                #{video.rights_holder}
-        %div= h video.rights.statement
-        %div
-          :textile
-            #{video.rights.html}
-
-      .details_list
-        - show_tabs.each do |tab|
-          = tabs_div_for tab
-
-      - if !(vd = video_details( video )).empty?
-        .details_list
-          %fieldset
-            %legend Video Information
-            %dl.wide
-              - vd.each do |dt,dd,textile|
-                %dt&= dt
-                %dd
-                  - if textile
-                    :textile
-                      #{dd}
-                  - else
-                    &= dd
-    .clear
-
-.sidebar
-  - if !video.tags.empty? or @library.user_tagging_enabled?
-    .entry
-      .title Tags
-      - if current_user and @library.user_tagging_enabled?
-        - form_tag url_for( :controller => :tagging, :action => :create ) do
-          = text_field_tag :tags
-          = hidden_field_tag :video_id, video.id
-          = submit_tag "add tags"
-      = tags_html( video.tags )
-      - if !current_user and @library.user_tagging_enabled?
-        .tell_login
-          = link_to "Login", login_path
-          to add tags
-      %div &nbsp;
-
-  .entry
-    .title Other Videos
-    %ul
-      %li
-        = link_to "Browse all videos", videos_path
-      - if session[:search]
+        - if !video.abstract.blank?
+          .abstract
+            :textile
+              #{video.abstract}
+        - elsif !video.sentence.blank?
+          .description&= video.sentence
+          .download
+            - video.assets.each do |asset|
+              %a{:href => asset_path( asset  )}
+                %img{ :src => "/images/btn-download.gif", :alt => "download" }
+              %span
+                = h asset.asset_format + " " + number_to_human_size(asset.size)
+    /left col end
+    .col-center
+      %ul.navigators
         %li
-          = link_to "Return to search results", search_path( session[:search] )
-  /        
-    .entry
-      .title Related Videos
-      %ul
-        %li Something here
-  .entry
-    .title Tools and Services
-    %ul.line
-      - if current_user
-        %li= render :partial => "videos/alter_favorites", :object => video
+          %a{ :href => "#details" }
+            Details
         %li
-          = render :partial => "add_to_playlist", |
-                   :object => video |
-      %li.print= link_to "Print this page", "#"
-      %li
-        = link_to "E-mail link to this video", mail_video( video )
-      - if !@library.emails.blank?
+          %a{ :href => "#storyboard" }
+            Storyboard
         %li
-          = link_to "Report issue with this video", mail_video_issue( video )
-    - if current_user and current_user.has_role?(  [ :admin, :cataloger ] )
-      %ul.line
-        %li= link_to "Edit catalog data", edit_video_path( video )
-        %li= link_to( "Delete catalog data", video_path( video ), |
-                       :confirm => "Are you sure you want to delete/uncatalog this video? Select OK to delete it, or Cancel to keep it.", |
+          %a{ :href => "#fast-forward" }
+            Fast Forward
+        %li
+          %a{ :href => "#excerpt" }
+            Excerpt
+      %dl#details
+        %dt
+          Overview
+        %dd
+          %ul
+            %li
+              %label
+                Added:
+              = video.created_at.to_date.to_s(:long)
+            %li
+              %label
+                Updated:
+              = video.updated_at.to_date.to_s(:long)
+            %li
+              %label
+                License:
+              %p
+              - if !video.rights_holder.blank?
+                :textile
+                  #{video.rights_holder}
+              %p
+                = h video.rights.statement
+              %p
+                :textile
+                  #{video.rights.html}
+        %dt
+          Dates
+        %dd
+          %ul
+            %li
+              %label
+                Creation:
+              April 14, 2009
+            %li
+              %label
+                Digitization:
+              April 21, 2009
+        %dt
+          Descriptors
+        %dd
+          %ul
+            %li
+              %label
+                Descriptor:
+        %dt
+          Responsible Entities
+        %dd
+          %ul
+            %li
+              %label
+                Writer:
+              John Smith
+        %dt
+          Video Information
+        %dd
+          %ul
+            %li
+              %label
+                Alternative Title:
+              video[alternative_title]
+            %li
+              %label
+                Series Title:
+              video[series_title]
+      - if params[:details_format] == "storyboard" and |
+           images = video.storyboard |
+        #storyboard
+          - images.each do |image|
+            .image
+              %a{ :href => "#" }
+                %img{:src=>image,:alt=>"storyboard image"}
+      #fast-forward
+        Fast forward
+      #excerpt
+        Excerpt
+    /center end
+    .col-right
+      %dl
+        %dt
+          %img{ :src => "/images/icon-tag.gif", :alt => "tags" }
+          TAGS
+        %dd
+          .tags
+            %a{ :href => "#" }
+              Dynamic
+            ,
+            %a{ :href => "#" }
+              Queries
+            ,
+            %a{ :href => "#" }
+              Computer-Science
+            ,
+            %a{ :href => "#" }
+              Computer
+            ,
+            %a{ :href => "#" }
+              Science
+        %dt
+          %img{ :src => "/images/icon-video.gif", :alt => "more videos" }
+          More videos
+        %dd
+          %ul
+            %li
+              = link_to "Browse All Videos »", videos_path
+            - if session[:search]
+              %li
+                = link_to "Return to search results »", search_path( session[:search])
+        %dt
+          %img{ :src => "/images/icon-tool.gif", :alt => "TOOLS &amp; SERVICES" }
+          TOOLS &amp; SERVICES
+        %dd
+          %ul
+            %li.menu-print
+              %span.icon
+              %a{ :href => "#" }
+                Print
+            %li.menu-email
+              %span.icon
+              = link_to "E-mail", mail_video( video )
+            - if !@library.emails.blank?
+              %li.menu-report
+                %span.icon
+                = link_to "Report Issue", mail_video_issue( video )
+            - if current_user
+              %li.menu-favorites
+                %span.icon
+                %a{ :href => "#" }
+                  Add to Favorites
+              %li.menu-playlists
+                %span.icon
+                %a{ :href => "#" }
+                  Add to Playlist
+            %li.menu-embed
+              %span.icon
+              %a{ :href => "#" }
+                Embed Video
+        - if current_user and current_user.has_role?(  [ :admin, :cataloger ] )
+          %dt
+            %img{ :src => "/images/icon-option.gif", :alt => "CATALOGING OPTIONS" }
+            CATALOGING OPTIONS
+          %dd
+            %ul
+              %li.menu-edit
+                %span.icon
+                = link_to "Edit Video Record", edit_video_path( video )
+              %li.menu-delete
+                %span.icon
+                = link_to( "Delete Video Record", video_path( video ), |
+                       :confirm => "Are you sure you want to delete the catalog record for this video? Select OK to delete it, or Cancel to keep it.", |
                        :method => :delete ) |
-      %ul
-        %li= link_to "Add new video", new_video_path
-
-.clear
+              %li.menu-create
+                %span.icon
+                = link_to "Create New Record", new_video_path
