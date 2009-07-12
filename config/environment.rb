@@ -92,7 +92,7 @@ ActionView::Helpers::AssetTagHelper.
 ActionView::Helpers::AssetTagHelper.
   register_javascript_include_default "jquery.cookie"
 ActionView::Helpers::AssetTagHelper.
-  register_javascript_include_default "jquery.ui.all"
+  register_javascript_include_default "jquery-ui"
 ActionView::Helpers::AssetTagHelper.
   register_javascript_include_default "jquery.autocomplete"
 ActionView::Helpers::AssetTagHelper.

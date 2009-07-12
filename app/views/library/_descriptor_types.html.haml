@@ -5,7 +5,7 @@
         = render :partial => "library/dt", :object => dt
       - if current_user and current_user.has_role?( "admin" )
         :javascript
-          $(document).ready( function() {
+          jQuery(document).ready( function() {
             make_sortable( { list_selector : "#descriptor_types_list", item_selector : ".dtype" , post_url : "/library/property_type/order", handle:".dt_handle"}  );
           });
       %li

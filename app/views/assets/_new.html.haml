@@ -29,12 +29,12 @@
           %td should be hidden
     #asset_pager.ajax
     %script{:type=>"text/javascript"}
-      $(function(){
-      $("div#asset_pager").paginate(
+      jQuery(function(){
+      jQuery("div#asset_pager").paginate(
       = Asset.uncataloged_files({}).length
       ,
       = '"' + formatted_uncataloged_assets_path( :format => :json ) + '"'
       );
-      $.load_assets(0);
+      jQuery.load_assets(0);
       });
     / .div= will_paginate files

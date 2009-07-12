@@ -28,29 +28,29 @@
           %img{ :src => "/images/icon-refine.gif", :alt => "video" }
           REFINE RESULTS
         %dd
-        - form_for @search, :url => videos_path, |
-                        :html => { :method => :get, :id => nil, :class => "refineForm" }, |
-                        :builder => OvdltFormBuilder do |form| |
-          %p
-            Additional Search Terms
-          %p
-            = form.criterion :text, :size => 28
-          %p
-            Duration
-          %p
-            = form.criterion :duration
-          - PropertyType.browse do |type|
+          - form_for @search, :url => videos_path, |
+                          :html => { :method => :get, :id => nil, :class => "refineForm" }, |
+                          :builder => OvdltFormBuilder do |form| |
             %p
-              &== #{type.name}
+              Additional Search Terms
             %p
-              = form.criterion type
-          - if current_user and current_user.has_role?([:admin,:cataloger])
+              = form.criterion :text, :size => 28
             %p
-              Visibility
+              Duration
             %p
-              = form.criterion :public
-          %p{ :align => "right" }
-            %input{ :id => "search_submit", :name => "commit", :src => "/images/btn-refine.gif", :type => "image", :value => "refine" }
+              = form.criterion :duration
+            - PropertyType.browse do |type|
+              %p
+                &== #{type.name}
+              %p
+                = form.criterion type
+            - if current_user and current_user.has_role?([:admin,:cataloger])
+              %p
+                Visibility
+              %p
+                = form.criterion :public
+            %p{ :align => "right" }
+              %input{ :id => "search_submit", :name => "commit", :src => "/images/btn-refine.gif", :type => "image", :value => "refine" }
       - if current_user
         %dt
           %img{ :src => "/images/icon-video.gif", :alt => "video" }

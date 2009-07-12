@@ -19,11 +19,13 @@
               - if logged_in?
                 %li
                   = link_to "Logout", logout_path
-                \|
+                %li
+                  \|
               - else
                 %li
                   = link_to "Login", login_path, { :rel => "facebox" }
-                \|
+                %li
+                  \|
               -#
                 %li
                   You're logged in as
@@ -40,7 +42,7 @@
             %h1
               = link_to title, url_for( :controller => :home, :action => :index )
             %h2
-              .subtitle= Library.subtitle
+              = Library.subtitle
 
           .navigation
             %ul
@@ -100,11 +102,3 @@
         /div.container end
       /div.center end
     /div.wrapper end
-    -# after a page loads, immediately highlight any flash messages (changes bg to yellow, then fade back to white)
-    -# a little later, fade out and remove the message completely
-    :javascript
-      $(document).ready( function() {
-        setTimeout( '$(".flash").effect("highlight", {}, 1000 );', 500 );
-        setTimeout( '$(".flash.notice").fadeOut( 2000 );' , 2000 );
-        $('a[rel*=facebox]').facebox({opacity:0.5})
-      } );
