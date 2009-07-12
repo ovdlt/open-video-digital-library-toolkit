@@ -57,7 +57,7 @@
   /right col end
 - if current_user and current_user.has_role?( "admin" )
   :javascript
-    $(document).ready( function() {
+    jQuery(document).ready( function() {
       make_sortable( { list_selector: "#featured_collections", item_selector: ".collection",    post_url: "/collections/featured/order" });
       make_sortable( { list_selector: "#featured_videos",      item_selector: ".video",         post_url: "/videos/featured/order" });
       make_sortable( { list_selector: "#browse_axes",          item_selector: ".property_type", post_url: "/library/property_type/order" });
