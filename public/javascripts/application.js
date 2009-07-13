@@ -242,22 +242,22 @@
         /* video list buttons */
 
         var current_button_class =
-            $.cookie(".videos.list.partial.navigate.current");
+            $.cookie(".videos.listby.current");
         if ( current_button_class == null) {
-            current_button_class = "bg_thumbs";
-            $.cookie(".videos.list.partial.navigate.current",
+            current_button_class = "big_thumbs";
+            $.cookie(".videos.listby.current",
                      current_button_class,
                      { path: '/' }
                     );
         }
 
-        $(".videos.list.partial").removeClass("bg_thumbs");
-        $(".videos.list.partial").removeClass("text_only");
-        $(".videos.list.partial").removeClass("sm_thumbs");
-        $(".videos.list.partial").removeClass("sm_thumbs_only");
-        $(".videos.list.partial").addClass(current_button_class);
+        $(".videos").removeClass("big_thumbs");
+        $(".videos").removeClass("text_only");
+        $(".videos").removeClass("sm_thumbs");
+        $(".videos").removeClass("thumbs_only");
+        $(".videos").addClass(current_button_class);
 
-        $(".videos.list.partial .navigate .button").each(function(){
+        $(".videos .listby .button").each(function(){
             if($(this).hasClass(current_button_class)){
                 $(this).addClass("current");
                 $(this).removeClass("pointer");
@@ -267,25 +267,25 @@
             }
         });
 
-        $(".videos.list.partial .navigate .button").click(function(){
+        $(".videos .button").click(function(){
             var clicked = this;
-            $("div.button",$(clicked).parents("div.navigate")[0]).each(function(){
+          $("div.button",$(clicked).parents("div.listby")[0]).each(function(){
                 if(this == clicked){
 
                     var classes = $(this).attr("class").split(" ");
                     current = $.grep( classes, function(n){
                         return n != "current" && n != "pointer"
                     })[0];
-                    $.cookie(".videos.list.partial.navigate.current",
+                    $.cookie(".videos.listby.current",
                              current,
                              { path: '/' }
                             );
 
-                    $(".videos.list.partial").removeClass("bg_thumbs");
-                    $(".videos.list.partial").removeClass("text_only");
-                    $(".videos.list.partial").removeClass("sm_thumbs");
-                    $(".videos.list.partial").removeClass("sm_thumbs_only");
-                    $(".videos.list.partial").addClass(current);
+                    $(".videos").removeClass("bg_thumbs");
+                    $(".videos").removeClass("text_only");
+                    $(".videos").removeClass("sm_thumbs");
+                    $(".videos").removeClass("thumbs_only");
+                    $(".videos").addClass(current);
 
                     $(this).addClass("current");
                     $(this).removeClass("pointer");
@@ -366,14 +366,14 @@
 
         //console.log("Making this list sortable --> " + list_selector );
         //console.log("                       items are '" + item_selector + "'" );
-        
+
         //console.log("                    : cancel is [" + cancel + "]" );
         //console.log("                    : handle is [" + handle + "] -- options.handle = [" + options.handle + "]" );
 
-        $(list_selector + " " + item_selector).bind("mouseover", 
-                                                    function(e) { 
-                                                        $(".ui-sortable .handle").hide(); 
-                                                        $(this).children(".handle").show()             
+        $(list_selector + " " + item_selector).bind("mouseover",
+                                                    function(e) {
+                                                        $(".ui-sortable .handle").hide();
+                                                        $(this).children(".handle").show()
                                                     } );
 
         // TODO generalize this
@@ -390,7 +390,7 @@
             //tolerance: 'intersect',
             handle: handle,
             containment: 'document',
-            update: function() { 
+            update: function() {
                 var new_order = get_sortable_order(list_selector) ;
                 //console.log( "Sortable: " + list_selector + " -- new order:  " + new_order );
                 //console.log( "Sortable: " + list_selector + " -- old order:  " + $(list_selector).attr("original_order") );
@@ -422,7 +422,7 @@
 
         //console.log("order to send is " + new_order );
 
-        var post_data = "order=" + new_order 
+        var post_data = "order=" + new_order
             + "&authenticity_token=" + encodeURIComponent(AUTH_TOKEN);
 
         // jQuery.post("http://localhost:3000/collections/featured/order", post_data, new_order_saved, "text" );
