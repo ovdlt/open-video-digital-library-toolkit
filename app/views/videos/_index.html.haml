@@ -9,12 +9,12 @@
         .show_all
           = link_to "show all", collection_path( @collection, :page => "all" )
       .listby
-        - [ :bg_thumbs, |
+        - [ :big_thumbs, |
             :text_only, |
             :sm_thumbs, |
             :thumbs_only ].reverse.each do |format| |
           .button{:class => "#{format} pointer"}
-            = image_tag "results_#{format}.gif"
+            = image_tag "#{format}.gif"
     .list
       %ul
         - if params[:search].nil? || params[:search][:criteria].nil? || params[:search][:criteria][:text].nil? || params[:search][:criteria][:text].length == 1
