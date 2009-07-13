@@ -356,7 +356,7 @@
  *  post_url      - URL to POST changes to be saved on the server
  *    accepts a selector (div id, etc) and applies jQuery Sortable to it
  */
-    function make_sortable( options )
+    make_sortable = function( options )
     {
         var list_selector = options.list_selector;
         var item_selector = options.item_selector;
@@ -411,12 +411,14 @@
         // $(".save_new_order").bind("click", send_new_order);
     }
 
-    function get_sortable_order( list )
+    get_sortable_order = function( list )
     {
+        console.debug( list);
+        console.debug( $(list) );
         return $( list ).sortable('serialize').replace( /&[a-z_]+\[\]=/ig, ",").replace( /[a-z_]+\[\]=/i, "");
     }
 
-    function send_new_order( list, post_url, new_order ) {
+    send_new_order = function( list, post_url, new_order ) {
         // disable the sortable list until we receive confirmation from the server that new order was saved
         $(list).sortable('disable');
 
@@ -439,7 +441,7 @@
         //console.log("Sent data: " + post_data );
     }
 
-    function new_order_saved( selector )
+    new_order_saved = function( selector )
     {
         list = $(selector);
         var sent_order = get_sortable_order( selector );
@@ -455,7 +457,8 @@
             }
         };
     }
-    function failed_saving_new_order( xml_req, error, exception )
+
+    failed_saving_new_order = function( xml_req, error, exception )
     {
         //console.log("failed sending new order to server");
         // TODO display a message telling the user we failed saving the order and what they can do about it ?
