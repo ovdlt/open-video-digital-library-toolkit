@@ -12,7 +12,7 @@
         - [ :big_thumbs, |
             :text_only, |
             :sm_thumbs, |
-            :thumbs_only ].reverse.each do |format| |
+            :thumbs_only ].each do |format| |
           .button{:class => "#{format} pointer"}
             = image_tag "#{format}.gif"
     .list
