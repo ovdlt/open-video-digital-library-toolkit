@@ -301,7 +301,7 @@
             return false;
         });
 
-        $("span.next input").click(function(){
+        $("span.next input, input[name=next]").click(function(){
             tabs = $(".tabs_pi > ul").tabs();
             current = tabs.data('selected.tabs');
             if( current+2 == tabs.tabs('length') ) {
