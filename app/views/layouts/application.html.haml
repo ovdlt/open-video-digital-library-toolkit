@@ -72,7 +72,7 @@
                 = image_submit_tag "sch.gif", :class => 'btn'
         /header end
         .container
-          = yield
+          = begin; render :partial => "layouts/#{controller.controller_name}"; rescue ActionView::MissingTemplate; yield; end
     .footer
       .center
         %ul
