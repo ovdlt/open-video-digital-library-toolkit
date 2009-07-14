@@ -150,10 +150,15 @@
               %label
                 Series Title:
               video[series_title]
-      - if params[:details_format] == "storyboard" and |
-           images = video.storyboard |
-        #storyboard
-          - images.each do |image|
+
+      #storyboard
+        - images = video.storyboard
+        - images.each_with_index do |image, index|
+          - if ((index + 1) % 4).zero?
+            .image.fourth
+              %a{ :href => "#" }
+                %img{:src=>image,:alt=>"storyboard image"}
+          - else
             .image
               %a{ :href => "#" }
                 %img{:src=>image,:alt=>"storyboard image"}
