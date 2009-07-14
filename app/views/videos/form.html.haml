@@ -1,29 +1,42 @@
-- form_for @video do |@form|
-
-  -# = error_messages_for 'video'
-
-  %fieldset
-
-    %legend
-      = @video.new_record? ? "New" : "Edit"
+- verb = @video.new_record? ? "New" : "Edit"
+.account-page
+  .head
+    %span.left
+      My NHF »
+      = verb
       Video
+  .body
+    
+    %div
 
-    .tabs
-      %ul#video
-        - edit_tabs.each do |tab|
-          = tabs_tab_for tab
-      - edit_tabs.each do |tab|
-        = tabs_div_for tab
+      .left.col-right
+        %dl
+          %dt
+            %img{ :src => "/images/icon-video.gif", :alt => "#{verb} Video Mediadata", :width => "15" }
+            = verb
+            Video Mediadata
+          %dd.tabs_pi
+            %ul
+              - edit_tabs.each do |tab|
+                = tabs_tab_for tab
+      .col-main.right{ :style => "width: 620px" }
+        - form_for @video do |@form|
+          - edit_tabs.each do |tab|
+            = tabs_div2_for tab
+          .button-set
+            .left
+              %input.submit{ :name => "submit", :value => "save", :src => "/images/btn-save-changes.gif", :type => "image" }
+              %span.btn-cancel
+                - if @video.new_record?
+                  = link_to "Clear", clear_videos_path
+                  |
+                  = link_to "Cancel", cancel_videos_path
+                - else
+                  = link_to "Reset", reset_video_path( @video )
+                  |
+                  = link_to "Cancel", video_path( @video )
+            .right
+              %input.submit{ :name => "next", :src => "/images/btn-next.gif", :type => "image" }
+            .clear
+            %input.submit{ :name => "submit", :value => "finished", :src => "/images/btn-finish.gif", :type => "image" }
 
-    .clear
-
-    %span.next= @form.submit "next"
-    = @form.submit @video.new_record? ? "Create" : "Save", |
-           :name => "submit", :value => "finished", :id => nil |
-    = @form.submit "Apply", :name => "submit", :value => "save", :id => nil
-    - if @video.new_record?
-      = link_to "clear", clear_videos_path
-      = link_to "cancel", cancel_videos_path
-    - else
-      = link_to "reset", reset_video_path( @video )
-      = link_to "cancel", video_path( @video )

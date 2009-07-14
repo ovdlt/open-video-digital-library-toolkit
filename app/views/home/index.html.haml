@@ -9,7 +9,7 @@
   .head
     %span.left
       FEATURED VIDEO
-  .videos
+  #featured_videos.videos
     - first = true
     - featured_videos.each do |video|
       %div{:class =>(first ? "video odd first" : "video even other")}
@@ -39,7 +39,7 @@
       = link_to "All", collections_collections_path
       == (#{public_collections_count})
 
-  .collections
+  #featured_collections.collections
     - featured_collections.each do |collection|
       .collection.odd{ :id => "collection_#{collection.id}" }
         %h5.title

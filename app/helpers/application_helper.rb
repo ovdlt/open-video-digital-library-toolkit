@@ -24,6 +24,10 @@ module ApplicationHelper
     render :partial => "/shared/div", :object => field
   end
 
+  def tabs_div2_for field
+    render :partial => "/shared/div2", :object => field
+  end
+
   def file_size file
     case file
     when Asset; file = file.uri
