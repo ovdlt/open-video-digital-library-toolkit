@@ -142,7 +142,7 @@
         });
 
 
-        $(".tabs > ul").tabs({ cookie: { expires: null } });
+        $(".tabs_pi > ul").tabs({ cookie: { expires: null } });
 
         $("#uncatted").autocomplete("/assets/uncataloged.txt");
 
@@ -302,7 +302,7 @@
         });
 
         $("span.next input").click(function(){
-            tabs = $(".tabs > ul").tabs();
+            tabs = $(".tabs_pi > ul").tabs();
             current = tabs.data('selected.tabs');
             if( current+2 == tabs.tabs('length') ) {
                 $("span.next input").hide();

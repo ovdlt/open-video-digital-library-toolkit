@@ -1,29 +1,92 @@
-- form_for @video do |@form|
+.account-page
+  .head
+    %span.left
+      My NHF » New Video
+  .body
+    
+    %div
 
-  -# = error_messages_for 'video'
-
-  %fieldset
-
-    %legend
-      = @video.new_record? ? "New" : "Edit"
-      Video
-
-    .tabs
-      %ul#video
-        - edit_tabs.each do |tab|
-          = tabs_tab_for tab
-      - edit_tabs.each do |tab|
-        = tabs_div_for tab
-
-    .clear
-
-    %span.next= @form.submit "next"
-    = @form.submit @video.new_record? ? "Create" : "Save", |
-           :name => "submit", :value => "finished", :id => nil |
-    = @form.submit "Apply", :name => "submit", :value => "save", :id => nil
-    - if @video.new_record?
-      = link_to "clear", clear_videos_path
-      = link_to "cancel", cancel_videos_path
-    - else
-      = link_to "reset", reset_video_path( @video )
-      = link_to "cancel", video_path( @video )
+      .left.col-right
+        %dl
+          %dt
+            %img{ :src => "/images/icon-video.gif", :alt => "New Video Mediadata", :width => "15" }
+            New Video Mediadata
+          %dd.tabs_pi
+            %ul
+              - edit_tabs.each do |tab|
+                = tabs_tab_for tab
+            /
+              %li.on
+                %a{ :href => "#" }
+                  General Information
+              %li
+                %a{ :href => "#" }
+                  Digital Files
+              %li
+                %a{ :href => "#" }
+                  Responsible Entities
+              %li
+                %a{ :href => "#" }
+                  Dates
+              %li
+                %a{ :href => "#" }
+                  Descriptors
+      /left col end, main col start
+      .col-main.right{ :style => "width: 620px" }
+        - form_for @video do |@form|
+          - edit_tabs.each do |tab|
+            = tabs_div2_for tab
+      /  
+        .head
+          General Information
+        %dl.general-info
+          %dt
+            Title Information
+          %dd
+            %label
+              Title of Video
+            %input.input{ :name => "", :type => "text" }
+            %label
+              Alternative Title of Video
+            %input.input{ :name => "", :type => "text" }
+            %label
+              Series Title of Video
+            %input.input{ :name => "", :type => "text" }
+          %dt
+            Participants
+          %dd
+            Participants text...  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec id facilisis justo. Sed sit amet dui libero. Aliquam ultricies semper arcu in semper. Praesent semper venenatis malesuada. Ut egestas aliquam mollis. Morbi sapien velit, fermentum in vehicula eget, tincidunt luctus diam. Etiam at libero nec justo rhoncus sollicitudin. Cras ut lobortis tellus. Nulla accumsan gravida elit facilisis pretium. In odio eros, dictum nec porttitor ut, consectetur in mi. Aliquam interdum scelerisque felis a tristique. Sed vitae dolor sem.
+          %dt
+            Content
+          %dd
+            Content text...  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec id facilisis justo. Sed sit amet dui libero. Aliquam ultricies semper arcu in semper. Praesent semper venenatis malesuada. Ut egestas aliquam mollis. Morbi sapien velit, fermentum in vehicula eget, tincidunt luctus diam. Etiam at libero nec justo rhoncus sollicitudin. Cras ut lobortis tellus. Nulla accumsan gravida elit facilisis pretium. In odio eros, dictum nec porttitor ut, consectetur in mi. Aliquam interdum scelerisque felis a tristique. Sed vitae dolor sem.
+          %dt
+            Tags
+          %dd
+            Tags text, tag, tag
+          %dt
+            Description
+          %dd
+            Description text...  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec id facilisis justo. Sed sit amet dui libero. Aliquam ultricies semper arcu in semper. Praesent semper venenatis malesuada. Ut egestas aliquam mollis. Morbi sapien velit, fermentum in vehicula eget, tincidunt luctus diam. Etiam at libero nec justo rhoncus sollicitudin. Cras ut lobortis tellus. Nulla accumsan gravida elit facilisis pretium. In odio eros, dictum nec porttitor ut, consectetur in mi. Aliquam interdum scelerisque felis a tristique. Sed vitae dolor sem.
+          %dt
+            Local Reference
+          %dd
+            Local Reference text...  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec id facilisis justo. Sed sit amet dui libero. Aliquam ultricies semper arcu in semper. Praesent semper venenatis malesuada. Ut egestas aliquam mollis. Morbi sapien velit, fermentum in vehicula eget, tincidunt luctus diam. Etiam at libero nec justo rhoncus sollicitudin.
+          %dt
+            Rights
+          %dd
+            Rights text...  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec id facilisis justo. Sed sit amet dui libero. Aliquam ultricies semper arcu in semper. Praesent semper venenatis malesuada. Ut egestas aliquam mollis. Morbi sapien velit, fermentum in vehicula eget, tincidunt luctus diam. Etiam at libero nec justo rhoncus sollicitudin.
+        .button-set
+          .left
+            %input.submit{ :name => "", :src => "images/btn-save-changes.gif", :type => "image" }
+            %span.btn-cancel
+              %a{ :href => "#" }
+                Clear
+              |
+              %a{ :href => "#" }
+                Cancel
+          .right
+            %input.submit{ :name => "", :src => "images/btn-next.gif", :type => "image" }
+          .clear
+          %input.submit{ :name => "", :src => "images/btn-finish.gif", :type => "image" }
+  /com-main end
