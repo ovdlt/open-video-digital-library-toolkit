@@ -5,23 +5,19 @@
       Log In
   /head end
   .body
-    - form_tag sessions_path do
-      %p
-        %label{ :for => "login" }
-          Login
-        = text_field_tag 'login', @login
-      %p
-        %label{ :for => "password" }
-          Password
-        = password_field_tag 'password', nil
-        = link_to 'Forgot Password?', forgot_password_path
+    - form_tag sessions_path, :class => 'loginform' do
+      %label
+        Username
+      = text_field_tag 'login', @login
+      %label
+        Password
+      = password_field_tag 'password', nil
+      = link_to 'Forgot your password?', forgot_password_path
       /
         Uncomment this if you want this functionality
-        <p><label for="remember_me">Remember me:</label>
-        <%= check_box_tag 'remember_me', '1', @remember_me %></p>
-      %p
-        = submit_tag 'Log in'
-      %p
-        %br
-        = link_to 'New user?', signup_path
-
+        %label{ :for => "remember_me" }
+          Remember me
+          = check_box_tag 'remember_me', '1', @remember_me
+      %br
+      %input.btn-login{ :name => "", :src => "images/btn-login.gif", :type => "image" }
+      = link_to 'New user?', signup_path

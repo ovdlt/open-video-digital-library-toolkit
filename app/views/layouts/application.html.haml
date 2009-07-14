@@ -103,3 +103,23 @@
         /div.container end
       /div.center end
     /div.wrapper end
+    .popup
+      .login-box
+        .padding
+          .head
+            LOGIN
+          .close
+            %a{ :href => "#" }
+              %img{ :src => "images/close.gif", :alt => "close" }
+          - form_tag sessions_path, :class => 'loginform' do
+            %label
+              Username
+            %input.input{ :name => "login", :size => "40", :type => "text" }
+            %label
+              Password
+            %input.input{ :name => "password", :size => "40", :type => "password" }
+            %br
+            %input.btn-login{ :name => "", :src => "images/btn-login.gif", :type => "image" }
+            %a{ :href => "#" }
+              Forgot your password?
+      .overlay
