@@ -174,20 +174,12 @@
           TAGS
         %dd
           .tags
-            %a{ :href => "#" }
-              Dynamic
-            ,
-            %a{ :href => "#" }
-              Queries
-            ,
-            %a{ :href => "#" }
-              Computer-Science
-            ,
-            %a{ :href => "#" }
-              Computer
-            ,
-            %a{ :href => "#" }
-              Science
+            - if current_user and @library.user_tagging_enabled?
+              = tags_html( video.tags )
+              - form_tag url_for( :controller => :tagging, :action => :create ) do
+                = text_field_tag :tags
+                = hidden_field_tag :video_id, video.id
+                = submit_tag "add tags"
         %dt
           %img{ :src => "/images/icon-video.gif", :alt => "more videos" }
           More videos
