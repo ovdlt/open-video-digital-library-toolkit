@@ -281,7 +281,7 @@
                              { path: '/' }
                             );
 
-                    $(".videos").removeClass("bg_thumbs");
+                    $(".videos").removeClass("big_thumbs");
                     $(".videos").removeClass("text_only");
                     $(".videos").removeClass("sm_thumbs");
                     $(".videos").removeClass("thumbs_only");

@@ -1,8 +1,6 @@
-%div
-  .form
-    %fieldset
-      %legend Descriptors
-      %dl
-        = render :partial => "type", |
-                 :collection => PropertyType.descriptor_types |
-    .clear
+.head
+  Descriptors
+.form.add
+  = render :partial => "type", |
+             :collection => PropertyType.descriptor_types |
+.clear

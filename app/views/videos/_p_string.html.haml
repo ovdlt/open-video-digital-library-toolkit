@@ -1,24 +1,23 @@
 %li.delete
   .property-type.display-edit
     .display{ error_class(p_string) }
-      .type
+      %label
         = p_string.name
         %span.edit= link_to "edit", "#"
-      .value
+      %p
         = p_string.value
+      .clear
     .edit{ error_class(p_string) }
       - fields_for "property[#{type_id(p_string)}]", p_string do |fields|
-        .type
-          %label
-            Type:
-            = fields.collection_select :property_type_id, |
-               property_types_by_class( property_class ), |
-               :id, :name, {}, :id => gen_id |
-            %span.delete= link_to "delete", "#"
-        .value
-          %label
-            Value:
-            = fields.text_field :value, :id => gen_id
-        = error_messages_for 'property', :object => p_string
-        = hidden_field_tag "property[#{type_id(p_string)}][deleted]", |
-                             false, :id => nil, :class => :deleted |
+        %label
+          Type:
+          = fields.collection_select :property_type_id, |
+             property_types_by_class( property_class ), |
+             :id, :name, {}, :id => gen_id |
+          %span.delete= link_to "delete", "#"
+        %label
+          Value:
+          = fields.text_field :value, :id => gen_id
+      = error_messages_for 'property', :object => p_string
+      = hidden_field_tag "property[#{type_id(p_string)}][deleted]", |
+                           false, :id => nil, :class => :deleted |
