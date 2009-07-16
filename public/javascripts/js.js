@@ -1,7 +1,9 @@
 jQuery.noConflict();
 jQuery(document).ready(function() {
    jQuery('#login').click(function(){ jQuery('.popup').show();  });
+   jQuery('#register').click(function(){ jQuery('.popup-reg').show();  });
    jQuery('.close img').click(function(){ jQuery('.popup').hide();  });
+   jQuery('.close img').click(function(){ jQuery('.popup-reg').hide();  });
    jQuery('.category, #details, .general-info').accordion({
     header: 'dt',
     event: 'click',

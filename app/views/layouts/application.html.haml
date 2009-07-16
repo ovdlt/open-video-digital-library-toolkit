@@ -17,9 +17,12 @@
           %ul
             - if logged_in?
               %li
-                = link_to "Logout", logout_path
+                You're logged in as
+                = h current_user.login
               %li
                 \|
+              %li
+                = link_to "Logout", logout_path
             - else
               %li
                 %span#login
@@ -28,13 +31,14 @@
               %li
                 \|
             -#
-              %li
-                You're logged in as
-                %span.login= h current_user.login
             - if !logged_in?
               %li
-                = link_to "Register", signup_path
+                -#= link_to "Register", signup_path
+                %span#register
+                  Register
             - if current_user and current_user.has_role?( "admin" )
+              %li
+                \|
               %li
                 = link_to "Administration", library_path
         /superheader end, div.header start
@@ -110,7 +114,7 @@
             LOGIN
           .close
             %a{ :href => "#" }
-              %img{ :src => "images/close.gif", :alt => "close" }
+              %img{ :src => "/images/close.gif", :alt => "close" }
           - form_tag sessions_path, :class => 'loginform' do
             %label
               Username
@@ -119,7 +123,31 @@
               Password
             %input.input{ :name => "password", :size => "40", :type => "password" }
             %br
-            %input.btn-login{ :name => "", :src => "images/btn-login.gif", :type => "image" }
+            %input.btn-login{ :name => "", :src => "/images/btn-login.gif", :type => "image" }
+            = link_to 'Forgot your password?', forgot_password_path
+      .overlay
+
+    .popup-reg
+      .register-box
+        .padding
+          .head
+            REGISTER
+          .close
             %a{ :href => "#" }
-              Forgot your password?
+              %img{ :src => "/images/close.gif", :alt => "close" }
+          - form_tag users_path, :class => 'loginform' do
+            %label
+              Login Name
+            %input.input{ :name => "login", :size => "40", :type => "text" }
+            %label
+              E-mail Address
+            %input.input{ :name => "email", :size => "40", :type => "text" }
+            %label
+              Password
+            %input.input{ :name => "password", :size => "40", :type => "password" }
+            %label
+              Confirm Password
+            %input.input{ :name => "password_confirmation", :size => "40", :type => "password" }
+            %br
+            %input.btn-login{ :name => "", :src => "/images/btn-login.gif", :type => "image" }
       .overlay

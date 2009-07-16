@@ -243,7 +243,7 @@ body
     :padding-bottom 10px
 
 
-.popup
+.popup, .popup-reg
   :display none
 
 
@@ -271,6 +271,13 @@ body
   :top 10%
   :height 265px
 
+.register-box
+  :width 518px
+  :position absolute
+  :z-index 11
+  :left 28%
+  :top 10%
+  :height 380px
 
 .padding
   :padding 20px 30px 30px
@@ -554,7 +561,13 @@ li
         :line-height 1.4em
 
 
-.featured
+.is_featured
+  :font-size 12px
+  :background-color #ffdf78
+  :padding 0 5px
+  :margin-left 5px
+
+.is_public
   :font-size 12px
   :background-color #ffdf78
   :padding 0 5px
@@ -586,6 +599,7 @@ li
   img
     :display inline-block
     :vertical-align middle
+    :margin-bottom 8px
 
   a
     :margin-right 5px
