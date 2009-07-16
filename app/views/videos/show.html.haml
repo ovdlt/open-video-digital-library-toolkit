@@ -95,7 +95,7 @@
             %li
               %label
                 Duration:
-              = h video.duration
+              = h int_to_duration( video.duration )
           - if !video.alternative_title.blank?
             %li
               %label
@@ -191,14 +191,8 @@
 
       #storyboard
         - if images = video.storyboard
-
-          -# Want to do this to get extra class on every fourth image,
-          -#   but cannot figure out how to do ternary line in Haml:
-          -# - images.each_with_index do |image, index|
-            -# - if ((index + 1) % 4).zero? .image.fourth : .image
-
-          - images.each do |image|
-            .image
+          - images.each_with_index do |image, index|
+            %div{:class =>(((index + 1) % 4).zero? ? "image fourth" : "image")}
               %img{:src=>image,:alt=>"storyboard image"}
               - if current_user and current_user.has_role?(  [ :admin, :cataloger ] )
                 - if image == video.poster_path
