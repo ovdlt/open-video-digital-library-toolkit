@@ -3,6 +3,7 @@
   .head
     %span.left
       BROWSE
+    .category#browse_axes
   = render :partial => "shared/axes"
 /left col end, center col start
 .col-center
@@ -12,7 +13,7 @@
   #featured_videos.videos
     - first = true
     - featured_videos.each do |video|
-      %div{:class =>(first ? "video odd first" : "video even other")}
+      %div{:class =>(first ? "video odd first" : "video even other"), :id => "video_#{video.id}"}
         - first = false
         .image
           %a{:href => video_path( video.id )}
@@ -30,6 +31,8 @@
           - if !video.sentence.blank?
             %p
               &= video.sentence
+        .handle
+          .handle_image
 /center col end, right col start
 .col-right
   .head
