@@ -189,7 +189,7 @@
                 :textile
                   #{video.rights.html}
 
-      #storyboard
+      #storyboard.storyboard
         - if images = video.storyboard
           - images.each_with_index do |image, index|
             %div{:class =>(((index + 1) % 4).zero? ? "image fourth" : "image")}

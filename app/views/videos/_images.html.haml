@@ -15,27 +15,17 @@
       - descriptor = values[ index % values.size ]
       - v = random( descriptor, shown )
       - if v
-        - if ((i + 1) % 5).zero?
-          %li.video.fifth
-            .image
-              %a{:href => video_path( v.id )}
-                - if poster_path = v.poster_path
-                  %img{:src=>poster_path, :alt => "video #{v.id}"}
-            .details
-              %h5.title{:class=>video_vis_class(v)}
-                = link_to h(v.title), video_path( v.id )
-              %p
-                = link_to "#{h descriptor.text}", "#"
-        - else
-          %li.video
-            .image
-              %a{:href => video_path( v.id )}
-                - if poster_path = v.poster_path
-                  %img{:src=>poster_path, :alt => "video #{v.id}"}
-            .details
-              %h5.title{:class=>video_vis_class(v)}
-                = link_to h(v.title), video_path( v.id )
-              %p
-                = link_to "#{h descriptor.text}", "#"
+        %li{:class =>(((i + 1) % 5).zero? ? "video fifth" : "video")}
+          .image
+            %a{:href => video_path( v.id )}
+              - if poster_path = v.poster_path
+                %img{:src=>poster_path, :alt => "video #{v.id}"}
+              - else
+                .placeholder
+          .details
+            %h5.title{:class=>video_vis_class(v)}
+              = link_to h(v.title), video_path( v.id )
+            %p
+              = link_to "#{h descriptor.text}", "#"
       - index += 1
 - srand
