@@ -1,24 +1,23 @@
 %dl.delete{:id => "property_type_#{dt.id}", |
-            :class => (dt.id != "new_dt" ) ? "dtype descriptor-types" : "descriptor-types" }
+            :class => (dt.id != "new_dt" ) ? "dtype descriptor-types" : "descriptor-types hidden" }
   %dt.property-type.display-edit
-    .display.dt_handle{ error_class(dt) }
+    %span.display.dt_handle{ error_class(dt) }
       = dt.name
       - if dt.browsable?
         %span.featured BROWSABLE
       |
       %span.edit= link_to "edit", "#"
-    .edit{ error_class(dt) }
+    %span.edit{ error_class(dt) }
       - fields_for "property_type[#{type_id(dt)}]", dt do |fields|
-        %div
-          %label
-            Type:
-            = fields.text_field :name
-        %div
-          %label
-            Browsable:
-            = fields.check_box :browsable
-        %div
-          %span.delete= link_to "delete", "#"
+        %label
+          Type:
+          = fields.text_field :name
+        %br
+        %label
+          Browsable:
+          = fields.check_box :browsable
+        %br
+        %span.delete= link_to "delete", "#"
         = error_messages_for 'property_type', :object => dt
         = fields.hidden_field :property_class_id
         = hidden_field_tag "property_type[#{type_id(dt)}][deleted]", |

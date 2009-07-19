@@ -92,8 +92,8 @@
             $("div.property-type.new a",copy).each(edit);
 
             $(li).before(copy);
-            $("div.display",copy).hide();
-            $("div.edit",copy).show();
+            $("div.display,span.display",copy).hide();
+            $("div.edit,span.edit",copy).show();
 
             $("li.none",ul).hide();
 
@@ -238,11 +238,13 @@
 
         $("form .display-edit div.display.error").hide();
 
-        $("form .display-edit div.edit").hide();
-        $("form .display-edit div.edit.error").show();
+        $("form .display-edit > div.edit").hide();
+        $("form .display-edit > span.edit").hide();
+        $("form .display-edit > div.edit.error").show();
+        $("form .display-edit > span.edit.error").show();
 
         $("form .display-edit span.edit a").click(function(){
-            $("div.display, div.edit",$(this).parents(".display-edit")[0]).toggle();
+            $("div.display, div.edit, span.display, span.edit",$(this).parents(".display-edit")[0]).toggle();
             return false;
         });
 

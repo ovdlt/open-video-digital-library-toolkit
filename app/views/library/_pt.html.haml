@@ -7,8 +7,8 @@
         %span.edit= link_to "edit", "#"
     .edit{ error_class(pt) }
       - fields_for "property_type[#{type_id(pt)}]", pt do |fields|
-        %label
-          %p
+        %p
+          %label
             Type:
             = fields.text_field :name, :id => gen_id
             %span.delete= link_to "delete", "#"

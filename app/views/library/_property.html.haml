@@ -4,13 +4,14 @@
 - form_for :library, @library, :html => { :method => :put, |
                                           :class => "admin-form"  } |
                                             do |@form| |
-  - property_types_by_class(pc).each do |pt|
-    = render :partial => "library/pt", :object => pt
-  %li
-    .property-type.new
-      = link_to "new", "#"
-      %ul.template
-        = render :partial => "library/pt", :object => pt_template(pc)
+  %ul                                            
+    - property_types_by_class(pc).each do |pt|
+      = render :partial => "library/pt", :object => pt
+    %li
+      .property-type.new
+        = link_to "new", "#"
+        %ul.template
+          = render :partial => "library/pt", :object => pt_template(pc)
   %br
   .left
     = @form.submit "Finished", :name => "submit", :value => "finished", :id => nil
