@@ -1,0 +1,30 @@
+.head
+  Manage Users
+.form.admin-form.create.users
+  %ul
+    %li
+      - form_tag :action => :remove_users do
+        %label
+          Remove User
+          = text_field_tag :users, nil, :id => nil, :class => "input"
+        = submit_tag "remove"
+
+    - Role.find(:all).each do |role|
+      - role = role.name
+
+      %li
+        - form_tag :action => :add_role do
+          %label
+            Users to add to role
+            &= role.humanize
+            = text_field_tag :users, nil, :id => nil, :class => "input"
+            = hidden_field_tag :role, role, :id => nil
+          = submit_tag "add"
+
+        - form_tag :action => :remove_role do
+          %label
+            Users to remove from role
+            &= role.humanize
+            = text_field_tag :users, nil, :id => nil, :class => "input"
+            = hidden_field_tag :role, role, :id => nil
+          = submit_tag "remove"

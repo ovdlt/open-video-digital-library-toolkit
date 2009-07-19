@@ -2,6 +2,7 @@
   .property-type.display-edit
     .display{ error_class(dv) }
       = dv.text
+      |
       %span.edit= link_to "edit", "#"
     .edit{ error_class(dv) }
       - fields_for "descriptor_value[#{type_id(dv)}]", dv do |fields|

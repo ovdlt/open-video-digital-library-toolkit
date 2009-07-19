@@ -58,6 +58,8 @@
 
         function edit() {
 
+            console.debug("edit");
+
             var ul = $(this).parents("ul")[0];
             var li = $(this).parents("li")[0];
             var template = $("ul.template li.delete",li)[0];
@@ -142,7 +144,25 @@
         });
 
 
-        $(".tabs_pi > ul").tabs({ cookie: { expires: null } });
+        var tabs = [ ".tabs_pi > ul", ".lt" ];
+
+        $.each(tabs, function(k,v){
+            $(v).tabs({ cookie: { expires: null,
+                                  name: v.id } });
+        });
+
+        $(".lt").tabs({select:function(){
+            // Mostly handles multiple classes ... except this
+            // Might break in new ui-tabs
+            $(".lt li").not(this).removeClass("ui-tabs-selected");
+            /*
+            $(".lt li.ui-tabs-selected").each(function(){
+                console.debug(this);
+            });
+            */
+        }});
+
+        // $(".tabs_pi > ul").tabs({ cookie: { expires: null } });
 
         $("#uncatted").autocomplete("/assets/uncataloged.txt");
 
@@ -216,17 +236,17 @@
             $("div.bookmark.hidden",$(this).parents("form")).toggle();
         });
 
-        $("div.display-edit div.display.error").hide();
+        $("form .display-edit div.display.error").hide();
 
-        $("div.display-edit div.edit").hide();
-        $("div.display-edit div.edit.error").show();
+        $("form .display-edit div.edit").hide();
+        $("form .display-edit div.edit.error").show();
 
-        $("div.display-edit span.edit a").click(function(){
-            $("div.display, div.edit",$(this).parents("div.display-edit")[0]).toggle();
+        $("form .display-edit span.edit a").click(function(){
+            $("div.display, div.edit",$(this).parents(".display-edit")[0]).toggle();
             return false;
         });
 
-        $("div.display-edit span.delete a").livequery('click',function(){
+        $("form .display-edit span.delete a").livequery('click',function(){
             ul = $(this).parents("ul")[0];
             var top = $($(this).parents("li.delete")[0]);
             $("input.deleted[type=hidden]",top).attr("value","deleted");
@@ -413,8 +433,8 @@
 
     get_sortable_order = function( list )
     {
-        console.debug( list);
-        console.debug( $(list) );
+        // console.debug( list);
+        // console.debug( $(list) );
         return $( list ).sortable('serialize').replace( /&[a-z_]+\[\]=/ig, ",").replace( /[a-z_]+\[\]=/i, "");
     }
 
@@ -465,3 +485,7 @@
     }
 
 })(jQuery);
+
+// Local Variables:
+// javascript-indent-level: 4
+// End:

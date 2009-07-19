@@ -27,7 +27,7 @@ class LibraryController < ApplicationController
         all_pc_ids = PropertyClass.find( :all, :select => "id").map &:id
         all_pc_ids = all_pc_ids - pcs.keys.map(&:to_i)
 
-        if !all_pc_ids.empty?
+        if false && !all_pc_ids.empty?
           logger.warn "missing pc ids: #{all_pc_ids.inspect}"
           render :nothing => true, :status => 400
           raise ActiveRecord::Rollback
@@ -63,7 +63,7 @@ class LibraryController < ApplicationController
 
         logger.warn pts.keys.map(&:to_i).inspect
 
-        if !all_pt_ids.empty?
+        if false && !all_pt_ids.empty?
           logger.warn "missing pt ids: #{all_pt_ids.inspect}"
           render :nothing => true, :status => 400
           raise ActiveRecord::Rollback
@@ -106,7 +106,7 @@ class LibraryController < ApplicationController
 
         logger.warn rds.keys.map(&:to_i).inspect
 
-        if !all_rd_ids.empty?
+        if false && !all_rd_ids.empty?
           logger.warn "missing rd ids: #{all_rd_ids.inspect}"
           render :nothing => true, :status => 400
           raise ActiveRecord::Rollback
@@ -149,7 +149,7 @@ class LibraryController < ApplicationController
 
         logger.warn dvs.keys.map(&:to_i).inspect
 
-        if !all_dv_ids.empty?
+        if false && !all_dv_ids.empty?
           logger.warn "missing dv ids: #{all_dv_ids.inspect}"
           render :nothing => true, :status => 400
           raise ActiveRecord::Rollback

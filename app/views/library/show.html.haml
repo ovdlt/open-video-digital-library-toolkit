@@ -5,54 +5,21 @@
   .body
     /left col start
     .left.col-right
-      %dl
+      %dl.lt#library-tab
         %dt
           Library Management
         %dd
           %ul
-            %li.on
-              %a{ :href => "#" }
-                Library Settings
-            %li
-              %a{ :href => "#" }
-                Manage Users
-            %li
-              %a{ :href => "#" }
-                Site Activity
+            - mgmt_tabs.each do |tab|
+              = tabs_tab_for tab
         %dt
           Metadata Management
         %dd
           %ul
-            %li
-              %a{ :href => "#" }
-                Date Types
-            %li
-              %a{ :href => "#" }
-                Roles
-            %li
-              %a{ :href => "#" }
-                Descriptor
-            %li
-              %a{ :href => "#" }
-                Dates Types
-            %li
-              %a{ :href => "#" }
-                Digital Files
-            %li
-              %a{ :href => "#" }
-                Rights Statements
-            %li
-              %a{ :href => "#" }
-                Format Types
+            - md_tabs.each do |tab|
+              = tabs_tab_for tab
     /left col end, main col start
     .col-main.right{ :style => "width: 620px" }
-      .head
-      - form_for :library, @library, :html => { :method => :put, :class => "admin-form create" } do |@form|
-        - tabs.each do |tab|
-          = tabs_tab_for tab
+      / - form_for :library, @library, :html => { :method => :put, :class => "admin-form create" } do |@form|
       - tabs.each do |tab|
-        = tabs_div_for tab
-
-      = @form.submit "Finished", :name => "submit", :value => "finished", :id => nil
-      = @form.submit "Save", :name => "submit", :value => "save", :id => nil
-      = link_to "cancel", library_path
+        = tabs_div3_for tab

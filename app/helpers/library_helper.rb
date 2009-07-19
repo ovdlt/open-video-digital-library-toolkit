@@ -1,17 +1,26 @@
 module LibraryHelper
 
-  def tabs
+  def mgmt_tabs
     [
      :general_information,
+     :manage_users,
+     :site_activity
+    ]
+  end
+
+  def md_tabs
+    [
      :date_types,
      :roles,
      :descriptor_types,
-#     :collections,
      :digital_files,
      :rights_statements,
-#     :video_relation_types,
      :format_types,
     ]
+  end
+
+  def tabs
+    mgmt_tabs + md_tabs
   end
 
   def descriptor_types
@@ -147,7 +156,18 @@ module LibraryHelper
   end
 
   def theme_choices
-    options_for_select Library.available_themes, @library.theme
+    # options_for_select Library.available_themes, @library.theme
+    themes = Library.available_themes.map do |theme|
+      checked = ""
+      if @library.theme == theme
+        checked="checked='checked'"
+      end
+      [ <<EOS ]
+<input name="themes" type="radio" value="#{theme}" #{checked} />
+<img src="/images/#{theme}.gif" alt="#{theme}" />
+EOS
+    end
+    themes.join("\n")
   end
 
   def theme_chooser

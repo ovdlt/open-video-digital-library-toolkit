@@ -1,72 +1,75 @@
-Library Settings
-%ul
-  %li
-    %label
-      Title
-      %br
-      = @form.text_field :title, :size => 50
+.head
+  Library Settings
+- form_for :library, @library, :html => { :method => :put, |
+                                          :class => "admin-form create"  } |
+                                            do |@form| |
+  %ul
+    %li
+      %label
+        Title
+        = @form.text_field :title, :class => "input"
 
-  %li
-    %label
-      Subtitle
-      %br
-      = @form.text_field :subtitle, :size => 80
+    %li
+      %label
+        Subtitle
+        = @form.text_field :subtitle, :class => "input"
 
-  %li
-    %label
-      Logo URL
-      %br
-      = @form.text_field :logo_url, :size => 80, :maxlength => 255
+    %li
+      %label
+        Logo URL
+        = @form.text_field :logo_url, :class => "input"
 
-  %li
-    %label
-      Organization Link Content
-      %br
-      = @form.text_field :org_link, :size => 80, :maxlength => 255
+    %li
+      %label
+        Organization Link Content
+        = @form.text_field :org_link, :class => "input"
 
-  %li
-    %label
-      Site Copyright Content
-      %br
-      = @form.text_field :copyright, :size => 80, :maxlength => 255
+    %li
+      %label
+        Site Copyright Content
+        = @form.text_field :copyright, :class => "input"
 
-  %li
-    %label
-      My Library Tab
-      %br
-      = @form.text_field :my, :size => 80, :maxlength => 255
+    %li
+      %label
+        My Library Tab
+        = @form.text_field :my, :class => "input"
 
-  %li
-    %label
-      Collections Title
-      %br
-      = @form.text_field :collections_title, :size => 80, :maxlength => 255
+    %li
+      %label
+        Collections Title
+        = @form.text_field :collections_title, :class => "input"
 
-  %li
-    %label
-      Playlists Title
-      %br
-      = @form.text_field :playlists_title, :size => 80, :maxlength => 255
+    %li
+      %label
+        Playlists Title
+        = @form.text_field :playlists_title, :class => "input"
 
-  %li
-    %label
-      Collections Login
-      %br
-      = @form.text_field :collections_login, :size => 80, :maxlength => 255
+    %li
+      %label
+        Collections Login
+        = @form.text_field :collections_login, :class => "input"
 
-  %li
-    %label
-      Contact Email
-      %br
-      = @form.text_field :emails, :size => 80, :maxlength => 255
+    %li
+      %label
+        Contact Email
+        = @form.text_field :emails, :class => "input"
 
-  %li
-    %label
-      = @form.check_box :user_tagging_enabled
-      Enable user tagging
+    %li
+      %label
+        = @form.check_box :user_tagging_enabled
+        %strong
+          Enable User Tagging
 
-  %li
-    %label
-      Theme:
-      %select{:name => "library[theme]"}
+    %li
+      %label
+        Theme
+      .themes
         = theme_choices
+        /
+          %select{:name => "library[theme]"}
+            = theme_choices
+
+  .left
+    = @form.submit "Finished", :name => "submit", :value => "finished", :id => nil
+    = @form.submit "Save", :name => "submit", :value => "save", :id => nil
+    = link_to "cancel", library_path

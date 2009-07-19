@@ -1,8 +1,11 @@
-%li.delete{:id => "property_type_#{dt.id}", :class => (dt.id != "new_dt" ) ? "dtype" : "" }
-  .property-type.display-edit
+%dl.delete{:id => "property_type_#{dt.id}", |
+            :class => (dt.id != "new_dt" ) ? "dtype descriptor-types" : "descriptor-types" }
+  %dt.property-type.display-edit
     .display.dt_handle{ error_class(dt) }
       = dt.name
-      = dt.browsable? ? "(browsable)" : "(not browsable)"
+      - if dt.browsable?
+        %span.featured BROWSABLE
+      |
       %span.edit= link_to "edit", "#"
     .edit{ error_class(dt) }
       - fields_for "property_type[#{type_id(dt)}]", dt do |fields|
@@ -20,11 +23,12 @@
         = fields.hidden_field :property_class_id
         = hidden_field_tag "property_type[#{type_id(dt)}][deleted]", |
                              false, :id => nil, :class => :deleted |
-  %ul
-    - descriptor_values(dt).each do |dv|
-      = render :partial => "library/dv", :object => dv
-    %li.delete
-      .property-type.new
-        = link_to "Add new descriptor value", "#"
-        %ul.template
-          = render :partial => "library/dv", :object => dv_template( dt )
+  %dd                           
+    %ul
+      - descriptor_values(dt).each do |dv|
+        = render :partial => "library/dv", :object => dv
+      %li.delete
+        .property-type.new
+          = link_to "+ Add new descriptor value", "#"
+          %ul.template
+            = render :partial => "library/dv", :object => dv_template( dt )
