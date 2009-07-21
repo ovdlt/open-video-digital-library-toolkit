@@ -1,5 +1,4 @@
-%dl.delete{:id => "property_type_#{dt.id}", |
-            :class => (dt.id != "new_dt" ) ? "dtype descriptor-types" : "descriptor-types hidden" }
+%dl.delete{:id => "property_type_#{dt.id}", :class => (dt.id != "new_dt" ) ? "dtype descriptor-types" : "descriptor-types hidden" }
   %dt.property-type.display-edit
     %span.display.dt_handle{ error_class(dt) }
       = dt.name
