@@ -243,7 +243,7 @@ body
     :padding-bottom 10px
 
 
-.popup
+.popup, .popup-reg
   :display none
 
 
@@ -270,6 +270,15 @@ body
   :left 28%
   :top 10%
   :height 265px
+
+
+.register-box
+  :width 518px
+  :position absolute
+  :z-index 11
+  :left 28%
+  :top 10%
+  :height 380px
 
 
 .padding
@@ -554,8 +563,9 @@ li
         :line-height 1.4em
 
 
-.featured
+.is_featured, .is_public
   :font-size 12px
+  :font-weight bold
   :background-color #ffdf78
   :padding 0 5px
   :margin-left 5px
@@ -586,6 +596,7 @@ li
   img
     :display inline-block
     :vertical-align middle
+    :margin-bottom 8px
 
   a
     :margin-right 5px
@@ -663,6 +674,12 @@ li
     :height 66px
     :overflow hidden
     :float left
+    :position relative
+
+    img
+      :width 88px
+      :height 66px
+
 
 
 #fast-forward, #excerpt
@@ -746,7 +763,7 @@ li
     :padding 10px 3%
     :position relative
 
-  .playlists .details
+  .playlists .details, .downloads .details
     :padding-left 110px
 
 
@@ -869,7 +886,7 @@ li
     :display none
 
 
-.bg-thumbs .list
+.big_thumbs .list
   li
     :padding 10px
     :width 610px
@@ -878,6 +895,7 @@ li
     :float left
     :height 75px
     :width 100px
+    :background-color #333
 
     img
       :width 100px
@@ -887,7 +905,7 @@ li
     :padding-bottom 0
 
 
-.text-only .list
+.text_only .list
   li
     :padding 10px
     :width 610px
@@ -896,6 +914,7 @@ li
     :float left
     :height 30px
     :width 40px
+    :background-color #333
 
     img
       :width 40px
@@ -929,7 +948,7 @@ li
     :font-weight normal
 
 
-.sm-thumbs .list
+.sm_thumbs .list
   .details p
     :display none
 
@@ -942,19 +961,25 @@ li
     :width 120px
     :height 90px
     :margin-bottom 5px
+    :background-color #333
 
     img
       :width 120px
 
 
-.thumbs-only .list
+.thumbs_only .list
   li
-    :width 120px
-    :margin 10px 18px
+    :width 70px
+    :margin 10px 10px
     :text-align center
 
-  .image img
-    :width 120px
+  .image
+    :width 70px
+    :height 55px
+    :background-color #333
+
+    img
+      :width 70px
 
   .details
     :display none
@@ -1211,3 +1236,19 @@ input
 
 .hidden
   :display none
+
+/ added after Iterative
+.duration, .created
+  :display inline
+
+
+.videos .placeholder
+  :background-color #333
+  :width 90px
+  :height 70px
+
+.jcarousel-item .title
+  :font-size 12px
+
+/.jcarousel-item .image
+  /:background-color #333

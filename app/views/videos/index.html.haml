@@ -51,27 +51,27 @@
                 = form.criterion :public
             %p{ :align => "right" }
               %input{ :id => "search_submit", :name => "commit", :src => "/images/btn-refine.gif", :type => "image", :value => "refine" }
-      - if current_user
-        %dt
-          %img{ :src => "/images/icon-video.gif", :alt => "video" }
-          Tools and Services
-        %dd
-          %ul
-          - if current_user && current_user.has_role?( [ :admin, :cataloger ] )
-            %li.menu-create
-              %span.icon
-              = link_to "Create New Record", new_video_path
-          - if current_user and params[:search]
-            %li.menu-embed
-              %span.icon
-              - form_tag saved_queries_path, :method => :post do
-                %label.button.save_query
-                  = link_to "Save this search", "#"
-                = to_form_inputs( @search.add_to_params( {}, :search ) )
-                .save_query
-                  .title.hidden
-                    %label
-                      Title:
-                      = text_field_tag 'search[title]', nil, :id => nil
-                      = submit_tag "Save", :class => :hidden
-      /right end
+        - if current_user
+          %dt
+            %img{ :src => "/images/icon-video.gif", :alt => "video" }
+            Tools and Services
+          %dd
+            %ul
+              - if current_user && current_user.has_role?( [ :admin, :cataloger ] )
+                %li.menu-create
+                  %span.icon
+                  = link_to "Create New Record", new_video_path
+              - if current_user and params[:search]
+                %li.menu-embed
+                  %span.icon
+                  - form_tag saved_queries_path, :method => :post do
+                    %label.button.save_query
+                      = link_to "Save this search", "#"
+                    = to_form_inputs( @search.add_to_params( {}, :search ) )
+                    .save_query
+                      .title.hidden
+                        %label
+                          Title:
+                          = text_field_tag 'search[title]', nil, :id => nil
+                          %input{ :class => :hidden, :name => "commit", :src => "/images/btn-refine.gif", :type => "image", :value => "save" }
+          /right end

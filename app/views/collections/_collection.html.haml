@@ -14,21 +14,20 @@
           %strong
             = owner
 
-      - if current_user and current_user.has_role?(  [ :admin, :cataloger ] )
-        .featured
-          - form_for collection, :html => { :id => nil } do |form|
-            %label
-              = form.check_box :featured, :id => gen_id
-              - if !collection.featured?
-                Feature this collection
-              - else
-                %label.featured
-                  Featured
-                  = feature_rank( collection )
-      - else
-        - if collection.featured?
-          %label.featured
-            Featured
+    - if current_user and current_user.has_role?(  [ :admin, :cataloger ] )
+      .featured
+        - form_for collection, :html => { :id => nil } do |form|
+          = form.check_box :featured, :id => gen_id
+          - if !collection.featured?
+            %label.is_featured
+              Feature this collection
+          - else
+            %label.is_featured
+              Featured
+              = feature_rank( collection )
+    - else
+      - if collection.featured?
+        %label.is_featured>FEATURED
 
     %p
       %strong
@@ -46,9 +45,9 @@
       %strong
         Last Updated:
       = collection.updated_at.to_date.to_s(:long)
-      %p
-        = collection.description
-      %p
+    %p
+      = collection.description
+    %p
       %strong
         = link_to "View " + container_text( collection ) + " ", |
           collection_path( collection ) |

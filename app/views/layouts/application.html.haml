@@ -14,28 +14,33 @@
     .wrapper
       .center
         .superheader
-          .login_out
-            %ul
-              - if logged_in?
-                %li
-                  = link_to "Logout", logout_path
-                %li
-                  \|
-              - else
-                %li
-                  = link_to "Login", login_path, { :rel => "facebox" }
-                %li
-                  \|
-              -#
-                %li
-                  You're logged in as
-                  %span.login= h current_user.login
-              - if !logged_in?
-                %li
-                  = link_to "Register", signup_path, { :rel => "facebox" }
-              - if current_user and current_user.has_role?( "admin" )
-                %li
-                  = link_to "Administration", library_path
+          %ul
+            - if logged_in?
+              %li
+                You're logged in as
+                = h current_user.login
+              %li
+                \|
+              %li
+                = link_to "Logout", logout_path
+            - else
+              %li
+                %span#login
+                  Login
+                  /= link_to "Login", login_path
+              %li
+                \|
+            -#
+            - if !logged_in?
+              %li
+                -#= link_to "Register", signup_path
+                %span#register
+                  Register
+            - if current_user and current_user.has_role?( "admin" )
+              %li
+                \|
+              %li
+                = link_to "Administration", library_path
         /superheader end, div.header start
         .header
           .logo
@@ -71,7 +76,7 @@
                 = image_submit_tag "sch.gif", :class => 'btn'
         /header end
         .container
-          = yield
+          = begin; render :partial => "layouts/#{controller.controller_name}"; rescue ActionView::MissingTemplate; yield; end
     .footer
       .center
         %ul
@@ -102,3 +107,47 @@
         /div.container end
       /div.center end
     /div.wrapper end
+    .popup
+      .login-box
+        .padding
+          .head
+            LOGIN
+          .close
+            %a{ :href => "#" }
+              %img{ :src => "/images/close.gif", :alt => "close" }
+          - form_tag sessions_path, :id => "login-form", :class => 'loginform' do
+            %label
+              Username
+            %input.input{ :name => "login", :size => "40", :type => "text" }
+            %label
+              Password
+            %input.input{ :name => "password", :size => "40", :type => "password" }
+            %br
+            %input.btn-login{ :name => "login-btn", :src => "/images/btn-login.gif", :type => "image" }
+            = link_to 'Forgot your password?', forgot_password_path
+      .overlay
+
+    .popup-reg
+      .register-box
+        .padding
+          .head
+            REGISTER
+          .close
+            %a{ :href => "#" }
+              %img{ :src => "/images/close.gif", :alt => "close" }
+          - form_tag users_path, :class => 'loginform' do
+            %label
+              Login Name
+            %input.input{ :name => "login", :size => "40", :type => "text" }
+            %label
+              E-mail Address
+            %input.input{ :name => "email", :size => "40", :type => "text" }
+            %label
+              Password
+            %input.input{ :name => "password", :size => "40", :type => "password" }
+            %label
+              Confirm Password
+            %input.input{ :name => "password_confirmation", :size => "40", :type => "password" }
+            %br
+            %input.btn-login{ :name => "register-btn", :src => "/images/btn-login.gif", :type => "image" }
+      .overlay

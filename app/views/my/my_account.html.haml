@@ -1,26 +1,22 @@
-.my
-  .account
-    = h(current_user.login)
-    Account Information
-  .registered
-    Registered since:
-    = current_user.created_at.to_date.to_s(:long)
-  .password
-    %fieldset
-      %legend
-        Change Password
-      - form_tag  url_for( :action => :password ), :method => :put do
-        .current
-          %label
-            %span.legend Current Password:
-            = password_field_tag :old_password
-        .new
-          %label
-            %span.legend New Password:
-            = password_field_tag :new_password
-        .verify
-          %label
-            %span.legend Verify New Password:
-            = password_field_tag :confirm_password
-        .submit
-          = submit_tag "change password"
+.col-main.left
+  .smaller-head
+    Manage My Account
+  .clear
+  - form_tag  url_for( :action => :password ), :method => :put, :class => 'playlist create' do
+    %p
+      %label
+        Current Password
+      = password_field_tag :old_password
+    %p
+      %label
+        New Password
+      = password_field_tag :new_password
+    %p
+      %label
+        Verify New Password
+      = password_field_tag :confirm_password
+    %p
+      %input.submit{ :name => "Change Password", :src => "/images/btn-change-password.gif", :type => "image" }
+      %a.btn-cancel{ :href => "#" }
+        Cancel
+

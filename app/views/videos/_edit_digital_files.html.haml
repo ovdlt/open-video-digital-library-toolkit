@@ -1,12 +1,13 @@
-.form
+.head
+  Digital Files
+.form.add
+  %label
+    Current Assets
+  = tabs_div_for :current_assets
 
-  %fieldset
-    %legend Current Assets
-    = tabs_div_for :current_assets
-
-  %fieldset
-    %legend Uncataloged Assets
-    = tabs_div_for :uncataloged_assets
+  %label
+    Uncataloged Assets
+  = tabs_div_for :uncataloged_assets
 
   .clear
 

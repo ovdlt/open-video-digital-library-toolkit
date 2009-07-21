@@ -1,29 +1,33 @@
 - max ||= nil
 - browse ||= false
-%dl.category
-  - axis_index = 1
-  - PropertyType.browse do |type|
-    %dt
-      = type.name
-    %dd
-      %ul
-        - type.values.each do |descriptor|
-          %li
-            = link_to descriptor.text, |
-              descriptor_value_search( descriptor ) |
-            %span.count= "[#{descriptor.videos(public_only?).size}]"
-        - unless HomeController === controller
-          %li.all
-            = link_to "All #{type.name.pluralize} &raquo;", |
-                      property_type_videos_path( type ) |
-  - if !max.nil? and axis_index >= max
-    - break
-  - else
-    - axis_index += 1
+.axes
+  %dl.category
+    - axis_index = 1
+    - PropertyType.browse do |type|
+      .axis.property_type{:id=>"property_type_#{type.id}"}
+        .handle
+          .handle_image
+      %dt
+        = type.name
+      %dd
+        %ul
+          - type.values.each do |descriptor|
+            %li
+              = link_to descriptor.text, |
+                descriptor_value_search( descriptor ) |
+              %span.count= "[#{descriptor.videos(public_only?).size}]"
+          - unless HomeController === controller
+            %li.all
+              = link_to "All #{type.name.pluralize} &raquo;", |
+                        property_type_videos_path( type ) |
+    - if !max.nil? and axis_index >= max
+      - break
+    - else
+      - axis_index += 1
 
-- if browse
-  .browse
-    = link_to "More Categories &raquo;", videos_path
+  - if browse
+    .browse
+      = link_to "More Categories &raquo;", videos_path
 
 :javascript
   jQuery(".axes .axis .title a").prepend('<span class="icon"><\/span> ');

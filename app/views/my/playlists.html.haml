@@ -1,3 +1,6 @@
-.my
-  = render :partial => "collections/index", :object => @collections, |
+.col-main.left
+  .videos
+    .smaller-head
+      My Playlists
+    = render :partial => "collections/index", :object => @collections, |
            :locals => { :title => @title } |

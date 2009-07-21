@@ -28,32 +28,32 @@
 
       .creation_credits{ error_class( @video, :creation_credits ) }
         .label= @form.label :creation_credits, "Creation Credits"
-        %div= @form.text_area :creation_credits, :cols => 38, :rows => 6
+        %div= @form.text_area :creation_credits, :cols => 44, :rows => 6
         = error_message_on @video, :creation_credits
 
       .participation_credits{ error_class( @video, :participation_credits ) }
         .label= @form.label :participation_credits, "Participation Credits"
-        %div= @form.text_area :participation_credits, :cols => 38, :rows => 6
+        %div= @form.text_area :participation_credits, :cols => 44, :rows => 6
         = error_message_on @video, :participation_credits
 
     %dt
-      Content 
+      Content
     %dd
-      
+
 
       .abstract.required{ error_class( @video, :abstract ) }
         .label= @form.label :abstract
-        %div= @form.text_area :abstract, :cols => 38, :rows => 6
+        %div= @form.text_area :abstract, :cols => 44, :rows => 6
         = error_message_on @video, :abstract
 
       .sentence{ error_class( @video, :sentence ) }
         .label= @form.label :sentence, "Sentence Summary"
-        %div= @form.text_area :sentence, :cols => 38, :rows => 2
+        %div= @form.text_area :sentence, :cols => 44, :rows => 4
         = error_message_on @video, :sentence
 
       .transcript{ error_class( @video, :transcript ) }
         .label= @form.label :transcript, "Transcript"
-        %div= @form.text_area :transcript, :cols => 38, :rows => 6
+        %div= @form.text_area :transcript, :cols => 44, :rows => 6
         = error_message_on @video, :transcript
 
     %dt
@@ -62,11 +62,13 @@
 
       .tags
         .label= @form.label :tags
-        %div= text_area_tag "video[tags]", |
-                             @video.tag_string, :cols => 38, :rows => 3 , |
+        %div
+          = text_area_tag "video[tags]", |
+                             @video.tag_string, :cols => 35, :rows => 4 , |
                              :id => "video_tags" |
-        = error_message_on @video, :tags
-    
+          Separate tags with commas
+          = error_message_on @video, :tags
+
     %dt
       Description
     %dd
@@ -108,15 +110,15 @@
 
       .donor{ error_class( @video, :donor ) }
         .label= @form.label :donor
-        %div= @form.text_area :donor, :cols => 38, :rows => 2
+        %div= @form.text_area :donor, :cols => 38, :rows => 3
 
       .preservation_note{ error_class( @video, :preservation_note ) }
         .label= @form.label :preservation_note, "Preservation Note"
-        %div= @form.text_area :preservation_note, :cols => 38, :rows => 2
+        %div= @form.text_area :preservation_note, :cols => 38, :rows => 3
 
       .notes{ error_class( @video, :notes ) }
         .label= @form.label :notes, "Other notes"
-        %div= @form.text_area :notes, :cols => 38, :rows => 2
+        %div= @form.text_area :notes, :cols => 38, :rows => 3
 
     %dt
       Rights

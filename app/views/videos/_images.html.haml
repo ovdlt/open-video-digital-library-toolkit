@@ -11,12 +11,12 @@
     - type = collection[ row % collection.size ]
     - index = 0 if collection.size > 1
     - values = type.values()
-    - (0..4).each do |col|
+    - (0..4).each_with_index do |col, i|
       - descriptor = values[ index % values.size ]
       - v = random( descriptor, shown )
       - if v
-        %li.video
-          .image
+        %li{:class =>(((i + 1) % 5).zero? ? "video fifth" : "video")}
+          .image.placeholder
             %a{:href => video_path( v.id )}
               - if poster_path = v.poster_path
                 %img{:src=>poster_path, :alt => "video #{v.id}"}

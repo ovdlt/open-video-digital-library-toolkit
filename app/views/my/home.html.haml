@@ -1,96 +1,91 @@
-.account-page.dashboard
-  .head
-    %span.left
-      My NHF
-  .body
-    .col-left
-      .box.favorites
-        .head
-          %span.left
-            Favorites
-            &== (#{current_user.favorites.size(public_only?)})
-          = link_to "View All &raquo;", favorites_my_path
-        .list
-          %ul
-          - current_user.favorites.each_with_index do |video,i|
-            - break if i > 2
-            %li
-              .image
-                %a{:href => video_path( video.id )}
-                  -if poster_path = video.poster_path
-                    %img{:src=>poster_path,:alt => "video #{video.id}", :width => "100"}
-              .details
-                %h5.title
-                  = link_to h(video.title), video_path( video.id )
-                %p
-                  %span.remove
-                    %a{ :href => "#" }
-                      Remove
-      .box.downloads
-        .head
-          %span.left
-            Downloads
-            &== (#{current_user.downloads.size(public_only?)})
-          = link_to "View All &raquo;", downloaded_videos_my_path
-        .list
-          %ul
-            - current_user.downloads.each_with_index do |video,i|
-              - break if i > 4
-              %li
-                .image
-                  %a{:href => video_path( video.id )}
-                    -if poster_path = video.poster_path
-                      %img{:src=>poster_path,:alt => "video #{video.id}", :width => "100"}
-                .details
-                  %h5.title
-                    = link_to h(video.title), video_path( video.id )
-                  %p
-                    %span.remove
-                      %a{ :href => "#" }
-                        Remove
-      /downloads end
-    /left col end
-    .col-center
-      .box.saved-searches
-        .head
-          %span.left
-            Saved Searches
-            &== (#{current_user.searches.size})
-          = link_to "View All &raquo;", saved_searches_my_path
-        .list
-          %ul
-          - current_user.searches.each_with_index do |search,i|
-            - break if i > 4
-            %li
-              .details
-                %h5.title
-                  = link_to h(search.title), search_path( Search.find search.id )
-                %p
-                  %span.remove
-                    %a{ :href => "#" }
-                      Edit
-                    |
-                    %a{ :href => "#" }
-                      Remove
-      .box.playlists
-        .head
-          %span.left
-            Playlists
-            &== (#{current_user.playlists.size})
-          = link_to "View All &raquo;", playlists_my_path
-        .list
-          %ul
-          - current_user.playlists.each_with_index do |playlist,i|
-            - break if i > 2
-            %li
-              .image
-                %a{:href => collection_path( playlist.id )}
-                  -if poster_path = playlist.poster_path(public_only?)
-                    %img{:src=>poster_path,:alt => "playlist #{playlist.id}", :width => "100"}
-              .details
-                %h5.title
-                  = link_to h(playlist.title), collection_path( playlist.id )
-                %p
-                  %span.remove
-                    %a{ :href => "#" }
-                      Remove
+.col-left
+  .box.favorites
+    .head
+      %span.left
+        Favorites
+        &== (#{current_user.favorites.size(public_only?)})
+      = link_to "View All &raquo;", favorites_my_path
+    .list
+      %ul
+        - current_user.favorites.each_with_index do |video,i|
+          - break if i > 3
+          %li
+            .image
+              %a{:href => video_path( video.id )}
+                -if poster_path = video.poster_path
+                  %img{:src=>poster_path,:alt => "video #{video.id}", :width => "100"}
+            .details
+              %h5.title
+                = link_to h(video.title), video_path( video.id )
+              %p
+                %span.remove
+                  %a{ :href => "#" }
+                    Remove
+  .box.downloads
+    .head
+      %span.left
+        Downloads
+        &== (#{current_user.downloads.size(public_only?)})
+      = link_to "View All &raquo;", downloaded_videos_my_path
+    .list
+      %ul
+        - current_user.downloads.each_with_index do |video,i|
+          - break if i > 3
+          %li
+            .image
+              %a{:href => video_path( video.id )}
+                -if poster_path = video.poster_path
+                  %img{:src=>poster_path,:alt => "video #{video.id}", :width => "100"}
+            .details
+              %h5.title
+                = link_to h(video.title), video_path( video.id )
+              %p
+                %span.remove
+                  %a{ :href => "#" }
+                    Remove
+  /downloads end
+/left col end
+.col-center
+  .box.saved-searches
+    .head
+      %span.left
+        Saved Searches
+        &== (#{current_user.searches.size})
+      = link_to "View All &raquo;", saved_searches_my_path
+    .list
+      %ul
+        - current_user.searches.each_with_index do |search,i|
+          - break if i > 6
+          %li
+            .details
+              %h5.title
+                = link_to h(search.title), search_path( Search.find search.id )
+              %p
+                %span.remove
+                  %a{ :href => "#" }
+                    Edit
+                  |
+                  %a{ :href => "#" }
+                    Remove
+  .box.playlists
+    .head
+      %span.left
+        Playlists
+        &== (#{current_user.playlists.size})
+      = link_to "View All &raquo;", playlists_my_path
+    .list
+      %ul
+        - current_user.playlists.each_with_index do |playlist,i|
+          - break if i > 3
+          %li
+            .image
+              %a{:href => collection_path( playlist.id )}
+                -if poster_path = playlist.poster_path(public_only?)
+                  %img{:src=>poster_path,:alt => "playlist #{playlist.id}", :width => "100"}
+            .details
+              %h5.title
+                = link_to h(playlist.title), collection_path( playlist.id )
+              %p
+                %span.remove
+                  %a{ :href => "#" }
+                    Remove

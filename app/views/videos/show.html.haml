@@ -5,32 +5,33 @@
       = h video.title
 
     - if current_user and current_user.has_role?(  [ :admin, :cataloger ] )
-      %label
+      .featured.clear
         - form_for video, :html => { :id => nil } do |form|
-          %label
-            = form.check_box :featured
-            - if !video.featured?
+          = form.check_box :featured
+          - if !video.featured?
+            %label.is_featured
               Feature this video
-            - else
+          - else
+            %label.is_featured
               This video featured on
-              = video.featured_on.to_time.localtime.strftime("%B %d, %Y at %I:%M %p")
+              = video.featured_on.to_time.localtime.strftime("%B %d, %Y")
               = feature_rank( video )
     - else
       - if video.featured?
-        %label.featured
-          FEATURED
+        %label.is_featured>FEATURED
 
     - if current_user and current_user.has_role?( :admin )
-      .public
+      .public.clear
         - form_for video, :html => { :id => nil } do |form|
-          %label
-            = form.check_box :public
-            - if !video.public?
+          = form.check_box :public
+          - if !video.public?
+            %label.is_public
               Make this video public
-            - else
+          - else
+            %label.is_public
               This video is public
     - elsif current_user and current_user.has_role?(  :cataloger )
-      .label
+      %label.is_public
         This video is
         = video.public? ? "public" : "private"
 
@@ -60,17 +61,17 @@
               Watch Full Size Video
 
         - if !video.abstract.blank?
-          .abstract
+          .description
             :textile
               #{video.abstract}
         - elsif !video.sentence.blank?
           .description&= video.sentence
-          .download
-            - video.assets.each do |asset|
-              %a{:href => asset_path( asset  )}
-                %img{ :src => "/images/btn-download.gif", :alt => "download" }
-              %span
-                = h asset.asset_format + " " + number_to_human_size(asset.size)
+        .download
+          - video.assets.each do |asset|
+            %a{:href => asset_path( asset  )}
+              %img{ :src => "/images/btn-download.gif", :alt => "download"}
+            %span
+              = h asset.asset_format + " " + number_to_human_size(asset.size)
     /left col end
     .col-center
       %ul.navigators
@@ -91,72 +92,117 @@
           Overview
         %dd
           %ul
+            - if !video.duration.blank?
+              %li
+                %label
+                  Duration:
+                = h int_to_duration( video.duration )
+            - if !video.alternative_title.blank?
+              %li
+                %label
+                  Alternative Title:
+                = h video.alternative_title
+            - if !video.series_title.blank?
+              %li
+                %label
+                  Series Title:
+                = h video.series_title
+            - if !video.sentence.blank?
+              %li
+                %label
+                  Sentence Summary:
+                = h video.sentence
+            - if !video.abstract.blank?
+              %li
+                %label
+                  Abstract:
+                = h video.abstract
+        %dt
+          Video Information
+        %dd
+          %ul
+            - if !video.created_at.blank?
+              %li
+                %label
+                  Added:
+                = video.created_at.to_date.to_s(:long)
+            - if !video.updated_at.blank?
+              %li
+                %label
+                  Last updated:
+                = video.updated_at.to_date.to_s(:long)
+            - if !video.audience.blank?
+              %li
+                %label
+                  Audience:
+                = video.audience
+            - if !video.language_note.blank?
+              %li
+                %label
+                  Language Note:
+                = video.language_note
+        %dt
+          Dates
+        %dd
+          %ul
+            -# TODO replace Creation example below with date types and values from db
             %li
               %label
-                Added:
-              = video.created_at.to_date.to_s(:long)
+                Creation:
+              April 14, 2009
+        %dt
+          Descriptors
+        %dd
+          %ul
+            -# TODO replace Color example below with Descriptor types and values from db
             %li
               %label
-                Updated:
-              = video.updated_at.to_date.to_s(:long)
+                Color:
+              Black &amp; White
+        %dt
+          Responsible Entities
+        %dd
+          -# TODO add below  Responsible entity types and values from db
+          %ul
+            - if !video.creation_credits.blank?
+              %li
+                %label
+                  Creation Credits:
+                = video.creation_credits
+            - if !video.participation_credits.blank?
+              %li
+                %label
+                  Participation Credits:
+                = video.participation_credits
+        %dt
+          Rights Information
+        %dd
+          %ul
             %li
               %label
                 License:
-              %p
               - if !video.rights_holder.blank?
                 :textile
                   #{video.rights_holder}
               %p
                 = h video.rights.statement
-              %p
-                :textile
-                  #{video.rights.html}
-        %dt
-          Dates
-        %dd
-          %ul
-            %li
-              %label
-                Creation:
-              April 14, 2009
-            %li
-              %label
-                Digitization:
-              April 21, 2009
-        %dt
-          Descriptors
-        %dd
-          %ul
-            %li
-              %label
-                Descriptor:
-        %dt
-          Responsible Entities
-        %dd
-          %ul
-            %li
-              %label
-                Writer:
-              John Smith
-        %dt
-          Video Information
-        %dd
-          %ul
-            %li
-              %label
-                Alternative Title:
-              video[alternative_title]
-            %li
-              %label
-                Series Title:
-              video[series_title]
-      - if params[:details_format] == "storyboard" and |
-           images = video.storyboard |
-        #storyboard
-          - images.each do |image|
-            .image
-              %a{ :href => "#" }
-                %img{:src=>image,:alt=>"storyboard image"}
+              :textile
+                #{video.rights.html}
+
+      #storyboard.storyboard
+        - if images = video.storyboard
+          - images.each_with_index do |image, index|
+            %div{:class =>(((index + 1) % 4).zero? ? "image fourth" : "image")}
+              %img{:src=>image,:alt=>"storyboard image"}
+              - if current_user and current_user.has_role?(  [ :admin, :cataloger ] )
+                - if image == video.poster_path
+                  .poster.checked
+                - else
+                  .poster.check
+                    - form_for video, :html => { :id => nil } do |f|
+                      .hidden
+                        = f.text_field :poster_path, :value => image, :id => gen_id
+                        = f.submit "update", :id => nil
       #fast-forward
         Fast forward
       #excerpt
@@ -169,20 +215,15 @@
           TAGS
         %dd
           .tags
-            %a{ :href => "#" }
-              Dynamic
-            ,
-            %a{ :href => "#" }
-              Queries
-            ,
-            %a{ :href => "#" }
-              Computer-Science
-            ,
-            %a{ :href => "#" }
-              Computer
-            ,
-            %a{ :href => "#" }
-              Science
+            - if current_user and @library.user_tagging_enabled?
+              = tags_html( video.tags )
+              - form_tag url_for( :controller => :tagging, :action => :create ) do
+                = text_field_tag :tags
+                = hidden_field_tag :video_id, video.id
+                = submit_tag "add tags"
+            - if !current_user and @library.user_tagging_enabled?
+              = link_to "Login", login_path
+              to add tags
         %dt
           %img{ :src => "/images/icon-video.gif", :alt => "more videos" }
           More videos
@@ -212,12 +253,10 @@
             - if current_user
               %li.menu-favorites
                 %span.icon
-                %a{ :href => "#" }
-                  Add to Favorites
+                = render :partial => "videos/alter_favorites", :object => video
               %li.menu-playlists
                 %span.icon
-                %a{ :href => "#" }
-                  Add to Playlist
+                = render :partial => "add_to_playlist", :object => video
             %li.menu-embed
               %span.icon
               %a{ :href => "#" }

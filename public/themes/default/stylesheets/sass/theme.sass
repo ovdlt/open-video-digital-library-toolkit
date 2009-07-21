@@ -172,6 +172,10 @@ dt.selected
   :background url(/images/bg-login-box.png) no-repeat 0 0
 
 
+.register-box
+  :background url(/images/bg-register-box.png) no-repeat 0 0
+
+
 .input
   :border solid 1px #d5d5d5
 
@@ -196,20 +200,20 @@ dt.selected
 
 
 .listby
-  .bg-thumbs
-    :background url(/images/bg-big-thumbs.gif) no-repeat
+  .big_thumbs
+    :background url(../images/bg_big_thumbs.gif) no-repeat
 
-  .text-only
-    :background url(/images/bg-text-only.gif) no-repeat
+  .text_only
+    :background url(../images/bg_text_only.gif) no-repeat
 
-  .sm-thumbs
-    :background url(/images/bg-sm-thumbs.gif) no-repeat
+  .sm_thumbs
+    :background url(../images/bg_sm_thumbs.gif) no-repeat
 
-  .thumbs-only
-    :background url(/images/bg-thumbs-only.gif) no-repeat
+  .thumbs_only
+    :background url(../images/bg_thumbs_only.gif) no-repeat
 
 
-.playlist .title span
+.playlist .title span, .collection-single .title span
   :color #7f7f7f
 
   a
@@ -279,6 +283,31 @@ dt.selected
 
 .menu-delete .icon
   :background-image url(/images/icon-delete.gif)
+
+# added to support pre-Iterative function
+
+.show_all
+  :float right
+  :font-size 12px
+  :font-weight bold
+  :padding 5px 5px
+
+.poster
+  :width 1em
+  :height 1em
+  :position absolute
+  :right 0
+  :bottom 0
+
+.poster.checked
+  :background-color red
+  :border 2px solid black
+
+.poster.check
+  :background white
+  :border 2px solid black
+
+# post-IM tweaks for js functionality, missing forms
 
 .admin-form.users form
   :margin-bottom 2em
