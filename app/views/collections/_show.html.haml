@@ -1,13 +1,14 @@
 - collection = show
 /head start
 .head
-  %span.left= container_text( collection ).capitalize + ": " + collection.title
-  %label.featured.left
-    FEATURED
+  %span.left
+    = container_text( collection ).capitalize + ": " + collection.title
+  %label.is_featured.left>FEATURED
   %span.right.rss
     %img{ :src => "/images/icon-rss.gif", :alt => "rss" }
     %a{ :href => "#" }
-      Subscribe to this Collection
+      Subscribe to this
+      = container_text( collection ).capitalize
 /head end
 .body
   .col-main.left
@@ -15,6 +16,12 @@
     .collection-single
       .image{ :style => "background-color:#333" }
       .details
+        -# TODO title part -- only show if Playlist type of collection
+        -#%h5.title
+          -#%span
+            -#created by
+            -#%strong
+              -#= h collection.user.login
         %p
           %strong
             Videos:
@@ -27,31 +34,28 @@
           %strong
             Added:
           = collection.created_at.to_date.to_s(:medium)
-          by
-          = h collection.user.login
           %br
           %strong
             Last Updated:
           = collection.created_at.to_date.to_s(:medium)
         %p
           = h collection.description
+        - if current_user and current_user.id == collection.user_id
+          %p
+            This playlist is
+            = collection.public? ? "public." : "private."
 
         - if current_user and current_user.id == collection.user_id
-          .right
-            = link_to "edit", edit_collection_path( collection )
-          .clear
-          .right
-            = link_to "delete", collection_path( collection ), |
+          %p
+            = link_to "Edit " + container_text( collection ).capitalize, edit_collection_path( collection )
+            \|
+            = link_to "Delete " + container_text( collection ).capitalize, collection_path( collection ), |
                :method => :delete, |
                :confirm => "are you sure you want to delete this collection?" |
-      - if current_user and current_user.id == collection.user_id
-        .public
-          This playlist is
-          = collection.public? ? "public." : "private."
       /collection single end
     = render :partial => "videos/index", :object => bookmarks
     /col left end
-    /code below would be better in collections/show but HAML nesting wont work there
+    /code below would be better in collections/show but HAML nesting wont work there?
   .col-right
     %dl
       %dt
@@ -60,7 +64,7 @@
       %dd
         %ul
           %li
-            = link_to "Browse All #{containers_text( @collection )} »", |
+            = link_to "Browse All #{containers_text( @collection ).capitalize} »", |
               send( "#{containers_text( @collection )}_collections_path".to_sym ) |
           /
             - if owner = owner_text( @collection )

@@ -563,14 +563,9 @@ li
         :line-height 1.4em
 
 
-.is_featured
+.is_featured, .is_public
   :font-size 12px
-  :background-color #ffdf78
-  :padding 0 5px
-  :margin-left 5px
-
-.is_public
-  :font-size 12px
+  :font-weight bold
   :background-color #ffdf78
   :padding 0 5px
   :margin-left 5px
@@ -768,7 +763,7 @@ li
     :padding 10px 3%
     :position relative
 
-  .playlists .details
+  .playlists .details, .downloads .details
     :padding-left 110px
 
 
@@ -900,6 +895,7 @@ li
     :float left
     :height 75px
     :width 100px
+    :background-color #333
 
     img
       :width 100px
@@ -918,6 +914,7 @@ li
     :float left
     :height 30px
     :width 40px
+    :background-color #333
 
     img
       :width 40px
@@ -964,6 +961,7 @@ li
     :width 120px
     :height 90px
     :margin-bottom 5px
+    :background-color #333
 
     img
       :width 120px
@@ -975,8 +973,13 @@ li
     :margin 10px 10px
     :text-align center
 
-  .image img
+  .image
     :width 70px
+    :height 55px
+    :background-color #333
+
+    img
+      :width 70px
 
   .details
     :display none
@@ -1239,10 +1242,13 @@ input
   :display inline
 
 
-.videos .image .placeholder
+.videos .placeholder
   :background-color #333
   :width 90px
   :height 70px
 
 .jcarousel-item .title
   :font-size 12px
+
+/.jcarousel-item .image
+  /:background-color #333

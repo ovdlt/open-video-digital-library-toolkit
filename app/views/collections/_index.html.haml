@@ -1,29 +1,25 @@
 - subtitle ||= nil
 - collections = index
-.one-column
-  .head
-    %span.left
-      Browse Collections
 
-    - if WillPaginate::ViewHelpers.total_pages_for_collection( collections ) > 1
+- if WillPaginate::ViewHelpers.total_pages_for_collection( collections ) > 1
+  .show_all
+    = link_to "Show All", |
+      url_for( :controller => request.path_parameters['controller'], |
+                :action => request.path_parameters['action'], |
+                :page => "all" ) |
 
-      = link_to " (show all)", |
-        url_for( :controller => request.path_parameters['controller'], |
-                  :action => request.path_parameters['action'], |
-                  :page => "all" ) |
-
-  /div.collections start
-  #all_collections.contents.collections
-    .row
-      / - if subtitle
-      /   .pagination_info= subtitle
-      / - else
-      /   %div &nbsp;
+/div.collections start
+#all_collections.contents.collections
+  .row
+    / - if subtitle
+    /   .pagination_info= subtitle
+    / - else
+    /   %div &nbsp;
 
 
-      = render :partial => "collections/collection", :collection => collections
+    = render :partial => "collections/collection", :collection => collections
 
-    .pager
-      = will_paginate collections
-  /collections end
-/div.one-column end
+  .pager
+    = will_paginate collections
+/collections end
+

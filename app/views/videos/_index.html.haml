@@ -5,9 +5,9 @@
     .smaller-head
       %span.left
         = page_entries_info videos, :entry_name => "video"
-      - if @collection and WillPaginate::ViewHelpers.total_pages_for_collection( videos ) > 1
-        .show_all
-          = link_to "show all", collection_path( @collection, :page => "all" )
+      -#- if @collection and WillPaginate::ViewHelpers.total_pages_for_collection( videos ) > 1
+        -#.show_all
+          -#= link_to "Show All", collection_path( @collection, :page => "all" )
       .listby
         - [ :big_thumbs, |
             :text_only, |

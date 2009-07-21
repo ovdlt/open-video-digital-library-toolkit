@@ -16,12 +16,10 @@
       - v = random( descriptor, shown )
       - if v
         %li{:class =>(((i + 1) % 5).zero? ? "video fifth" : "video")}
-          .image
+          .image.placeholder
             %a{:href => video_path( v.id )}
               - if poster_path = v.poster_path
                 %img{:src=>poster_path, :alt => "video #{v.id}"}
-              - else
-                .placeholder
           .details
             %h5.title{:class=>video_vis_class(v)}
               = link_to h(v.title), video_path( v.id )

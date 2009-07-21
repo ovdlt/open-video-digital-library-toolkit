@@ -22,16 +22,14 @@
       - else
         =h video.sentence
     - if !video.tags.empty?
-      .tags
+      %p
         Tags:
         = tags_html( video.tags )
-    = link_to "View video details", video_path( video )
-    \|
-    - if current_user
-      .actions
-        .action
-          = render :partial => "videos/alter_favorites", :object => video
-        .action
-          = render :partial => "videos/add_to_playlist", :object => video
-      &nbsp;&bull;&nbsp;
-    = link_to "Download", download_video_path( video )
+    %p<
+      = link_to "View video details", video_path( video )
+      \|
+      - if current_user
+        = render :partial => "videos/alter_favorites", :object => video
+        \|
+        = render :partial => "videos/add_to_playlist", :object => video
+      = link_to "Download", download_video_path( video )

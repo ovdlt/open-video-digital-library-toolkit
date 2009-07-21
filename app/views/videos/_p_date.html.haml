@@ -5,7 +5,6 @@
         = p_date.name
         \|
         %span.edit= link_to "edit", "#"
-      %p
         = p_date.value
     .edit{ error_class(p_date) }
       - fields_for "property[#{type_id(p_date)}]", p_date do |fields|
@@ -27,4 +26,3 @@
         = error_messages_for 'property', :object => p_date
         = hidden_field_tag "property[#{type_id(p_date)}][deleted]", |
                              false, :id => nil, :class => :deleted |
-.clear

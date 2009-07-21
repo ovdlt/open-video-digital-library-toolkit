@@ -330,6 +330,7 @@
             return false;
         });
 
+
         $("div#content div.axis").click(function(){
             $("body").css("cursor","wait");
             pt_id = $(this).attr("id").replace("property_type_","");

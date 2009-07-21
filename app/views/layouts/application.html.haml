@@ -115,7 +115,7 @@
           .close
             %a{ :href => "#" }
               %img{ :src => "/images/close.gif", :alt => "close" }
-          - form_tag sessions_path, :class => 'loginform' do
+          - form_tag sessions_path, :id => "login-form", :class => 'loginform' do
             %label
               Username
             %input.input{ :name => "login", :size => "40", :type => "text" }
@@ -123,7 +123,7 @@
               Password
             %input.input{ :name => "password", :size => "40", :type => "password" }
             %br
-            %input.btn-login{ :name => "", :src => "/images/btn-login.gif", :type => "image" }
+            %input.btn-login{ :name => "login-btn", :src => "/images/btn-login.gif", :type => "image" }
             = link_to 'Forgot your password?', forgot_password_path
       .overlay
 
@@ -149,5 +149,5 @@
               Confirm Password
             %input.input{ :name => "password_confirmation", :size => "40", :type => "password" }
             %br
-            %input.btn-login{ :name => "", :src => "/images/btn-login.gif", :type => "image" }
+            %input.btn-login{ :name => "register-btn", :src => "/images/btn-login.gif", :type => "image" }
       .overlay

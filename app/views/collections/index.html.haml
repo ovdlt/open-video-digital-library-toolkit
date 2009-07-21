@@ -1,6 +1,12 @@
-= render :partial => "collections/index", :object => @collections, |
+.one-column
+  .head
+    %span.left
+      Browse Collections
+
+  = render :partial => "collections/index", :object => @collections, |
            :locals => { :title => @title, |
                         :subtitle => @subtitle } |
+/div.one-column end
 - if current_user and current_user.has_role?( "admin" )
   :javascript
     jQuery(document).ready( function() {

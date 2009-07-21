@@ -1,9 +1,11 @@
-.col-left
-  .head
-    %span.left
-      BROWSE
-  = render :partial => "shared/axes"
-/left col end, right col start
-.main.left
-  = render :partial => "videos/images"
+#content
+  .col-left#browse
+    .head
+      %span.left
+        BROWSE
+    .content.block.last
+      = render :partial => "shared/axes"
+  /left col end, right col start
+  .main.left#videos.videos
+    = render :partial => "videos/images"
 /right col end

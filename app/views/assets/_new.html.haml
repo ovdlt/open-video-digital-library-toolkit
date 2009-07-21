@@ -5,38 +5,37 @@
     Search
     = text_field_tag :uncatted, nil, :size => 50
     = submit_tag "add"
-  %p
 
   %label
     Browse
-    .uncataloged.template
-      %table
-        %tr
-          %td.input
-            = hidden_field_tag "uncataloged_assets", |
-                               ":uri:", |
-                               :name => "uncataloged_assets[]" |
-            .delete.right= link_to "delete", "#"
-            = link_to "show.uri", "#", :class => "uri"
-          %td.format= "show.asset_format"
-          %td.size= "number_to_human_size(show.size)"
+  .uncataloged.template
     %table
-      %thead
-        %tr
-          %th Filename
-          %th Type
-          %th Size
-      %tbody.page
-        %tr.hidden
-          %td should be hidden
-    #asset_pager.ajax
-    %script{:type=>"text/javascript"}
-      jQuery(function(){
-      jQuery("div#asset_pager").paginate(
-      = Asset.uncataloged_files({}).length
-      ,
-      = '"' + formatted_uncataloged_assets_path( :format => :json ) + '"'
-      );
-      jQuery.load_assets(0);
-      });
-    / .div= will_paginate files
+      %tr
+        %td.input
+          = hidden_field_tag "uncataloged_assests", |
+                             ":uri:", |
+                             :name => "uncataloged_assets[]" |
+          .delete.right= link_to "delete", "#"
+          = link_to "show.uri", "#", :class => "uri"
+        %td.format= "show.asset_format"
+        %td.size= "number_to_human_size(show.size)"
+  %table
+    %thead
+      %tr
+        %th Filename
+        %th Type
+        %th Size
+    %tbody.page
+      %tr.hidden
+        %td should be hidden
+  #asset_pager.ajax
+  %script{:type=>"text/javascript"}
+    jQuery(function(){
+    jQuery("div#asset_pager").paginate(
+    = Asset.uncataloged_files({}).length
+    ,
+    = '"' + formatted_uncataloged_assets_path( :format => :json ) + '"'
+    );
+    jQuery.load_assets(0);
+    });
+  / .div= will_paginate files

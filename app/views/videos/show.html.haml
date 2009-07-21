@@ -7,27 +7,28 @@
     - if current_user and current_user.has_role?(  [ :admin, :cataloger ] )
       .featured.clear
         - form_for video, :html => { :id => nil } do |form|
-          %label.is_featured
-            = form.check_box :featured
-            - if !video.featured?
+          = form.check_box :featured
+          - if !video.featured?
+            %label.is_featured
               Feature this video
-            - else
+          - else
+            %label.is_featured
               This video featured on
               = video.featured_on.to_time.localtime.strftime("%B %d, %Y")
               = feature_rank( video )
     - else
       - if video.featured?
-        %label.is_featured
-          FEATURED
+        %label.is_featured>FEATURED
 
     - if current_user and current_user.has_role?( :admin )
       .public.clear
         - form_for video, :html => { :id => nil } do |form|
-          %label.is_public
-            = form.check_box :public
-            - if !video.public?
+          = form.check_box :public
+          - if !video.public?
+            %label.is_public
               Make this video public
-            - else
+          - else
+            %label.is_public
               This video is public
     - elsif current_user and current_user.has_role?(  :cataloger )
       %label.is_public
@@ -91,60 +92,60 @@
           Overview
         %dd
           %ul
-          - if !video.duration.blank?
-            %li
-              %label
-                Duration:
-              = h int_to_duration( video.duration )
-          - if !video.alternative_title.blank?
-            %li
-              %label
-                Alternative Title:
-              = h video.alternative_title
-          - if !video.series_title.blank?
-            %li
-              %label
-                Series Title:
-              = h video.series_title
-          - if !video.sentence.blank?
-            %li
-              %label
-                Sentence Summary:
-              = h video.sentence
-          - if !video.abstract.blank?
-            %li
-              %label
-                Abstract:
-              = h video.abstract
+            - if !video.duration.blank?
+              %li
+                %label
+                  Duration:
+                = h int_to_duration( video.duration )
+            - if !video.alternative_title.blank?
+              %li
+                %label
+                  Alternative Title:
+                = h video.alternative_title
+            - if !video.series_title.blank?
+              %li
+                %label
+                  Series Title:
+                = h video.series_title
+            - if !video.sentence.blank?
+              %li
+                %label
+                  Sentence Summary:
+                = h video.sentence
+            - if !video.abstract.blank?
+              %li
+                %label
+                  Abstract:
+                = h video.abstract
         %dt
           Video Information
         %dd
           %ul
-          - if !video.created_at.blank?
-            %li
-              %label
-                Added:
-              = video.created_at.to_date.to_s(:long)
-          - if !video.updated_at.blank?
-            %li
-              %label
-                Last updated:
-              = video.updated_at.to_date.to_s(:long)
-          - if !video.audience.blank?
-            %li
-              %label
-                Audience:
-              = video.audience
-          - if !video.language_note.blank?
-            %li
-              %label
-                Language Note:
-              = video.language_note
+            - if !video.created_at.blank?
+              %li
+                %label
+                  Added:
+                = video.created_at.to_date.to_s(:long)
+            - if !video.updated_at.blank?
+              %li
+                %label
+                  Last updated:
+                = video.updated_at.to_date.to_s(:long)
+            - if !video.audience.blank?
+              %li
+                %label
+                  Audience:
+                = video.audience
+            - if !video.language_note.blank?
+              %li
+                %label
+                  Language Note:
+                = video.language_note
         %dt
           Dates
         %dd
           %ul
-          -# TODO replace Creation example below with date types and values from db
+            -# TODO replace Creation example below with date types and values from db
             %li
               %label
                 Creation:
@@ -153,7 +154,7 @@
           Descriptors
         %dd
           %ul
-          -# TODO replace Color example below with Descriptor types and values from db
+            -# TODO replace Color example below with Descriptor types and values from db
             %li
               %label
                 Color:
@@ -161,18 +162,18 @@
         %dt
           Responsible Entities
         %dd
-          %ul
-          - if !video.creation_credits.blank?
-            %li
-              %label
-                Creation Credits:
-              = video.creation_credits
-          - if !video.participation_credits.blank?
-            %li
-              %label
-                Participation Credits:
-              = video.participation_credits
           -# TODO add below  Responsible entity types and values from db
+          %ul
+            - if !video.creation_credits.blank?
+              %li
+                %label
+                  Creation Credits:
+                = video.creation_credits
+            - if !video.participation_credits.blank?
+              %li
+                %label
+                  Participation Credits:
+                = video.participation_credits
         %dt
           Rights Information
         %dd
@@ -185,9 +186,8 @@
                   #{video.rights_holder}
               %p
                 = h video.rights.statement
-              %p
-                :textile
-                  #{video.rights.html}
+              :textile
+                #{video.rights.html}
 
       #storyboard.storyboard
         - if images = video.storyboard
