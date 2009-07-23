@@ -1,10 +1,9 @@
-%dl.delete{:id => "property_type_#{dt.id}", |
-            :class => (dt.id != "new_dt" ) ? "dtype descriptor-types" : "descriptor-types hidden" }
+%dl.delete{:id => "property_type_#{dt.id}", :class => (dt.id != "new_dt" ) ? "dtype descriptor-types" : "descriptor-types hidden" }
   %dt.property-type.display-edit
     %span.display.dt_handle{ error_class(dt) }
       = dt.name
       - if dt.browsable?
-        %span.featured BROWSABLE
+        %span.is_featured BROWSABLE
       |
       %span.edit= link_to "edit", "#"
     %span.edit{ error_class(dt) }
@@ -22,7 +21,7 @@
         = fields.hidden_field :property_class_id
         = hidden_field_tag "property_type[#{type_id(dt)}][deleted]", |
                              false, :id => nil, :class => :deleted |
-  %dd                           
+  %dd
     %ul
       - descriptor_values(dt).each do |dv|
         = render :partial => "library/dv", :object => dv

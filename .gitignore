@@ -15,4 +15,4 @@
 /vendor/gems/RedCloth-4.1.9/ext/redcloth_scan/Makefile
 /vendor/gems/RedCloth-4.1.9/ext/redcloth_scan/redcloth_scan.bundle
 /vendor/gems/RedCloth-4.1.9/lib/redcloth_scan.bundle
-
+vendor/gems/RedCloth-4.1.9/ext/redcloth_scan/gem_make.out

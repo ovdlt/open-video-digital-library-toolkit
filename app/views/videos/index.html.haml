@@ -62,10 +62,10 @@
                   %span.icon
                   = link_to "Create New Record", new_video_path
               - if current_user and params[:search]
-                %li.menu-embed
-                  %span.icon
+                %li.menu-searches
                   - form_tag saved_queries_path, :method => :post do
                     %label.button.save_query
+                      %span.icon
                       = link_to "Save this search", "#"
                     = to_form_inputs( @search.add_to_params( {}, :search ) )
                     .save_query
@@ -73,5 +73,6 @@
                         %label
                           Title:
                           = text_field_tag 'search[title]', nil, :id => nil
-                          %input{ :class => :hidden, :name => "commit", :src => "/images/btn-refine.gif", :type => "image", :value => "save" }
+                          %span.right
+                            %input{ :class => :hidden, :name => "commit", :src => "/images/save.gif", :type => "image", :value => "save" }
           /right end

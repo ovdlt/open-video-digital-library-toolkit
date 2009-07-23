@@ -18,7 +18,7 @@
         .image
           %a{:href => video_path( video.id )}
             -if poster_path = video.poster_path
-              %img{:src=>poster_path,:alt => "video #{video.id}"}
+              %img{:src=>poster_path,:alt => "video #{video.id}", :width => "100"}
         .details
           %h5.title{:class=>video_vis_class(video)}
             = link_to h(video.title), video_path( video )

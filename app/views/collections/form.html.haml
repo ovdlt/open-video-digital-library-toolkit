@@ -1,55 +1,42 @@
+- verb = @collection.new_record? ? "Create New" : "Edit"
 - collection ||= @collection
-.collection.page
-  - form_for @collection do |f|
-    .image
-      - if p = collection.poster_path(public_only?)
-        %img{:src=>p,:alt => "sample image from collection"}
-    .details
-      .title
-        .label
-          Title:
-          - if current_user and !current_user.special_collection?( collection )
-            = f.text_field :title, :size => 50
+.account-page
+  .head
+    %span.left
+      = verb
+      Playlist
+  .body
+    .col-main.left
+      - form_for @collection, :html => { :class => "playlist create new_collection" } do |f|
+        %p
+          %label
+            Playlist Name
+          - if current_user and !current_user.special_collection?( collection)
+            = f.text_field :title, :size => 50, :class => "input"
           - else
             = collection.title
-      .description
-        .label
-          Description:
-          %div= f.text_area :description, :size => "50x4"
-
-      .clear
-      .public
-        .label
-          Privacy:
-          Public:
-          = f.radio_button :public, "true"
-          Private:
-          = f.radio_button :public, "false"
-
-      %div &nbsp;
-      .clear
-
-      = submit_tag @collection.new_record? ? "Create" : "Save" 
-      = submit_tag "Done"
-
-    .menu
-      .attribute
-        .legend Created on:
-        .right.value= ca = collection.created_at and ca.to_date.to_s(:medium)
-      .attribute
-        .legend Last updated:
-        .right.value= ua = collection.updated_at and ua.to_date.to_s(:medium)
-      .attribute
-        .legend Videos:
-        .value= collection.size(public_only?)
-      .attribute
-        .legend Views:
-        .value= collection.views
-
-    .clear
-
-= render :partial => "collections/videos", |
-        :object => @collection.send(bookmarks_method), |
-        :locals => { :collection => collection } |
+        %p
+          %label
+            Playlist Description
+          = f.text_area :description, :rows => "5", :class => "input"
+        %p
+          %label
+            Privacy
+          = f.radio_button :public, "true", :id => "privacy_0"
+          Public &nbsp;&nbsp;&nbsp;
+          = f.radio_button :public, "false", :id => "privacy_1"
+          Private
+        %p
+          -if @collection.new_record?
+            = submit_tag("Done", {:type => "image", :src=>"/images/btn-create-playlist.gif", :alt=>"Create", :class=>"submit"})
+          - else
+            = submit_tag("Done", {:type => "image", :src=>"/images/btn-save-changes.gif", :alt=>"Save", :class=>"submit"})
+          %a.btn-cancel{ :href => "#" }
+            Cancel
+    -# TODO think we should just use the video/index partial but
+    -# need to pass correct parameters
+      //= render :partial => "collections/videos", |
+        //:object => @collection.send(bookmarks_method), |
+        //:locals => { :collection => collection } |
 
 
