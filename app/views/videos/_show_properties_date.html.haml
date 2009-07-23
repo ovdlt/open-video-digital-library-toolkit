@@ -1,8 +1,11 @@
 - pc = PropertyClass.find_by_name property_class
 - if ( ps = properties_by_class( pc ) ).size > 0
-  %fieldset
-    %legend&= title
-    %dl
+  %dt
+    Dates
+  %dd
+    %ul
       - ps.each do |p|
-        %dt&== #{p.name}:
-        %dd&= p.value.to_date.to_s(:long)
+        %li
+          %label
+            &== #{p.name}:
+          &= p.value.to_date.to_s(:long)

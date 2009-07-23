@@ -141,15 +141,9 @@
                 %label
                   Language Note:
                 = video.language_note
-        %dt
-          Dates
-        %dd
-          %ul
-            -# TODO replace Creation example below with date types and values from db
-            %li
-              %label
-                Creation:
-              April 14, 2009
+
+        = render_partial_by_class( "Date Types", "Dates" )
+
         %dt
           Descriptors
         %dd
