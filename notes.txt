@@ -1,0 +1,224 @@
+OVDLT status - 2009-07-21
+    - General fixes
+        - remove space from all sidebar icons using >
+        - Pagination styling
+    - Graphics
+        - Need source files for buttons, or can Drew make:
+            - Register and Send New Password buttons similar to Login
+            - Save button
+            - Slightly smaller Download button for Video Details page
+    - Common Page Layout elements  -- layout/application.html.haml
+        - Logo - defined as background image in css -- how to get same
+          look using Steven's code which defines logo as img in layout?
+        - Need to verify Forget password, Register, New Password forms
+          work
+        - Clicking Login or Register should put the cursor focus in the
+          Username field
+    - Home Page - home/index.html.haml
+        - [postpone] Need to have Featured videos alternate even | odd
+          rows to get gray bg
+        - [postpone] Collection list also needs to alternate row bg
+        - Steven
+            - Featured video image should be larger; can do after we
+              generate larger surrogates
+                - Where is size of image specified (.first class?)?
+            - Redo Browse accordian with li tags like orginal code to
+              enable drag and drop and eliminate validation errors
+            - Save New Order button should only show when doing drag
+              and drop - currently shows for Non-logged in users (also
+              does on ovdlt3 so Larry probably didn't figure this
+              completely out)
+            - Drop doesn't work for home page items
+    - Videos
+        - Accordian images - placeholder image for cases where no
+          storyboard (tried using .jcarousel-item .image class in
+          structure.sass but height is too big)
+        - In videos list, need the genre under thumbnail linked to
+          search on that genre attribute
+        - Steven
+            - Need a route for Random Videos to be able to update
+              video/random partial for correct link for "See more
+              random videos" at top
+            - Clicking on Browse accordian Genre descriptor type should
+              refresh thumbs area with videos of that type
+                - Works in ovdlt3 version -- need to update the
+                  application.js to work with divs and classes in vew
+                  markup?
+            - Carousel code uses a "page=" attribute of carousel_page
+              class within carousel_pager class. The page attribute is
+              not valid but javascript refers to it so need to figure
+              out how to use another way to provide hook to page of the
+              carousel.
+            - Accordian code needs to be fixed to remove invalid
+              nesting of divs within a dl tag
+    - Collections - collections/index
+        - Long titles should be contained within left main col
+        - Better placement of the "show all" text ?
+        - Subscribe code should do something
+        - Steven
+            - Show total number of collections in parenthesis after
+              Browse Collections title?
+            - Drag and drop works but order doesn't stick. Also,
+              dragging is glitchy on Firefox, not Safari
+            - If logged in as Admin, Show All link in
+              collections/_index not active for some reason
+            - Need a way to create a new collection versus playlist?
+            - Need a way to delete a collection
+        - Validates
+    - Collection - collections/show
+        - Had to put right column code in collections/_show partial
+          when it seems like it should go into collections/show, but
+          couldn't get the nesting right
+        - Long titles should be contained within left main col
+        - Subscribe code should do something
+        - Steven
+            - Need to get "Add to favorites" and "Add to playlist"
+              links on same line as View video details. Each comes from
+              partial and can't figure out how to keep partial-included
+              content on same line
+            - Validates if user not logged in. the "Add to favorites"
+              and "Add to playlist" partials cause validation problems
+              because they use a form and I'm trying to keep all these
+              links on same line within a %p tag.
+    - Playlists
+        - Mockups use different page layout for Collections and
+          Playlists
+            - Need to create new _playlists partial for Playlists?
+        - Need to move page header (Browse Collections) into
+          collection/playlist specific partial to keep from having
+          Browse Collections heading on Playlists page. Was working
+          correctly before I started messing with things.
+        - Need to format Create New Playlist page with new style
+        - If user is creator -- public / private checkbox
+        - If user is creator -- edit / delete checkbox
+    - About, News, Privacy
+        - Need to add some placeholder content to defalt database so
+          user has some text on each page by default.
+            - A bit fancier for Contact page
+    - Video Details
+        - Double check code to output rights/license stuff to make sure
+          cases where no rights holder, or html with images, works
+        - Would look better to have some bottom padding between Details
+          sections' text and the next section label, within the
+          Accordian.
+        - Need to revise path for loading storyboard stills:
+            - /public/surrogates/<video_name>/stills/small/
+        - Would be nice to make the Watch Full Size Video Link use
+          popup overlay (similar to Login/Register) instead of new
+          window
+        - Need to figure out Embed code or remove from Tools
+        - Need to make Print style sheet for printing
+        - Would be nice to have the "Login to add tags" link use the
+          popup login, but right now that is triggered by an #login
+          (already defined in header code from application layout) and
+          can't have two ids with same name on same page.
+        - Steven
+            - [postpone] In longer term, we probably should use ajax to
+              load each view (Details, Storyboard, etc.) on demand,
+              rather than at initial page load. Too slow now.
+            - For valid HTML, need to check that none of the Details
+              sections (e.g. Responsible Entities) is blank before
+              ouputting a ul tag (empty ul causes validation error).
+            - Need code to output Dates, Responsible Entities, and
+              Descriptors
+            - Text for Add to Favorites and Add to Playlist links not
+              on same line as icon. Same problem I had with Save this
+              search on results page. All my fixes use invalid HTML.
+            - When a video has multiple video assets -- need strategy
+              for the Watch Full Size Video link in left column. For
+              now, just link to first found asset?
+            - Need code to load the excerpt and fast forwards
+                - /public/surrogates/<video_name>/excerpts/
+                - /public/surrogates/<video_name>/fastforwards/
+            - Problem with storyboard code caused by me adding new
+              styling:
+                - Current videos work fine with new code, but when
+                  creating a new record, I get error when Finishing and
+                  control goes to videos/show page. Error is:
+                    - You have a nil object when you didn't expect it!
+                      ...
+                    - Current relevant code is: - if images =
+                      video.storyboard
+
+                    - Previous code was:     - if
+                      params[:details_format] == "storyboard" and |
+                               images = video.storyboard |
+                    - Problem has to do with naming convention for
+                      still images. The latest format is:
+                        - 0002.0001_H_sms00256.256.jpg
+                    - Old format is:
+                        - 1200_I_375.364.jpg
+                    - When I put an old video's stills in the new video
+                      stills dir, no error
+                - New video - Video iself doesn't show up in left
+                  column; same naming problem as above? New video I
+                  added was "0002.0001_H.mov"
+    - Search Results
+        - Steven
+            - Can we change default number of items displayed based on
+              view? For example, default to 70 for small thumbs.
+            - In all results views, need image to be linked to Details
+              page (especially the thumbs_only)
+            - Save this search -- text not on same line as icon. Fixed
+              this but in doing so used invalid HTML. Can't figure out
+              how to keep function working without invalid HTML.
+    - My
+        - Home page - none of the remove links work
+        - Home page - should we get rid of edit link for Saved Searches?
+            - Same question on Saved searches page
+        - Playlists page - need to figure out new style formatting
+        - Playlists page - should be able to remove from this page
+        - Saved searches page - make the main content area two columns?
+        - Account page - need to verify change password works
+        - Steven
+            - Favorites, Downloads pages - the collections/_show
+              partial causes error: "undefined local variable or method
+              `bookmarks' for #<ActionView::Base:0x48794d0>"
+            - Saved searches  page - would validate except have problem
+              with javascript adding thumbs class which causes details
+              div to be hidden, so have wrong indentation currently.
+              HTML will validate if I figure out how to not trigger the
+              adding of thumbs class.
+    - Cataloging
+        - What was in tabs now in sidebar, and now using JQuery
+          Accordian for page sections (i.e., Accordian bars == fieldset
+          labels)
+        - Digital Files - Need some work on pagination - my style
+          changes resulted in the Prev and Next buttons being up top in
+          weird place
+        - Digital Files - Would look better to right-align type and
+          size in current assets and browse tables
+        - Digital Files - Search needs background for drop-down menu
+          when entering a value
+        - Dates - Could use better formatting/placement, especially if
+          no values currently set
+        - Responsible Entities - Needs styling but wait until Dates
+          works completely to use similar code
+        - Steven
+            - General Information - Duration (under Description)
+              doesn't hold edited value.
+            - Digital Files - When adding a new asset through the
+              Search box, the type and size don't show up in the
+              current assets table (they do if you add through the
+              Browse table)
+            - Descriptors - Values don't hold when edited
+        - Validates
+    - Admin
+        - Need to see what Steven has working
+        - Need to add the Manage Users page
+
+duration DONE
+descriptors
+Dates, desc, resp ent on the details
+
+new descr type
+
+image sizes, part on the front page
+
+image links
+
+bookmarks
+
+update videos based on accordian on videos page
+
+jquery stuff

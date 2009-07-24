@@ -1,13 +1,14 @@
 - dts = descriptor_types
 - dvs = dts.map { |dt| properties_by_type( dt ) }
 - if dvs.flatten.size > 0
-  %fieldset
-    %legend Attributes
-    %dl
-      - dts.each_with_index do |dt,i|
+  %dt
+    Descriptors
+  %dd
+    - dts.each_with_index do |dt,i|
+      %ul
         - if dvs[i].length > 0
-          %dt
-            = link_to "#{h(dt.name)}:", property_type_videos_path( dt )
-          %dd
+          %li
+            %label
+              = link_to "#{h(dt.name)}:", property_type_videos_path( dt )
             = dvs[i].map(&:value).map { |dv| link_to h(dv.text), |
-                                             descriptor_value_search( dv) }.join(", ") |
+                                           descriptor_value_search( dv) }.join(", ") |

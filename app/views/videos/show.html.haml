@@ -144,39 +144,40 @@
                 %label
                   Language Note:
                 = video.language_note
-        %dt
-          Dates
-        %dd
-          %ul
-            -# TODO replace Creation example below with date types and values from db
-            %li
-              %label
-                Creation:
-              April 14, 2009
-        %dt
-          Descriptors
-        %dd
-          %ul
-            -# TODO replace Color example below with Descriptor types and values from db
-            %li
-              %label
-                Color:
-              Black &amp; White
-        %dt
-          Responsible Entities
-        %dd
-          -# TODO add below  Responsible entity types and values from db
-          %ul
-            - if !video.creation_credits.blank?
+
+        = render_partial_by_class( "Date Types", "Dates" )
+        = render :partial => "show_properties_dv"
+
+        /
+          %dt
+            Descriptors
+          %dd
+            %ul
+              -# TODO replace Color example below with Descriptor types and values from db
               %li
                 %label
-                  Creation Credits:
-                = video.creation_credits
-            - if !video.participation_credits.blank?
-              %li
-                %label
-                  Participation Credits:
-                = video.participation_credits
+                  Color:
+                Black &amp; White
+
+        = render_partial_by_class( "Roles", "Responsible Entities" )
+
+        /
+          %dt
+            Responsible Entities
+          %dd
+            -# TODO add below  Responsible entity types and values from db
+            %ul
+              - if !video.creation_credits.blank?
+                %li
+                  %label
+                    Creation Credits:
+                  = video.creation_credits
+              - if !video.participation_credits.blank?
+                %li
+                  %label
+                    Participation Credits:
+                  = video.participation_credits
+
         %dt
           Rights Information
         %dd

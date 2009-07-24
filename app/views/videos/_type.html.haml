@@ -3,9 +3,9 @@
 %ul
   - descriptor_values(type).each do |dv|
     %li
-      = check_box_tag "descriptor_type[#{type.id}][#{dv.id}]", |
-                             1, video_has_dv( dv ), :id => nil |
-      -
       = hidden_field_tag "descriptor_type[#{type.id}][#{dv.id}]", |
                                                  "no", :id => nil |
+      -
+      = check_box_tag "descriptor_type[#{type.id}][#{dv.id}]", |
+                             1, video_has_dv( dv ), :id => nil |
       &= dv.text
