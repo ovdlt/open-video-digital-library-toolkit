@@ -28,8 +28,4 @@
     %p<
       = link_to "View video details", video_path( video )
       \|
-      - if current_user
-        = render :partial => "videos/alter_favorites", :object => video
-        \|
-        = render :partial => "videos/add_to_playlist", :object => video
       = link_to "Download", download_video_path( video )
