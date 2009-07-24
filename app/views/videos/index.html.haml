@@ -22,8 +22,9 @@
           %ul
             %li
               = link_to "Browse All Videos »", videos_path
-          - if @property_type_menu
-            = render :partial => "shared/axis", :object => @property_type_menu
+            - if @property_type_menu
+              %li
+                = render :partial => "shared/axis", :object => @property_type_menu
         %dt
           %img{ :src => "/images/icon-refine.gif", :alt => "video" }
           REFINE RESULTS
