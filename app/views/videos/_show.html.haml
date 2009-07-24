@@ -25,24 +25,11 @@
       %p
         Tags:
         = tags_html( video.tags )
-    %p.vid_actions
-      %span
-        = link_to "View video details", video_path( video )
-      %span
+    %p<
+      = link_to "View video details", video_path( video )
+      \|
+      - if current_user
+        = render :partial => "videos/alter_favorites", :object => video
         \|
-      -# TODO decide if we need to have favorites and playlist links here at all
-        - if current_user
-          %span
-            Add to favorites
-            -# TODO figure out how to include partial code without causing line break
-              = render :partial => "videos/alter_favorites", :object => video
-          %span
-            \|
-          %span
-            Add to playlist
-            -# TODO figure out how to include partial code without causing line break
-              = render :partial => "videos/add_to_playlist", :object => video
-          %span
-            \|
-      %span
-        = link_to "Download", download_video_path( video )
+        = render :partial => "videos/add_to_playlist", :object => video
+      = link_to "Download", download_video_path( video )
