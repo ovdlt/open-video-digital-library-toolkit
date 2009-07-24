@@ -250,6 +250,10 @@
             %li.menu-email
               %span.icon
               = link_to "E-mail", mail_video( video )
+            %li.menu-embed
+              %span.icon
+              %a{ :href => "#" }
+                Embed Video
             - if !@library.emails.blank?
               %li.menu-report
                 %span.icon
@@ -261,10 +265,6 @@
               %li.menu-playlists
                 %span.icon
                 = render :partial => "add_to_playlist", :object => video
-            %li.menu-embed
-              %span.icon
-              %a{ :href => "#" }
-                Embed Video
         - if current_user and current_user.has_role?(  [ :admin, :cataloger ] )
           %dt
             %img{ :src => "/images/icon-option.gif", :alt => "CATALOGING OPTIONS" }
