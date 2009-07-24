@@ -207,9 +207,8 @@ OVDLT status - 2009-07-21
         - Need to see what Steven has working
         - Need to add the Manage Users page
 
-duration DONE
-descriptors
-Dates, desc, resp ent on the details
+duration DONE descriptors DONE Dates, desc, resp ent on the details
+DONE
 
 new descr type
 
