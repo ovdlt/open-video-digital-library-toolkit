@@ -58,7 +58,7 @@
 
         function edit() {
 
-            console.debug("edit");
+            // console.debug("edit");
 
             var ul = $(this).parents("ul")[0];
             var li = $(this).parents("li")[0];
@@ -249,10 +249,15 @@
         });
 
         $("form .display-edit span.delete a").livequery('click',function(){
-            ul = $(this).parents("ul")[0];
-            var top = $($(this).parents("li.delete")[0]);
+            // not really a ul anymore ...
+            ul = $(this).parents("ul, dt")[0];
+            var top = $($(this).parents("li.delete, dt.delete")[0]);
+            // console.debug( "smp" );
+            // console.debug(top);
             $("input.deleted[type=hidden]",top).attr("value","deleted");
             top.hide();
+            
+            top.next("dd").hide();
 
             if ( $("li.delete:visible", ul).length == 1 ) {
                 $("li.none").show();

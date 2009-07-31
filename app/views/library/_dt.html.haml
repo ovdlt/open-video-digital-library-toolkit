@@ -1,5 +1,5 @@
 %dl.delete{:id => "property_type_#{dt.id}", :class => (dt.id != "new_dt" ) ? "dtype descriptor-types" : "descriptor-types hidden" }
-  %dt.property-type.display-edit
+  %dt.property-type.display-edit.delete
     %span.display.dt_handle{ error_class(dt) }
       = dt.name
       - if dt.browsable?

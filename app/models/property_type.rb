@@ -5,7 +5,9 @@ class PropertyType < ActiveRecord::Base
 
   belongs_to :property_class
 
-  has_many :properties
+  has_many :properties, :dependent => :destroy
+
+  has_many :descriptor_values, :dependent => :destroy
 
   validates_presence_of :name, :property_class_id
   validates_numericality_of :property_class_id, :greater_than => 0

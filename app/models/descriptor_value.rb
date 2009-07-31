@@ -39,6 +39,12 @@ class DescriptorValue < ActiveRecord::Base
 
   end
 
+  after_destroy do |dv|
+    dv.properties.each do |property|
+      property.destroy
+    end
+  end
+
   def count public
     if public
       public = "and videos.public = true"
