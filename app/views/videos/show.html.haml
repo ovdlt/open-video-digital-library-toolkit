@@ -193,7 +193,7 @@
               :textile
                 #{video.rights.html}
 
-      #storyboard.storyboard
+      #storyboard.storyboard.ui-tabs-hide
         - if images = video.storyboard
           - images.each_with_index do |image, index|
             %div{:class =>(((index + 1) % 4).zero? ? "image fourth" : "image")}
@@ -207,10 +207,46 @@
                       .hidden
                         = f.text_field :poster_path, :value => image, :id => gen_id
                         = f.submit "update", :id => nil
-      #fast-forward
-        Fast forward
-      #excerpt
-        Excerpt
+      #fast-forward.ui-tabs-hide
+
+        - if p = video.fast_forward_path
+
+          %p.miniplayer#fast_forward
+
+          %script{:type => "text/javascript", :src=>"/javascripts/swfobject.js"}
+          %script{:type => "text/javascript"}
+            var s1 = new SWFObject('/player.swf','player','200','150','9');
+            s1.addParam('allowfullscreen','true');
+            s1.addParam('allowscriptaccess','always');
+            s1.addParam('flashvars',
+            = "'file=#{p}&image=#{video.poster_path}'"
+            );
+            s1.write('fast_forward');
+
+        - else 
+
+          No fast forward view for this video
+
+      #excerpt.ui-tabs-hide
+
+        - if p = video.excerpt_path
+
+          %p.miniplayer#excerpt
+
+          %script{:type => "text/javascript", :src=>"/javascripts/swfobject.js"}
+          %script{:type => "text/javascript"}
+            var s1 = new SWFObject('/player.swf','player','200','150','9');
+            s1.addParam('allowfullscreen','true');
+            s1.addParam('allowscriptaccess','always');
+            s1.addParam('flashvars',
+            = "'file=#{p}&image=#{video.poster_path}'"
+            );
+            s1.write('excerpt');
+
+        - else 
+
+          No excerpt view for this video
+
     /center end
     .col-right
       %dl
