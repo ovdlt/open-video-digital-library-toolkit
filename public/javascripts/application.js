@@ -402,8 +402,9 @@
             return false;
         });
 
-
+        
         $("div#content div.axis").click(function(){
+            console.debug("click");
             $("body").css("cursor","wait");
             pt_id = $(this).attr("id").replace("property_type_","");
             $.get(relative_url_root + "/videos/images?property_type=" + pt_id, function(data){

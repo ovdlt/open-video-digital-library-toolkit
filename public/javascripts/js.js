@@ -4,14 +4,15 @@ jQuery(document).ready(function() {
    jQuery('#register').click(function(){ jQuery('.popup-reg').show();  });
    jQuery('.close img').click(function(){ jQuery('.popup').hide();  });
    jQuery('.close img').click(function(){ jQuery('.popup-reg').hide();  });
-   jQuery('.category, #details, .general-info').accordion({
-    header: 'dt',
-    event: 'click',
-  autoheight: false
-    });
-   jQuery('ul.videos li.fifth, .sm-thumbs .list li.fourth').after('<div class="clear"></div>');
+   jQuery('.categoryx, #details, .general-info').accordion({
+     header: 'dt',
+     event: 'click',
+     autoheight: false
+   });
+   jQuery('ul.videos li.fifthx, .sm-thumbs .list li.fourth').after('<div class="clear"></div>');
    jQuery('.tabs ul, ul.navigators').tabs();
 
+  jQuery('ul.videos li.fifth + li').css("clear", "left");
 
   function recent_carousel_initCallback( recent_carousel ) {
 

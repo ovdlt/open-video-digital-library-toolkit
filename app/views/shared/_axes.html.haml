@@ -4,10 +4,11 @@
   %dl.category
     - axis_index = 1
     - PropertyType.browse do |type|
-      .axis.property_type{:id=>"property_type_#{type.id}"}
-        .handle
-          .handle_image
-      %dt
+      /
+        .axis.property_type{:id=>"property_type_#{type.id}"}
+          .handle
+            .handle_image
+      %dt{:id=>"property_type_#{type.id}"}
         = type.name
       %dd
         %ul
@@ -31,8 +32,22 @@
 
 :javascript
   jQuery(".axes .axis .title a").prepend('<span class="icon"><\/span> ');
-  jQuery(".axes").accordion( {
-    header: ".title",
-    autoHeight: false
+  jQuery(".axes dl").accordion( {
+    header: "dt",
+    event: 'click',
+    autoHeight: false,
+  });
+  jQuery(".ui-accordion").bind( 'accordionchange', function(event, ui){
+    var $ = jQuery;
+    $("body").css("cursor","wait");
+    pt_id = $(ui.newHeader).attr("id").replace("property_type_","");
+    $.get(relative_url_root + "/videos/images?property_type=" + pt_id, function(data){
+      $("div#videos").fadeOut("fast",function(){
+        $("div#videos").html(data);
+        $('ul.videos li.fifth + li').css("clear", "left");
+        $("div#videos").fadeIn("fast");
+        $("body").css("cursor","default");
+      });
+    });
   });
 
