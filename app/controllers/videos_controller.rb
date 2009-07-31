@@ -39,7 +39,7 @@ class VideosController < ApplicationController
       return
     end
 
-    if !@assert.video.public? and
+    if !@asset.video.public? and
        (!current_user or !current_user.has_role?([:admin,:cataloger]))
       render_missing
       return
