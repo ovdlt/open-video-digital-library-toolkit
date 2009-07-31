@@ -211,7 +211,7 @@
 
         - if p = video.fast_forward_path
 
-          %p.miniplayer#fast_forward
+          %p.miniplayer#flash_fast_forward{:style => "text-align: center"}
 
           %script{:type => "text/javascript", :src=>"/javascripts/swfobject.js"}
           %script{:type => "text/javascript"}
@@ -221,7 +221,7 @@
             s1.addParam('flashvars',
             = "'file=#{p}&image=#{video.poster_path}'"
             );
-            s1.write('fast_forward');
+            s1.write('flash_fast_forward');
 
         - else 
 
@@ -231,7 +231,7 @@
 
         - if p = video.excerpt_path
 
-          %p.miniplayer#excerpt
+          %p.miniplayer#flash_excerpt{:style => "text-align: center"}
 
           %script{:type => "text/javascript", :src=>"/javascripts/swfobject.js"}
           %script{:type => "text/javascript"}
@@ -241,7 +241,7 @@
             s1.addParam('flashvars',
             = "'file=#{p}&image=#{video.poster_path}'"
             );
-            s1.write('excerpt');
+            s1.write('flash_excerpt');
 
         - else 
 
