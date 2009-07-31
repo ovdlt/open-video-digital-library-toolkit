@@ -298,8 +298,6 @@
                     current = $.grep( classes, function(n){
                         return n != "button" && n != "current" && n != "pointer"
                     })[0];
-                    console.debug( "smp" );
-                    console.debug( current );
                     $.cookie(".videos.listby.current",
                              current,
                              { path: '/' }
