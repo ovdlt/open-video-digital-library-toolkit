@@ -13,11 +13,11 @@
           jQuery(document).ready( function() {
             make_sortable( { list_selector : "#descriptor_types_list", item_selector : ".dtype" , post_url : "/library/property_type/order", handle:".dt_handle"}  );
           });
-  %ul
-    %li
-      .property-type.new
-        = link_to "Add new descriptor type", "#"
-        = render :partial => "library/dt", :object => dt_template
+
+  .property-type.new_dt
+    = link_to "Add new descriptor type", "#"
+    .template
+      = render :partial => "library/dt", :object => dt_template
 
 
   %br

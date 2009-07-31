@@ -102,6 +102,51 @@
 
         $("div.property-type.new a").livequery('click',edit);
 
+        function edit_dt() {
+
+            var div = $(this).parents(".new_dt")[0];
+            var template = $("dl.delete",div)[0];
+            console.debug(template);
+            var copy = $(template).clone();
+
+            // could use a stored variable, but really ...
+            var r = Math.floor(Math.random()*32768);
+
+            $("[name]",copy).each(function() {
+
+                name = $(this).attr("name");
+
+                new_name = name.replace( /\[template_([^\]]+)\]/g, "[$1]" );
+
+                if ( new_name != name ) {
+                    name = new_name;
+                } else {
+                    name = name.replace( /\[(new(_[a-z]+)?)\]/g, "[$1_"+r+"]" );
+                }
+
+                $(this).attr("name",name);
+
+                if ( v = $(this).attr("value") ) {
+                    v = v.replace( /^(new(_[a-z]+)?)$/g, "$1_"+r+"" );
+                    $(this).attr("value",v);
+                }
+
+            });
+
+            $("div.property-type.new a",copy).each(edit);
+
+            $(div).before(copy);
+
+            $("div.display,span.display",copy).hide();
+            $("div.edit,span.edit",copy).show();
+            $(copy).show();
+
+            return false;
+        };
+
+
+        $("div.property-type.new_dt a").livequery('click',edit_dt);
+
         $("div.template").addClass("hidden");
 
         /* make tab text red on panes with errors */
