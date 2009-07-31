@@ -19,8 +19,9 @@
                 = link_to h(video.title), video_path( video.id )
               %p
                 %span.remove
-                  %a{ :href => "#" }
-                    Remove
+                  = link_to "Remove ", favorite_path( video.id ), |
+                    :method => :delete, |
+                    :confirm => "Are you sure you want to delete this video from your favorites?" |
   .box.downloads
     .head
       %span.left
@@ -39,10 +40,12 @@
             .details
               %h5.title
                 = link_to h(video.title), video_path( video.id )
-              %p
-                %span.remove
-                  %a{ :href => "#" }
-                    Remove
+              -#
+                %p
+                  %span.remove
+                    = link_to "Remove ", downloaded_videos_path( video.id ), |
+                      :method => :delete, |
+                      :confirm => "Are you sure you want to delete this download for your list?" |
   /downloads end
 /left col end
 .col-center
@@ -65,7 +68,7 @@
                   %a{ :href => "#" }
                     Edit
                   |
-                  = link_to "Remove ", "#", |
+                  = link_to "Remove ", saved_query_path( search.id ), |
                     :method => :delete, |
                     :confirm => "Are you sure you want to delete this search?" |
   .box.playlists
