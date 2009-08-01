@@ -24,6 +24,6 @@
             %h5.title{:class=>video_vis_class(v)}
               = link_to h(v.title), video_path( v.id )
             %p
-              = link_to "#{h descriptor.text}", "#"
+              = link_to "#{h descriptor.text}", descriptor_value_search( descriptor )
       - index += 1
 - srand
