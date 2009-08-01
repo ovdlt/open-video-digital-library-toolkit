@@ -61,13 +61,12 @@
                 %img{ :src => "/images/icon-full-size.gif", :alt => "" }
                 Watch Full Size Video
               == (#{h asset.asset_format})
-
-        - if !video.abstract.blank?
+        - if !video.sentence.blank?
+          .description&= video.sentence
+        - elsif !video.abstract.blank?
           .description
             :textile
               #{video.abstract}
-        - elsif !video.sentence.blank?
-          .description&= video.sentence
         .download
           - video.assets.each do |asset|
             %a{:href => asset_path( asset  )}
