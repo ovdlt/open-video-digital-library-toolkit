@@ -1,0 +1,47 @@
+- collection = show
+.col-main.left
+  .smaller-head
+    = collection.title
+  /collection single start
+  .collection-single
+    .image{ :style => "background-color:#333; margin-top:12px" }
+    .details{ :style => "margin-top:12px" }
+      -# TODO title part -- only show if Playlist type of collection
+      -#%h5.title
+        -#%span
+          -#created by
+          -#%strong
+            -#= h collection.user.login
+      %p
+        %strong
+          Videos:
+        = collection.size( public_only? )
+        %br
+        %strong
+          Views:
+        = collection.views
+        %br
+        %strong
+          Added:
+        = collection.created_at.to_date.to_s(:medium)
+        %br
+        %strong
+          Last Updated:
+        = collection.created_at.to_date.to_s(:medium)
+      %p
+        = h collection.description
+      - if current_user and current_user.id == collection.user_id
+        %p
+          This playlist is
+          = collection.public? ? "public." : "private."
+
+      - if current_user and current_user.id == collection.user_id
+        %p
+          = link_to "Edit " + container_text( collection ).capitalize, edit_collection_path( collection )
+          \|
+          = link_to "Delete " + container_text( collection ).capitalize, collection_path( collection ), |
+             :method => :delete, |
+             :confirm => "are you sure you want to delete this collection?" |
+    /collection single end
+  = render :partial => "videos/index", :object => bookmarks
+  /col left end

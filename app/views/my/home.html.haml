@@ -10,7 +10,7 @@
         - current_user.favorites.each_with_index do |video,i|
           - break if i > 2
           %li
-            .image
+            .image{ :style => "background-color:#333" }
               %a{:href => video_path( video.id )}
                 -if poster_path = video.poster_path
                   %img{:src=>poster_path,:alt => "video #{video.id}", :width => "100"}
@@ -33,7 +33,7 @@
         - current_user.downloads.each_with_index do |video,i|
           - break if i > 2
           %li
-            .image
+            .image{ :style => "background-color:#333" }
               %a{:href => video_path( video.id )}
                 -if poster_path = video.poster_path
                   %img{:src=>poster_path,:alt => "video #{video.id}", :width => "100"}
@@ -58,16 +58,18 @@
     .list
       %ul
         - current_user.searches.each_with_index do |search,i|
-          - break if i > 4
+          - break if i > 3
           %li
             .details
-              %h5.title
-                = link_to h(search.title), search_path( Search.find search.id )
+              %h5.title.menu-searches
+                %span.icon
+                = link_to h('"' + search.title + '"'), search_path( Search.find search.id )
               %p
                 %span.remove
-                  %a{ :href => "#" }
-                    Edit
-                  |
+                  /
+                    %a{ :href => "#" }
+                      Edit
+                    |
                   = link_to "Remove ", saved_query_path( search.id ), |
                     :method => :delete, |
                     :confirm => "Are you sure you want to delete this search?" |
@@ -82,7 +84,7 @@
         - current_user.playlists.each_with_index do |playlist,i|
           - break if i > 2
           %li
-            .image
+            .image{ :style => "background-color:#333" }
               %a{:href => collection_path( playlist.id )}
                 -if poster_path = playlist.poster_path(public_only?)
                   %img{:src=>poster_path,:alt => "playlist #{playlist.id}", :width => "100"}
@@ -91,6 +93,8 @@
                 = link_to h(playlist.title), collection_path( playlist.id )
               %p
                 %span.remove
+                  = link_to "Edit ", edit_collection_path( playlist.id )
+                  |
                   = link_to "Remove ", collection_path( playlist.id ), |
                     :method => :delete, |
                     :confirm => "Are you sure you want to delete this playlist?" |

@@ -31,7 +31,7 @@ class MyController < ApplicationController
     @title = "#{current_user.login} Playlists"
     @collections = current_user.playlists( params )
     if false
-    render :template => "collections/index",
+    render :template => "my/playlists",
            :locals => { :collections =>
                         @collections = current_user.playlists( params )}
     end
