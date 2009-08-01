@@ -215,7 +215,7 @@
 
           %script{:type => "text/javascript", :src=>"/javascripts/swfobject.js"}
           %script{:type => "text/javascript"}
-            var s1 = new SWFObject('/player.swf','player','200','150','9');
+            var s1 = new SWFObject('/player.swf','player','320','240','9');
             s1.addParam('allowfullscreen','true');
             s1.addParam('allowscriptaccess','always');
             s1.addParam('flashvars',
@@ -223,7 +223,7 @@
             );
             s1.write('flash_fast_forward');
 
-        - else 
+        - else
 
           No fast forward view for this video
 
@@ -235,7 +235,7 @@
 
           %script{:type => "text/javascript", :src=>"/javascripts/swfobject.js"}
           %script{:type => "text/javascript"}
-            var s1 = new SWFObject('/player.swf','player','200','150','9');
+            var s1 = new SWFObject('/player.swf','player','320','240','9');
             s1.addParam('allowfullscreen','true');
             s1.addParam('allowscriptaccess','always');
             s1.addParam('flashvars',
@@ -243,7 +243,7 @@
             );
             s1.write('flash_excerpt');
 
-        - else 
+        - else
 
           No excerpt view for this video
 
