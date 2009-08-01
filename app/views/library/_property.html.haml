@@ -4,7 +4,7 @@
 - form_for :library, @library, :html => { :method => :put, |
                                           :class => "admin-form"  } |
                                             do |@form| |
-  %ul                                            
+  %ul
     - property_types_by_class(pc).each do |pt|
       = render :partial => "library/pt", :object => pt
     %li
@@ -14,6 +14,8 @@
           = render :partial => "library/pt", :object => pt_template(pc)
   %br
   .left
-    = @form.submit "Finished", :name => "submit", :value => "finished", :id => nil
-    = @form.submit "Save", :name => "submit", :value => "save", :id => nil
-    = link_to "cancel", library_path
+    %input.submit{ :name => "submit", :value => "save", :src => "/images/btn-save-changes.gif", :type => "image", :id => nil }
+    %span.btn-cancel
+      = link_to "cancel", library_path
+    .clear
+    %input.submit{ :name => "submit", :value => "finished", :src => "/images/btn-finish.gif", :type => "image", :id => nil }

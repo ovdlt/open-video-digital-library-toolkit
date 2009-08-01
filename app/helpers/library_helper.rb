@@ -4,6 +4,7 @@ module LibraryHelper
     [
      :general_information,
      :manage_users,
+     :export_records,
      :site_activity
     ]
   end
