@@ -191,6 +191,27 @@
                 = h video.rights.statement
               :textile
                 #{video.rights.html}
+        %dt
+          Site Activity
+        %dd
+          %ul
+            - if !video.views.blank?
+              %li
+                %label
+                  Views:
+                = h video.views
+              %li
+                %label
+                  Downloads:
+                [Placeholder]
+              %li
+                %label
+                  Favorites:
+                [Placeholder]
+              %li
+                %label
+                  Playlists:
+                [Placeholder]
 
       #storyboard.storyboard.ui-tabs-hide
         - if images = video.storyboard
