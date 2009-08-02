@@ -6,22 +6,22 @@
       &== (#{current_user.searches.size})
     .list
       %ul
-      - current_user.searches.each do |search|
-        %li
-          .details
-            %h5.title.menu-searches
-              %span.icon
-              "
-              %a{:href=>search_path(search)}><
-                = h search.title
-              "
-            %p
-              %span.remove
-                /
-                  %a{ :href => "#" }
-                    Edit
-                  |
-                = link_to "Remove ", saved_query_path( search.id ), |
-                  :method => :delete, |
-                  :confirm => "Are you sure you want to delete this search?" |
+        - current_user.searches.each do |search|
+          %li
+            .details
+              %h5.title.menu-searches
+                %span.icon
+                "
+                %a{:href=>search_path(search)}><
+                  = h search.title
+                "
+              %p
+                %span.remove
+                  /
+                    %a{ :href => "#" }
+                      Edit
+                    |
+                  = link_to "Remove ", saved_query_path( search.id ), |
+                    :method => :delete, |
+                    :confirm => "Are you sure you want to delete this search?" |
 /left col end
