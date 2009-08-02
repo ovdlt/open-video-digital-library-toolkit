@@ -23,5 +23,6 @@
           = highlight(  |
             (render :partial => "videos/show", :collection => videos), |
             params[:search][:criteria][:text] ) |
-    .pagination
+
+    .pager_pagination
       = will_paginate videos

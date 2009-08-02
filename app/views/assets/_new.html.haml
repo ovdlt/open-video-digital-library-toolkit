@@ -1,12 +1,12 @@
 - if (files = Asset.uncataloged_files(params).length) < 1
   .div No uncataloged files
 - else
-  %label
+  %label.asset_section
     Search
     = text_field_tag :uncatted, nil, :size => 50
     = submit_tag "add"
 
-  %label
+  %label.asset_section
     Browse
   .uncataloged.template
     %table
@@ -23,12 +23,12 @@
     %thead
       %tr
         %th Filename
-        %th Type
-        %th Size
+        %th.format Type
+        %th.size Size
     %tbody.page
       %tr.hidden
         %td should be hidden
-  #asset_pager.ajax
+  #asset_pager.ajax.pager_pagination
   %script{:type=>"text/javascript"}
     jQuery(function(){
     jQuery("div#asset_pager").paginate(

@@ -799,24 +799,28 @@ li
   :padding 20px 10px 10px
 
 
-.pager
+.pager_pagination
   :clear both
   :text-align right
   :padding-top 20px
+  :padding-left 10px
+  :background white
 
-  ul
-    :display inline
-    :padding-left 10px
-
-  li
-    :display inline
+  a, span
     :padding 0 5px
     :font-weight bold
     :line-height 1.4em
     :font-size 13px
+  span.disabled
+    :color #AAA
+  span.current
+    :font-weight bold
+    :color #fff
+    :background-color #006fbd
 
-    &.current
-      :cursor pointer
+  a
+    :color #006fbd
+    :text-decoration none
 
     &:hover
       :cursor pointer
@@ -824,6 +828,27 @@ li
       a
         :color #fff
 
+    &.current, &:hover
+      :background-color #006fbd
+      :color #fff
+
+  .page_info
+    :background #2E6AB1
+    :color white
+    :padding .4em .6em
+    :width 22em
+    :margin-bottom .3em
+    :text-align center
+    b
+      :color #003
+      :background = #006fbd
+      :padding .1em .25em
+
+  .prev_page, .next_page
+    :padding 0 5px
+
+#asset_pager .next, #asset_pager .prev
+  :display none
 
 .rss
   :font-size 14px!important
@@ -1276,4 +1301,7 @@ input
 
   input
     :margin 10px 0 10px 2px
+
+.assets .asset_section
+  :padding-top 20px
 
