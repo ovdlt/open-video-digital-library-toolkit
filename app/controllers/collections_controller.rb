@@ -4,7 +4,7 @@ class CollectionsController < ApplicationController
                 :except => [ :collections,
                              :playlists,
                              :new,
-                             :create, 
+                             :create,
                              :featured_order,
                              :edit,
                              :update,
@@ -126,7 +126,7 @@ class CollectionsController < ApplicationController
       render_missing
       return
     end
-    
+
     @collection.views += 1
     @collection.trivial_save
 
