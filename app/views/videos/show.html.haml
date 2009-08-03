@@ -61,6 +61,7 @@
                 %img{ :src => "/images/icon-full-size.gif", :alt => "" }
                 Watch Full Size Video
               == (#{h asset.asset_format})
+        .clear
         - if !video.sentence.blank?
           .description&= video.sentence
         - elsif !video.abstract.blank?
