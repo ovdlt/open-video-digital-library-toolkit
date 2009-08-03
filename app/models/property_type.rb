@@ -44,9 +44,15 @@ class PropertyType < ActiveRecord::Base
   end
 
   def descriptor_values
-    raise NotDescriptorType.new( property_class_id ) unless 
-      property_class.range == "descriptor_value"
-    property_class.values self
+    # This is allowed because it's called from the destructor
+    # Could make the destructor more explicit (and the dvs not dependent)
+    # but the extra safety doesn't seem a big deal now?
+    if property_class.range == "descriptor_value"
+      property_class.values self
+    else
+      # raise NotDescriptorType.new( property_class_id ) unless 
+      []
+    end
   end
 
   def values options = {}
