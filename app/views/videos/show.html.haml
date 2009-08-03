@@ -53,6 +53,12 @@
           );
           s1.write('flash');
 
+      - else
+
+        - if p = video.poster_path
+
+          %img{:src=>p,:alt => "sample image from video", :style=>"width: 100%;"}
+
       .details
         .full-screen
           - video.assets.each do |asset|
