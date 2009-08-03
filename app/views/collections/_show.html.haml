@@ -28,6 +28,8 @@
     /collection single start
     .collection-single
       .image{ :style => "background-color:#333" }
+        - if p = collection.poster_path( public_only? )
+          %img{:src=>p,:alt => "sample image from collection"}
       .details
         -# TODO title part -- only show if Playlist type of collection
         -#%h5.title
