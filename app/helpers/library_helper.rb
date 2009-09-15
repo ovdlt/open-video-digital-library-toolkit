@@ -16,7 +16,7 @@ module LibraryHelper
 
   def descriptor_types
     pcs = PropertyClass.find( :all, :conditions => "range = 'descriptor_value'" ).map(&:id)
-    @property_types.select { |pt| pcs.include?(pt.property_class_id) }
+    @property_types.select { |pt| pcs.include?(pt.property_class_id) }.sort { |a,b| b.priority <=> a.priority }
   end
 
   def default_descriptor_class

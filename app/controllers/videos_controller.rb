@@ -10,7 +10,8 @@ class VideosController < ApplicationController
   require_role [ :admin, :cataloger], :for_all_except => [ :index,
                                                            :show,
                                                            :recent,
-                                                           :images ]
+                                                           :images ,
+                                                           :popular ]
 
   require_role [ :admin ], :for => [ :featured_order ]
 
@@ -68,6 +69,12 @@ class VideosController < ApplicationController
     search
   end
 
+  def popular
+    @search = Search.new 
+    current_user and @search.user_id = current_user.id
+    search :popular
+  end
+
   def index
     if params[:search] or @property_type_menu
       search
@@ -96,12 +103,21 @@ class VideosController < ApplicationController
             :locals => { :property_type => @property_type } ) if @property_type
   end
 
-  def search
+  def search sort = :recent
+   
+    case sort
+    when :popular
+      order = "videos.views desc"
+    when :recent
+    else
+      order = "videos.created_at desc"   
+    end
 
     @videos = Video.search :method => :paginate,
                             :page => params[:page],
                             :per_page => per_page,
-                            :search => @search
+                            :search => @search,
+                            :order => order
 
     render :template => "videos/index"
 

@@ -1,0 +1,75 @@
+.ui-sortable > *:hover
+  :background #FAFAFA
+
+.ui-sortable .ui-sortable-helper
+  :background-color transparent
+  :background-image url(../images/75alpha.png)
+
+//#featured_collections .collection , #featured_videos .video
+.ui-sortable > *, .ui-sortable > * > *
+  :position relative
+  .handle
+    :display none
+    :position absolute
+    :cursor move
+    :width 20px
+    :height 40px
+    :top 0px
+    :left 0px
+    :background-color #ddd
+    .handle_image
+      :margin-left 4px
+      :margin-top 10px
+      :width 15px
+      :height 15px
+      :background-color transparent
+      :background-image url(../images/ui-icons_222222_256x240.png)
+      :background-position -130px -50px
+.dt_handle
+  :cursor move
+
+//#featured_collections .collection, .collections.index .collection, #featured_videos .video
+//.ui-sortable
+//  .handle 
+//    .handle_image
+
+.collections.index .collection 
+  .handle
+    :width 37px
+    :height 120px
+    / :border solid 1px black
+    :top 13px
+    :left -25px
+    .handle_image
+      :margin-left 12px
+      :margin-top 50px
+  
+   
+#featured_collections.ui-sortable , #featured_videos.ui-sortable
+  .collection, .video
+    :position relative
+    :padding-left 20px
+  .ui-sortable-helper
+    :margin-left 15px
+
+  .placeholder
+    :background #ddd
+    :border dashed 2px #A00
+    :height 5em
+
+.contents.ui-sortable 
+  .ui-sortable-helper
+    :width 100%
+    :margin-left 50px
+
+  .placeholder
+    :border-top dashed 3px #A00
+    :height 1em
+    :width 110%
+    :margin-left -5%
+
+.ui-sortable + .save_new_order
+  :border solid 1px #777
+  :display none
+  :cursor pointer
+  :padding 5px

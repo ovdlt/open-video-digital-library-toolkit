@@ -347,3 +347,114 @@ $(function(){
 
 });
 
+/* Function to make a list (of collections, videos, etc) sortable
+ * Parameters:
+ *  list_selector - div id or other selector for the list that will become sortable
+ *  item_selector - what elements should be draggable within this list
+ *  post_url      - URL to POST changes to be saved on the server
+ *    accepts a selector (div id, etc) and applies jQuery Sortable to it
+ */
+function make_sortable( options )
+{
+      var list_selector = options.list_selector;
+      var item_selector = options.item_selector;
+      var post_url      = options.post_url;
+      var handle        = (undefined == options.handle ) ? ".handle" : options.handle ;
+      var cancel        = options.cancel;
+
+      //console.log("Making this list sortable --> " + list_selector );
+      //console.log("                       items are '" + item_selector + "'" );
+      
+      //console.log("                    : cancel is [" + cancel + "]" );
+      //console.log("                    : handle is [" + handle + "] -- options.handle = [" + options.handle + "]" );
+
+      $(list_selector + " " + item_selector).bind("mouseover", 
+        function(e) { 
+          $(".ui-sortable .handle").hide(); 
+          $(this).children(".handle").show()             
+        } );
+
+      // TODO generalize this
+      $(list_selector).bind("mouseout", function(e) { $("#content .collection .handle").hide() } );
+      //console.log("                    : mouseover bindings complete");
+
+      $(list_selector).sortable({
+        items: item_selector,
+        axis: 'y',
+        cancel: cancel,
+        revert: true,
+        cursor: 'move',
+        placeholder : "placeholder",
+        //tolerance: 'intersect',
+        handle: handle,
+        containment: 'document',
+        update: function() { 
+          var new_order = get_sortable_order(list_selector) ;
+          //console.log( "Sortable: " + list_selector + " -- new order:  " + new_order );
+          //console.log( "Sortable: " + list_selector + " -- old order:  " + $(list_selector).attr("original_order") );
+          if (($(list_selector).attr("original_order") != new_order))
+          {
+            // $(".save_new_order").fadeIn(250);
+            // $(".save_new_order").effect("highlight", {}, 2000 );
+            send_new_order( list_selector, post_url, new_order );
+          }
+        }
+      });
+
+      //console.log("                    : sortable complete");
+
+      var orig_order =get_sortable_order(list_selector) ;
+      $(list_selector).attr("original_order", orig_order );
+      //console.log("                    : saved original order [" + orig_order + "]");
+      // $(".save_new_order").bind("click", send_new_order);
+}
+
+function get_sortable_order( list )
+{
+  return $( list ).sortable('serialize').replace( /&[a-z_]+\[\]=/ig, ",").replace( /[a-z_]+\[\]=/i, "");
+}
+
+function send_new_order( list, post_url, new_order ) {
+  // disable the sortable list until we receive confirmation from the server that new order was saved
+  $(list).sortable('disable');
+
+  //console.log("order to send is " + new_order );
+
+  var post_data = "order=" + new_order 
+                + "&authenticity_token=" + encodeURIComponent(AUTH_TOKEN);
+
+  // jQuery.post("http://localhost:3000/collections/featured/order", post_data, new_order_saved, "text" );
+  // console.log("full post url is " + relative_url_root + post_url );
+
+  jQuery.ajax( {
+    url: relative_url_root + post_url,
+    type: "POST",
+    success: new_order_saved(list),
+    error: failed_saving_new_order,
+    dataType: "text",
+    data: post_data
+  });
+  //console.log("Sent data: " + post_data );
+}
+
+function new_order_saved( selector )
+{
+  list = $(selector);
+  var sent_order = get_sortable_order( selector );
+  return  function ( data, textstatus ) {
+      //console.log( "status = " + textstatus );
+      if ( textstatus == "success" ) {
+        //console.log("success saving order");
+        // save the new order for this list
+        list.attr("original_order", sent_order );
+        // $(".save_new_order").fadeout(500);
+        // re-enable the sortable, now that new order is saved on the server
+        list.sortable('enable');
+      }
+  };
+}
+    function failed_saving_new_order( xml_req, error, exception )
+    {
+      //console.log("failed sending new order to server");
+      // TODO display a message telling the user we failed saving the order and what they can do about it ?
+    }

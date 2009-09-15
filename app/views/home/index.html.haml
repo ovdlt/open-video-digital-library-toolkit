@@ -18,32 +18,35 @@
       .content
         .column_title
           Browse
-        .category
-          = render :partial => "shared/axes", :locals => { :max => 3, :browse => true }
+        .category#browse_axes
+          = render :partial => "shared/axes"
 
     .center
       .content
         - first = true
-        - featured_videos.each do |video|
-          .video{:id=>"video_#{video.id}"}
-            %div{:class =>(first ? "first" : "other")}
-              - first = false
-              .image
-                %a{:href => video_path( video.id )}
-                  -if poster_path = video.poster_path
-                    %img{:src=>poster_path,:alt => "video #{video.id}"}
-              .details
-                .title{:class=>video_vis_class(video)}
-                  = link_to h(video.title), video_path( video )
-                - if !(d = video_created( video )).blank?
-                  .duration= int_to_duration( video.duration )
-                  %span.between
-                    |
-                  .created
-                    &= video_created( video ).to_s(:long)
-                - if !video.sentence.blank?
-                  .description&= video.sentence
-              .clear  
+        #featured_videos
+          - featured_videos.each do |video|
+            .video{ :id => "video_#{video.id}" }
+              %div{:class =>(first ? "first" : "other")}
+                - first = false
+                .image
+                  %a{:href => video_path( video.id )}
+                    -if poster_path = video.poster_path
+                      %img{:src=>poster_path,:alt => "video #{video.id}"}
+                .details
+                  .title{:class=>video_vis_class(video)}
+                    = link_to h(video.title), video_path( video )
+                  - if !(d = video_created( video )).blank?
+                    .duration= int_to_duration( video.duration )
+                    %span.between
+                      |
+                    .created
+                      &= video_created( video ).to_s(:long)
+                  - if !video.sentence.blank?
+                    .description&= video.sentence
+                .clear  
+              .handle
+                .handle_image
 
     .right
       .content
@@ -53,17 +56,27 @@
             == [#{public_collections_count}]
           Collections
 
-        - featured_collections.each do |collection|
-          .collection{:id => "collection_#{collection.id}"}
-            .title
-              = link_to h(collection.title), collection_path( collection )
-            .videos
-              = collection.size(public_only?)
-              videos
-            .description
-              &= collection.description
-
+        #featured_collections
+          - featured_collections.each do |collection|
+            .collection{ :id => "collection_#{collection.id}" }
+              .title
+                = link_to h(collection.title), collection_path( collection )
+              .videos
+                = collection.size(public_only?)
+                videos
+              .description
+                &= collection.description
+              .handle
+                .handle_image
+        %input{ :type => "submit", :class => "save_new_order", :value => "Save new order" }
         .all_collections
           = link_to "View all collections &raquo;", collections_collections_path
-
+    - if current_user and current_user.has_role?( "admin" )  
+      :javascript
+        $(document).ready( function() {
+          make_sortable( { list_selector: "#featured_collections", item_selector: ".collection",    post_url: "/collections/featured/order" });
+          make_sortable( { list_selector: "#featured_videos",      item_selector: ".video",         post_url: "/videos/featured/order" });
+          make_sortable( { list_selector: "#browse_axes",          item_selector: ".property_type", post_url: "/library/property_type/order" });
+        });
     .clear
+

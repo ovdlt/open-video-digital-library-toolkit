@@ -1,8 +1,10 @@
-.collection
-
+.collection{ :id => "collection_#{collection.id}" }
+  .handle
+    .handle_image
   .image
     - if p = collection.poster_path(public_only?)
-      %img{:src=>p,:alt => "sample image from collection"}
+      %a{ :href => collection_path( collection )  }
+        %img{:src=>p,:alt => "sample image from collection"}
   .details
     - if owner = owner_text( collection ) and owner != "my"
       .owned_by

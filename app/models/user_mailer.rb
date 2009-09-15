@@ -27,7 +27,7 @@ class UserMailer < ActionMailer::Base
   def setup_email(user)
     @recipients  = "#{user.email}"
     prefix = UsersController.prefix
-    @from        = "ovdlt.org <ovdlt@ovdlt.org>"
+    @from        = Library.email
     @subject     = "[#{prefix}] "
     @sent_on     = Time.now
     @body[:user] = user

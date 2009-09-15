@@ -3,8 +3,7 @@
   :margin 0
 
 body
-  / :background #fafafa url(../images/backgrounds/body-default.jpg) 0 0 repeat-x
-  / :color #333
+  :background-color #CCC 
   :font
     :family "helvetica neue", helvetica, "lucida grande", verdana, sans-serif
     :size 62.5%
@@ -18,13 +17,15 @@ body
   :min-height 100%
   :width 900px
   :position relative
+  :background-color white
+  :padding 0
 
 a
   :text-decoration none
   :padding 0px 0px 1px 0px
   &:visited, &:link
     / :border-bottom 1px solid #60acda
-    :color #60acda
+    :color #A00   
   &:hover, &:active
     :background-color #cdeafb
     /* :border-bottom 1px solid #457ea1 */
@@ -112,6 +113,16 @@ a
 
 .pagination
   :text-align center
+  a, span
+    :border solid 1px #bbb
+    :padding 1px 2px
+
+.pagination .pagination
+  :width 50%
+  :margin 15px 25% 0
+  :padding-top 15px
+  // :background transparent url(../images/gradient-bw-vert-50.png) repeat-x
+
 
 .form fieldset
 
@@ -269,19 +280,25 @@ div.collection.videos
 .pagination_info
   :text-align center
 
+.navigate .pagination_info
+  :margin-bottom -20px
+  :font-size 0.9em
+
 .collections.index
 
   .title
-    :font-size 2.5em
+    :font-size 1.8em
     :font-weight bold
-    :background #eee
-    :border solid 1px #ccc
     :padding .5em
-    :margin .1em
+    :margin 0.1em 0 0.1em
+    :background-position 0 -5px
+
+  .contents
+    :margin 0 15px 0
 
   .collection
 
-    :border solid 1px black  
+    :border-top solid 1px #CCC  
     :margin-bottom 1em
 
     .image
@@ -300,6 +317,7 @@ div.collection.videos
     .details
       :float left
       :font-size 1.1em
+      :width 75%
 
       .title
         :background none
@@ -330,10 +348,18 @@ div.collection.videos
   .contents
     .pagination
       :font-size 1.2em
+#content .collections
+  .sidebar
+    :width 25%
+    :margin-top -1em
+    :margin-bottom -1em
+    :padding 3em 0em 3em 0.5em
+    // :background transparent url(../images/gradient-wb-lr.png) repeat-y
+
 
 #content .collection.page .collection
   
-  :margin-bottom 1em
+  / :margin-bottom 1em
 
   .image
     :float left
@@ -364,8 +390,6 @@ div.collection.videos
       :border none
       :font-size 1.4em
       :padding none
-      :background #eee
-      :border 1px solid #ccc
      
     .description
       :padding-right 2em
@@ -556,6 +580,7 @@ div.collection.videos
     :border-bottom 1px dotted #888
 
     .image
+      :float left
       :width 122px
       :height 92px
       :border 1px solid #888
@@ -569,6 +594,7 @@ div.collection.videos
       :float left
       :margin-left 4px
       :margin-top 0
+      :width 75%
 
       .title
         :background none
@@ -726,6 +752,9 @@ div.collection.videos
       .value
         :display inline
         :font-style italic
+    .label
+      :font-size 0.8em
+      :color #777
   .details
     .attribute.created_on .separator
       :display none
@@ -772,6 +801,7 @@ div.collection.videos
 .my.content
   :float left
   :width 610px
+  :margin-left 7px
 
 .collections.index.partial
   .details
@@ -781,7 +811,7 @@ div.collection.videos
       .owner
         :display inline
         :font-style italic
-  .pagination_info
+  .navigate .pagination_info
     :font-size 1.1em
     :margin-bottom .2em
     :margin-top .2em
@@ -847,6 +877,7 @@ li.delete li.delete
   li
     :margin 0
     :padding-top 4px
+    :clear both
 
 .refine
   :font-size .8em
@@ -875,6 +906,8 @@ div.save_query
   .notice
     :font-style italic
     :color red
+    :margin-top -10px
+    :margin-left 8px
 
 .collection .featured form
   :font-size .8em
@@ -906,6 +939,10 @@ div.save_query
 .all_collections
   :font-size 1.2em
   :font-style italic
+
+#save_new_order
+  :border solid 1px #a00
+  :display none
 
 #content .private.title
 

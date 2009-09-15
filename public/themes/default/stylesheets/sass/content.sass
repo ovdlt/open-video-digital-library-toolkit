@@ -1,21 +1,21 @@
 #content
 
-  a
-    :border-bottom 0px none
-
   :clear both
   :font-size 1.1em
   :line-height 19px
-  :padding-top 1em
+  :padding 1em 10px 0
   
   h1
     :color black
-    :font-size 2em
+    :font-size 1.6em
     :margin 0 0 15px 0
     :padding .4em
     
   h3
     :margin 0 0 10 0
+
+  .highlight
+    :background-color #FF0
   
 .category
 
@@ -23,23 +23,28 @@
   :font-size 1.5em
 
   .block
-    :border 2px solid
-    :padding-left 0.5em
+    // :border 2px solid
+    :padding-left 0
     :padding-top .5em
     :padding-bottom 0.5em
-    :padding-right .5em
+    :padding-right 0
     :border-bottom none
 
   .title
     :font-weight bold
     :line-height 1em
-    :background #B0C4DE
+    // :background #B0C4DE
+  > .title
+    :background transparent url(../images/gradient-bw-vert-50.png) repeat-x
+    :background-position 0px -7px
+    :padding-bottom 0
+    :padding-left 0.5em
+    :margin 0 -10px
 
   .footer
     :font-weight bold
     :font-size 0.8em
     :font-style italic
-    :background #B0C4DE
     
     a:link, a:visited
       :text-decoration none
@@ -48,10 +53,9 @@
 
     a:hover, a:active
       :text-decoration underline
-      :background #0ff
 
   .last
-    :border-bottom 2px solid
+    // :border-bottom 2px solid
 
   .axes
     :font-size 0.8em
@@ -64,19 +68,27 @@
 
     .axis
 
-      :margin-bottom 1em
+      :margin-bottom 0.5em
 
       .count
         :font-size .8em
 
       .title
-        :border-bottom 1px solid
+        :border-top 1px #a00 solid
+        :padding-top 5px
+      .title, .title a, .title a:visited, .title a:link
         :background-color #fff
-        :padding-bottom .2em
+        / :padding-bottom .2em
         :margin-bottom .2em
+        :color #AA0000
+
+      ul
+        :list-style-type none
 
       li
-        :margin-left 1em
+        :margin-left 2em
+        a, a:hover, a:link, a:visited
+          :color #333
 
       li.all
         :margin-left 2em
@@ -105,11 +117,13 @@
 .category .videos
   :float right          
   :width 78%
+.category .videos .axis .video 
+  :width 20%
 
 .category .videos .video
 
   :float left
-  :width 20%
+  // :width 20%
   :font-size .6em
   :line-height 1em
   :text-align center
@@ -129,6 +143,8 @@
     :border 0px none
     :background #eee
     :text-align center
+    :margin 0 auto
+    :float none
 
     img
       :height 100px
@@ -136,7 +152,8 @@
 
 
 .featured .image
-  :margin-left 3em
+  // :margin-left 3em
+  // :margin 0 20px
 
 #content .hitlist
   :float left
@@ -144,7 +161,6 @@
   :margin-top 1em
 
   h1
-    :background #ddd
     :padding .5em
     :margin-bottom 4px
 
@@ -195,10 +211,11 @@
         :height 90px
         :background #eee
         :text-align center
-        :margin-left auto
-        :margin-right auto
-        :margin-top .2em
-        :margin-bottom .2em
+        :margin 0.2em auto
+        // :margin-left auto
+        // :margin-right auto
+        // :margin-top .2em
+        // :margin-bottom .2em
 
         img
           :width 120px
@@ -252,9 +269,9 @@
 #content .sidebar
 
   :float right
-  :width 30%
+  :width 29%
   :margin-top 1em
-  :font-size 1.6em
+  :font-size 1.1em
 
   a
     :border 0px none
@@ -333,46 +350,23 @@
         :font-size 1.2em
         :font-weight bold
 
-#content .sidebar
-
-  :float right
-  :width 30%
-  :margin-top 1em
-  :font-size 1.6em
-
-  a
-    :border 0px none
-
-  .entry
-
-    .title
-      :font-weight bold
-      :padding-bottom .3em
-      :border-bottom 2px solid #ccc
-
-    ul
-      :margin-bottom 2em
-
-      li
-        :margin-top .2em
-        :margin-left 1em
 
 
 .details
   :float left
-  :width 68%
-  :margin-top 1em
+  :width 60%
+  / :margin-top 1em
 
   .title
-    :background #ddd
-    :padding .5em .5em .5em .5em
+    // :background #ddd
+    :padding .5em .5em 0em .5em
 
   .body
 
-    :border-left 2px solid black
-    :border-right 2px solid black
-    :border-top 2px solid black
-    :border-bottom 1px solid black
+    // :border-left 2px solid black
+    // :border-right 2px solid black
+    // :border-top 2px solid black
+    // :border-bottom 1px solid black
 
     .image
       :float left
@@ -390,36 +384,37 @@
       
     .sentence, .abstract
       :margin 1em
-      :font-size 1.4em
+      :font-size 1.2em
 
     .navigate
+      :list-style none
+      .li 
+        :float left
 
       :clear both
 
       :width 100%
 
-      .view
-        div
-          :width 131px
-          :border-right 1px solid #aaa
-          :border-top 1px solid #aaa
-          :border-bottom 1px solid #aaa
-          :padding-left 10px
-          :padding-right 10px
+      li.view
+        // div
+        // :width 131px
+        :float left
+        :border-right 1px solid #aaa
+        :border-top 1px solid #aaa
+        :border-bottom 1px solid #aaa
+        :padding-left 10px
+        :padding-right 10px
       
       .view.first
-        div
-          :border-left 0px none
+        :border-left 0px none
     
       .view.last
-        div
-          :padding-right 11px
-          :margin-right 0px
-          :border-right 0px none
+        :padding-right 11px
+        :margin-right 0px
+        :border-right 0px none
     
       .view.current
-        div
-          :border-bottom 1px none
+        :border-bottom 1px none
 
     .downloads
 
@@ -487,7 +482,7 @@
   :width 100%
 
 .videos
-  :padding-top .5em
+  :padding-top 0
 
 .videos.list # .page
 
@@ -504,15 +499,15 @@
 
     .image
       :float left
-      :width 120px
-      :height 90px
+      // :width 120px
+      // :height 90px
       :background #eee
       :text-align center
       :margin-right 1em
 
-      img
-        :width 120px
-        :height 90px
+      // img
+      //   :width 120px
+      //   :height 90px
 
     .title
       :display inline

@@ -14,8 +14,14 @@
     :display inline
     :margin 0
     :padding 0
+    .flag
+      :height .5em
+  li.on .flag
+    :background white
+  li.on .text a:visited, a:link
+    :color #ddd
   
-  li
+  ul li
     :float left
     / :background  transparent url(../images/backgrounds/navigation-a-default.jpg) no-repeat left top
     :border none
@@ -29,18 +35,12 @@
       :padding 12px
       :padding-bottom 5px
 
-    .flag
-      :height .5em
 
-    .flag.on
-      :background rgb(170,0,0)
+    .text
+      a:visited, a:link
+        :color #aaa
 
-    a:visited, a:link
-      span
-        :color #60acda
-
-    a:hover, a:active
-      span
+      a:hover, a:active
         :background-color #cdeafb
         :color #457ea1
 
@@ -58,7 +58,7 @@
 
 .navigate
 
-  :font-size 1.5em
+  :font-size 1.3em
 
   :margin-top 1em
   :margin-bottom -2px

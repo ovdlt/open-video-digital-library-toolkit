@@ -1,11 +1,11 @@
 - videos = index
 .videos.list.partial
 
-  .pagination_info
-    = page_entries_info videos, :entry_name => "video"
 
   - if videos.size > 0
     .navigate
+      .pagination_info
+        = page_entries_info videos, :entry_name => "video"
       - if @collection and WillPaginate::ViewHelpers.total_pages_for_collection( videos ) > 1
         .show_all
           = link_to "show all", collection_path( @collection, :page => "all" )
@@ -18,7 +18,12 @@
       .clear
       
     .list        
-      = render :partial => "videos/show", :collection => videos
+      - if params[:search].nil? || params[:search][:criteria].nil? || params[:search][:criteria][:text].nil? || params[:search][:criteria][:text].length == 1
+        = render :partial => "videos/show", :collection => videos
+      - else
+        = highlight(  |
+          (render :partial => "videos/show", :collection => videos), |
+          params[:search][:criteria][:text] ) |
     .clear
 
     .pagination

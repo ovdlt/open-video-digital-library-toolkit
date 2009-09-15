@@ -41,6 +41,10 @@ class Library < ActiveRecord::Base
     ( self.find :first ).playlists_title
   end
 
+  def self.email
+    ( self.find :first ).emails
+  end
+
   def video_count public
     if public
       Video.count :conditions => { :public => true }

@@ -9,17 +9,18 @@
 
         .title.required{ error_class( @video, :title ) }
           .label= @form.label :title, "Title of Video"
-          %div= @form.text_field :title, :size => 44
+          -# size 44 made these fields wider than their container
+          %div= @form.text_field :title
           = error_message_on @video, :title
 
         .alternative_title{ error_class( @video, :alternative_title ) }
           .label= @form.label :alternative_title, "Alternative Title of Video"
-          %div= @form.text_field :alternative_title, :size => 44
+          %div= @form.text_field :alternative_title
           = error_message_on @video, :alternative_title
 
         .series_title{ error_class( @video, :series_title ) }
           .label= @form.label :series_title, "Series Title of Video"
-          %div= @form.text_field :series_title, :size => 44
+          %div= @form.text_field :series_title
           = error_message_on @video, :series_title
 
       %fieldset

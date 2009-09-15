@@ -35,7 +35,6 @@
     .column_title
       :font-size 2em
       :padding-bottom 2px
-      :border-bottom 1px solid rgb(170,0,0)
       :margin-bottom 8px
 
     .left, .right, .center
@@ -56,15 +55,20 @@
         .title
           :color rgb(170,0,0)
           :border none
+          :border-top solid #a00 1px
           :font-weight normal
           :margin-bottom 0
           :padding-bottom 0
+          :padding-top 5px
 
         ul
           :list-style-type none
 
         li
           :margin 0
+          :margin-left 2.0em
+          a, a:hover, a:link, a:visited
+            :color #333
 
         li.all
           :margin-left 2em
@@ -72,6 +76,7 @@
     .right
 
       :float right
+      :margin-left 0
 
       .size
         :float right

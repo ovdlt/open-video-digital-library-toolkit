@@ -7,7 +7,7 @@
 
 <p><label for="password">Password</label><br/>
 <%= password_field_tag 'password', nil %>
-<%= link_to 'Forgot Password', forgot_password_path %>
+<%= link_to 'Forgot Password?', forgot_password_path %>
 </p>
 
 <!-- Uncomment this if you want this functionality
@@ -16,6 +16,10 @@
 -->
 <br />
 <p><%= submit_tag 'Log in' %></p>
+<p>
+<br/>
+<%= link_to 'New user?', signup_path %>
+</p>
 <% end -%>
 
 </fieldset>

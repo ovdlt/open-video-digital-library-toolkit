@@ -1,18 +1,33 @@
 .category.featured
-  .title.block Recent Videos
-  .content.block
-    .videos
-      - Video.recent(public_only?,5).each do |video|
-        .video
-          .image
-            %a{:href => video_path( video.id )}
-              - if poster_path = video.poster_path
-                %img{:src=>poster_path,:alt => "video #{video.id}"}
-          .clear
-          .text
-            .title{:class=>video_vis_class(video)}
-              = link_to h(video.title), video_path( video.id )
-            .description= h video.sentence
-    .clear
-  .footer.block.last= link_to "See more recent videos &raquo;", recent_videos_path
+  -# There's a lot of refactoring that could happen here ...
+  :javascript
+    function activateTab( tab, tabname )
+    {
+      $('.tab_content, .tabs li').removeClass('active'); 
+      $('#' + tabname + '.tab_content').addClass('active'); 
+      $(tab).addClass('active'); 
+      $('.seemore a').text('See more ' + tabname + ' videos');
+      if ( tabname == 'recent' ) { $('.seemore a').attr('href', "#{recent_videos_path}" ); }
+      if ( tabname == 'popular' ) { $('.seemore a').attr('href', "#{popular_videos_path}" ); }
+      //if ( tabname == 'random' ) { $('.seemore a').href( "#random_videos_path}" ); }
+      //if ( tabname == 'random' ) { $('.seemore a').href( '' ); }
+      return false;
+    }
+  %ul.tabs
+    %li.title.block.tab.active{ :onclick => "activateTab( $(this), 'recent' ); "  }
+      %a{ :href => "#" } Recent
+    %li.title.block.tab{ :onclick => "activateTab( $(this), 'popular' ); "  }
+      %a{ :href => "#" } Popular
+    %li.title.block.tab{ :onclick => "activateTab( $(this), 'random' ); "  }
+      %a{ :href => "#" } Random
+    %li.title.block.tab.seemore= link_to "See more recent videos &raquo;", recent_videos_path
+  .tab_contents
+    #recent.tab_content.active
+      =render :partial => "recent"
+    #popular.tab_content
+      =render :partial => "popular"
+    #random.tab_content
+      =render :partial => "random"
+.clear
 = render :partial => "browse"
+- logger.info recent_videos_path.inspect

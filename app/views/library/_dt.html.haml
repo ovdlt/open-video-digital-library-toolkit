@@ -1,6 +1,6 @@
-%li.delete{:id => "property_type_#{dt.id}"}
+%li.delete{:id => "property_type_#{dt.id}", :class => (dt.id != "new_dt" ) ? "dtype" : "" }
   .property-type.display-edit
-    .display{ error_class(dt) }
+    .display.dt_handle{ error_class(dt) }
       = dt.name
       = dt.browsable? ? "(browsable)" : "(not browsable)"
       %span.edit= link_to "edit", "#"

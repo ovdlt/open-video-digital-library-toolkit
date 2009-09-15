@@ -20,15 +20,15 @@
           .login_out
             - if logged_in?
               .button= link_to "Logout", logout_path
-              - else
-              .button= link_to "Login", login_path
+            - else
+              .button= link_to "Login", login_path, { :rel => "facebox" }
             -#
               .user
                 You're logged in as
                 %span.login= h current_user.login
           - if !logged_in?
             .register
-              .button= link_to "Register", signup_path
+              .button= link_to "Register", signup_path, { :rel => "facebox" }
           - if current_user and current_user.has_role?( "admin" )
             .admin
               .button= link_to "Users", users_library_path
@@ -42,32 +42,34 @@
         #header
           - if Library.logo_url
             #logo
-              = image_tag Library.logo_url
+              %a{ :href => url_for( :controller => :home, :action => :index ) }
+                = image_tag Library.logo_url
           .content
-            .title= title
+            .title
+              = link_to title, url_for( :controller => :home, :action => :index )
             .subtitle= Library.subtitle
             #navigation
               %ul
-                %li
+                %li{:class => ( HomeController === controller ? "on" : "off")}
                   .text= link_to "Home", url_for( :controller => :home, :action => :index ) |
-                  .flag{:class => ( HomeController === controller ? "on" : "off")}
+                  .flag
               %ul
-                %li
+                %li{:class => ( VideosController === controller ? "on" : "off")}
                   .text= link_to "Videos", videos_path
-                  .flag{:class => ( VideosController === controller ? "on" : "off")}
+                  .flag
               %ul
-                %li
+                %li{:class => collections_flag }
                   .text= link_to "Collections", collections_collections_path
-                  .flag{:class => collections_flag }
+                  .flag
               %ul
-                %li
+                %li{:class => playlists_flag }
                   .text= link_to "Playlists", playlists_collections_path |
-                  .flag{:class => playlists_flag }
+                  .flag
               - if current_user
                 %ul
-                  %li
+                  %li{:class => ( MyController === controller ? "on" : "off")}
                     .text= link_to h(my), my_path
-                    .flag{:class => ( MyController === controller ? "on" : "off")}
+                    .flag
           .search
             - form_for Search.new, |
                       :url => videos_path, |
@@ -101,5 +103,13 @@
             :textile
               #{@library.copyright}
           .open_video
-            Powered by
-            = link_to "Open Video", "http://open-video.org/"
+            Powered by the
+            = link_to "Open Video Toolkit", "http://www.open-video-toolkit.org/"
+    -# after a page loads, immediately highlight any flash messages (changes bg to yellow, then fade back to white)
+    -# a little later, fade out and remove the message completely
+    :javascript
+      $(document).ready( function() { 
+        setTimeout( '$(".flash").effect("highlight", {}, 1000 );', 500 );
+        setTimeout( '$(".flash.notice").fadeOut( 2000 );' , 2000 );
+        $('a[rel*=facebox]').facebox({opacity:0.5})
+      } );
