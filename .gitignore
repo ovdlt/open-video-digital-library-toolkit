@@ -11,3 +11,10 @@
 /public/assets
 /public/surrogates/*
 /public/surrogates
+/vendor/gems/mysql-2.7/Makefile
+/vendor/gems/mysql-2.7/gem_make.out
+/vendor/gems/mysql-2.7/lib/
+/vendor/gems/mysql-2.7/mkmf.log
+/vendor/gems/mysql-2.7/mysql.bundle
+/vendor/gems/mysql-2.7/mysql.c
+/vendor/gems/**/.specification
