@@ -38,7 +38,7 @@ class ImportMapsController < ApplicationController
     @import_map = ImportMap.find(params[:id])
     if @import_map.update_attributes(params[:import_map])
       flash[:notice] = 'ImportMap was successfully updated.'
-      redirect_to edit_import_map_path @import_map
+      redirect_to edit_import_map_path( @import_map )
     else
       if params[:import_map][:yml]
         render :action => "yml"
