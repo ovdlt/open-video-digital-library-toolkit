@@ -136,9 +136,14 @@ describe PropertyType do
   describe "#descriptor_values" do
 
     it "should raise an error on the wrong kind of PT" do
+
+      # We do not raise an error even if d_v's is called on non dt's
+      # Necessary for the has_many ... destroy to work; this spec could
+      # be reverted if that were ever rearranged
+
       pt = PropertyType.find_by_name "Rights Statement"
       lambda { pt.descriptor_values }.
-        should raise_error( PropertyType::NotDescriptorType )
+        should_not raise_error( PropertyType::NotDescriptorType )
     end
 
     it "should return the descriptor_values for a property" do
