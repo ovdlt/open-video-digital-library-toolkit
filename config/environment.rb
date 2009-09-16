@@ -27,15 +27,18 @@ Rails::Initializer.run do |config|
   # config.gem "aws-s3", :lib => "aws/s3"
 
   # config.gem "mysql", :version => "2.7" # may require "gem install mysql -- --with-mysql-config"
-  config.gem "erubis", :version => "2.6.4"
-  config.gem "fastercsv", :version => "1.4.0"
-  config.gem "haml", :version => "2.2.1"
+  config.gem "abstract", :version => "1.0.0" # needed by erubis
+  config.gem "erubis", :version => "2.6.5"
+  config.gem "fastercsv", :version => "1.5.0"
+  config.gem "haml", :version => "2.2.4"
   config.gem "faker", :version => "0.3.1"
-  config.gem "RedCloth", :version => "4.1.9"
+  config.gem "RedCloth", :version => "4.2.2"
   config.gem "thoughtbot-factory_girl",
+             :version => "1.2.2",
              :lib => "factory_girl",
              :source => "http://gems.github.com"
   config.gem "mislav-will_paginate",
+             :version => "2.3.11",
              :lib => "will_paginate",
              :source => "http://gems.github.com"
 
