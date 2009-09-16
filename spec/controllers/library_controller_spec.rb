@@ -839,7 +839,7 @@ describe LibraryController do
 
     it "should require login" do
       put :property_type_order, :order => "1 2, 3"
-      response.should redirect_to login_path
+      response.should redirect_to( login_path )
     end
 
     it "should not allow user" do
@@ -890,7 +890,7 @@ describe LibraryController do
 
     it "should require login" do
       put :descriptor_value_order, :order => "1 2, 3"
-      response.should redirect_to login_path
+      response.should redirect_to( login_path )
     end
 
     it "should not allow user" do
