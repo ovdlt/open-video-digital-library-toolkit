@@ -27,12 +27,6 @@ class LibraryController < ApplicationController
         all_pc_ids = PropertyClass.find( :all, :select => "id").map &:id
         all_pc_ids = all_pc_ids - pcs.keys.map(&:to_i)
 
-        if false && !all_pc_ids.empty?
-          logger.warn "missing pc ids: #{all_pc_ids.inspect}"
-          render :nothing => true, :status => 400
-          raise ActiveRecord::Rollback
-        end
-
         pcs.each do |pc_id,pc_params|
           pc_ar = @property_classes.detect { |pc_ar| pc_ar.id == pc_id }
           if pc_ar
@@ -62,14 +56,6 @@ class LibraryController < ApplicationController
         all_pt_ids.delete PropertyType.find_by_name("Rights Statement").id
 
         logger.warn pts.keys.map(&:to_i).inspect
-
-        if false && !all_pt_ids.empty?
-          logger.warn "missing pt ids: #{all_pt_ids.inspect}"
-          render :nothing => true, :status => 400
-          raise ActiveRecord::Rollback
-        end
-
-        # pp params[:property_type]
 
         pts.each do |pt_id,pt_params|
           pt_ar = @property_types.detect { |pt_ar| pt_ar.id == pt_id.to_i }
@@ -105,12 +91,6 @@ class LibraryController < ApplicationController
         all_rd_ids = all_rd_ids - rds.keys.map(&:to_i)
 
         logger.warn rds.keys.map(&:to_i).inspect
-
-        if false && !all_rd_ids.empty?
-          logger.warn "missing rd ids: #{all_rd_ids.inspect}"
-          render :nothing => true, :status => 400
-          raise ActiveRecord::Rollback
-        end
 
         rds.each do |rd_id,rd_params|
           rd_ar = @rights_details.detect { |rd_ar| rd_ar.id == rd_id.to_i }
@@ -148,12 +128,6 @@ class LibraryController < ApplicationController
         all_dv_ids = all_dv_ids - dvs.keys.map(&:to_i)
 
         logger.warn dvs.keys.map(&:to_i).inspect
-
-        if false && !all_dv_ids.empty?
-          logger.warn "missing dv ids: #{all_dv_ids.inspect}"
-          render :nothing => true, :status => 400
-          raise ActiveRecord::Rollback
-        end
 
         dvs.each do |dv_id,dv_params|
           dv_ar = @descriptor_values.detect { |dv_ar| dv_ar.id == dv_id.to_i }

@@ -159,20 +159,6 @@ describe LibraryController do
         @pc = @params["property_class"][@pc_id]
       end
 
-      it "should require all the property classes be present " +
-         "in order to process them" do
-      
-        post :update, @params
-
-        response.should redirect_to(library_path)
-      
-        @params["property_class"].delete @params["property_class"].keys.first
-      
-        post :update, @params
-
-        response.response_code.should == 400
-      end
-
       it "should update pc attributes" do
         @pc["name"] = "something"
 
@@ -222,20 +208,6 @@ describe LibraryController do
           controller.send(:parameters)["property_type"]
         @pt_id = @params["property_type"].keys[4]
         @pt = @params["property_type"][@pt_id]
-      end
-
-      it "should require all the property types be present " +
-         "in order to process them" do
-      
-        post :update, @params
-
-        response.should redirect_to(library_path)
-      
-        @params["property_type"].delete @params["property_type"].keys.first
-      
-        post :update, @params
-
-        response.response_code.should == 400
       end
 
       it "should update pt attributes" do
@@ -326,20 +298,6 @@ describe LibraryController do
         @new_rd = @new_rd[0].last
 
         @pt_id = PropertyType.find_by_name("Rights Statement").id
-      end
-
-      it "should require all the rights details be present " +
-         "in order to process them" do
-      
-        post :update, @params
-
-        response.should redirect_to(library_path)
-      
-        @params["rights_detail"].delete @params["rights_detail"].keys.first
-      
-        post :update, @params
-
-        response.response_code.should == 400
       end
 
       it "should update rd attributes" do
@@ -441,20 +399,6 @@ describe LibraryController do
         @dv_id = @params["descriptor_value"].keys[4]
         @dv = @params["descriptor_value"][@dv_id]
         @pt_id = PropertyType.find_by_name("Genre").id
-      end
-
-      it "should require all the descriptor values be present " +
-         "in order to process them" do
-      
-        post :update, @params
-
-        response.should redirect_to(library_path)
-      
-        @params["descriptor_value"].delete @params["descriptor_value"].keys.first
-      
-        post :update, @params
-
-        response.response_code.should == 400
       end
 
       it "should update dv attributes" do
