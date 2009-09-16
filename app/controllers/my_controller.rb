@@ -67,7 +67,6 @@ class MyController < ApplicationController
     @user.save
 
     if !@user.errors.empty?
-      p @user.errors
       flash.now[:error] = "Password #{@user.errors.on :password}"
       render :action => :my_account
       return

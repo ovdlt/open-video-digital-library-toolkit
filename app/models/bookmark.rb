@@ -19,8 +19,6 @@ class Bookmark < ActiveRecord::Base
   end
 
   def self.set_order user_id, ids
-    p user_id, ids
-
     objects = {}
 
     begin
