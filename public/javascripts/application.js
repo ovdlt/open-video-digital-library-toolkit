@@ -443,7 +443,8 @@
 
         $(list_selector).sortable({
             items: item_selector,
-            axis: 'y',
+            // SMP: locking to the axis causes wierd jumps (padding/margins?)
+            // axis: 'y',
             cancel: cancel,
             revert: true,
             cursor: 'move',

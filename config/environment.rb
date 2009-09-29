@@ -102,6 +102,8 @@ ActionView::Helpers::AssetTagHelper.
 ActionView::Helpers::AssetTagHelper.
   register_javascript_include_default "ui.tabs"
 ActionView::Helpers::AssetTagHelper.
+  register_javascript_include_default "ui.sortable"
+ActionView::Helpers::AssetTagHelper.
   register_javascript_include_default "effects.core"
 ActionView::Helpers::AssetTagHelper.
   register_javascript_include_default "effects.highlight"
