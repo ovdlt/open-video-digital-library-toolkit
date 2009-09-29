@@ -189,7 +189,7 @@
         });
 
 
-        var tabs = [ ".tabs_pi > ul", ".lt" ];
+        var tabs = [ ".tabs_pi", ".lt" ];
 
         $.each(tabs, function(k,v){
             $(v).tabs({ cookie: { expires: null,

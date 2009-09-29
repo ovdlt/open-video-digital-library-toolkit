@@ -100,15 +100,19 @@ ActionView::Helpers::AssetTagHelper.
 ActionView::Helpers::AssetTagHelper.
   register_javascript_include_default "ui.accordion"
 ActionView::Helpers::AssetTagHelper.
+  register_javascript_include_default "ui.tabs"
+ActionView::Helpers::AssetTagHelper.
+  register_javascript_include_default "effects.core"
+ActionView::Helpers::AssetTagHelper.
+  register_javascript_include_default "effects.highlight"
+ActionView::Helpers::AssetTagHelper.
   register_javascript_include_default "jquery.autocomplete"
 ActionView::Helpers::AssetTagHelper.
   register_javascript_include_default "jquery.pagination"
 ActionView::Helpers::AssetTagHelper.
   register_javascript_include_default "jquery.livequery"
 ActionView::Helpers::AssetTagHelper.
-  register_javascript_include_default "jquery.carousel.pack"
-ActionView::Helpers::AssetTagHelper.
-  register_javascript_include_default "facebox"
+  register_javascript_include_default "jquery.jcarousel"
 
 ActionView::Base.field_error_proc = Proc.new do |html_tag, instance|
   error_class = "fieldWithErrors"
