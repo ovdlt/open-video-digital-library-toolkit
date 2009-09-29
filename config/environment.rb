@@ -27,6 +27,7 @@ Rails::Initializer.run do |config|
   # config.gem "aws-s3", :lib => "aws/s3"
 
   # config.gem "mysql", :version => "2.7" # may require "gem install mysql -- --with-mysql-config"
+
   config.gem "abstract", :version => "1.0.0" # needed by erubis
   config.gem "erubis", :version => "2.6.5"
   config.gem "fastercsv", :version => "1.5.0"
