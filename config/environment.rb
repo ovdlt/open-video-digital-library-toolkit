@@ -96,7 +96,9 @@ ActionView::Helpers::AssetTagHelper.
 ActionView::Helpers::AssetTagHelper.
   register_javascript_include_default "jquery.cookie"
 ActionView::Helpers::AssetTagHelper.
-  register_javascript_include_default "jquery-ui-1.7.2/ui/ui.accordian.js"
+  register_javascript_include_default "ui.core"
+ActionView::Helpers::AssetTagHelper.
+  register_javascript_include_default "ui.accordion"
 ActionView::Helpers::AssetTagHelper.
   register_javascript_include_default "jquery.autocomplete"
 ActionView::Helpers::AssetTagHelper.
