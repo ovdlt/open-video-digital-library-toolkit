@@ -196,19 +196,6 @@
                                   name: v.id } });
         });
 
-        $(".lt").tabs({select:function(){
-            // Mostly handles multiple classes ... except this
-            // Might break in new ui-tabs
-            $(".lt li").not(this).removeClass("ui-tabs-selected");
-            /*
-            $(".lt li.ui-tabs-selected").each(function(){
-                console.debug(this);
-            });
-            */
-        }});
-
-        // $(".tabs_pi > ul").tabs({ cookie: { expires: null } });
-
         $("#uncatted").autocomplete("/assets/uncataloged.txt");
 
         function promote(uncatted) {

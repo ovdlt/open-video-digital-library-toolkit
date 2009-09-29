@@ -22,8 +22,8 @@
 
   %br
   .left
-    %input.submit{ :name => "submit", :value => "save", :src => "/images/btn-save-changes.gif", :type => "image", :id => nil }
+    = image_submit_tag "btn-save-changes.gif", :name => "submit", :value => "save", :id => nil
     %span.btn-cancel
       = link_to "cancel", library_path
     .clear
-    %input.submit{ :name => "submit", :value => "finished", :src => "/images/btn-finish.gif", :type => "image", :id => nil }
+    = image_submit_tag "btn-finish.gif", :name => "submit", :value => "finished", :id => nil
