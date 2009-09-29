@@ -92,7 +92,7 @@ ExceptionNotifier.sender_address = %("OVDLT Error" <ovdlt@ovdlt.org>)
 ExceptionNotifier.email_prefix = "[OVDLT] "
 
 ActionView::Helpers::AssetTagHelper.
-  register_javascript_include_default "jquery"
+  register_javascript_include_default "jquery-1.3.2"
 ActionView::Helpers::AssetTagHelper.
   register_javascript_include_default "jquery.cookie"
 ActionView::Helpers::AssetTagHelper.
