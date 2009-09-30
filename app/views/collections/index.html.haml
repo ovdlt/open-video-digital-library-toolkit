@@ -10,5 +10,7 @@
 - if current_user and current_user.has_role?( "admin" )
   :javascript
     jQuery(document).ready( function() {
-      make_sortable( { list_selector : "#all_collections", item_selector : ".collection" , post_url : "/collections/featured/order"}  );
+      make_sortable( { list_selector : "#all_collections",
+                       item_selector : ".collection",
+                       post_url : "/collections/featured/order" }  );
     });
