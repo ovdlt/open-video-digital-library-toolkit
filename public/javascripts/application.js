@@ -454,8 +454,8 @@
             containment: 'document',
             update: function() {
                 var new_order = get_sortable_order(list_selector) ;
-                //console.log( "Sortable: " + list_selector + " -- new order:  " + new_order );
-                //console.log( "Sortable: " + list_selector + " -- old order:  " + $(list_selector).attr("original_order") );
+                // console.log( "Sortable: " + list_selector + " -- new order:  " + new_order );
+                // console.log( "Sortable: " + list_selector + " -- old order:  " + $(list_selector).attr("original_order") );
                 if (($(list_selector).attr("original_order") != new_order))
                 {
                     // $(".save_new_order").fadeIn(250);
@@ -477,7 +477,7 @@
     {
         // console.debug( list);
         // console.debug( $(list) );
-        return $( list ).sortable('serialize').replace( /&[a-z_]+\[\]=/ig, ",").replace( /[a-z_]+\[\]=/i, "");
+      return $( list ).sortable('serialize').replace( /&[a-z_]+\[\]=/ig, ",").replace( /[a-z_]+\[\]=/i, ""); 
     }
 
     send_new_order = function( list, post_url, new_order ) {

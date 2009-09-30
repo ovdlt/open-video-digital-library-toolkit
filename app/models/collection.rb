@@ -109,11 +109,17 @@ class Collection < ActiveRecord::Base
     objects = {}
     self.find( ids ).each { |object| objects[object.id] = object }
     objects = ids.map { |id| objects[id] }
+    # p objects.sort { |a,b| a.featured_priority - b.featured_priority }.map(&:id)
     priorities = objects.map(&:featured_priority)
     priorities = priorities.sort.reverse
     objects.each { |o| o.featured_priority = priorities.shift }
+    # p objects.sort { |a,b| a.featured_priority - b.featured_priority }.map(&:id)
     # this should be transactional, but ...
     objects.each { |o| o.save! }
+    # objects = {}
+    # self.find( ids ).each { |object| objects[object.id] = object }
+    # objects = ids.map { |id| objects[id] }
+    # p objects.sort { |a,b| a.featured_priority - b.featured_priority }.map(&:id)
   end
 
 end
