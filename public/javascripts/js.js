@@ -52,6 +52,7 @@ jQuery(document).ready(function() {
     page = jQuery.jcarousel.intval( (index - 1) / 5 );
     jQuery(".panels #recent .carousel_pager .carousel_page_" + page ).addClass("active");
   }
+
   jQuery(".panels #recent .panel").jcarousel(
   {
     visible: 4,
@@ -59,6 +60,7 @@ jQuery(document).ready(function() {
     wrap: "both",
     initCallback: recent_carousel_initCallback,
     itemFirstInCallback:  {
+      onBeforeAnimation: null,
       onAfterAnimation: recent_carousel_updatePagerCallback
     }
   });
@@ -90,11 +92,13 @@ jQuery(document).ready(function() {
     });
 
   }
+
   function popular_carousel_updatePagerCallback( popular_carousel, item, index, action ) {
     jQuery("#popular .carousel_pager span").removeClass("active");
     page = jQuery.jcarousel.intval( (index - 1) / 5 );
     jQuery("#popular .carousel_pager .carousel_page_" + page ).addClass("active");
   }
+
   jQuery(".panels #popular .panel").jcarousel(
   {
     visible: 4,
@@ -135,11 +139,13 @@ jQuery(document).ready(function() {
     });
 
   }
+
   function random_carousel_updatePagerCallback( random_carousel, item, index, action ) {
     jQuery("#random .carousel_pager span").removeClass("active");
     page = jQuery.jcarousel.intval( (index - 1) / 5 );
     jQuery("#random .carousel_pager .carousel_page_" + page ).addClass("active");
   }
+
   jQuery(".panels #random .panel").jcarousel(
   {
     visible: 4,
@@ -159,5 +165,4 @@ jQuery(document).ready(function() {
 jQuery(document).ready( function() {
     setTimeout( 'jQuery(".flash").effect("highlight", {}, 1000 );', 500 );
     setTimeout( 'jQuery(".flash.notice").fadeOut( 2000 );' , 2000 );
-    //jQuery('a[rel*=facebox]').facebox({opacity:0.5})
 } );

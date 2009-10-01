@@ -1,3 +1,8 @@
+/* NOTE: this file has been modified from the standard distribution.
+ * There is a safari hack that seems no longer necessary (but might now work with old versions of safari.)
+ * Check before upgrading.
+ */
+
 /**
  * jCarousel - Riding carousels with jQuery
  *   http://sorgalla.com/jcarousel/
@@ -855,7 +860,8 @@
 
             var el = e.jquery != undefined ? e[0] : e;
 
-            if (p == 'marginRight' && $.browser.safari) {
+            /* NOTE: this hack removed for safari to work ... probalby outdated? */
+            if (false && p == 'marginRight' && $.browser.safari) {
                 var old = {'display': 'block', 'float': 'none', 'width': 'auto'}, oWidth, oWidth2;
 
                 $.swap(el, old, function() { oWidth = el.offsetWidth; });

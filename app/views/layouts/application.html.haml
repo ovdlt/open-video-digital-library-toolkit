@@ -10,6 +10,9 @@
     = javascript_tag "var AUTH_TOKEN = #{form_authenticity_token.inspect};" |
       if protect_against_forgery? |
     = javascript_tag "var relative_url_root = '#{ActionController::Base.relative_url_root}'"
+    - if false
+      %script{:type=>"text/javascript"}
+        if ( !window.console || !window.console.debug ) {document.write("<script type='text/javascript' src='http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js'><\/script>");}
   %body
     .wrapper
       .center
