@@ -14,12 +14,11 @@ class UserMailer < ActionMailer::Base
     @body[:url]  = "#{prefix}"
   end
   
-  def new_password_notification user, password
+  def forgot_password user
     prefix = UsersController.prefix
     setup_email(user)
-    @subject    += 'Your new OVDLT password'
-    @body[:password] = password
-    @body[:url]  = "#{prefix}login?login=#{user.login}"
+    @subject    += 'Password reset request'
+    @body[:url]  = "#{prefix}reset_password/#{user.password_reset_code}"
   end
 
   protected

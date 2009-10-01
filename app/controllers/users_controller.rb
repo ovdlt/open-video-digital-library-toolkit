@@ -75,7 +75,52 @@ class UsersController < ApplicationController
     end
   end
 
+  def forgot_password
+    return unless request.post?
+    if @user = User.find_by_email(params[:email])
+      @user.forgot_password
+      @user.save
+      redirect_back_or_default( root_path )
+      flash[:notice] = "A password reset link has been sent to your email address" 
+    else
+      @email = params[:email]
+      flash[:error] = "Could not find a user with that email address" 
+    end
+  end
+
   def reset_password
+    @user = !params[:id].blank? &&
+      User.find_by_password_reset_code(params[:id])
+    if !@user
+      flash[:error] = "Sorry; that password reset link is not valid; please request a new link" 
+      render :action => :forgot_password
+    end
+  end
+    
+  def change_password
+    @user = !params[:id].blank? && 
+      User.find_by_password_reset_code(params[:id])
+    
+    if !@user
+      render :action => :reset_password
+      return
+    end
+
+    if (params[:password] &&
+         params[:password_confirmation] && 
+        !params[:password_confirmation].blank? &&
+         ( params[:password] == params[:password_confirmation] ) )
+      @user.password = params[:password]
+      @user.password_confirmation = params[:password_confirmation]
+      flash[:notice] = @user.reset_password ? "Password reset success." : "Password reset failed." 
+      redirect_back_or_default( root_path )
+    else
+      flash[:error] = "Password mismatch" 
+      render :action => :reset_password
+    end  
+  end
+    
+  def _reset_password
 
     email = params["email"]
     user = User.find_by_email email

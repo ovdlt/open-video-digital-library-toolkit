@@ -23,7 +23,17 @@ ActionController::Routing::Routes.draw do |map|
   map.forgot_password '/forgot_password',
                       :conditions => { :method => :post },
                       :controller => 'users',
+                      :action => 'forgot_password'
+    
+  map.reset_password '/reset_password/:id',
+                      :conditions => { :method => :get },
+                      :controller => 'users',
                       :action => 'reset_password'
+    
+  map.reset_password '/reset_password/:id',
+                      :conditions => { :method => :post },
+                      :controller => 'users',
+                      :action => 'change_password'
     
   map.resources :videos, :collection => { :recent => :get,
                                           :popular => :get,
