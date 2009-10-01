@@ -11,16 +11,17 @@
       %label
         Login Name
       = f.text_field :login
-      %label{ :for => "email" }
+      %label{ :for => "user_email" }
         E-mail Address
       = f.text_field :email
-      %label{ :for => "password" }
+      %label{ :for => "user_password" }
         Password
       = f.password_field :password
-      %label{ :for => "password_confirmation" }
+      %label{ :for => "user_password_confirmation" }
         Confirm Password
       = f.password_field :password_confirmation
       %br
-      %input.btn-login{ :name => "", :src => "images/btn-register.gif", :type => "image" }
+      %br
+      = image_submit_tag "btn-register.gif", :name => "Register"
 
 

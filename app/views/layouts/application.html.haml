@@ -140,16 +140,16 @@
           - form_tag users_path, :class => 'loginform' do
             %label
               Login Name
-            %input.input{ :name => "login", :size => "40", :type => "text" }
+            %input.input{ :name => "user[login]", :size => "40", :type => "text" }
             %label
               E-mail Address
-            %input.input{ :name => "email", :size => "40", :type => "text" }
+            %input.input{ :name => "user[email]", :size => "40", :type => "text" }
             %label
               Password
-            %input.input{ :name => "password", :size => "40", :type => "password" }
+            %input.input{ :name => "user[password]", :size => "40", :type => "password" }
             %label
               Confirm Password
-            %input.input{ :name => "password_confirmation", :size => "40", :type => "password" }
+            %input.input{ :name => "user[password_confirmation]", :size => "40", :type => "password" }
             %br
             = image_submit_tag "btn-register.gif"
             // %input.btn-login{ :name => "register-btn", :src => "/images/btn-register.gif", :type => "image" }
