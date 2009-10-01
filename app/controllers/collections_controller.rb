@@ -88,7 +88,7 @@ class CollectionsController < ApplicationController
     @subtitle =
       "The #{Library.title} currently contains "+
       "#{@collections.total_entries} special collections"
-    render :action => :index
+    render :action => :collections
   end
 
   def playlists
@@ -107,7 +107,7 @@ class CollectionsController < ApplicationController
     @subtitle =
       "The #{Library.title} currently contains "+
       "#{@collections.total_entries} public playlists"
-    render :action => :index
+    render :action => :playlists
   end
 
   def featured_order

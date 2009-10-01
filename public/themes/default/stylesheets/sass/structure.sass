@@ -216,8 +216,9 @@ body
 .collection
   // :vertical-align top
   // :display inline-block
-  :float left
-  :width 190px
+  // SMP unless and until the d/d code handles floats
+  // :float left
+  // :width 190px
   :padding 5px 10px
 
 .number
@@ -559,7 +560,8 @@ li
   .collection
     :margin 0px
     :padding 0px 19px 0 0
-    :width 400px
+    // SMP unless and until go to two columns
+    // :width 400px
     :border-bottom none
 
   .collections
