@@ -93,6 +93,9 @@ class Collection < ActiveRecord::Base
 
   before_save do |collection|
     collection.send :update_featured_on
+    if !collection.priority || collection.priority == 0
+      collection.priority =  Collection.maximum("priority") + 1;
+    end
   end
 
   def update_featured_on
@@ -120,6 +123,16 @@ class Collection < ActiveRecord::Base
     # self.find( ids ).each { |object| objects[object.id] = object }
     # objects = ids.map { |id| objects[id] }
     # p objects.sort { |a,b| a.featured_priority - b.featured_priority }.map(&:id)
+  end
+
+  def self.priority_order= ids
+    objects = {}
+    self.find( ids ).each { |object| objects[object.id] = object }
+    objects = ids.map { |id| objects[id] }
+    priorities = objects.map(&:priority)
+    priorities = priorities.sort.reverse
+    objects.each { |o| o.priority = priorities.shift }
+    objects.each { |o| o.save! }
   end
 
 end

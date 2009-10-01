@@ -70,6 +70,10 @@ ActionController::Routing::Routes.draw do |map|
                                               :action => "featured_order",
                                               :conditions => { :method => :post }
 
+  map.connect "/collections/priority/order", :controller => "collections",
+                                             :action => "priority_order",
+                                             :conditions => { :method => :post }
+
   map.connect "/videos/featured/order", :controller => "videos",
                                         :action => "featured_order",
                                         :conditions => { :method => :post }
