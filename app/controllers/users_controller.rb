@@ -17,7 +17,7 @@ class UsersController < ApplicationController
       # protection if visitor resubmits an earlier form using back
       # button. Uncomment if you understand the tradeoffs.
       # reset session
-      flash[:notice] = "Thanks for signing up!  We're sending you an email with an activation link."
+      flash[:notice] = "Thanks for signing up!  We're sending you an email with an activation link.  If you don't recieve an email, check your bulk or trash folder, as your spam filter may have inadvertently caught the registration email."
       redirect_to root_path
     else
       flash[:error]  = "We couldn't set up that account, sorry.  Please try again, or contact an admin (link is above)."
@@ -81,7 +81,7 @@ class UsersController < ApplicationController
       @user.forgot_password
       @user.save
       redirect_back_or_default( root_path )
-      flash[:notice] = "A password reset link has been sent to your email address" 
+      flash[:notice] = "A password reset link has been sent to your email address;   If you don't recieve an email, check your bulk or trash folder, as your spam filter may have inadvertently caught the registration email." 
     else
       @email = params[:email]
       flash[:error] = "Could not find a user with that email address" 
