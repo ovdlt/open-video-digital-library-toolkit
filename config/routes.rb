@@ -39,9 +39,11 @@ ActionController::Routing::Routes.draw do |map|
                                           :popular => :get,
                                           :cancel => :get,
                                           :clear => :get,
-                                          :images => :get },
+                                          :images => :get,
+                                          :convert => :post
+                         },
                          :member => { :download => :get,
-                                      :reset => :get,
+                                      :reset => :get
                          } do |videos|
     videos.resources :assets
   end

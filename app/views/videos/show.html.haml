@@ -345,3 +345,9 @@
               %li.menu-create
                 %span.icon
                 = link_to "Create New Record", new_video_path
+              /
+                %li.menu-edit
+                  %span.icon
+                  = link_to "Convert video", |
+                            convert_videos_path( video, :path => "path"), |
+                            :method => :post |
