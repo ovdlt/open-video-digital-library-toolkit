@@ -292,7 +292,7 @@
               = link_to "Login", login_path
               to add tags
         %dt
-          %img{ :src => "/images/icon-video.gif", :alt => "more videos" }
+          = image_tag "icon-video.gif", :alt => "more videos"
           More videos
         %dd
           %ul
@@ -302,7 +302,7 @@
               %li
                 = link_to "Return to search results »", search_path( session[:search])
         %dt
-          %img{ :src => "/images/icon-tool.gif", :alt => "TOOLS &amp; SERVICES" }
+          = image_tag "icon-tool.gif", :alt => "TOOLS &amp; SERVICES"
           TOOLS &amp; SERVICES
         %dd
           %ul
@@ -330,7 +330,7 @@
                 = render :partial => "add_to_playlist", :object => video
         - if current_user and current_user.has_role?(  [ :admin, :cataloger ] )
           %dt
-            %img{ :src => "/images/icon-option.gif", :alt => "CATALOGING OPTIONS" }
+            = image_tag "icon-option.gif", :alt => "CATALOGING OPTIONS"
             CATALOGING OPTIONS
           %dd
             %ul
