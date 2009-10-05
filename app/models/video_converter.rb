@@ -46,12 +46,12 @@ class VideoConverter
 
         root = File.join(SURROGATE_DIR,directory)
 
-        [ "flash", "fastfowards", "excerpts", "stills" ].each do |subdir|
+        [ "flash", "fastforwards", "excerpts", "stills" ].each do |subdir|
           FileUtils.mkdir_p "#{root}/#{subdir}"
           case subdir
           when "flash"
             converter "-if #{ASSET_DIR}/#{directory} -of #{root}/#{subdir}/0002.0001_H.flv -interval 1"
-          when "fastfowards"
+          when "fastforwards"
             converter "-if #{ASSET_DIR}/#{directory} -of #{root}/#{subdir}/0002.0001_H.flv"
           when "excerpts"
             converter "-if #{ASSET_DIR}/#{directory} -of #{root}/#{subdir}/0002.0001_H.flv  -interval 1 -time_segment 10 20"
