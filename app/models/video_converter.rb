@@ -22,8 +22,18 @@ class VideoConverter
         root = File.join(SURROGATE_DIR,directory)
 
         [ "flash", "fastfowards", "excerpts", "stills" ].each do |subdir|
-          print "mkdir #{root}/#{subdir}\n"
           FileUtils.mkdir_p "#{root}/#{subdir}"
+          case subdir
+          when "flash"
+            system "#{RAILS_ROOT}/lib/KFQuilt -if #{ASSET_DIR}/#{directory} -of #{root}/#{subdir}/0002.0001_H.flv -interval 1"
+          when "fastfowards"
+            system "#{RAILS_ROOT}/lib/KFQuilt -if #{ASSET_DIR}/#{directory} -of #{root}/#{subdir}/0002.0001_H.flv"
+          when "excerpts"
+            system "#{RAILS_ROOT}/lib/KFQuilt -if #{ASSET_DIR}/#{directory} -of #{root}/#{subdir}/0002.0001_H.flv  -interval 1 -time_segment 10 20"
+          when "stills"
+            print "#{RAILS_ROOT}/lib/KFQuilt -if #{ASSET_DIR}/#{directory} -of #{root}/#{subdir}/#{directory}.jpg -scale_x 320\n"
+            system "#{RAILS_ROOT}/lib/KFQuilt -if #{ASSET_DIR}/#{directory} -of #{root}/#{subdir}/#{directory}.jpg -scale_x 320"
+          end
         end
 
         exit
