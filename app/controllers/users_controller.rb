@@ -17,7 +17,7 @@ class UsersController < ApplicationController
       # protection if visitor resubmits an earlier form using back
       # button. Uncomment if you understand the tradeoffs.
       # reset session
-      flash[:notice] = "Thanks for signing up!  We're sending you an email with an activation link.  If you don't recieve an email, check your bulk or trash folder, as your spam filter may have inadvertently caught the registration email."
+      flash[:notice] = "Thanks for signing up!  We're sending you an email with an activation link.  If you don't receive an email, check your bulk or trash folder, as your spam filter may have inadvertently caught the registration email."
       redirect_to root_path
     else
       flash[:error]  = "We couldn't set up that account, sorry.  Please try again, or contact an admin (link is above)."
@@ -81,7 +81,7 @@ class UsersController < ApplicationController
       @user.forgot_password
       @user.save
       redirect_back_or_default( root_path )
-      flash[:notice] = "A password reset link has been sent to your email address;   If you don't recieve an email, check your bulk or trash folder, as your spam filter may have inadvertently caught the registration email." 
+      flash[:notice] = "A password reset link has been sent to your email address;   If you don't receive an email, check your bulk or trash folder, as your spam filter may have inadvertently caught the registration email." 
     else
       @email = params[:email]
       flash[:error] = "Could not find a user with that email address" 
@@ -94,6 +94,13 @@ class UsersController < ApplicationController
     if !@user
       flash[:error] = "Sorry; that password reset link is not valid; please request a new link" 
       render :action => :forgot_password
+      return
+    end
+    if @user.state == "pending"
+      UserMailer.deliver_signup_notification(@user)
+      flash[:notice] = "You have not yet activated your account.  We're sending you another email with an activation link."
+      redirect_back_or_default( root_path )
+      return
     end
   end
     
