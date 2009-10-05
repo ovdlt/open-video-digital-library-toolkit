@@ -2,7 +2,32 @@ class VideoConverter
 
   class << self
 
-    def run
+    def run directory = nil
+      directories = nil
+      if !directory.blank?
+        # FIX for windows if we keep this
+        if !Dir[ File.join( ASSET_DIR, directory ) ].empty?
+          directories = [ File.join( ASSET_DIR, directory ) ]
+          if !Dir[ File.join( SURROGATE_DIR, directory ) ].empty?
+            FileUtils.rm_rf File.join( SURROGATE_DIR, directory )
+          end
+        else
+          if directory.index("public/assets") != 0
+            raise "#{directory} not found"
+          else
+            directory = directory[ "public/assets".length, directory.length ]
+            if !Dir[ File.join( ASSET_DIR, directory ) ].empty?
+              directories = [ File.join( ASSET_DIR, directory ) ]
+              if !Dir[ File.join( SURROGATE_DIR, directory ) ].empty?
+                FileUtils.rm_rf File.join( SURROGATE_DIR, directory )
+              end
+            else
+              raise "#{directory} not found"
+            end
+          end
+        end
+      end
+      directories ||= self.directories
       directories.each do |directory|
         convert trim(directory)
       end
@@ -25,18 +50,16 @@ class VideoConverter
           FileUtils.mkdir_p "#{root}/#{subdir}"
           case subdir
           when "flash"
-            system "#{RAILS_ROOT}/lib/KFQuilt -if #{ASSET_DIR}/#{directory} -of #{root}/#{subdir}/0002.0001_H.flv -interval 1"
+            converter "-if #{ASSET_DIR}/#{directory} -of #{root}/#{subdir}/0002.0001_H.flv -interval 1"
           when "fastfowards"
-            system "#{RAILS_ROOT}/lib/KFQuilt -if #{ASSET_DIR}/#{directory} -of #{root}/#{subdir}/0002.0001_H.flv"
+            converter "-if #{ASSET_DIR}/#{directory} -of #{root}/#{subdir}/0002.0001_H.flv"
           when "excerpts"
-            system "#{RAILS_ROOT}/lib/KFQuilt -if #{ASSET_DIR}/#{directory} -of #{root}/#{subdir}/0002.0001_H.flv  -interval 1 -time_segment 10 20"
+            converter "-if #{ASSET_DIR}/#{directory} -of #{root}/#{subdir}/0002.0001_H.flv  -interval 1 -time_segment 10 20"
           when "stills"
-            print "#{RAILS_ROOT}/lib/KFQuilt -if #{ASSET_DIR}/#{directory} -of #{root}/#{subdir}/#{directory}.jpg -scale_x 320\n"
-            system "#{RAILS_ROOT}/lib/KFQuilt -if #{ASSET_DIR}/#{directory} -of #{root}/#{subdir}/#{directory}.jpg -scale_x 320"
+            converter "-if #{ASSET_DIR}/#{directory} -of #{root}/#{subdir}/#{directory}.jpg -scale_x 320\n"
           end
         end
 
-        exit
       end
     end
 
@@ -52,6 +75,15 @@ class VideoConverter
 
     def asset directory
       !Dir[File.join(SURROGATE_DIR,directory)].empty?
+    end
+
+    def converter string
+      cmd = "#{RAILS_ROOT}/lib/KFQuilt " + string
+      print cmd
+      result = system cmd
+      if result != 0 
+        $stderr.print "conversion failed: exit status: #{$?}\n"
+      end
     end
 
   end
