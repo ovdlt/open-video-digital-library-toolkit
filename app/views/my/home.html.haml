@@ -63,7 +63,7 @@
             .details
               %h5.title.menu-searches
                 %span.icon
-                = link_to h('"' + search.title + '"'), search_path( Search.find search.id )
+                = link_to h('"' + search.title + '"'), search_path( Search.find( search.id ) )
               %p
                 %span.remove
                   /

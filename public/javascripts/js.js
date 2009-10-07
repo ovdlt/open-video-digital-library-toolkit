@@ -1,18 +1,24 @@
-jQuery.noConflict();
 jQuery(document).ready(function() {
-   jQuery('#login').click(function(){ jQuery('.popup').show();  });
-   jQuery('#register').click(function(){ jQuery('.popup-reg').show();  });
-   jQuery('.close img').click(function(){ jQuery('.popup').hide();  });
-   jQuery('.close img').click(function(){ jQuery('.popup-reg').hide();  });
-   jQuery('.categoryx, #details, .general-info').accordion({
-     header: 'dt',
-     event: 'click',
-     autoheight: false
-   });
-   jQuery('ul.videos li.fifthx, .sm-thumbs .list li.fourth').after('<div class="clear"></div>');
-   jQuery('.tabs ul, ul.navigators').tabs();
-
+  jQuery('#login').click(function(){ jQuery('.popup').show();  });
+  jQuery('#register').click(function(){ jQuery('.popup-reg').show();  });
+  jQuery('.close img').click(function(){ jQuery('.popup').hide();  });
+  jQuery('.close img').click(function(){ jQuery('.popup-reg').hide();  });
+  jQuery('.categoryx, #details, .general-info').accordion({
+    header: 'dt',
+    event: 'click',
+    autoheight: false
+  });
+  jQuery('ul.videos li.fifthx, .sm-thumbs .list li.fourth').after('<div class="clear"></div>');
+  jQuery('.tabs').tabs();
+  jQuery('ul.navigators').parent().tabs();
+  
   jQuery('ul.videos li.fifth + li').css("clear", "left");
+  
+  jQuery("div.carousel_pager").each(function(index,pager){
+    $(pager).find("span").each(function(index,element){
+      $(element).attr("page",index);
+    });
+  });
 
   function recent_carousel_initCallback( recent_carousel ) {
 
@@ -24,8 +30,8 @@ jQuery(document).ready(function() {
     var ulwidth = licount * 150;
     jQuery(".panels #recent .jcarousel-clip > ul").attr('style', 'width:' + ulwidth + 'px;');
 
-    jQuery(".panels #recent .carousel_pager div").bind("click", function() {
-      recent_carousel.scroll( jQuery.jcarousel.intval( jQuery(this).attr("page")*5+1 ) );
+    jQuery(".panels #recent .carousel_pager a").bind("click", function() {
+      recent_carousel.scroll( jQuery.jcarousel.intval( jQuery(this).find("span").attr("page")*5+1 ) );
       return false;
     });
 
@@ -42,19 +48,20 @@ jQuery(document).ready(function() {
     });
   }
   function recent_carousel_updatePagerCallback( recent_carousel, item, index, action ) {
-    jQuery(".panels #recent .carousel_pager div").removeClass("active");
+    jQuery(".panels #recent .carousel_pager span").removeClass("active");
     page = jQuery.jcarousel.intval( (index - 1) / 5 );
     jQuery(".panels #recent .carousel_pager .carousel_page_" + page ).addClass("active");
   }
-  jQuery(".panels #recent").jcarousel(
+
+  jQuery(".panels #recent .panel").jcarousel(
   {
     visible: 4,
     scroll: 5,
     wrap: "both",
     initCallback: recent_carousel_initCallback,
     itemFirstInCallback:  {
-    onBeforeAnimation: null,
-    onAfterAnimation: recent_carousel_updatePagerCallback
+      onBeforeAnimation: null,
+      onAfterAnimation: recent_carousel_updatePagerCallback
     }
   });
 
@@ -67,8 +74,8 @@ jQuery(document).ready(function() {
     var ulwidth = licount * 150;
     jQuery(".panels #popular .jcarousel-clip > ul").attr('style', 'width:' + ulwidth + 'px;');
 
-    jQuery("#popular .carousel_pager div").bind("click", function() {
-      popular_carousel.scroll( jQuery.jcarousel.intval( jQuery(this).attr("page")*5+1 ) );
+    jQuery("#popular .carousel_pager a").bind("click", function() {
+      popular_carousel.scroll( jQuery.jcarousel.intval( jQuery(this).find("span").attr("page")*5+1 ) );
       return false;
     });
 
@@ -85,12 +92,14 @@ jQuery(document).ready(function() {
     });
 
   }
+
   function popular_carousel_updatePagerCallback( popular_carousel, item, index, action ) {
-    jQuery("#popular .carousel_pager div").removeClass("active");
+    jQuery("#popular .carousel_pager span").removeClass("active");
     page = jQuery.jcarousel.intval( (index - 1) / 5 );
     jQuery("#popular .carousel_pager .carousel_page_" + page ).addClass("active");
   }
-  jQuery(".panels #popular").jcarousel(
+
+  jQuery(".panels #popular .panel").jcarousel(
   {
     visible: 4,
     scroll: 5,
@@ -112,8 +121,8 @@ jQuery(document).ready(function() {
     var ulwidth = licount * 150;
     jQuery(".panels #random .jcarousel-clip > ul").attr('style', 'width:' + ulwidth + 'px;');
 
-    jQuery("#random .carousel_pager div").bind("click", function() {
-      random_carousel.scroll( jQuery.jcarousel.intval( jQuery(this).attr("page")*5+1 ) );
+    jQuery("#random .carousel_pager a").bind("click", function() {
+      random_carousel.scroll( jQuery.jcarousel.intval( jQuery(this).find("span").attr("page")*5+1 ) );
       return false;
     });
 
@@ -130,12 +139,14 @@ jQuery(document).ready(function() {
     });
 
   }
+
   function random_carousel_updatePagerCallback( random_carousel, item, index, action ) {
-    jQuery("#random .carousel_pager div").removeClass("active");
+    jQuery("#random .carousel_pager span").removeClass("active");
     page = jQuery.jcarousel.intval( (index - 1) / 5 );
     jQuery("#random .carousel_pager .carousel_page_" + page ).addClass("active");
   }
-  jQuery(".panels #random").jcarousel(
+
+  jQuery(".panels #random .panel").jcarousel(
   {
     visible: 4,
     scroll: 5,
@@ -154,5 +165,4 @@ jQuery(document).ready(function() {
 jQuery(document).ready( function() {
     setTimeout( 'jQuery(".flash").effect("highlight", {}, 1000 );', 500 );
     setTimeout( 'jQuery(".flash.notice").fadeOut( 2000 );' , 2000 );
-    //jQuery('a[rel*=facebox]').facebox({opacity:0.5})
 } );

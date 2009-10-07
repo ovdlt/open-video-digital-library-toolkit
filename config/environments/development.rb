@@ -16,7 +16,7 @@ config.action_controller.perform_caching             = false
 # Don't care if the mailer can't send
 config.action_mailer.raise_delivery_errors = true
 
-# ActionMailer::Base.delivery_method = :sendmail
+ActionMailer::Base.delivery_method = :sendmail
 
 ASSET_DIR = File.join(RAILS_ROOT, 'public/assets')
 SURROGATE_DIR = File.join(RAILS_ROOT, 'public/surrogates')

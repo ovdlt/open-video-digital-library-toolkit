@@ -10,6 +10,9 @@
     = javascript_tag "var AUTH_TOKEN = #{form_authenticity_token.inspect};" |
       if protect_against_forgery? |
     = javascript_tag "var relative_url_root = '#{ActionController::Base.relative_url_root}'"
+    - if false
+      %script{:type=>"text/javascript"}
+        if ( !window.console || !window.console.debug ) {document.write("<script type='text/javascript' src='http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js'><\/script>");}
   %body
     .wrapper
       .center
@@ -114,7 +117,7 @@
             LOGIN
           .close
             %a{ :href => "#" }
-              %img{ :src => "/images/close.gif", :alt => "close" }
+              = image_tag "close.gif"
           - form_tag sessions_path, :id => "login-form", :class => 'loginform' do
             %label
               Username
@@ -123,7 +126,9 @@
               Password
             %input.input{ :name => "password", :size => "40", :type => "password" }
             %br
-            %input.btn-login{ :name => "login-btn", :src => "/images/btn-login.gif", :type => "image" }
+              
+            = image_submit_tag "btn-login.gif"
+            / %input.btn-login{ :name => "login-btn", :src => "/images/btn-login.gif", :type => "image" }
             = link_to 'Forgot your password?', forgot_password_path
       .overlay
 
@@ -134,20 +139,21 @@
             REGISTER
           .close
             %a{ :href => "#" }
-              %img{ :src => "/images/close.gif", :alt => "close" }
+              = image_tag "close.gif"
           - form_tag users_path, :class => 'loginform' do
             %label
               Login Name
-            %input.input{ :name => "login", :size => "40", :type => "text" }
+            %input.input{ :name => "user[login]", :size => "40", :type => "text" }
             %label
               E-mail Address
-            %input.input{ :name => "email", :size => "40", :type => "text" }
+            %input.input{ :name => "user[email]", :size => "40", :type => "text" }
             %label
               Password
-            %input.input{ :name => "password", :size => "40", :type => "password" }
+            %input.input{ :name => "user[password]", :size => "40", :type => "password" }
             %label
               Confirm Password
-            %input.input{ :name => "password_confirmation", :size => "40", :type => "password" }
+            %input.input{ :name => "user[password_confirmation]", :size => "40", :type => "password" }
             %br
-            %input.btn-login{ :name => "register-btn", :src => "/images/btn-register.gif", :type => "image" }
+            = image_submit_tag "btn-register.gif"
+            // %input.btn-login{ :name => "register-btn", :src => "/images/btn-register.gif", :type => "image" }
       .overlay

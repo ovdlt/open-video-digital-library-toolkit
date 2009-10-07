@@ -6,6 +6,7 @@ class CollectionsController < ApplicationController
                              :new,
                              :create,
                              :featured_order,
+                             :priority_order,
                              :edit,
                              :update,
                              :desroy ]
@@ -14,9 +15,9 @@ class CollectionsController < ApplicationController
                                                   :update,
                                                   :desroy ]
 
-  before_filter :login, :only => [ :new, :create, :featured_order ]
+  before_filter :login, :only => [ :new, :create, :featured_order, :priority_order ]
 
-  require_role [ :admin ], :for => [ :featured_order ]
+  require_role [ :admin ], :for => [ :featured_order, :priority_order ]
 
   def new
     @collection = Collection.new
@@ -88,7 +89,7 @@ class CollectionsController < ApplicationController
     @subtitle =
       "The #{Library.title} currently contains "+
       "#{@collections.total_entries} special collections"
-    render :action => :index
+    render :action => :collections
   end
 
   def playlists
@@ -107,12 +108,18 @@ class CollectionsController < ApplicationController
     @subtitle =
       "The #{Library.title} currently contains "+
       "#{@collections.total_entries} public playlists"
-    render :action => :index
+    render :action => :playlists
   end
 
   def featured_order
     ids = params["order"].split(/[,\s]+/).map(&:to_i)
     Collection.featured_order = ids
+    render_nothing
+  end
+
+  def priority_order
+    ids = params["order"].split(/[,\s]+/).map(&:to_i)
+    Collection.priority_order = ids
     render_nothing
   end
 

@@ -16,7 +16,7 @@
     .col-right
       %dl
         %dt
-          %img{ :src => "/images/icon-video.gif", :alt => "video" }
+          = image_tag "icon-video.gif", :alt => "video"
           MORE VIDEOS
         %dd
           %ul
@@ -26,7 +26,7 @@
               %li
                 = render :partial => "shared/axis", :object => @property_type_menu
         %dt
-          %img{ :src => "/images/icon-refine.gif", :alt => "video" }
+          = image_tag "icon-refine.gif", :alt => "video"
           REFINE RESULTS
         %dd
           - form_for @search, :url => videos_path, |
@@ -54,7 +54,7 @@
               %input{ :id => "search_submit", :name => "commit", :src => "/images/btn-refine.gif", :type => "image", :value => "refine" }
         - if current_user
           %dt
-            %img{ :src => "/images/icon-video.gif", :alt => "video" }
+            = image_tag "icon-video.gif", :alt => "video"
             Tools and Services
           %dd
             %ul

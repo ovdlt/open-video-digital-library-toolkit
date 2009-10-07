@@ -1,4 +1,12 @@
 /left col start
+- if flash[:error]
+  .flash.error
+    %span
+      = flash[:error]
+- if flash[:notice]
+  .flash.notice
+    %span
+      = flash[:notice]
 .col-left
   .head
     %span.left
@@ -33,6 +41,7 @@
               &= video.sentence
         .handle
           .handle_image
+        .clear
 /center col end, right col start
 .col-right
   .head
@@ -61,7 +70,11 @@
 - if current_user and current_user.has_role?( "admin" )
   :javascript
     jQuery(document).ready( function() {
-      make_sortable( { list_selector: "#featured_collections", item_selector: ".collection",    post_url: "/collections/featured/order" });
-      make_sortable( { list_selector: "#featured_videos",      item_selector: ".video",         post_url: "/videos/featured/order" });
-      make_sortable( { list_selector: "#browse_axes",          item_selector: ".property_type", post_url: "/library/property_type/order" });
+      make_sortable( { list_selector: "#featured_collections",
+                       item_selector: ".collection",
+                       post_url: "/collections/featured/order" });
+
+      make_sortable( { list_selector: "#featured_videos",
+                       item_selector: ".video",
+                       post_url: "/videos/featured/order" });
     });

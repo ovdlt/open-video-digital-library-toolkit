@@ -14,3 +14,5 @@
 /vendor/gems/*/ext/*/Makefile
 /vendor/gems/*/ext/*/*.bundle
 /vendor/gems/*/lib/*.bundle
+/vendor/gems/*/ext/*/*.so
+/vendor/gems/*/lib/*.so

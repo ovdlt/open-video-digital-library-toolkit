@@ -1,0 +1,21 @@
+[submodule "vendor/plugins/rspec"]
+	path = vendor/plugins/rspec
+	url = git://github.com/dchelimsky/rspec.git
+[submodule "vendor/rails"]
+	path = vendor/rails
+	url = git://github.com/rails/rails.git
+[submodule "vendor/plugins/rspec_rails"]
+	path = vendor/plugins/rspec_rails
+	url = git://github.com/dchelimsky/rspec-rails.git
+[submodule "vendor/plugins/restful_authentication"]
+	path = vendor/plugins/restful_authentication
+	url = git://github.com/technoweenie/restful-authentication.git
+[submodule "vendor/plugins/role_requirement"]
+	path = vendor/plugins/role_requirement
+	url = git://github.com/negonicrac/role_requirement.git
+[submodule "vendor/plugins/exception_notification"]
+	path = vendor/plugins/exception_notification
+	url = git://github.com/rails/exception_notification.git
+[submodule "vendor/plugins/aasm"]
+	path = vendor/plugins/aasm
+	url = git://github.com/rubyist/aasm.git

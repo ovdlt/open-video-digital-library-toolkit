@@ -1,26 +1,27 @@
-#popular.panel.jcarousel-content
-  .see-more
-    = link_to "See more popular videos »", popular_videos_path
-  %ul
-    -# If you change these numbers, make sure to also update the values in jquery.jcarousel.sass
-    - carousel_pages = 4
-    - carousel_items_per_page = 5
-    - Video.popular(public_only?, carousel_items_per_page * carousel_pages).each do |video|
-      %li
-        .image
-          - if poster_path = video.poster_path
-            %img{:src=>poster_path,:alt => "video #{video.id}", :width=>"120"}
-        .details
-          %h5.title{:class=>video_vis_class(video)}
-            = link_to h(video.title), video_path( video.id )
-          %p
-            = h video.sentence
-  .carousel_pager
-    %a{ :href => "#" }
-      .carousel_page_0{ :page => "0" }
-    %a{ :href => "#" }
-      .carousel_page_1{ :page => "1" }
-    %a{ :href => "#" }
-      .carousel_page_2{ :page => "2" }
-    %a{ :href => "#" }
-      .carousel_page_3{ :page => "3" }
+#popular.ui_tabs_hide
+  .panel.jcarousel-content
+    .see-more
+      = link_to "See more popular videos »", popular_videos_path
+    %ul
+      -# If you change these numbers, make sure to also update the values in jquery.jcarousel.sass
+      - carousel_pages = 4
+      - carousel_items_per_page = 5
+      - Video.popular(public_only?, carousel_items_per_page * carousel_pages).each do |video|
+        %li
+          .image
+            - if poster_path = video.poster_path
+              %img{:src=>poster_path,:alt => "video #{video.id}", :width=>"120"}
+          .details
+            %h5.title{:class=>video_vis_class(video)}
+              = link_to h(video.title), video_path( video.id )
+            %p
+              = h video.sentence
+    .carousel_pager
+      %a{ :href => "#" }
+        %span.carousel_page_0 &nbsp;
+      %a{ :href => "#" }
+        %span.carousel_page_1 &nbsp;
+      %a{ :href => "#" }
+        %span.carousel_page_2 &nbsp;
+      %a{ :href => "#" }
+        %span.carousel_page_3 &nbsp;

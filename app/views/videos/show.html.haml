@@ -64,7 +64,7 @@
           - video.assets.each do |asset|
             %span.left
               %a{:href => asset_path( asset  )}
-                %img{ :src => "/images/icon-full-size.gif", :alt => "" }
+                = image_tag "icon-full-size.gif"
                 Watch Full Size Video
               == (#{h asset.asset_format})
         .clear
@@ -77,7 +77,7 @@
         .download
           - video.assets.each do |asset|
             %a{:href => asset_path( asset  )}
-              %img{ :src => "/images/btn-download.gif", :alt => "download"}
+              = image_tag "btn-download.gif", :alt => "download"
             %span
               = h asset.asset_format + " " + number_to_human_size(asset.size)
 
@@ -278,7 +278,7 @@
     .col-right
       %dl
         %dt
-          %img{ :src => "/images/icon-tag.gif", :alt => "tags" }
+          = image_tag "icon-tag.gif", :alt => "tags"
           TAGS
         %dd
           .tags
@@ -292,7 +292,7 @@
               = link_to "Login", login_path
               to add tags
         %dt
-          %img{ :src => "/images/icon-video.gif", :alt => "more videos" }
+          = image_tag "icon-video.gif", :alt => "more videos"
           More videos
         %dd
           %ul
@@ -302,7 +302,7 @@
               %li
                 = link_to "Return to search results »", search_path( session[:search])
         %dt
-          %img{ :src => "/images/icon-tool.gif", :alt => "TOOLS &amp; SERVICES" }
+          = image_tag "icon-tool.gif", :alt => "TOOLS &amp; SERVICES"
           TOOLS &amp; SERVICES
         %dd
           %ul
@@ -330,7 +330,7 @@
                 = render :partial => "add_to_playlist", :object => video
         - if current_user and current_user.has_role?(  [ :admin, :cataloger ] )
           %dt
-            %img{ :src => "/images/icon-option.gif", :alt => "CATALOGING OPTIONS" }
+            = image_tag "icon-option.gif", :alt => "CATALOGING OPTIONS"
             CATALOGING OPTIONS
           %dd
             %ul
@@ -345,3 +345,9 @@
               %li.menu-create
                 %span.icon
                 = link_to "Create New Record", new_video_path
+              /
+                %li.menu-edit
+                  %span.icon
+                  = link_to "Convert video", |
+                            convert_videos_path( video, :path => "path"), |
+                            :method => :post |

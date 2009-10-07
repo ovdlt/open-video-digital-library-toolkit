@@ -189,25 +189,12 @@
         });
 
 
-        var tabs = [ ".tabs_pi > ul", ".lt" ];
+        var tabs = [ ".tabs_pi", ".lt" ];
 
         $.each(tabs, function(k,v){
             $(v).tabs({ cookie: { expires: null,
                                   name: v.id } });
         });
-
-        $(".lt").tabs({select:function(){
-            // Mostly handles multiple classes ... except this
-            // Might break in new ui-tabs
-            $(".lt li").not(this).removeClass("ui-tabs-selected");
-            /*
-            $(".lt li.ui-tabs-selected").each(function(){
-                console.debug(this);
-            });
-            */
-        }});
-
-        // $(".tabs_pi > ul").tabs({ cookie: { expires: null } });
 
         $("#uncatted").autocomplete("/assets/uncataloged.txt");
 
@@ -456,7 +443,8 @@
 
         $(list_selector).sortable({
             items: item_selector,
-            axis: 'y',
+            // SMP: locking to the axis causes wierd jumps (padding/margins?)
+            // axis: 'y',
             cancel: cancel,
             revert: true,
             cursor: 'move',
@@ -466,8 +454,8 @@
             containment: 'document',
             update: function() {
                 var new_order = get_sortable_order(list_selector) ;
-                //console.log( "Sortable: " + list_selector + " -- new order:  " + new_order );
-                //console.log( "Sortable: " + list_selector + " -- old order:  " + $(list_selector).attr("original_order") );
+                // console.log( "Sortable: " + list_selector + " -- new order:  " + new_order );
+                // console.log( "Sortable: " + list_selector + " -- old order:  " + $(list_selector).attr("original_order") );
                 if (($(list_selector).attr("original_order") != new_order))
                 {
                     // $(".save_new_order").fadeIn(250);
@@ -489,7 +477,7 @@
     {
         // console.debug( list);
         // console.debug( $(list) );
-        return $( list ).sortable('serialize').replace( /&[a-z_]+\[\]=/ig, ",").replace( /[a-z_]+\[\]=/i, "");
+      return $( list ).sortable('serialize').replace( /&[a-z_]+\[\]=/ig, ",").replace( /[a-z_]+\[\]=/i, ""); 
     }
 
     send_new_order = function( list, post_url, new_order ) {

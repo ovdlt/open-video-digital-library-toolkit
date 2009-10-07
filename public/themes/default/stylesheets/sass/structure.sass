@@ -151,8 +151,8 @@ body
     :padding-top 4px
     :line-height 1em
 
-/  .left
-/    :width 630px
+//  .left
+//    :width 630px
 
 .left
   :float left!important
@@ -190,6 +190,8 @@ body
   :width 360px
   :padding 10px 20px
 
+.col-center .video
+  :float none
 
 .title
   :font-size 16px
@@ -212,10 +214,12 @@ body
 
 
 .collection
-  :float left
-  :width 190px
+  // :vertical-align top
+  // :display inline-block
+  // SMP unless and until the d/d code handles floats
+  // :float left
+  // :width 190px
   :padding 5px 10px
-
 
 .number
   :font-size 14px
@@ -432,7 +436,7 @@ ul.xvideos li.fifth + li
   :margin 0 auto
   :clear left
 
-  div
+  a span
     :height 10px
     :margin 0 10px
     :width 10px
@@ -556,7 +560,8 @@ li
   .collection
     :margin 0px
     :padding 0px 19px 0 0
-    :width 400px
+    // SMP unless and until go to two columns
+    // :width 400px
     :border-bottom none
 
   .collections
@@ -1286,7 +1291,7 @@ input
   :display none
 
 
-/ added after Iterative
+// added after Iterative
 .duration, .created
   :display inline
 
@@ -1306,3 +1311,16 @@ input
 .assets .asset_section
   :padding-top 20px
 
+// SMP
+
+#featured_collections, #featured_videos
+  :float left
+
+.clear
+  :clear both
+
+form.inline
+  :display inline
+
+label.button.playlist
+  :padding 0

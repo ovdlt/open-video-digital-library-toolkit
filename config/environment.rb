@@ -27,6 +27,7 @@ Rails::Initializer.run do |config|
   # config.gem "aws-s3", :lib => "aws/s3"
 
   # config.gem "mysql", :version => "2.7" # may require "gem install mysql -- --with-mysql-config"
+
   config.gem "abstract", :version => "1.0.0" # needed by erubis
   config.gem "erubis", :version => "2.6.5"
   config.gem "fastercsv", :version => "1.5.0"
@@ -91,11 +92,21 @@ ExceptionNotifier.sender_address = %("OVDLT Error" <ovdlt@ovdlt.org>)
 ExceptionNotifier.email_prefix = "[OVDLT] "
 
 ActionView::Helpers::AssetTagHelper.
-  register_javascript_include_default "jquery"
+  register_javascript_include_default "jquery-1.3.2"
 ActionView::Helpers::AssetTagHelper.
   register_javascript_include_default "jquery.cookie"
 ActionView::Helpers::AssetTagHelper.
-  register_javascript_include_default "jquery-ui"
+  register_javascript_include_default "ui.core"
+ActionView::Helpers::AssetTagHelper.
+  register_javascript_include_default "ui.accordion"
+ActionView::Helpers::AssetTagHelper.
+  register_javascript_include_default "ui.tabs"
+ActionView::Helpers::AssetTagHelper.
+  register_javascript_include_default "ui.sortable"
+ActionView::Helpers::AssetTagHelper.
+  register_javascript_include_default "effects.core"
+ActionView::Helpers::AssetTagHelper.
+  register_javascript_include_default "effects.highlight"
 ActionView::Helpers::AssetTagHelper.
   register_javascript_include_default "jquery.autocomplete"
 ActionView::Helpers::AssetTagHelper.
@@ -103,9 +114,7 @@ ActionView::Helpers::AssetTagHelper.
 ActionView::Helpers::AssetTagHelper.
   register_javascript_include_default "jquery.livequery"
 ActionView::Helpers::AssetTagHelper.
-  register_javascript_include_default "jquery.carousel.pack"
-ActionView::Helpers::AssetTagHelper.
-  register_javascript_include_default "facebox"
+  register_javascript_include_default "jquery.jcarousel"
 
 ActionView::Base.field_error_proc = Proc.new do |html_tag, instance|
   error_class = "fieldWithErrors"

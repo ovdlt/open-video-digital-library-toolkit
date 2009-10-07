@@ -110,7 +110,7 @@ class ApplicationController < ActionController::Base
   before_filter :set_prefix
 
   def set_prefix
-    @@prefix = "http://#{request.host_with_port}/"
+    @@prefix = "http://#{request.host_with_port}#{ActionController::Base.relative_url_root}/"
   end
 
   def self.prefix

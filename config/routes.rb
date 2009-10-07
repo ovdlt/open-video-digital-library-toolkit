@@ -23,15 +23,27 @@ ActionController::Routing::Routes.draw do |map|
   map.forgot_password '/forgot_password',
                       :conditions => { :method => :post },
                       :controller => 'users',
+                      :action => 'forgot_password'
+    
+  map.reset_password '/reset_password/:id',
+                      :conditions => { :method => :get },
+                      :controller => 'users',
                       :action => 'reset_password'
+    
+  map.reset_password '/reset_password/:id',
+                      :conditions => { :method => :post },
+                      :controller => 'users',
+                      :action => 'change_password'
     
   map.resources :videos, :collection => { :recent => :get,
                                           :popular => :get,
                                           :cancel => :get,
                                           :clear => :get,
-                                          :images => :get },
+                                          :images => :get,
+                                          :convert => :post
+                         },
                          :member => { :download => :get,
-                                      :reset => :get,
+                                      :reset => :get
                          } do |videos|
     videos.resources :assets
   end
@@ -69,6 +81,10 @@ ActionController::Routing::Routes.draw do |map|
   map.connect "/collections/featured/order", :controller => "collections",
                                               :action => "featured_order",
                                               :conditions => { :method => :post }
+
+  map.connect "/collections/priority/order", :controller => "collections",
+                                             :action => "priority_order",
+                                             :conditions => { :method => :post }
 
   map.connect "/videos/featured/order", :controller => "videos",
                                         :action => "featured_order",
