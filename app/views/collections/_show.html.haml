@@ -18,7 +18,7 @@
       - if collection.featured?
         %label.is_featured>FEATURED
   %span.right.rss
-    %img{ :src => "/images/icon-rss.gif", :alt => "rss" }
+    = image_tag("icon-rss.gif", :alt => "rss")
     %a{ :href => "#" }
       Subscribe to this
       = container_text( collection ).capitalize
@@ -74,7 +74,7 @@
   .col-right
     %dl
       %dt
-        %img{ :src => "/images/icon-video.gif", :alt => "video" }
+        = image_tag("icon-video.gif", :alt => "video")
         MORE COLLECTIONS
       %dd
         %ul

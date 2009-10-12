@@ -16,7 +16,7 @@
         Verify New Password
       = password_field_tag :confirm_password
     %p
-      %input.submit{ :name => "Change Password", :src => "/images/btn-change-password.gif", :type => "image" }
+      = image_submit_tag "btn-change-password.gif"
       %a.btn-cancel{ :href => "#" }
         Cancel
 

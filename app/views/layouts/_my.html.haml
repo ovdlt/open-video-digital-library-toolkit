@@ -7,7 +7,7 @@
     .col-right
       %dl
         %dt
-          %img{ :src => "/images/icon-user.gif", :alt => "user's icon avatar" }>
+          = image_tag("icon-user.gif", :alt => "user's icon avatar")
           MY PROFILE
         %dd
           .my-profile
@@ -17,7 +17,7 @@
             %br
             = link_to_action :my_account
         %dt
-          %img{ :src => "/images/icon-tool.gif", :alt => "TOOLS &amp; SERVICES" }>
+          = image_tag("icon-tool.gif", :alt => "TOOLS &amp; SERVICES")
           = Library.my
           Services
         %dd

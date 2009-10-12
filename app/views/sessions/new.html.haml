@@ -27,5 +27,5 @@
           Remember me
           = check_box_tag 'remember_me', '1', @remember_me
       %br
-      %input.btn-login{ :name => "", :src => "images/btn-login.gif", :type => "image" }
+      = image_submit_tag("btn-login.gif")
       = link_to 'New user?', signup_path

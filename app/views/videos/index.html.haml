@@ -51,7 +51,7 @@
               %p
                 = form.criterion :public
             %p{ :align => "right" }
-              %input{ :id => "search_submit", :name => "commit", :src => "/images/btn-refine.gif", :type => "image", :value => "refine" }
+              = image_submit_tag("btn-refine.gif", :id => "search_submit", :name => "commit", :value => "refine")
         - if current_user
           %dt
             = image_tag "icon-video.gif", :alt => "video"
@@ -75,5 +75,5 @@
                           Title:
                           = text_field_tag 'search[title]', nil, :id => nil
                           %span.right
-                            %input{ :class => :hidden, :name => "commit", :src => "/images/save.gif", :type => "image", :value => "save" }
+                            = image_submit_tag("save.gif", :class => :hidden, :name => "commit", :value => "save" )
           /right end
