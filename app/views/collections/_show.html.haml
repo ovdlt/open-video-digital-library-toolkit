@@ -16,7 +16,7 @@
               = feature_rank( collection )
     - else
       - if collection.featured?
-        %label.is_featured>FEATURED
+        %label.title_featured>FEATURED
   %span.right.rss
     = image_tag("icon-rss.gif", :alt => "rss")
     %a{ :href => "#" }
@@ -75,7 +75,7 @@
     %dl
       %dt
         = image_tag("icon-video.gif", :alt => "video")
-        MORE COLLECTIONS
+        = "MORE " + container_text( collection ).capitalize + "S"
       %dd
         %ul
           %li

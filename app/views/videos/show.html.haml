@@ -4,22 +4,6 @@
     %span.left{:class=>video_vis_class(video)}
       = h video.title
 
-    - if current_user and current_user.has_role?(  [ :admin, :cataloger ] )
-      .featured.clear
-        - form_for video, :html => { :id => nil } do |form|
-          = form.check_box :featured
-          - if !video.featured?
-            %label.is_featured
-              Feature this video
-          - else
-            %label.is_featured
-              This video featured on
-              = video.featured_on.to_time.localtime.strftime("%B %d, %Y")
-              = feature_rank( video )
-    - else
-      - if video.featured?
-        %label.is_featured>FEATURED
-
     - if current_user and current_user.has_role?( :admin )
       .public.clear
         - form_for video, :html => { :id => nil } do |form|
@@ -34,6 +18,22 @@
       %label.is_public
         This video is
         = video.public? ? "public" : "private"
+
+    - if current_user and current_user.has_role?(  [ :admin, :cataloger ] )
+      .featured.clear
+        - form_for video, :html => { :id => nil } do |form|
+          = form.check_box :featured
+          - if !video.featured?
+            %label.is_featured
+              Feature this video
+          - else
+            %label.is_featured
+              This video featured on
+              = video.featured_on.to_time.localtime.strftime("%B %d, %Y")
+              = feature_rank( video )
+    - else
+      - if video.featured?
+        %label.title_featured>FEATURED
 
   .body
     /left col start

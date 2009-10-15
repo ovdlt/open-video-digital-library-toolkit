@@ -2,5 +2,6 @@
   .videos
     .smaller-head
       My Playlists
+      &== (#{current_user.playlists.size})
     = render :partial => "playlists", :object => @collections, |
            :locals => { :title => @title } |

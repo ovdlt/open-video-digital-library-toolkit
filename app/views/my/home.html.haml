@@ -1,6 +1,6 @@
 .col-left
   .box.favorites
-    .head
+    .smaller-head
       %span.left
         Favorites
         &== (#{current_user.favorites.size(public_only?)})
@@ -23,7 +23,7 @@
                     :method => :delete, |
                     :confirm => "Are you sure you want to delete this video from your favorites?" |
   .box.downloads
-    .head
+    .smaller-head
       %span.left
         Downloads
         &== (#{current_user.downloads.size(public_only?)})
@@ -50,7 +50,7 @@
 /left col end
 .col-center
   .box.saved-searches
-    .head
+    .smaller-head
       %span.left
         Saved Searches
         &== (#{current_user.searches.size})
@@ -74,7 +74,7 @@
                     :method => :delete, |
                     :confirm => "Are you sure you want to delete this search?" |
   .box.playlists
-    .head
+    .smaller-head
       %span.left
         Playlists
         &== (#{current_user.playlists.size})

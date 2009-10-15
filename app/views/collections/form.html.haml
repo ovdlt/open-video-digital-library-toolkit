@@ -7,6 +7,36 @@
       Playlist
   .body
     .col-main.left
+      - if verb == "Edit"
+        .playlist
+          .image{ :style => "background-color:#333;" }
+            - if p = collection.poster_path(public_only?)
+              %a{ :href => collection_path( collection )  }
+                %img{:src=>p,:alt => "sample image from collection"}
+          .details
+            - if owner = owner_text( collection ) and owner != "my"
+              %span
+                Created by
+                %strong
+                  = owner
+            %p
+              %strong
+                Videos:
+              = collection.size(public_only?)
+              %br
+              %strong
+                Views:
+              = collection.views
+              %br
+              %strong
+                Added:
+              = collection.created_at.to_date.to_s(:long)
+              %br
+              %strong
+                Last Updated:
+              = collection.updated_at.to_date.to_s(:long)
+
+
       - form_for @collection, :html => { :class => "playlist create new_collection" } do |f|
         %p
           %label
@@ -31,12 +61,9 @@
             = submit_tag("Done", {:type => "image", :src=>"/images/btn-create-playlist.gif", :alt=>"Create", :class=>"submit"})
           - else
             = submit_tag("Done", {:type => "image", :src=>"/images/btn-save-changes.gif", :alt=>"Save", :class=>"submit"})
-          %a.btn-cancel{ :href => "#" }
-            Cancel
-    -# TODO think we should just use the video/index partial but
-    -# need to pass correct parameters
-      //= render :partial => "collections/videos", |
-        //:object => @collection.send(bookmarks_method), |
-        //:locals => { :collection => collection } |
+          %span.btn-cancel
+            = link_to "Cancel", my_path
+
+
 
 

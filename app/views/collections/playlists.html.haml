@@ -1,7 +1,8 @@
 .one-column
   .head
     %span.left
-      Browse Collections
+      Browse
+      = Library.playlists_title
 
   = render :partial => "collections/index", :object => @collections, |
            :locals => { :title => @title, |
