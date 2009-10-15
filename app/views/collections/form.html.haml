@@ -58,9 +58,9 @@
           Private
         %p
           -if @collection.new_record?
-            = submit_tag("Done", {:type => "image", :src=>"/images/btn-create-playlist.gif", :alt=>"Create", :class=>"submit"})
+            = image_submit_tag("btn-create-playlist.gif", :class=>"submit")
           - else
-            = submit_tag("Done", {:type => "image", :src=>"/images/btn-save-changes.gif", :alt=>"Save", :class=>"submit"})
+            = image_submit_tag("btn-save-changes.gif", :class=>"submit")
           %span.btn-cancel
             = link_to "Cancel", my_path
 
