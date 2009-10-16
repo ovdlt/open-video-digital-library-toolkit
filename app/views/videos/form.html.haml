@@ -18,7 +18,7 @@
             %ul
               - edit_tabs.each do |tab|
                 = tabs_tab_for tab
-      .col-main.right{ :style => "width: 620px" }
+      .col-main.right{ :style => "width: 620px; padding-top: 0px" }
         - form_for @video do |@form|
           - edit_tabs.each do |tab|
             = tabs_div2_for tab

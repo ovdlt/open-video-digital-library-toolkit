@@ -3,9 +3,11 @@
     .display{ error_class(p_string) }
       %label
         = p_string.name
+        \|
         %span.edit= link_to "edit", "#"
+      %p
         = p_string.value
-      .clear
+
     .edit{ error_class(p_string) }
       - fields_for "property[#{type_id(p_string)}]", p_string do |fields|
         %label

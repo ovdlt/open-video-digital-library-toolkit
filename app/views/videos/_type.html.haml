@@ -1,8 +1,8 @@
 %label
-  &== #{type.name}:
+  &== #{type.name}
 %ul
   - descriptor_values(type).each do |dv|
-    %li
+    %li.descriptor
       = hidden_field_tag "descriptor_type[#{type.id}][#{dv.id}]", |
                                                  "no", :id => nil |
       -

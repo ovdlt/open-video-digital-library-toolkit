@@ -1,19 +1,23 @@
 - pc = PropertyClass.find_by_name property_class
-%div
-  .form
-    %ul
-      - if ( ps = properties_by_class( pc ) ).size == 0
-        %li.delete.none
-          .property-type.display-edit
-            .display
-              No properites
-      - else
-        - ps.each do |p|
-          = render :partial => "p_string", :object => p, |
-                    :locals => { :property_class => pc } |
-      %li
-        .property-type.new
-          = link_to "new", "#"
-          %ul.template
-            = render :partial => "p_string", :object => p_template, |
-                               :locals => { :property_class => pc } |
+.smaller-head
+  Responsible Entities
+.form.add
+  %ul
+    - if ( ps = properties_by_class( pc ) ).size == 0
+      %li.delete.none
+        .property-type.display-edit
+          .display
+            No entities cataloged
+    - else
+      - ps.each do |p|
+        = render :partial => "p_string", :object => p, |
+                  :locals => { :property_class => pc } |
+    %li
+      .property-type.new
+        .btn-add
+          %a{ :href => "#" }
+            = image_tag "icon-add.png"
+            Add Entity
+        %ul.template
+          = render :partial => "p_string", :object => p_template, |
+                             :locals => { :property_class => pc } |
