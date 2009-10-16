@@ -24,7 +24,7 @@
             = tabs_div2_for tab
           .button-set
             .left
-              = image_submit_tag "btn-save-changes.gif", :name => "submit", :value => "save"
+              = image_submit_tag "btn-save-changes.gif", :name => "submit", :value => "save", :class => "submit"
               %span.btn-cancel
                 - if @video.new_record?
                   = link_to "Clear", clear_videos_path
@@ -35,7 +35,7 @@
                   |
                   = link_to "Cancel", video_path( @video )
             .right
-              = image_submit_tag "btn-next.gif", :name => "next"
+              = image_submit_tag "btn-next.gif", :name => "next", :class => "submit"
             .clear
-            = image_submit_tag "btn-finish.gif", :name => "submit", :value => "finished"
+            = image_submit_tag "btn-finish.gif", :name => "submit", :value => "finished", :class => "submit"
 
