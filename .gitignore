@@ -14,3 +14,4 @@
 /vendor/gems/*/ext/*/Makefile
 /vendor/gems/*/ext/*/*.bundle
 /vendor/gems/*/lib/*.bundle
+/lib/KFQuilt
