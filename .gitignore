@@ -16,3 +16,4 @@
 /vendor/gems/*/lib/*.bundle
 /vendor/gems/*/ext/*/*.so
 /vendor/gems/*/lib/*.so
+/lib/KFQuilt
