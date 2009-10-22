@@ -1,6 +1,6 @@
 jQuery(document).ready(function() {
-  jQuery('#login').click(function(){ jQuery('.popup').show();  });
-  jQuery('#register').click(function(){ jQuery('.popup-reg').show();  });
+  jQuery('#login').click(function(){ jQuery('.popup').show(); jQuery('#username').focus(); });
+  jQuery('#register').click(function(){ jQuery('.popup-reg').show(); jQuery('#loginname').focus();  });
   jQuery('.close img').click(function(){ jQuery('.popup').hide();  });
   jQuery('.close img').click(function(){ jQuery('.popup-reg').hide();  });
   jQuery('.categoryx, #details, .general-info').accordion({
@@ -11,9 +11,9 @@ jQuery(document).ready(function() {
   jQuery('ul.videos li.fifthx, .sm-thumbs .list li.fourth').after('<div class="clear"></div>');
   jQuery('.tabs').tabs();
   jQuery('ul.navigators').parent().tabs();
-  
+
   jQuery('ul.videos li.fifth + li').css("clear", "left");
-  
+
   jQuery("div.carousel_pager").each(function(index,pager){
     $(pager).find("span").each(function(index,element){
       $(element).attr("page",index);

@@ -5,7 +5,8 @@
 %html{ :xmlns => "http://www.w3.org/1999/xhtml" }
   %head
     %title= title
-    = stylesheet_link_tag :all, :cache => "cached"
+    = stylesheet_link_tag "flash", "jquery.autocomplete", "sortable", "structure", "tables", "theme", :cache => "cached"
+    = stylesheet_link_tag "print", :media => " print"
     = javascript_include_tag :all, :cache => "cache/all"
     = javascript_tag "var AUTH_TOKEN = #{form_authenticity_token.inspect};" |
       if protect_against_forgery? |
@@ -121,12 +122,12 @@
           - form_tag sessions_path, :id => "login-form", :class => 'loginform' do
             %label
               Username
-            %input.input{ :name => "login", :size => "40", :type => "text" }
+            %input.input{ :name => "login", :id => "username", :size => "40", :type => "text" }
             %label
               Password
             %input.input{ :name => "password", :size => "40", :type => "password" }
             %br
-              
+
             = image_submit_tag "btn-login.gif"
             / %input.btn-login{ :name => "login-btn", :src => "/images/btn-login.gif", :type => "image" }
             = link_to 'Forgot your password?', forgot_password_path
@@ -143,7 +144,7 @@
           - form_tag users_path, :class => 'loginform' do
             %label
               Login Name
-            %input.input{ :name => "user[login]", :size => "40", :type => "text" }
+            %input.input{ :name => "user[login]", :id => "loginname", :size => "40", :type => "text" }
             %label
               E-mail Address
             %input.input{ :name => "user[email]", :size => "40", :type => "text" }
