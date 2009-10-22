@@ -77,7 +77,7 @@
         .download
           - video.assets.each do |asset|
             %a{:href => asset_path( asset  )}
-              = image_tag "btn-download.gif", :alt => "download"
+              = image_tag "btn-download.gif", :alt => "download", :class => "download-btn"
             %span
               = h asset.asset_format + " " + number_to_human_size(asset.size)
 
@@ -205,20 +205,21 @@
             - if !video.views.blank?
               %li
                 %label
-                  Views:
+                  Viewed:
                 = h video.views
+                times
               %li
                 %label
-                  Downloads:
-                [Placeholder]
+                  Downloaded:
+                [Placeholder] times
               %li
                 %label
-                  Favorites:
-                [Placeholder]
+                  Favorited:
+                [Placeholder] times
               %li
                 %label
                   Playlists:
-                [Placeholder]
+                In [Placeholder] playlists
 
       #storyboard.storyboard.ui-tabs-hide
         - if images = video.storyboard
@@ -287,7 +288,7 @@
               - form_tag url_for( :controller => :tagging, :action => :create ) do
                 = text_field_tag :tags
                 = hidden_field_tag :video_id, video.id
-                = submit_tag "add tags"
+                = submit_tag "Add tags"
             - if !current_user and @library.user_tagging_enabled?
               = link_to "Login", login_path
               to add tags
@@ -300,7 +301,7 @@
               = link_to "Browse All Videos »", videos_path
             - if session[:search]
               %li
-                = link_to "Return to search results »", search_path( session[:search])
+                = link_to "Return to Search Results »", search_path( session[:search])
         %dt
           = image_tag "icon-tool.gif", :alt => "TOOLS &amp; SERVICES"
           TOOLS &amp; SERVICES
@@ -308,15 +309,14 @@
           %ul
             %li.menu-print
               %span.icon
-              %a{ :href => "#" }
+              %a{ :href => "#", :onclick => "window.print();return false;" }
                 Print
             %li.menu-email
               %span.icon
               = link_to "E-mail", mail_video( video )
             %li.menu-embed
               %span.icon
-              %a{ :href => "#" }
-                Embed Video
+              = render :partial => "video_embed_code", :object => video
             - if !@library.emails.blank?
               %li.menu-report
                 %span.icon
