@@ -76,6 +76,12 @@
               #{video.abstract}
         .download
           - video.assets.each do |asset|
+            .hidden
+              Location: #{asset_url(asset)}
+              %br
+              Format: #{asset.asset_format}
+              %br
+              Size: #{number_to_human_size(asset.size)}
             %a{:href => asset_path( asset  )}
               = image_tag "btn-download.gif", :alt => "download", :class => "download-btn"
             %span

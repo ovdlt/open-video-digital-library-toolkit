@@ -110,16 +110,14 @@ img
     :display inline
     :padding 0px 5px 0px 0px
 
-  // hide download button but show download link url and video format and size
+  // hide download button and details but show download link url and video format and size
   .download
-    a[href]:after
-      content: " (" attr(href) ") "
-      font-size: 90%
 
-    a[href^="/"]:after
-      content: " (" attr(href) ") "
+    .hidden
+      :display block
+      :padding 12px 0px 6px 0px
 
-    .download-btn
+    .download-btn, span
       :display none
 
 
@@ -136,6 +134,9 @@ img
     :font-weight bold
     :padding 10px 0px 3px 0px
     :margin 0px
+
+    &:first-child
+      :padding-top 0px
 
   dd
     :display block !important
