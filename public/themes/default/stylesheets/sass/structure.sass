@@ -1284,6 +1284,9 @@ input
   ul
     :padding-bottom 20px
 
+    &#descriptor_types_list
+      :padding-bottom 0px
+
   a
     :font-weight bold
 
@@ -1296,18 +1299,28 @@ input
       :margin-right 10px
 
 
+.admin-form.users form
+  :margin-bottom 2em
+
+
 .descriptor-types
-  :padding-bottom 20px
+  :padding-bottom 15px
+
+  li.delete
+    :padding-top 5px
 
   dt
     :font-weight bold
 
   dd
-    :padding 5px 20px 20px
+    :padding 5px 20px 5px 20px
     :font-size 12px
 
     ul
       :padding-bottom 5px
+
+  .browsable-line
+    :padding-left 20px
 
 
 .date-types p
@@ -1319,6 +1332,17 @@ input
 
 .hidden
   :display none
+
+  .new
+    :padding-top 10px
+
+#property_type_new_dt, .rights-admin
+  :border 1px solid #ddd
+  :padding 15px 0px 0px 10px
+  :margin-bottom 20px
+
+.rights-admin p
+  :padding-left 10px
 
 
 // added after Iterative
@@ -1342,6 +1366,23 @@ input
   :padding 20px 5px 0px 5px
   :margin 0px 5px 5px 0px
   :font-style italic
+
+
+.show_all
+  :float right
+  :font-size 12px
+  :font-weight bold
+  :padding 5px 5px
+
+.poster
+  :width 1em
+  :height 1em
+  :position absolute
+  :right 0
+  :bottom 0
+
+
+/* post-IM tweaks for js functionality, missing forms */
 
 
 // SMP

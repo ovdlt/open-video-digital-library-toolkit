@@ -13,15 +13,16 @@
             Type:
             = fields.text_field :name
           %br
-          %label
+          %br
+          %label.browsable-line
             Browsable:
             = fields.check_box :browsable
-          %br
-          %span.delete= link_to "delete", "#"
-          = error_messages_for 'property_type', :object => dt
-          = fields.hidden_field :property_class_id
-          = hidden_field_tag "property_type[#{type_id(dt)}][deleted]", |
-                               false, :id => nil, :class => :deleted |
+            %span.delete= link_to "delete", "#"
+            = error_messages_for 'property_type', :object => dt
+            = fields.hidden_field :property_class_id
+            = hidden_field_tag "property_type[#{type_id(dt)}][deleted]", |
+                                 false, :id => nil, :class => :deleted |
+
     %dd
       %ul
         - descriptor_values(dt).each do |dv|
