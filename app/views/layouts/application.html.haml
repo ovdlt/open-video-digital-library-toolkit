@@ -128,7 +128,7 @@
             %input.input{ :name => "password", :size => "40", :type => "password" }
             %br
 
-            = image_submit_tag "btn-login.gif"
+            = image_submit_tag "btn-login.gif", :class => "submit"
             / %input.btn-login{ :name => "login-btn", :src => "/images/btn-login.gif", :type => "image" }
             = link_to 'Forgot your password?', forgot_password_path
       .overlay
@@ -155,6 +155,6 @@
               Confirm Password
             %input.input{ :name => "user[password_confirmation]", :size => "40", :type => "password" }
             %br
-            = image_submit_tag "btn-register.gif"
+            = image_submit_tag "btn-register.gif", :class => "submit"
             // %input.btn-login{ :name => "register-btn", :src => "/images/btn-register.gif", :type => "image" }
       .overlay

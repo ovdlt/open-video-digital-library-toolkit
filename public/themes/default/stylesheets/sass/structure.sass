@@ -653,7 +653,11 @@ li
     :display block
     :padding-bottom 3px
     :padding-top 3px
+    :margin-top 2px
     :cursor pointer
+
+    &:first-child
+      :margin-top 0px
 
     &.selected
       :background-position right 8px
@@ -661,6 +665,9 @@ li
   li
     :padding 8px 0 2px
     :display block
+
+    &:last-child
+      :padding-bottom 15px
 
   label
     :font-weight bold
@@ -1343,7 +1350,7 @@ input
 
 .rights-admin p
   :padding-left 10px
-
+  :padding-right 10px
 
 // added after Iterative
 .duration, .created
