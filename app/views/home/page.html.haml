@@ -1,32 +1,33 @@
 .one-column
   .head
     %span.left
-      Placeholder Title
-  .body.static-page
+      = @page.to_s.capitalize
+  .body{:class =>((@page == :contact) ? "contact" : "static-page")}
 
-  %div{:class => @page}
-    - if current_user and current_user.has_role? :admin and params[:edit]
-      - form_tag url_for( :action => "update" ) do
-        - if !params[:preview]
-          .label
-            = label_tag @page, @page.to_s.humanize+":"
-          .input
-            %div
-              = hidden_field_tag :attribute, @page
-              = text_area_tag :value, @value, :size => "80x40"
-            = submit_tag "save"
-            = submit_tag "preview"
-        - else
-    - else
-      .content
-        :textile
-          #{@value}
-      - if current_user and current_user.has_role? :admin
-        .edit
-          - form_tag url_for(), :method => :get do
-            = hidden_field_tag :edit, true
-            - if params[:commit] == "preview"
-              .back
-                = submit_tag "back"
-            - else
-              = submit_tag "edit"
+    %div{:class => @page}
+      - if current_user and current_user.has_role? :admin and params[:edit]
+        - form_tag url_for( :action => "update" ) do
+          - if !params[:preview]
+            .label
+              = label_tag @page, "Text for " + @page.to_s.humanize+" page:"
+            .input
+              %div
+                = hidden_field_tag :attribute, @page
+                = text_area_tag :value, @value, :size => "100x40"
+              .button-set
+                = submit_tag "save"
+                = submit_tag "preview"
+          - else
+      - else
+        .content
+          :textile
+            #{@value}
+        - if current_user and current_user.has_role? :admin
+          .edit.button-set
+            - form_tag url_for(), :method => :get do
+              = hidden_field_tag :edit, true
+              - if params[:commit] == "preview"
+                .back
+                  = submit_tag "back"
+              - else
+                = submit_tag "edit"
