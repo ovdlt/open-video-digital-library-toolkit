@@ -16,3 +16,6 @@
 [submodule "vendor/plugins/aasm"]
 	path = vendor/plugins/aasm
 	url = git://github.com/rubyist/aasm.git
+[submodule "vendor/plugins/role_requirement"]
+	path = vendor/plugins/role_requirement
+	url = git://github.com/timcharper/role_requirement.git
