@@ -100,13 +100,13 @@
             return false;
         };
 
-        $("div.property-type.new a").livequery('click',edit);
+        $("div.property-type.new a").live('click',edit);
 
         function edit_dt() {
 
             var div = $(this).parents(".new_dt")[0];
             var template = $("dl.delete",div)[0];
-            console.debug(template);
+            // console.debug(template);
             var copy = $(template).clone();
 
             // could use a stored variable, but really ...
@@ -145,7 +145,7 @@
         };
 
 
-        $("div.property-type.new_dt a").livequery('click',edit_dt);
+        $("div.property-type.new_dt a").live('click',edit_dt);
 
         $("div.template").addClass("hidden");
 
@@ -245,7 +245,7 @@
             return true;
         });
 
-        $(".assets tr .delete a").livequery('click',function(e){
+        $(".assets tr .delete a").live('click',function(e){
             $($(this).parents("tr")[0]).remove();
             return false;
         });
@@ -286,7 +286,7 @@
             return false;
         });
 
-        $("form .display-edit span.delete a").livequery('click',function(){
+        $("form .display-edit span.delete a").live('click',function(){
             // not really a ul anymore ...
             ul = $(this).parents("ul, dt")[0];
             var top = $($(this).parents("li.delete, dt.delete")[0]);
@@ -397,7 +397,7 @@
 
 
         $("div#content div.axis").click(function(){
-            console.debug("click");
+            // console.debug("click");
             $("body").css("cursor","wait");
             pt_id = $(this).attr("id").replace("property_type_","");
             $.get(relative_url_root + "/videos/images?property_type=" + pt_id, function(data){

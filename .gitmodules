@@ -10,12 +10,12 @@
 [submodule "vendor/plugins/restful_authentication"]
 	path = vendor/plugins/restful_authentication
 	url = git://github.com/technoweenie/restful-authentication.git
-[submodule "vendor/plugins/role_requirement"]
-	path = vendor/plugins/role_requirement
-	url = git://github.com/negonicrac/role_requirement.git
 [submodule "vendor/plugins/exception_notification"]
 	path = vendor/plugins/exception_notification
 	url = git://github.com/rails/exception_notification.git
 [submodule "vendor/plugins/aasm"]
 	path = vendor/plugins/aasm
 	url = git://github.com/rubyist/aasm.git
+[submodule "vendor/plugins/role_requirement"]
+	path = vendor/plugins/role_requirement
+	url = git://github.com/timcharper/role_requirement.git
