@@ -16,4 +16,5 @@
 /vendor/gems/*/lib/*.bundle
 /vendor/gems/*/ext/*/*.so
 /vendor/gems/*/lib/*.so
+/vendor/gems/*/ext/redcloth_scan/*.o
 /lib/KFQuilt
