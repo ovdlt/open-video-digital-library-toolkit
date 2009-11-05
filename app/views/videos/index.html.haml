@@ -76,4 +76,12 @@
                           = text_field_tag 'search[title]', nil, :id => nil
                           %span.right
                             = image_submit_tag("save.gif", :class => :hidden, :name => "commit", :value => "save" )
+                    - if flash[:error]
+                      .flash.error
+                        %span
+                          = flash[:error]
+                    - if flash[:notice]
+                      .flash.notice
+                        %span
+                          = flash[:notice]
           /right end

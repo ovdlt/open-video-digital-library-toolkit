@@ -1,3 +1,11 @@
+- if flash[:error]
+  .flash.error
+    %span
+      = flash[:error]
+- if flash[:notice]
+  .flash.notice
+    %span
+      = flash[:notice]
 .col-left
   .box.favorites
     .smaller-head

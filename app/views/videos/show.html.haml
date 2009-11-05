@@ -331,6 +331,14 @@
               %li.menu-favorites
                 %span.icon
                 = render :partial => "videos/alter_favorites", :object => video
+                - if flash[:error]
+                  .flash.error
+                    %span
+                      = flash[:error]
+                - if flash[:notice]
+                  .flash.notice
+                    %span
+                      = flash[:notice]
               %li.menu-playlists
                 %span.icon
                 = render :partial => "add_to_playlist", :object => video
