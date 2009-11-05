@@ -16,10 +16,10 @@
     - form_tag sessions_path, :class => 'loginform' do
       %label
         Username
-      = text_field_tag 'login', @login
+      = text_field_tag 'login', @login, :class => 'input'
       %label
         Password
-      = password_field_tag 'password', nil
+      = password_field_tag 'password', nil, :class => 'input'
       = link_to 'Forgot your password?', forgot_password_path
       /
         Uncomment this if you want this functionality
@@ -27,5 +27,6 @@
           Remember me
           = check_box_tag 'remember_me', '1', @remember_me
       %br
-      = image_submit_tag("btn-login.gif")
+      %br
+      = image_submit_tag "btn-login.gif", :class => "submit"
       = link_to 'New user?', signup_path
