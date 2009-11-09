@@ -1,7 +1,14 @@
-Your account has been created.
+Hello,
 
-  Username: <%=h @user.login %>
+Your account with <%=h Library.title %> has been created.
+
+    Username: <%=h @user.login %>
 
 Visit this url to activate your account:
 
-  <%=h @url %>
+    <%=h @url %>
+
+If you did not request an account with us, you may simply ignore this email.
+
+Thanks,
+<%=h Library.title %>

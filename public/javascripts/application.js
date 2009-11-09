@@ -268,6 +268,12 @@
             $("div.bookmark.hidden",$(this).parents("form")).toggle();
         });
 
+        $("div.video_embed.hidden").hide();
+
+        $("label.button.video_embed_area").click(function(){
+            $("div.video_embed.hidden",$(this).parents("form")).toggle();
+        });
+
         $("form .display-edit div.display.error").hide();
 
         $("form .display-edit > div.edit").hide();
@@ -288,7 +294,7 @@
             // console.debug(top);
             $("input.deleted[type=hidden]",top).attr("value","deleted");
             top.hide();
-            
+
             top.next("dd").hide();
 
             if ( $("li.delete:visible", ul).length == 1 ) {
@@ -389,7 +395,7 @@
             return false;
         });
 
-        
+
         $("div#content div.axis").click(function(){
             // console.debug("click");
             $("body").css("cursor","wait");
@@ -477,7 +483,7 @@
     {
         // console.debug( list);
         // console.debug( $(list) );
-      return $( list ).sortable('serialize').replace( /&[a-z_]+\[\]=/ig, ",").replace( /[a-z_]+\[\]=/i, ""); 
+      return $( list ).sortable('serialize').replace( /&[a-z_]+\[\]=/ig, ",").replace( /[a-z_]+\[\]=/i, "");
     }
 
     send_new_order = function( list, post_url, new_order ) {

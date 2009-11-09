@@ -9,13 +9,13 @@
       = render :partial => "library/pt", :object => pt
     %li
       .property-type.new
-        = link_to "new", "#"
+        = link_to "+ Add new #{pc.name.singularize.downcase}", "#"
         %ul.template
           = render :partial => "library/pt", :object => pt_template(pc)
   %br
   .left
-    = image_submit_tag "btn-save-changes.gif", :name => "submit", :value => "save", :id => nil
+    = image_submit_tag "btn-save-changes.gif", :name => "submit", :value => "save", :class => "submit", :id => nil
     %span.btn-cancel
       = link_to "cancel", library_path
     .clear
-    = image_submit_tag "btn-finish.gif", :name => "submit", :value => "finished", :id => nil
+    = image_submit_tag "btn-finish.gif", :name => "submit", :value => "finished", :class => "submit", :id => nil

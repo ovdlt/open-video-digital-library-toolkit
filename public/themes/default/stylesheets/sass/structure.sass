@@ -653,7 +653,11 @@ li
     :display block
     :padding-bottom 3px
     :padding-top 3px
+    :margin-top 2px
     :cursor pointer
+
+    &:first-child
+      :margin-top 0px
 
     &.selected
       :background-position right 8px
@@ -661,6 +665,9 @@ li
   li
     :padding 8px 0 2px
     :display block
+
+    &:last-child
+      :padding-bottom 15px
 
   label
     :font-weight bold
@@ -818,6 +825,9 @@ li
 
   a
     :font-weight bold
+
+  input
+    :margin 5px 0
 
 
 .row
@@ -1085,14 +1095,19 @@ li
 
 
 .contact
+  :padding-top 0px
+
   h5
     :font-size 14px
     :margin-bottom 12px
 
   p
     :line-height 1.4em
-    :margin-bottom 5px
+    :margin-bottom 15px
 
+  label
+    :font-weight bold
+    :padding-bottom 5px
 
 .static-page
   :line-height 1.4em
@@ -1120,6 +1135,11 @@ li
     :color #737373
     :font-size 14px
     :font-style italic
+
+  label
+    :font-weight bold
+    :padding-bottom 5px
+
 
 
 .box
@@ -1281,6 +1301,9 @@ input
   ul
     :padding-bottom 20px
 
+    &#descriptor_types_list
+      :padding-bottom 0px
+
   a
     :font-weight bold
 
@@ -1293,18 +1316,28 @@ input
       :margin-right 10px
 
 
+.admin-form.users form
+  :margin-bottom 2em
+
+
 .descriptor-types
-  :padding-bottom 20px
+  :padding-bottom 15px
+
+  li.delete
+    :padding-top 5px
 
   dt
     :font-weight bold
 
   dd
-    :padding 5px 20px 20px
+    :padding 5px 20px 5px 20px
     :font-size 12px
 
     ul
       :padding-bottom 5px
+
+  .browsable-line
+    :padding-left 20px
 
 
 .date-types p
@@ -1317,6 +1350,17 @@ input
 .hidden
   :display none
 
+  .new
+    :padding-top 10px
+
+#property_type_new_dt, .rights-admin
+  :border 1px solid #ddd
+  :padding 15px 0px 0px 10px
+  :margin-bottom 20px
+
+.rights-admin p
+  :padding-left 10px
+  :padding-right 10px
 
 // added after Iterative
 .duration, .created
@@ -1339,6 +1383,23 @@ input
   :padding 20px 5px 0px 5px
   :margin 0px 5px 5px 0px
   :font-style italic
+
+
+.show_all
+  :float right
+  :font-size 12px
+  :font-weight bold
+  :padding 5px 5px
+
+.poster
+  :width 1em
+  :height 1em
+  :position absolute
+  :right 0
+  :bottom 0
+
+
+/* post-IM tweaks for js functionality, missing forms */
 
 
 // SMP

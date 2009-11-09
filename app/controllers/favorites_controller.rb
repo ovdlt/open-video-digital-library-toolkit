@@ -2,7 +2,7 @@ class FavoritesController < ApplicationController
 
   def create
     if current_user.nil?
-      flash[:error] = "You must be logged in to save a search"
+      flash[:error] = "You must be logged in to save a favorite"
     else
       if v = Video.find_by_id( params[:video_id] ) and
          check_video_viz( v ) and

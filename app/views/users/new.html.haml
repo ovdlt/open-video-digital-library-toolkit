@@ -2,7 +2,7 @@
   /head start
   .head
     %span.left
-      Register
+      New User Registration
   /head end
   .body
     - @user.password = @user.password_confirmation = nil
@@ -10,18 +10,18 @@
     - form_for :user, :url => users_path, :html => {:class => 'loginform'} do |f|
       %label
         Login Name
-      = f.text_field :login
+      = f.text_field :login, :class => 'input'
       %label{ :for => "user_email" }
         E-mail Address
-      = f.text_field :email
+      = f.text_field :email, :class => 'input'
       %label{ :for => "user_password" }
         Password
-      = f.password_field :password
+      = f.password_field :password, :class => 'input'
       %label{ :for => "user_password_confirmation" }
         Confirm Password
-      = f.password_field :password_confirmation
+      = f.password_field :password_confirmation, :class => 'input'
       %br
       %br
-      = image_submit_tag "btn-register.gif", :name => "Register"
+      = image_submit_tag "btn-register.gif", :name => "Register", :class => "submit"
 
 

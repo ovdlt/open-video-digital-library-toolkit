@@ -1,0 +1,10 @@
+- video = video_embed_code
+- asset = video.assets[0]
+
+- form_tag "", :method => :post, :name => "video_embed_form", :id => "video_embed_form", :class => :inline do
+
+  %label.button.video_embed_area
+    Embed Video Link
+  .video_embed.hidden
+    %br
+    = text_field_tag "video_embed_code", "<embed src=\"#{asset_url(asset)}\" width=\"320\" height=\"240\">", :id => "video_embed_code", :name => "video_embed_code", :class => :inline, :onclick => "document.video_embed_form.video_embed_code.select();"
