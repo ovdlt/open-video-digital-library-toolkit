@@ -4,7 +4,7 @@ class AssetsController < ApplicationController
 
   def uncataloged
     options = { :limit => 10 }
-    
+
     if params[:limit]
       options[:limit] = params[:limit]
     end
@@ -30,6 +30,10 @@ class AssetsController < ApplicationController
       return
     end
 
+    @asset.video.downloads += 1
+    @asset.video.last_downloaded = Time.now
+    @asset.video.save
+
     if (!current_user or !current_user.has_role?([:admin,:cataloger])) and
         !@asset.video.public?
       render_missing
@@ -42,7 +46,7 @@ class AssetsController < ApplicationController
       current_user.downloads.save!
       current_user.save!
     end
-      
+
     # There's got to be a better way to do this
     redirect_to ( ActionController::Base.relative_url_root or "" ) +
                '/assets/' + @asset.relative_path

@@ -23,8 +23,9 @@ class VideosController < ApplicationController
     class << @video
       def record_timestamps; false; end
     end
-    
+
     @video.views += 1
+    @video.last_viewed = Time.now
     @video.save
 
     class << @video
@@ -51,7 +52,7 @@ class VideosController < ApplicationController
       current_user.downloads.save!
       current_user.save!
     end
-      
+
     redirect_to ( ActionController::Base.relative_url_root or "" ) +
                '/assets/' + @asset.relative_path
   end
@@ -64,13 +65,13 @@ class VideosController < ApplicationController
   end
 
   def recent
-    @search = Search.new 
+    @search = Search.new
     current_user and @search.user_id = current_user.id
     search
   end
 
   def popular
-    @search = Search.new 
+    @search = Search.new
     current_user and @search.user_id = current_user.id
     search :popular
   end
@@ -104,13 +105,13 @@ class VideosController < ApplicationController
   end
 
   def search sort = :recent
-   
+
     case sort
     when :popular
       order = "videos.views desc"
     when :recent
     else
-      order = "videos.created_at desc"   
+      order = "videos.created_at desc"
     end
 
     @videos = Video.search :method => :paginate,
@@ -122,7 +123,7 @@ class VideosController < ApplicationController
     render :template => "videos/index"
 
   end
-  
+
   def cancel
     redirect_to videos_path
   end
@@ -153,7 +154,7 @@ class VideosController < ApplicationController
     @video = Video.find params[:id]
     _change
   end
-  
+
   def edit
     @object = @video = Video.find( params[:id] )
     render :action => :form
@@ -164,7 +165,7 @@ class VideosController < ApplicationController
     flash[:notice] = "#{@video.title} was deleted"
     redirect_to videos_path
   end
-  
+
   def featured_order
     ids = params["order"].split(/[,\s]+/).map(&:to_i)
     Video.featured_order = ids
@@ -180,7 +181,7 @@ class VideosController < ApplicationController
                            :descriptors,
                            :collections,
                            :related_videos ]
-  
+
   private
 
   def find_video_for_cat
@@ -220,7 +221,7 @@ class VideosController < ApplicationController
           begin
             DescriptorValue.find d.to_i
           rescue ActiveRecord::RecordNotFound
-            render_bad_request 
+            render_bad_request
             return
           end
         end
@@ -312,7 +313,7 @@ class VideosController < ApplicationController
           v[:asset_ids] = a.map { |s| s.to_i }
           v.delete(:assets)
         end
-        
+
         if !current_user.has_role? :admin
           v.delete( :public )
         end
@@ -364,19 +365,19 @@ class VideosController < ApplicationController
         dts.each do |dt,dvs|
 
           dt_id = dt.to_i
-          
+
           if dt_id.nil? or dt_id < 1
-            render_bad_request 
+            render_bad_request
             return
           end
-          
+
           current_ids = @properties.select { |p| p.property_type_id == dt_id }.map(&:integer_value)
           on_ids = dvs.select { |k,v| v == "1" }.map { |k,v| k.to_i }
           off_ids = dvs.select { |k,v| v == "no" }.map { |k,v| k.to_i }
-          
+
           turn_on = on_ids - current_ids
           turn_off = off_ids & current_ids
-          
+
           turn_off.each do |dv_id|
             destroy_dv_property( dt_id, dv_id )
           end
@@ -394,14 +395,14 @@ class VideosController < ApplicationController
           begin
             DescriptorValue.find d.to_i
           rescue ActiveRecord::RecordNotFound
-            render_bad_request 
+            render_bad_request
             return
           end
         end
       end
 
       was_new = @video.new_record?
-      
+
       @video.save
 
       if okay
