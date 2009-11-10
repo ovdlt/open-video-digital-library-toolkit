@@ -281,12 +281,14 @@
         $("form .display-edit > div.edit.error").show();
         $("form .display-edit > span.edit.error").show();
 
-        $("form .display-edit span.edit a").click(function(){
+        $("form .display-edit .dt_handle span.edit a").click(function(){
+            // console.debug("edit");
             $("div.display, div.edit, span.display, span.edit",$(this).parents(".display-edit")[0]).toggle();
             return false;
         });
 
         $("form .display-edit span.delete a").live('click',function(){
+            // console.debug("delete");
             // not really a ul anymore ...
             ul = $(this).parents("ul, dt")[0];
             var top = $($(this).parents("li.delete, dt.delete")[0]);
