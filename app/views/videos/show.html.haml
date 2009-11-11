@@ -241,6 +241,10 @@
                       .hidden
                         = f.text_field :poster_path, :value => image, :id => gen_id
                         = f.submit "update", :id => nil
+        - else
+
+          A storyboard is not currently available for this video.
+
       #fast-forward.ui-tabs-hide
 
         - if p = video.fast_forward_path
@@ -259,7 +263,7 @@
 
         - else
 
-          No fast forward view for this video
+          A fast forward is not currently available for this video.
 
       #excerpt.ui-tabs-hide
 
@@ -279,7 +283,7 @@
 
         - else
 
-          No excerpt view for this video
+          An excerpt view is not currently available for this video.
 
     /center end
     .col-right
@@ -320,9 +324,10 @@
             %li.menu-email
               %span.icon
               = link_to "E-mail", mail_video( video )
-            %li.menu-embed
-              %span.icon
-              = render :partial => "video_embed_code", :object => video
+            - if video.assets[0]
+              %li.menu-embed
+                %span.icon
+                = render :partial => "video_embed_code", :object => video
             - if !@library.emails.blank?
               %li.menu-report
                 %span.icon
