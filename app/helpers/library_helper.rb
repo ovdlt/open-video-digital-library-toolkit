@@ -165,7 +165,7 @@ module LibraryHelper
       end
       [ <<EOS ]
 <input name="themes" type="radio" value="#{theme}" #{checked} />
-<img src="/images/#{theme}.gif" alt="#{theme}" />
+<img src='#{compute_public_path("theme.gif", "themes/#{theme}/images")}' alt="#{theme}" />
 EOS
     end
     themes.join("\n")
