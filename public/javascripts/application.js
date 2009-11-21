@@ -262,6 +262,15 @@
                 return false;
             });
 
+        // Site Activity page
+        $('.activity-toggle a').click(function(){
+            // TODO improve to remove multiple parent traversal
+            $(this).parent().parent().parent().parent().find('table').toggle();
+            var thisElem = $(this);
+            thisElem.text(thisElem.text() === "[show]" ? "[hide]" : "[show]");
+            return false;
+        });
+
         $("div.bookmark.hidden").hide();
 
         $("label.button.playlist").click(function(){

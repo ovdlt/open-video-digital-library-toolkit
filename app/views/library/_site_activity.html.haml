@@ -1,2 +1,167 @@
 .head
   Site Activity
+.form.admin-form.create
+
+  #activity-collection-statistics
+    .site-activity-head
+      %span.left
+        &raquo; Collection Statistics
+        %span.activity-toggle
+          = link_to "[show]"
+    .list
+      %table.hidden
+        %tr
+          %th
+            Total Videos
+          %th
+            Public
+          %th
+            Private
+          %th
+            Featured
+          %tr
+            %td.entry
+              = h Video.count
+            %td.entry
+              = link_to h(Video.count(:conditions => "public = 1")), search_path( Search.new( :public => 1 ) )
+            %td.entry
+              = link_to h(Video.count(:conditions => "public != 1")), search_path( Search.new( :public => 0 ) )
+            %td.entry
+              = h Video.count(:conditions => "featured = 1")
+
+  #activity-registered-users
+    .site-activity-head
+      %span.left
+        &raquo; Most Recent Registered Users
+        %span.activity-toggle
+          = link_to "[show]"
+      %ul
+        %li
+          = link_to "Pending"
+        %li
+          \|
+        %li
+          = link_to "Active"
+    .list
+      %table.hidden
+        %tr
+          %th
+            Login
+          %th
+            Email
+          %th.date
+            Date Created
+          %th.date
+            Last Updated
+        - registered_users(5, "active").each do |user|
+          %tr
+            %td.entry
+              = h user.login
+            %td.entry
+              = mail_to h(user.email)
+            %td.date
+              = h user.created_at.to_date.to_s(:db)
+            %td.date
+              = h user.updated_at.to_date.to_s(:db)
+
+  #activity-downloads
+    .site-activity-head
+      %span.left
+        &raquo; Most Downloaded Videos
+        %span.activity-toggle
+          = link_to "[show]"
+      %ul
+        %li
+          = link_to "Week"
+        %li
+          \|
+        %li
+          = link_to "Month"
+        %li
+          \|
+        %li
+          = link_to "All Time"
+    .list
+      %table.hidden
+        %tr
+          %th
+            Video Title
+          %th.date
+            Last Downloaded
+          %th.numeric
+            Downloads
+        - video_downloads(10, 1.year.ago).each do |video|
+          %tr
+            %td.entry
+              = link_to h(video.title), video_path( video.id )
+            %td.date
+              = h video.last_downloaded.to_date.to_s(:db)
+            %td.numeric
+              = h video.downloads
+
+  #activity-views
+    .site-activity-head
+      %span.left
+        &raquo; Most Viewed Video Pages
+        %span.activity-toggle
+          = link_to "[show]"
+      %ul
+        %li
+          = link_to "Week"
+        %li
+          \|
+        %li
+          = link_to "Month"
+        %li
+          \|
+        %li
+          = link_to "All Time"
+    .list
+      %table.hidden
+        %tr
+          %th
+            Video Page
+          %th.date
+            Last Viewed
+          %th.numeric
+            Views
+        - video_views(10, 1.year.ago).each do |video|
+          %tr
+            %td.entry
+              = link_to h(video.title), video_path( video.id )
+            %td.date
+              = h video.last_viewed.to_date.to_s(:db)
+            %td.numeric
+              = h video.views
+
+  #activity-popular-tags
+    .site-activity-head
+      %span.left
+        &raquo; Most Popular Tags
+        %span.activity-toggle
+          = link_to "[show]"
+      %ul
+        %li
+          = link_to "Week"
+        %li
+          \|
+        %li
+          = link_to "Month"
+        %li
+          \|
+        %li
+          = link_to "All Time"
+    .list
+      %table.hidden
+        %tr
+          %th
+            Tag
+          %th.numeric
+            Videos Tagged
+        - popular_tags(10, 1.year.ago).each do |tag|
+          %tr
+            %td.entry
+              = link_to h(tag.text), search_path( Search.new( :tag => tag.id ) )
+            %td.numeric
+              = h tag.taggings_count
+
