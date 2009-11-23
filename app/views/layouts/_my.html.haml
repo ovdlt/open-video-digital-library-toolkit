@@ -13,7 +13,7 @@
           .my-profile
             .username
               = h(current_user.login)
-            = "Registered since " + current_user.created_at.to_date.to_s(:long)
+            = "Registered " + current_user.created_at.to_date.to_s(:long_ordinal)
             %br
             = link_to_action :my_account
         %dt
