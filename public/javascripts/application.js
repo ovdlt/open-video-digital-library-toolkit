@@ -271,6 +271,8 @@
             return false;
         });
 
+        $("a.storyboard_image").fancybox();
+
         $("div.bookmark.hidden").hide();
 
         $("label.button.playlist").click(function(){

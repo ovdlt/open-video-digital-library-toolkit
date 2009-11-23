@@ -211,13 +211,14 @@
             - if !video.views.blank?
               %li
                 %label
-                  Viewed:
+                  Page Viewed:
                 = h video.views
                 times
               %li
                 %label
                   Downloaded:
-                [Placeholder] times
+                = h video.downloads
+                times
               %li
                 %label
                   Favorited:
@@ -231,7 +232,8 @@
         - if images = video.storyboard
           - images.each_with_index do |image, index|
             %div{:class =>(((index + 1) % 4).zero? ? "image fourth" : "image")}
-              %img{:src=>image,:alt=>"storyboard image"}
+              %a{:href => image, :class => "storyboard_image", :rel => "storyboard_group"}
+                %img{:src=>image, :alt=>"storyboard image"}
               - if current_user and current_user.has_role?(  [ :admin, :cataloger ] )
                 - if image == video.poster_path
                   .poster.checked
