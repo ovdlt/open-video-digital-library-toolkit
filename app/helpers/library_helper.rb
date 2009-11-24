@@ -164,7 +164,7 @@ module LibraryHelper
         checked="checked='checked'"
       end
       [ <<EOS ]
-<input name="themes" type="radio" value="#{theme}" #{checked} />
+<input name="library[theme]" type="radio" value="#{theme}" #{checked} />
 <img src='#{compute_public_path("theme.gif", "themes/#{theme}/images")}' alt="#{theme}" />
 EOS
     end
