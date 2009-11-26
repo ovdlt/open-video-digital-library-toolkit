@@ -19,15 +19,15 @@
             Private
           %th
             Featured
-          %tr
-            %td.entry
-              = h Video.count
-            %td.entry
-              = link_to h(Video.count(:conditions => "public = 1")), search_path( Search.new( :public => 1 ) )
-            %td.entry
-              = link_to h(Video.count(:conditions => "public != 1")), search_path( Search.new( :public => 0 ) )
-            %td.entry
-              = h Video.count(:conditions => "featured = 1")
+        %tr
+          %td.entry
+            = h Video.count
+          %td.entry
+            = link_to h(Video.count(:conditions => "public = 1")), search_path( Search.new( :public => 1 ) )
+          %td.entry
+            = link_to h(Video.count(:conditions => "public != 1")), search_path( Search.new( :public => 0 ) )
+          %td.entry
+            = h Video.count(:conditions => "featured = 1")
 
   #activity-registered-users
     .site-activity-head
@@ -53,7 +53,7 @@
             Date Created
           %th.date
             Last Updated
-        - registered_users(5, "active").each do |user|
+        - @registered_users.each do |user|
           %tr
             %td.entry
               = h user.login
@@ -90,7 +90,7 @@
             Last Downloaded
           %th.numeric
             Downloads
-        - video_downloads(10, 1.year.ago).each do |video|
+        - @video_downloads.each do |video|
           %tr
             %td.entry
               = link_to h(video.title), video_path( video.id )
@@ -125,7 +125,7 @@
             Last Viewed
           %th.numeric
             Views
-        - video_views(10, 1.year.ago).each do |video|
+        - @video_views.each do |video|
           %tr
             %td.entry
               = link_to h(video.title), video_path( video.id )
@@ -158,7 +158,7 @@
             Tag
           %th.numeric
             Videos Tagged
-        - popular_tags(10, 1.year.ago).each do |tag|
+        - @popular_tags.each do |tag|
           %tr
             %td.entry
               = link_to h(tag.text), search_path( Search.new( :tag => tag.id ) )

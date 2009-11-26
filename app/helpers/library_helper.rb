@@ -175,21 +175,4 @@ EOS
     select "library", "theme", theme_choices
   end
 
-  # Site Activity page
-  def video_downloads(displayNum, startDate)
-    Video.all(:select => "title, downloads, last_downloaded, id", :conditions => ["last_downloaded >= ?", startDate], :limit => displayNum, :order => "downloads DESC")
-  end
-
-  def video_views(displayNum, startDate)
-    Video.all(:select => "title, views, last_viewed, id", :conditions => ["last_viewed >= ?", startDate], :limit => displayNum, :order => "views DESC")
-  end
-
-  def registered_users(displayNum, state)
-    User.all(:select => "login, email, created_at, updated_at", :conditions => ["state = ?", state], :limit => displayNum, :order => "updated_at DESC")
-  end
-
-  def popular_tags(displayNum, startDate)
-    Tag.all(:joins => :taggings, :select => "tags.*, count(taggings.id) as taggings_count", :conditions => ["taggings.updated_at >= ?", startDate], :group => "tags.id", :limit => displayNum, :order => "taggings_count DESC")
-  end
-
 end
