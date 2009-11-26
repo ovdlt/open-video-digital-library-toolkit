@@ -2,21 +2,22 @@
 /head start
 .head
   %span.left
-    = container_text( collection ).capitalize + ": " + collection.title
-    - if current_user and current_user.has_role?(  [ :admin, :cataloger ] )
-      .featured
-        - form_for collection, :html => { :id => nil } do |form|
-          = form.check_box :featured, :id => gen_id
-          - if !collection.featured?
-            %label.is_featured
-              Feature this collection
-          - else
-            %label.is_featured
-              Featured
-              = feature_rank( collection )
-    - else
-      - if collection.featured?
-        %label.title_featured>FEATURED
+    /= container_text( collection ).capitalize + ": "
+    = collection.title
+  - if current_user and current_user.has_role?(  [ :admin, :cataloger ] )
+    .featured
+      - form_for collection, :html => { :id => nil } do |form|
+        = form.check_box :featured, :id => gen_id
+        - if !collection.featured?
+          %label.is_featured
+            Feature this collection
+        - else
+          %label.is_featured
+            Featured
+            = feature_rank( collection )
+  - else
+    - if collection.featured?
+      %label.title_featured>FEATURED
   %span.right.rss
     = image_tag("icon-rss.gif", :alt => "rss")
     %a{ :href => "#" }
@@ -31,12 +32,12 @@
         - if p = collection.poster_path( public_only? )
           %img{:src=>p,:alt => "sample image from collection"}
       .details
-        -# TODO title part -- only show if Playlist type of collection
-        -#%h5.title
-          -#%span
-            -#created by
-            -#%strong
-              -#= h collection.user.login
+        - if collection.user.login != Library.collections_login
+          %h5.title
+            %span
+              created by
+              %strong
+                = h collection.user.login
         %p
           %strong
             Videos:
