@@ -298,6 +298,14 @@
             return false;
         });
 
+        // duplicate of block above but without the ".dt_handle"
+        // needed to make editing values not in .dt_handle cascade work
+        $("form .display-edit span.edit a").click(function(){
+            // console.debug("edit");
+            $("div.display, div.edit, span.display, span.edit",$(this).parents(".display-edit")[0]).toggle();
+            return false;
+        });
+
         $("form .display-edit span.delete a").live('click',function(){
             // console.debug("delete");
             // not really a ul anymore ...
