@@ -1,6 +1,6 @@
 class BookmarksController < ApplicationController
 
-  before_filter :find_and_verify_user, :only => [ :update ]
+  before_filter :find_and_verify_user, :only => [ :update, :annotation ]
 
   def create
     if  !(params[:video_id]) or
@@ -38,6 +38,17 @@ class BookmarksController < ApplicationController
 
     redirect_to :back
 
+  end
+
+  def annotation
+    text = nil
+    if @bookmark
+      @bookmark.annotation = params[:value]
+      @bookmark.save
+      @bookmark.reload
+      text = @bookmark.annotation
+    end
+    render :text => text
   end
 
   def update

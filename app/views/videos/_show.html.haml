@@ -1,8 +1,10 @@
 - video = show
 - bookmark = nil
+- annotation = nil
 - id_value = "#{video.class.name.tableize.singularize}_#{video.id}"
 - if Bookmark === video
   - bookmark = video
+  - annotation = bookmark.annotation
   - video = bookmark.video
 -# removed: .video{:id => id_value}
 %li
@@ -17,7 +19,7 @@
         = "(#{h date.year})"
 
     %p
-      - if bookmark
+      - if false and bookmark
         =h bookmark.sentence
       - else
         =h video.sentence
@@ -25,6 +27,18 @@
       %p
         Tags:
         = tags_html( video.tags )
+    - if bookmark
+      - if bookmark.user != current_user
+        - if annotation && !annotation.blank
+          %p
+            = annotation
+      - else
+        .annotation
+          .url= annotation_bookmark_path bookmark
+          - if annotation
+            .edit<= annotation
+          - else
+            .edit< Click to add annotation
     %p<
       = link_to "View video details", video_path( video )
       \|

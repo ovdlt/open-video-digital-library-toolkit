@@ -5,7 +5,7 @@
 %html{ :xmlns => "http://www.w3.org/1999/xhtml" }
   %head
     %title= title
-    = stylesheet_link_tag "flash", "jquery.autocomplete", "sortable", "structure", "tables", "theme", "jquery.fancybox", :cache => "cached"
+    = stylesheet_link_tag "flash", "jquery.autocomplete", "sortable", "structure", "tables", "theme", :cache => "cached"
     = stylesheet_link_tag "print", :media => " print"
     = javascript_include_tag :all, :cache => "cache/all"
     = javascript_tag "var AUTH_TOKEN = #{form_authenticity_token.inspect};" |

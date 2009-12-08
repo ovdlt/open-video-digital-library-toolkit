@@ -107,7 +107,8 @@ ActionController::Routing::Routes.draw do |map|
 
   end
 
-  map.resources :bookmarks, :collection => { :order => :put }
+  map.resources :bookmarks, :collection => { :order => :put },
+                            :member => { :annotation => :put }
 
   map.resources :sessions
 

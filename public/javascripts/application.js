@@ -528,7 +528,7 @@
             data: post_data
         });
         //console.log("Sent data: " + post_data );
-    }
+    };
 
     new_order_saved = function( selector )
     {
@@ -545,16 +545,52 @@
                 list.sortable('enable');
             }
         };
-    }
+    };
 
     failed_saving_new_order = function( xml_req, error, exception )
     {
         //console.log("failed sending new order to server");
         // TODO display a message telling the user we failed saving the order and what they can do about it ?
-    }
+    };
+
+    $(function(){
+        $(".annotation .edit").each(function(){
+            var blur = function(){
+                var s = $(this).text();
+                if(s === "") {
+                    $(this).text(s = "Click to add annotation");
+                }
+                if(s === "Click to add annotation"){
+                    $(this).addClass("default");
+                } else {
+                    $(this).removeClass("default");
+                }
+            };
+            $(this).blur(blur);
+            blur.apply(this);
+            $(this).focus(function(){
+                var i = $(this).find("input");
+                var s = i.val();
+                if(s === "Click to add annotation"){
+                    i.val("");
+                }
+                return false;
+            });
+            var url = $(this).parent().find(".url").text();
+            $(this).editable(url, {
+                tooltip: "Click to edit ...",
+                method: "PUT",
+                callback: function(){
+                    blur.call(this);
+                },
+            });
+        });
+    });
 
 })(jQuery);
 
 // Local Variables:
-// javascript-indent-level: 4
+// espresso-indent-level:4
+// c-basic-offset:4
+// tab-width:4
 // End:
