@@ -43,9 +43,9 @@
 
         %p.miniplayer#flash
 
-        %script{:type => "text/javascript", :src=>"/javascripts/swfobject.js"}
+        %script{:type => "text/javascript", :src=>compute_public_path(%(swfobject.js),%(javascripts))}
         %script{:type => "text/javascript"}
-          var s1 = new SWFObject('/player.swf','player','200','150','9');
+          = "var s1 = new SWFObject('#{compute_public_path(%(player.swf),%(.))}','player','200','150','9');"
           s1.addParam('allowfullscreen','true');
           s1.addParam('allowscriptaccess','always');
           s1.addParam('flashvars',
@@ -224,9 +224,9 @@
 
           %p.miniplayer#flash_fast_forward{:style => "text-align: center"}
 
-          %script{:type => "text/javascript", :src=>"/javascripts/swfobject.js"}
+          %script{:type => "text/javascript", :src=>compute_public_path(%(swfobject.js),%(javascripts))}
           %script{:type => "text/javascript"}
-            var s1 = new SWFObject('/player.swf','player','320','240','9');
+            = "var s1 = new SWFObject('#{compute_public_path(%(player.swf),%(.))}','player','320','240','9');"
             s1.addParam('allowfullscreen','true');
             s1.addParam('allowscriptaccess','always');
             s1.addParam('flashvars',
@@ -243,10 +243,10 @@
         - if p = video.excerpt_path
 
           %p.miniplayer#flash_excerpt{:style => "text-align: center"}
-
-          %script{:type => "text/javascript", :src=>"/javascripts/swfobject.js"}
+            
+          %script{:type => "text/javascript", :src=>compute_public_path(%(swfobject.js),%(javascripts))}
           %script{:type => "text/javascript"}
-            var s1 = new SWFObject('/player.swf','player','320','240','9');
+            = "var s1 = new SWFObject('#{compute_public_path(%(player.swf),%(.))}','player','320','240','9');"
             s1.addParam('allowfullscreen','true');
             s1.addParam('allowscriptaccess','always');
             s1.addParam('flashvars',
@@ -255,7 +255,6 @@
             s1.write('flash_excerpt');
 
         - else
-
           An excerpt view is not currently available for this video.
 
     /center end
