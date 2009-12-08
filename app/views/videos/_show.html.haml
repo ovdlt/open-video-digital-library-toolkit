@@ -29,7 +29,7 @@
         = tags_html( video.tags )
     - if bookmark
       - if bookmark.user != current_user
-        - if annotation && !annotation.blank
+        - if annotation && !annotation.blank?
           %p
             = annotation
       - else
