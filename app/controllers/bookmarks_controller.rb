@@ -21,6 +21,11 @@ class BookmarksController < ApplicationController
   end
 
   def destroy
+    if params[:id]
+      bookmark = Bookmark.find_by_id params[:id]
+      params[:video_id] ||= bookmark.video_id
+      params[:collection_id] ||= bookmark.collection_id
+    end
     if  !(params[:video_id]) or
         !(collection = Collection.find_by_id params[:collection_id]) or
         ((!current_user or collection.user_id != current_user.id))
