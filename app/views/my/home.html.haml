@@ -54,12 +54,11 @@
               .details
                 %h5.title
                   = link_to h(video.title), video_path( video.id )
-                -#
-                  %p
-                    %span.remove
-                      = link_to "Remove ", downloaded_videos_path( video.id ), |
-                        :method => :delete, |
-                        :confirm => "Are you sure you want to delete this download for your list?" |
+                %p
+                  %span.remove
+                    = link_to "Remove ", download_path( video.id ), |
+                      :method => :delete, |
+                      :confirm => "Are you sure you want to delete this download for your list?" |
       - else
         %p.my-message
           You have currently have no saved downloads. Videos you download from a video's details page will be added here.

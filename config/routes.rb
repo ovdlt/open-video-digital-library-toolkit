@@ -9,6 +9,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :saved_queries
   map.resources :favorites
+  map.resources :downloads
 
   map.activate '/activate/:activation_code',
                :controller => 'users',
