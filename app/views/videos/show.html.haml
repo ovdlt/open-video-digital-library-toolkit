@@ -183,21 +183,12 @@
               %li
                 %label
                   Page Viewed:
-                = h video.views
-                times
+                = h pluralize(video.views, "time")
+            - if !video.downloads.blank?
               %li
                 %label
                   Downloaded:
-                = h video.downloads
-                times
-              %li
-                %label
-                  Favorited:
-                [Placeholder] times
-              %li
-                %label
-                  Playlists:
-                In [Placeholder] playlists
+                = h pluralize(video.downloads, "time")
 
       #storyboard.storyboard.ui-tabs-hide
         - if images = video.storyboard
@@ -243,7 +234,7 @@
         - if p = video.excerpt_path
 
           %p.miniplayer#flash_excerpt{:style => "text-align: center"}
-            
+
           %script{:type => "text/javascript", :src=>compute_public_path(%(swfobject.js),%(javascripts))}
           %script{:type => "text/javascript"}
             = "var s1 = new SWFObject('#{compute_public_path(%(player.swf),%(.))}','player','320','240','9');"
