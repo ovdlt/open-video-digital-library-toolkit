@@ -9,10 +9,12 @@
         %li.heading Library Management
         - mgmt_tabs.each do |tab|
           = tabs_tab_for tab
+        %li.section-divider
         %li.heading
           Metadata Management
         - md_tabs.each do |tab|
           = tabs_tab_for tab
+        %li.section-divider
     /left col end, main col start
     .col-main.right{ :style => "width: 620px" }
       / - form_for :library, @library, :html => { :method => :put, :class => "admin-form create" } do |@form|

@@ -114,6 +114,9 @@ body
 
 .account-page .col-right
 
+  dt
+    :border-bottom solid 1px #d5d5d5
+
   li.heading
     :font-size 14px
     :font-weight bold
@@ -126,14 +129,14 @@ body
   li.heading:hover
     :background-color white
 
-  dt
-    :border-bottom solid 1px #d5d5d5
-
   li
     :font-weight bold
 
   li:hover
     :background-color #e5f0f8
+
+  li.section-divider
+    :visibility hidden
 
 .general-info
   :background-color #f6f6f6
@@ -215,6 +218,35 @@ dt.selected
 
 .navigators li.ui-tabs-selected
   :background url(../images/bg-navigator.gif) no-repeat center 20px
+
+.pager_pagination
+  :background white
+
+  span.disabled
+    :color #AAA
+  span.current
+    :color #fff
+    :background-color #006fbd
+
+  a
+    :color #006fbd
+
+    &:hover
+
+      a
+        :color #fff
+
+    &.current, &:hover
+      :background-color #006fbd
+      :color #fff
+
+  .page_info
+    :background #2E6AB1
+    :color white
+
+    b
+      :color #003
+      :background = #006fbd
 
 
 .listby

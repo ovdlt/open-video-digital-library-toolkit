@@ -7,14 +7,14 @@
   .flash.notice
     %span
       = flash[:notice]
-.col-left
+.col-left.home-page
   .head
     %span.left
       BROWSE
-    .category#browse_axes
+    #browse_axes
   = render :partial => "shared/axes"
 /left col end, center col start
-.col-center
+.col-center.home-page
   .head
     %span.left
       FEATURED VIDEO
@@ -22,6 +22,11 @@
     - first = true
     - featured_videos.each do |video|
       %div{:class =>(first ? "video odd first" : "video even other"), :id => "video_#{video.id}"}
+        - if first
+          %span.corner-1
+          %span.corner-2
+          %span.corner-3
+          %span.corner-4
         - first = false
         .image
           %a{:href => video_path( video.id )}
@@ -43,7 +48,7 @@
           .handle_image
         .clear
 /center col end, right col start
-.col-right
+.col-right.home-page
   .head
     %span.left
       COLLECTIONS
@@ -52,6 +57,10 @@
       == (#{public_collections_count})
 
   #featured_collections.collections
+    %span.corner-1
+    %span.corner-2
+    %span.corner-3
+    %span.corner-4
     - featured_collections.each do |collection|
       .collection.odd{ :id => "collection_#{collection.id}" }
         %h5.title

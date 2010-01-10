@@ -12,6 +12,11 @@ jQuery(document).ready(function() {
   jQuery('.tabs').tabs();
   jQuery('ul.navigators').parent().tabs();
 
+/* ---------------------- new added for theme 1 ------------------------- */
+//  jQuery('.category, .collections, .col-center .video.first').prepend("<span class='corner-1'></span><span class='corner-2'></span><span class='corner-3'></span><span class='corner-4'></span>");
+  jQuery('.category,').prepend("<span class='corner-1'></span><span class='corner-2'></span><span class='corner-3'></span><span class='corner-4'></span>");
+
+/* ---------------------- end new added --------------------------------- */
   jQuery('ul.videos li.fifth + li').css("clear", "left");
 
   jQuery("div.carousel_pager").each(function(index,pager){
