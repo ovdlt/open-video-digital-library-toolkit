@@ -298,9 +298,10 @@
             return false;
         });
 
-        // duplicate of block above but without the ".dt_handle"
-        // needed to make editing values not in .dt_handle cascade work
-        $("form .display-edit span.edit a").click(function(){
+        // Duplicate of block above but changed the ".dt_handle" to".dv_handle"
+        // and added /dv_handle class to libary/_dv.html partial
+        // Best temp solution to make editing/deleting values in both dt and dv work
+        $("form .display-edit .dv_handle span.edit a").click(function(){
             // console.debug("edit");
             $("div.display, div.edit, span.display, span.edit",$(this).parents(".display-edit")[0]).toggle();
             return false;
