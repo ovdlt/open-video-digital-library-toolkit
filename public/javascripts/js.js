@@ -168,6 +168,6 @@ jQuery(document).ready(function() {
 });
 
 jQuery(document).ready( function() {
-    setTimeout( 'jQuery(".flash").effect("highlight", {}, 500 );', 500 );
-    setTimeout( 'jQuery(".flash.notice").fadeOut( 600 );' , 600 );
+    setTimeout( 'jQuery(".flash").effect("highlight", {}, 1000 );', 500 );
+    setTimeout( 'jQuery(".flash.notice").fadeOut( 2000 );' , 2000 );
 } );

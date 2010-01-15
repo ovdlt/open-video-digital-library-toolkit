@@ -69,7 +69,7 @@
           = collection.size(public_only?)
           videos
         %p
-          &= collection.description
+          &= truncate(collection.description, 185)
         .handle
           .handle_image
   /%input{ :type => "submit", :class => "save_new_order", :value => "Save new order" }
