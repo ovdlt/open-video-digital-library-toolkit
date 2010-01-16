@@ -162,7 +162,7 @@ class VideosController < ApplicationController
 
   def destroy
     @video.destroy
-    flash.now[:notice] = "<span class='video-title'>#{@video.title} </span>  was deleted"
+    flash.now[:notice] = "<span class='video-title'>#{@video.title} </span> was deleted"
     redirect_to videos_path
   end
 
@@ -235,7 +235,7 @@ class VideosController < ApplicationController
         was_new = @video.new_record?
         if @video.save
           if was_new
-            flash[:notice] = "<span class='video-title'>#{@video.title} </span>  was added"
+            flash[:notice] = "<span class='video-title'>#{@video.title} </span> was added"
             session["working_video"] = nil
             redirect_to videos_path
           else
