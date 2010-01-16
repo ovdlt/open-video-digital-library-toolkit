@@ -1,3 +1,12 @@
+- if flash[:error]
+  .flash.error
+    %span
+      = flash[:error]
+- if flash[:notice]
+  .flash.notice
+    %span
+      = flash[:notice]
+
 .one-column
   .head
     %span.left

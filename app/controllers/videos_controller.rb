@@ -162,7 +162,7 @@ class VideosController < ApplicationController
 
   def destroy
     @video.destroy
-    flash[:notice] = "#{@video.title} was deleted"
+    flash.now[:notice] = "<span class='video-title'>#{@video.title} </span>  was deleted"
     redirect_to videos_path
   end
 
@@ -235,11 +235,11 @@ class VideosController < ApplicationController
         was_new = @video.new_record?
         if @video.save
           if was_new
-            flash[:notice] = "#{@video.title} was added"
+            flash[:notice] = "<span class='video-title'>#{@video.title} </span>  was added"
             session["working_video"] = nil
             redirect_to videos_path
           else
-            flash[:notice] = "#{@video.title} saved"
+            flash[:notice] = "<span class='video-title'>#{@video.title} </span> was saved"
             redirect_to video_path( @video )
           end
         else
@@ -407,7 +407,7 @@ class VideosController < ApplicationController
 
       if okay
         if was_new
-          flash[:notice] = "#{@video.title} was added"
+          flash[:notice] = "<span class='video-title'>#{@video.title} </span> was added"
           if params["submit"] == "save"
             redirect_to edit_video_path( @video )
           else
@@ -417,7 +417,7 @@ class VideosController < ApplicationController
           if params["video"] && params["video"]["poster_path"]
             redirect_to video_path(@video, :details_format => "storyboard")
           else
-            flash[:notice] = "#{@video.title} saved"
+            flash[:notice] = "<span class='video-title'>#{@video.title} </span> was saved"
             if params["submit"] == "save"
               redirect_to edit_video_path( @video )
             else

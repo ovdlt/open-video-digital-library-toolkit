@@ -2,7 +2,7 @@
 - form_tag collection_bookmarks_path(:from_params), :method => :post, :class => :inline do
   = hidden_field_tag :video_id, add_to_playlist.id, :id => nil
   %label.button.playlist
-    Add to playlist
+    Add to Playlist
   .bookmark.hidden
     %br
     = select_tag "bookmark_into_id", bookmark_options(video), :id => nil

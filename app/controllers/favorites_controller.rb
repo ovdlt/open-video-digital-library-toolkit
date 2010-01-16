@@ -9,9 +9,9 @@ class FavoritesController < ApplicationController
          ( current_user.favorites.all_videos << v ) and
          current_user.favorites.save and
          current_user.save
-        flash[:notice] = "Favorite saved"
+        flash[:notice] = "Favorite added"
       else
-        flash[:error] = "Error saving favorite"
+        flash[:error] = "Error adding favorite"
       end
     end
     redirect_to :back
@@ -30,7 +30,7 @@ class FavoritesController < ApplicationController
 
     if v = Video.find( params[:id] )
       current_user.favorites.all_videos.delete v
-      flash[:notice] = "Favorite removed"
+      flash[:notice] = "Favorite deleted"
     end
 
     redirect_to :back
