@@ -189,7 +189,7 @@ class LibraryController < ApplicationController
         user.destroy
       end
     end
-    redirect_to url_for( :action => :users )
+    redirect_to library_path
   end
 
   def remove_role
@@ -204,7 +204,8 @@ class LibraryController < ApplicationController
         end
       end
     end
-    redirect_to url_for( :action => :users )
+    #redirect_to url_for( :action => :users )
+    redirect_to library_path
   end
 
   def add_role
@@ -219,7 +220,7 @@ class LibraryController < ApplicationController
         end
       end
     end
-    redirect_to url_for( :action => :users )
+    redirect_to library_path
   end
 
   def property_type_order

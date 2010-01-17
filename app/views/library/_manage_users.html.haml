@@ -7,7 +7,7 @@
         %label
           Remove User
           = text_field_tag :users, nil, :id => nil, :class => "input"
-        = submit_tag "remove"
+        = submit_tag "Remove"
 
     - Role.find(:all).each do |role|
       - role = role.name
@@ -19,7 +19,7 @@
             &= role.humanize
             = text_field_tag :users, nil, :id => nil, :class => "input"
             = hidden_field_tag :role, role, :id => nil
-          = submit_tag "add"
+          = submit_tag "Add"
 
         - form_tag :action => :remove_role do
           %label
@@ -27,4 +27,4 @@
             &= role.humanize
             = text_field_tag :users, nil, :id => nil, :class => "input"
             = hidden_field_tag :role, role, :id => nil
-          = submit_tag "remove"
+          = submit_tag "Remove"
