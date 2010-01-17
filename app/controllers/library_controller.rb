@@ -235,22 +235,6 @@ class LibraryController < ApplicationController
     render_nothing
   end
 
-  # Site Activity page
-  def video_downloads(displayNum=10, startDate=20.years.ago)
-    Video.all(:select => "title, downloads, last_downloaded, id", :conditions => ["last_downloaded >= ?", startDate], :limit => displayNum, :order => "downloads DESC")
-  end
-
-  def video_views(displayNum=10, startDate=20.years.ago)
-    Video.all(:select => "title, views, last_viewed, id", :conditions => ["last_viewed >= ?", startDate], :limit => displayNum, :order => "views DESC")
-  end
-
-  def popular_tags(displayNum=15, startDate=20.years.ago)
-    Tag.all(:joins => :taggings, :select => "tags.*, count(taggings.id) as taggings_count", :conditions => ["taggings.updated_at >= ?", startDate], :group => "tags.id", :limit => displayNum, :order => "taggings_count DESC")
-  end
-
-  def registered_users(displayNum=10, state="active")
-    User.all(:select => "login, email, created_at, updated_at", :conditions => ["state = ?", state], :limit => displayNum, :order => "updated_at DESC")
-  end
 
   private
 
@@ -303,10 +287,6 @@ class LibraryController < ApplicationController
     @property_types = PropertyType.find :all
     @descriptor_values = DescriptorValue.find :all
     @rights_details = RightsDetail.find :all
-    @video_downloads = video_downloads()
-    @video_views = video_views()
-    @popular_tags = popular_tags()
-    @registered_users = registered_users()
   end
 
 end

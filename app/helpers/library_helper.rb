@@ -3,9 +3,7 @@ module LibraryHelper
   def mgmt_tabs
     [
      :general_information,
-     :manage_users,
-     :export_records,
-     :site_activity
+     :manage_users
     ]
   end
 

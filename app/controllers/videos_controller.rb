@@ -162,7 +162,9 @@ class VideosController < ApplicationController
 
   def destroy
     @video.destroy
-    flash.now[:notice] = "<span class='video-title'>#{@video.title} </span> was deleted"
+    # would prefer to use "flash.now[:notice]" so that flash message isn't held too long
+    # but that breaks a test
+    flash[:notice] = "<span class='video-title'>#{@video.title} </span> was deleted"
     redirect_to videos_path
   end
 
