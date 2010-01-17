@@ -11,7 +11,7 @@
         - fields_for "property_type[#{type_id(dt)}]", dt do |fields|
           %label
             Type:
-            = fields.text_field :name
+            = fields.text_field :name, :placeholder => "Name of descriptor"
           %br
           %br
           %label.browsable-line

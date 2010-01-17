@@ -18,7 +18,7 @@
           %span.delete= link_to "delete", "#"
         %label
           Value:
-          = fields.text_field :value, :id => gen_id
+          = fields.text_field :value, :id => gen_id, :placeholder => "Name of person or other entity"
       = error_messages_for 'property', :object => p_string
       = hidden_field_tag "property[#{type_id(p_string)}][deleted]", |
                            false, :id => nil, :class => :deleted |

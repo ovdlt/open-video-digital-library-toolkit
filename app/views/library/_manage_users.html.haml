@@ -5,8 +5,8 @@
     %li
       - form_tag :action => :remove_users do
         %label
-          Remove User
-          = text_field_tag :users, nil, :id => nil, :class => "input"
+          Remove Users
+          = text_field_tag :users, nil, :id => nil, :class => "input", :placeholder => "Enter a login name to remove that user; separate multiple login names with spaces"
         = submit_tag "Remove"
 
     - Role.find(:all).each do |role|
@@ -17,7 +17,7 @@
           %label
             Users to add to role
             &= role.humanize
-            = text_field_tag :users, nil, :id => nil, :class => "input"
+            = text_field_tag :users, nil, :id => nil, :class => "input", :placeholder => "Enter a login name to add role for that user; separate multiple login names with spaces"
             = hidden_field_tag :role, role, :id => nil
           = submit_tag "Add"
 
@@ -25,6 +25,6 @@
           %label
             Users to remove from role
             &= role.humanize
-            = text_field_tag :users, nil, :id => nil, :class => "input"
+            = text_field_tag :users, nil, :id => nil, :class => "input", :placeholder => "Enter a login name to remove role for that user; separate multiple login names with spaces"
             = hidden_field_tag :role, role, :id => nil
           = submit_tag "Remove"

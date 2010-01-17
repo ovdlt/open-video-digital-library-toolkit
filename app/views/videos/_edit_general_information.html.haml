@@ -9,7 +9,7 @@
       .title.required{ error_class( @video, :title ) }
         .label= @form.label :title, "Title of Video"
         -# size 44 made these fields wider than their container
-        %div= @form.text_field :title
+        %div= @form.text_field :title, :placeholder => "Required field"
         = error_message_on @video, :title
 
       .alternative_title{ error_class( @video, :alternative_title ) }

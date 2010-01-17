@@ -8,7 +8,7 @@
       - fields_for "descriptor_value[#{type_id(dv)}]", dv do |fields|
         %label
           Value:
-          = fields.text_field :text, :id => gen_id
+          = fields.text_field :text, :id => gen_id, :placeholder => "Name of a descriptor value"
         %span.delete= link_to "delete", "#"
         = error_messages_for 'descriptor_value', :object => dv
         = hidden_field_tag( "descriptor_value[#{type_id(dv)}][deleted]", |

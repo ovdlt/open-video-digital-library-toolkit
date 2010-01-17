@@ -18,7 +18,7 @@
           %span.delete= link_to "delete", "#"
         %label
           Value:
-          = fields.text_field :value
+          = fields.text_field :value, :placeholder => "Format: YYYY-MM-DD"
       = error_messages_for 'property', :object => p_date
       = hidden_field_tag "property[#{type_id(p_date)}][deleted]", |
                            false, :id => nil, :class => :deleted |
