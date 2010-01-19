@@ -12,6 +12,12 @@
   .head
     %span.left{:class=>video_vis_class(video)}
       = h video.title
+    - if current_user and current_user.has_role?(  [ :admin, :cataloger ] )
+
+      - if !video.public?
+        %label.title_private>NOT PUBLIC
+
+
 
     - if current_user and current_user.has_role?( :admin )
       .public.clear

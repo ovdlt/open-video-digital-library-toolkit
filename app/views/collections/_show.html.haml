@@ -7,7 +7,6 @@
   - if current_user and current_user.has_role?(  [ :admin, :cataloger ] )
     .featured
       - form_for collection, :html => { :id => nil } do |form|
-        = form.check_box :featured, :id => gen_id
         - if !collection.featured?
           %label.is_featured
             Feature this collection
@@ -15,6 +14,7 @@
           %label.is_featured
             Featured
             = feature_rank( collection )
+        = form.check_box :featured, :id => gen_id
   - else
     - if collection.featured?
       %label.title_featured>FEATURED
