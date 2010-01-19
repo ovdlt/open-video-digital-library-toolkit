@@ -18,11 +18,12 @@
   - else
     - if collection.featured?
       %label.title_featured>FEATURED
-  %span.right.rss
-    = image_tag("icon-rss.gif", :alt => "rss")
-    %a{ :href => "#" }
-      Subscribe to this
-      = container_text( collection ).capitalize
+  -# Section below temporarily removed until we get function working
+    %span.right.rss
+      = image_tag("icon-rss.gif", :alt => "rss")
+      %a{ :href => "#" }
+        Subscribe to this
+        = container_text( collection ).capitalize
 /head end
 .body
   .col-main.left

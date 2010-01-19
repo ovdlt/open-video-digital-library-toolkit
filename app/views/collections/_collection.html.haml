@@ -51,10 +51,10 @@
       %strong
         = link_to "View " + container_text( collection ) + " ", |
           collection_path( collection ) |
-      \|
-      %strong
-        = link_to "Subscribe to " + container_text( collection ) + " ", |
-          collection_path( collection, :format => "atom" ) |
+      -#\|
+      -#%strong
+        -#= link_to "Subscribe to " + container_text( collection ) + " ", |
+          -#collection_path( collection, :format => "atom" ) |
 
       - if current_user and current_user.id == collection.user_id
         \|
