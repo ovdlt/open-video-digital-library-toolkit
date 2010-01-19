@@ -38,7 +38,7 @@
           - if annotation
             .edit<= annotation
           - else
-            .edit< Click to add annotation
+            .edit< Click to add annotation (press Enter to save)
     %p<
       = link_to "View video details", video_path( video )
       \|
@@ -47,5 +47,5 @@
         \|
         = link_to "Remove from " + container_text( @collection ), bookmark_path( bookmark ) |
                                 , :method => :delete |
-                                , :confirm => "Are you sure you want to remove this video" |
+                                , :confirm => "Are you sure you want to remove this video?" |
 

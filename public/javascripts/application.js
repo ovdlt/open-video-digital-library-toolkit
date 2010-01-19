@@ -559,9 +559,9 @@
             var blur = function(){
                 var s = $(this).text();
                 if(s === "") {
-                    $(this).text(s = "Click to add annotation");
+                    $(this).text(s = "Click to add annotation (press Enter to save)");
                 }
-                if(s === "Click to add annotation"){
+                if(s === "Click to add annotation (press Enter to save)"){
                     $(this).addClass("default");
                 } else {
                     $(this).removeClass("default");
@@ -572,7 +572,7 @@
             $(this).focus(function(){
                 var i = $(this).find("input");
                 var s = i.val();
-                if(s === "Click to add annotation"){
+                if(s === "Click to add annotation (press Enter to save)"){
                     i.val("");
                 }
                 return false;
