@@ -50,13 +50,13 @@ class VideoConverter
           FileUtils.mkdir_p "#{root}/#{subdir}"
           case subdir
           when "flash"
-            converter "-if #{ASSET_DIR}/#{directory} -of #{root}/#{subdir}/0002.0001_H.flv -interval 1"
+            converter "-if #{ASSET_DIR}/#{directory} -of #{root}/#{subdir}/#{directory}.flv -interval 1 > #{root}/#{subdir}/#{directory}.log"
           when "fastforwards"
-            converter "-if #{ASSET_DIR}/#{directory} -of #{root}/#{subdir}/0002.0001_H.flv"
+            converter "-if #{ASSET_DIR}/#{directory} -of #{root}/#{subdir}/#{directory}.flv > #{root}/#{subdir}/#{directory}.log"
           when "excerpts"
-            converter "-if #{ASSET_DIR}/#{directory} -of #{root}/#{subdir}/0002.0001_H.flv  -interval 1 -time_segment 10 20"
+            converter "-if #{ASSET_DIR}/#{directory} -of #{root}/#{subdir}/#{directory}.flv  -interval 1 -time_segment 12 22 > #{root}/#{subdir}/#{directory}.log"
           when "stills"
-            converter "-if #{ASSET_DIR}/#{directory} -of #{root}/#{subdir}/#{directory}.jpg -scale_x 320\n"
+            converter "-if #{ASSET_DIR}/#{directory} -of #{root}/#{subdir}/#{directory}.jpg -scale_x 320 > #{root}/#{subdir}/#{directory}.log"
           end
         end
 
@@ -81,7 +81,7 @@ class VideoConverter
       cmd = "#{RAILS_ROOT}/lib/KFQuilt " + string
       print cmd
       result = system cmd
-      if result != 0 
+      if result != 0
         $stderr.print "conversion failed: exit status: #{$?}\n"
       end
     end
