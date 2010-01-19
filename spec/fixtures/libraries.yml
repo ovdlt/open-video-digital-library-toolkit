@@ -26,7 +26,7 @@ nhf:
 
      h3. Images with Wrapping Text
 
-     p. <img src="../images/image.jpg" alt="placeholder image" class="left" /><!-- Images should go in the "/public/images" directory to use the path example used with this image  -->
+     p. <img src="../images/image.jpg" alt="placeholder image" class="left" width="350" /><!-- Images should go in the "/public/images" directory to use the path example used with this image  -->
 
      Paragraph text...  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec id facilisis justo. Sed sit amet dui libero. Aliquam ultricies semper arcu in semper. Praesent semper venenatis malesuada. Ut egestas aliquam mollis. Morbi sapien velit, fermentum in vehicula eget, tincidunt luctus diam. Etiam at libero nec justo rhoncus sollicitudin. Cras ut lobortis tellus. Nulla accumsan gravida elit facilisis pretium. In odio eros, dictum nec porttitor ut, consectetur in mi. Aliquam interdum scelerisque felis a tristique. Sed vitae dolor sem.
 
@@ -70,7 +70,7 @@ nhf:
      h5. Directions
 
      <div class="map">
-     <img src="../images/google-map.jpg" alt="map" />
+     <img src="../images/google-map.jpg" alt="map" width="400" />
      </div>
 
      </div>
@@ -110,7 +110,7 @@ nhf:
 
      h3. Images with Wrapping Text
 
-     p. <img src="../images/image.jpg" alt="placeholder image" class="left" /><!-- Images should go in the "/public/images" directory to use the path example used with this image  -->
+     p. <img src="../images/image.jpg" alt="placeholder image" class="left" width="350" /><!-- Images should go in the "/public/images" directory to use the path example used with this image  -->
 
      Paragraph text...  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec id facilisis justo. Sed sit amet dui libero. Aliquam ultricies semper arcu in semper. Praesent semper venenatis malesuada. Ut egestas aliquam mollis. Morbi sapien velit, fermentum in vehicula eget, tincidunt luctus diam. Etiam at libero nec justo rhoncus sollicitudin. Cras ut lobortis tellus. Nulla accumsan gravida elit facilisis pretium. In odio eros, dictum nec porttitor ut, consectetur in mi. Aliquam interdum scelerisque felis a tristique. Sed vitae dolor sem.
 
