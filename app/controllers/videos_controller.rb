@@ -316,7 +316,7 @@ class VideosController < ApplicationController
           v.delete(:assets)
         end
 
-        if !current_user.has_role? :admin
+        if !current_user.has_role?([:admin,:cataloger])
           v.delete( :public )
         end
 

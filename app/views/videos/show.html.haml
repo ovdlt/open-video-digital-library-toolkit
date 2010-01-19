@@ -12,14 +12,13 @@
   .head
     %span.left{:class=>video_vis_class(video)}
       = h video.title
-    - if current_user and current_user.has_role?(  [ :admin, :cataloger ] )
 
+    - if current_user and current_user.has_role?( [ :admin, :cataloger ] )
       - if !video.public?
-        %label.title_private>NOT PUBLIC
+        %label.title_private
+          This video is
+          = video.public? ? "public" : "private"
 
-
-
-    - if current_user and current_user.has_role?( :admin )
       .public.clear
         - form_for video, :html => { :id => nil } do |form|
           = form.check_box :public
@@ -29,12 +28,6 @@
           - else
             %label.is_public
               This video is public
-    - elsif current_user and current_user.has_role?(  :cataloger )
-      %label.is_public
-        This video is
-        = video.public? ? "public" : "private"
-
-    - if current_user and current_user.has_role?(  [ :admin, :cataloger ] )
       .featured.clear
         - form_for video, :html => { :id => nil } do |form|
           = form.check_box :featured
