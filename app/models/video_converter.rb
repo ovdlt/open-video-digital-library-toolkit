@@ -50,13 +50,13 @@ class VideoConverter
           FileUtils.mkdir_p "#{root}/#{subdir}"
           case subdir
           when "flash"
-            converter "-if #{ASSET_DIR}/#{directory} -of #{root}/#{subdir}/#{directory}.flv -interval 1 > #{root}/#{subdir}/#{directory}.log"
+            converter "-if #{ASSET_DIR}/#{directory} -of #{root}/#{subdir}/#{directory}.flv -interval 1"
           when "fastforwards"
-            converter "-if #{ASSET_DIR}/#{directory} -of #{root}/#{subdir}/#{directory}.flv > #{root}/#{subdir}/#{directory}.log"
+            converter "-if #{ASSET_DIR}/#{directory} -of #{root}/#{subdir}/#{directory}.flv"
           when "excerpts"
-            converter "-if #{ASSET_DIR}/#{directory} -of #{root}/#{subdir}/#{directory}.flv  -interval 1 -time_segment 12 22 > #{root}/#{subdir}/#{directory}.log"
+            converter "-if #{ASSET_DIR}/#{directory} -of #{root}/#{subdir}/#{directory}.flv  -interval 1 -time_segment 12 22"
           when "stills"
-            converter "-if #{ASSET_DIR}/#{directory} -of #{root}/#{subdir}/#{directory}.jpg -scale_x 320 > #{root}/#{subdir}/#{directory}.log"
+            converter "-if #{ASSET_DIR}/#{directory} -of #{root}/#{subdir}/#{directory}.jpg -scale_x 320"
           end
         end
 
@@ -78,7 +78,7 @@ class VideoConverter
     end
 
     def converter string
-      cmd = "#{RAILS_ROOT}/lib/KFQuilt " + string
+      cmd = "#{RAILS_ROOT}/lib/ovsurgen " + string
       print cmd
       result = system cmd
       if result != 0
