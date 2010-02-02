@@ -1,15 +1,11 @@
 /log/*.log
 /tmp/**/*
 .DS_Store
-/doc/api
-/doc/app
 /config/initializers/site_keys.rb
 /config/database.yml
 /public/stylesheets/*.css
 /coverage
-/public/assets/*
 /public/assets
-/public/surrogates/*
 /public/surrogates
 /vendor/gems/*/ext/*/Makefile
 /vendor/gems/*/ext/*/*.bundle
@@ -18,3 +14,5 @@
 /vendor/gems/*/lib/*.so
 /vendor/gems/*/ext/redcloth_scan/*.o
 /lib/KFQuilt
+/ovdlt.tgz
+/pkg

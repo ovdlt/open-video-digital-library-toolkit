@@ -25,3 +25,13 @@ namespace :tmp do
   end
 end
 
+task :release do
+  rm_rf "pkg"
+  mkdir_p "pkg/ovdlt"
+  system "cp -r . pkg/ovdlt"
+  rm_rf "pkg/ovdlt/pkg"
+  rm_f "pkg/ovdlt/ovdlt.tgz"
+  mkdir_p "pkg/ovdlt/public/surrogates pkg/ovdlt/public/assets"
+  system "find pkg -name .git | xargs rm -rf"
+  system "(cd pkg; tar cvfz ../ovdlt.tgz ovdlt)"
+end
