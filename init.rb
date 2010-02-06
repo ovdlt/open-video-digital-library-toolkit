@@ -38,8 +38,8 @@ ENV["RAILS_ENV"] = "production"
 system "rake db:create"
 system "rake db:migrate"
 
+cp_r "spec/fixtures/assets", "public"
+cp_r "spec/fixtures/surrogates", "public"
 system "rake spec:db:fixtures:load"
-cp_r "spec/fixtures/assets/.", "public/assets/."
-cp_r "spec/fixtures/surrogates/.", "public/surrogates/."
 
 system "rake db:populate"
