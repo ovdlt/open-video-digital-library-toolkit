@@ -76,7 +76,7 @@
                       :url => videos_path, |
                       :html => { :method => :get }, |
                       :builder => OvdltFormBuilder do |form| |
-                = form.criterion :text, :size => 40, :id => nil, :class => 'input-text'
+                = form.criterion :text, :size => 40, :id => nil, :class => 'input-text', :placeholder => 'Search videos...'
                 = image_submit_tag "sch.gif", :class => 'btn'
         /header end
         .container
