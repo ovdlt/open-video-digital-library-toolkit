@@ -22,7 +22,7 @@
                 %img{:src=>poster_path, :alt => "video #{v.id}"}
           .details
             %h5.title{:class=>video_vis_class(v)}
-              = link_to h(v.title), video_path( v.id )
+              = link_to h(truncate(v.title, 35)), video_path( v.id )
             %p
               = link_to "#{h descriptor.text}", descriptor_value_search( descriptor )
       - index += 1

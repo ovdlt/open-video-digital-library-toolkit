@@ -1,44 +1,154 @@
 1:
   video_id: 1
   property_type_id: 38
-  integer_value: 1
+  integer_value: 2
+
+1b:
+  video_id: 1
+  property_type_id: 39
+  integer_value: 9
+
+1c:
+  video_id: 1
+  property_type_id: 40
+  integer_value: 17
+
+1d:
+  video_id: 1
+  property_type_id: 41
+  integer_value: 20
+
+1e:
+  video_id: 1
+  property_type_id: 42
+  integer_value: 11
+
+1f:
+  video_id: 1
+  property_type_id: 37
+  integer_value: 2
 
 2:
   video_id: 2
   property_type_id: 38
-  integer_value: 2
-
-1r:
-  video_id: 1
-  property_type_id: 37
   integer_value: 1
 
-2r:
+2b:
+  video_id: 2
+  property_type_id: 39
+  integer_value: 9
+
+2c:
+  video_id: 2
+  property_type_id: 40
+  integer_value: 17
+
+2d:
+  video_id: 2
+  property_type_id: 41
+  integer_value: 20
+
+2e:
+  video_id: 2
+  property_type_id: 42
+  integer_value: 11
+
+2f:
   video_id: 2
   property_type_id: 37
   integer_value: 2
-  
-3r:
+
+3:
+  video_id: 3
+  property_type_id: 38
+  integer_value: 1
+
+3b:
+  video_id: 3
+  property_type_id: 39
+  integer_value: 9
+
+3c:
+  video_id: 3
+  property_type_id: 40
+  integer_value: 18
+
+3d:
+  video_id: 3
+  property_type_id: 41
+  integer_value: 21
+
+3e:
+  video_id: 3
+  property_type_id: 42
+  integer_value: 11
+
+3f:
   video_id: 3
   property_type_id: 37
+  integer_value: 2
+
+3g:
+  video_id: 3
+  property_type_id: 38
   integer_value: 3
-  
-4r:
+
+4:
+  video_id: 4
+  property_type_id: 38
+  integer_value: 1
+
+4b:
+  video_id: 4
+  property_type_id: 39
+  integer_value: 9
+
+4c:
+  video_id: 4
+  property_type_id: 40
+  integer_value: 17
+
+4d:
+  video_id: 4
+  property_type_id: 41
+  integer_value: 20
+
+4e:
+  video_id: 4
+  property_type_id: 42
+  integer_value: 11
+
+4f:
   video_id: 4
   property_type_id: 37
-  integer_value: 4
-  
-5r:
+  integer_value: 2
+
+5:
+  video_id: 5
+  property_type_id: 38
+  integer_value: 1
+
+5b:
+  video_id: 5
+  property_type_id: 39
+  integer_value: 6
+
+5c:
+  video_id: 5
+  property_type_id: 40
+  integer_value: 17
+
+5d:
+  video_id: 5
+  property_type_id: 41
+  integer_value: 20
+
+5e:
+  video_id: 5
+  property_type_id: 42
+  integer_value: 11
+
+5f:
   video_id: 5
   property_type_id: 37
-  integer_value: 5
-  
-6r:
-  video_id: 6
-  property_type_id: 37
-  integer_value: 6
-  
-7r:
-  video_id: 7
-  property_type_id: 37
-  integer_value: 7
+  integer_value: 2

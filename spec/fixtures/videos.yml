@@ -1,70 +1,96 @@
 video1:
   id: 1
-  title: From Stump to Ship
-  sentence: Depicts the year-round activities of the Machias Lumber Company on the Machias River in Washington County, Maine.
+  title: Breakfast Pals
+  sentence: Rice Krispies stay crispy in milk!
+  abstract: "Snap, Crackle and Pop take on Soggy, Mushy and Toughy."
   created_at: <%=(Time.now + 1.minute).utc.to_s(:db)%>
   updated_at: <%=(Time.now + 1.minute).utc.to_s(:db)%>
-  duration: 7
-  public: true
-  featured: true
-  featured_priority: 1
-
-video2:
-  id: 2
-  title: Maine's TV Time Machine
-  sentence: Placeholder description for the Maine's TV Time Machine video.
-  created_at: <%=(Time.now + 2.minutes).utc.to_s(:db)%>
-  updated_at: <%=(Time.now + 2.minutes).utc.to_s(:db)%>
-  duration: 7
-  public: true
-  featured: true
-  featured_priority: 2
-
-video3:
-  id: 3
-  title: Charles S. Clark - home movies
-  sentence: Children on swing
-  created_at: <%=(Time.now + 4.minutes).utc.to_s(:db)%>
-  updated_at: <%=(Time.now + 4.minutes).utc.to_s(:db)%>
-  public: true
-  duration: 7
-  featured: true
-  featured_priority: 3
-
-video4:
-  id: 4
-  title: Mr. Ed Goes to town
-  sentence: Horses are very interesting.
-  created_at: <%=(Time.now + 8.minutes).utc.to_s(:db)%>
-  updated_at: <%=(Time.now + 8.minutes).utc.to_s(:db)%>
-  duration: 6
+  duration: 120
+  creation_credits: |
+   Cartoon Films, Limited
+   Sponsored by Kellogg (W.K.) Company
   public: true
   featured: true
   featured_priority: 4
+  views: 8
+  downloads: 5
+  last_viewed: <%=(Time.now + 2.minutes).utc.to_s(:db)%>
+  last_downloaded: <%=(Time.now + 2.minutes).utc.to_s(:db)%>
+  poster_path: /surrogates/Breakfas1939_512kb.mp4/stills/Breakfas1939_512kb.mp4_00033.100.jpg
+
+video2:
+  id: 2
+  title: Coral Gables
+  sentence: "Come visit sunny, tropical Florida!"
+  abstract: |
+   Travelogue, made for theatrical showing, promoting tourism in Coral Gables, Florida. Shows colorful parrots, the University of Miami, and a visit to the beach.
+  created_at: <%=(Time.now + 2.minutes).utc.to_s(:db)%>
+  updated_at: <%=(Time.now + 2.minutes).utc.to_s(:db)%>
+  duration: 180
+  series_title: Road to Romance
+  creation_credits: |
+   Producer: Handy (Jam) Organization
+   Sponsor: Chevrolet Division, General Motors Corp.
+  public: true
+  featured: true
+  featured_priority: 3
+  views: 6
+  downloads: 4
+  last_viewed: <%=(Time.now + 2.minutes).utc.to_s(:db)%>
+  last_downloaded: <%=(Time.now + 2.minutes).utc.to_s(:db)%>
+  poster_path: /surrogates/RoadstoR1950_512kb.mp4/stills/RoadstoR1950_512kb.mp4_00001.068.jpg
+
+video3:
+  id: 3
+  title: Post Office Works On
+  sentence: |
+   In the midst of a postal strike, the Bangor post office works on.
+  abstract: |
+   News footage shot by WABI-TV of the Bangor Post Office at work. In spite of postal strikes in many other large cities, the Bangor Post Office keeps moving. Contains footage of postal workers sorting mail/letters in the mailroom and large piles of mail and mail bags.
+  series_title: Bangor Historical Society/WABI Collection
+  creation_credits: WABI-TV (Bangor, Maine)
+  created_at: <%=(Time.now + 4.minutes).utc.to_s(:db)%>
+  updated_at: <%=(Time.now + 4.minutes).utc.to_s(:db)%>
+  public: true
+  duration: 46
+  featured: true
+  featured_priority: 2
+  views: 4
+  downloads: 2
+  last_viewed: <%=(Time.now + 2.minutes).utc.to_s(:db)%>
+  last_downloaded: <%=(Time.now + 2.minutes).utc.to_s(:db)%>
+  poster_path: /surrogates/1191.1228.05_H.mov/stills/1191.1228.05_H.mov_00012.813.jpg
+
+video4:
+  id: 4
+  title: Forces of Flight
+  sentence: Scientists explain the fundamentals of flight.
+  abstract: NASA Connect segment explaining the fundamentals of flight and the science behind it.
+  created_at: <%=(Time.now + 8.minutes).utc.to_s(:db)%>
+  updated_at: <%=(Time.now + 8.minutes).utc.to_s(:db)%>
+  duration: 226
+  series_title: NASA Connect - SOF
+  public: true
+  featured: true
+  featured_priority: 1
+  views: 4
+  downloads: 1
+  last_viewed: <%=(Time.now + 2.minutes).utc.to_s(:db)%>
+  last_downloaded: <%=(Time.now + 2.minutes).utc.to_s(:db)%>
+  poster_path: /surrogates/NASASOF-ForcesOfFlight.mp4/stills/NASASOF-ForcesOfFlight.mp4_00003.648.jpg
 
 video5:
   id: 5
-  title: Dynamic Queries Demo
-  sentence: Ben shows you how to do dynamic queries.
+  title: Virus de Computadora
+  alternative_title: Computer Viruses
+  series_title: NASAKSN
+  sentence: Que es un virus de computadora?
   created_at: <%=(Time.now + 16.minutes).utc.to_s(:db)%>
   updated_at: <%=(Time.now + 16.minutes).utc.to_s(:db)%>
-  duration: 10
+  duration: 58
   public: true
-
-video6:
-  id: 6
-  title: Hurricanes and Computer Simulation
-  sentence: NASA video showing how hurricanes are simulated.
-  created_at: <%=(Time.now + 32.minutes).utc.to_s(:db)%>
-  updated_at: <%=(Time.now + 32.minutes).utc.to_s(:db)%>
-  public: true
-  duration: 7
-
-video7:
-  id: 7
-  title: USGS mapping
-  sentence: USGS mapps of California
-  created_at: <%=(Time.now + 64.minutes).utc.to_s(:db)%>
-  updated_at: <%=(Time.now + 64.minutes).utc.to_s(:db)%>
-  duration: 7
-  public: true
+  views: 4
+  downloads: 2
+  last_viewed: <%=(Time.now + 2.minutes).utc.to_s(:db)%>
+  last_downloaded: <%=(Time.now + 2.minutes).utc.to_s(:db)%>
+  poster_path: /surrogates/NASAKSN-VirusDeComputadora.mpg/stills/NASAKSN-VirusDeComputadora.mpg_00008.542.jpg

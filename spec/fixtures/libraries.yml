@@ -1,14 +1,14 @@
-nhf:
+dmc:
   id: 1
-  title: Northeast Historic Film Archives
-  subtitle: a digital library for the Northeast Historic Film archives
+  title: DMC Course Collection
+  subtitle: this is a subtitle placeholder for you to replace
   logo_url: http://www.oldfilm.org/themes/oldfilm/images/nhflogo.jpg
-  my: My NHF
+  my: My DMC
   collections_login: collections
-  collections_title: NHF Special Collections
-  playlists_title: NHF Public Playlists
-  copyright: '&copy; Northeast Historic Film. All Rights Reserved.'
-  org_link: '"Northeast Historic Film":http://www.oldfilm.org/'
+  collections_title: DMC Special Collections
+  playlists_title: DMC Public Playlists
+  copyright: '&copy; Your name here. All Rights Reserved.'
+  org_link: '"UT iSchool INF 385U":http://courses.ischool.utexas.edu/feinberg/2010/spring/INF385U/'
   emails: "librarian@foo.bar"
   theme: "default"
   about: |

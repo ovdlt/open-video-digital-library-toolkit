@@ -35,12 +35,12 @@
         .details
           %h5.title{:class=>video_vis_class(video)}
             = link_to h(video.title), video_path( video )
-          - if !(d = video_created( video )).blank?
-            .duration= int_to_duration( video.duration )
-            %span.between
-              |
-            .created
-              &= video_created( video ).to_s(:long)
+          / - if !(d = video_created( video )).blank?
+          /   .duration= int_to_duration( video.duration )
+          /   %span.between
+          /     |
+          /   .created
+          /     &= video_created( video ).to_s(:long)
           - if !video.sentence.blank?
             %p
               &= video.sentence

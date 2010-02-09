@@ -1,99 +1,36 @@
-quentin:
-  id:                        1
-  login:                     quentin
-  email:                     quentin@example.com
-  salt:                      356a192b7913b04c54574d18c28d46e6395428ab # SHA1('0')
-  crypted_password:          4d9428af6186c2e04a1bc59afc3adf3b581f33f9 # 'monkey'
-  created_at:                <%= 5.days.ago.to_s :db  %>
-  remember_token_expires_at: <%= 1.days.from_now.to_s %>
-  remember_token:            77de68daecd823babbb58edb1c8e14d7106e83bb
-  activation_code:           
-  activated_at:              <%= 5.days.ago.to_s :db %>
-  state:                     active
-      
-aaron:
-  id:                        2
-  login:                     aaron
-  email:                     aaron@example.com
-  salt:                      da4b9237bacccdf19c0760cab7aec4a8359010b0 # SHA1('1')
-  crypted_password:          e0cdb251ac8142ab644b2c8fa8ccd2de638f901a # 'monkey'
-  created_at:                <%= 1.days.ago.to_s :db %>
-  remember_token_expires_at: 
-  remember_token:            
-  activation_code:           1b6453892473a467d07372d45eb05abc2031647a
-  activated_at:              
-  state:                     pending
-
-old_password_holder:
-  id:                        3
-  login:                     old_password_holder
-  email:                     salty_dog@example.com
-  salt:                      7e3041ebc2fc05a40c60028e2c4901a81035d3cd
-  crypted_password:          00742970dc9e6319f8019fd54864d3ea740f04b1 # test
-  created_at:                <%= 1.days.ago.to_s :db %>
-  activation_code:           
-  activated_at:              <%= 5.days.ago.to_s :db %>
-  state:                     active
-
-geisler:
-  id: 4
-  login: geisler
-  email: geisler@ischool.utexas.edu
-  name: Gary Geisler
+administrator:
+  id: 1
+  login: administrator
+  email: fernando.ovdlt@gmail.com
+  name: Administrator
   state: active
   salt: <%= salt = User::make_token %>
-  crypted_password: <%= User::password_digest("ovdlt4geisler",salt) %>
-
-moses:
-  id: 5
-  login: moses
-  email: moses@collaborativedrug.com
-  name: Moses Hohman
-  state: active
-  salt: <%= salt = User::make_token %>
-  crypted_password: <%= User::password_digest("ovdlt4moses",salt) %>
-
-smparkes:
-  id: 6
-  login: smparkes
-  email: smparkes@smparkes.net
-  name: Steven Parkes
-  state: active
-  salt: <%= salt = User::make_token %>
-  crypted_password: <%= User::password_digest("ovdlt4smparkes",salt) %>
-
-smparkes_cat:
-  id: 7
-  login: smparkes_cat
-  email: smparkes_cat@smparkes.net
-  name: Steven Parkes
-  state: active
-  salt: <%= salt = User::make_token %>
-  crypted_password: <%= User::password_digest("ovdlt4smparkes",salt) %>
-
-smparkes_guest:
-  id: 8
-  login: smparkes_guest
-  email: smparkes_guest@smparkes.net
-  name: Steven Parkes (Guest)
-  state: active
-  salt: <%= salt = User::make_token %>
-  crypted_password: <%= User::password_digest("ovdlt4smparkes",salt) %>
+  crypted_password: <%= User::password_digest("admininstrator$ovdlt",salt) %>
 
 cataloger:
-  id: 9
+  id: 2
   login: cataloger
-  email: smparkes_cataloger@smparkes.net
+  email: karina.ovdlt@gmail.com
   name: Cataloger
   state: active
   salt: <%= salt = User::make_token %>
-  crypted_password: <%= User::password_digest("ovdlt4cataloger",salt) %>
+  crypted_password: <%= User::password_digest("cataloger$ovdlt",salt) %>
 
 collections:
-  id: 10
+  id: 3
   login: collections
-  email: smparkes_coll@smparkes.net
+  email: marylou.ovdlt@gmail.com
   name: Collections
   state: active
   salt: <%= salt = User::make_token %>
-  crypted_password: <%= User::password_digest("ovdlt4collections",salt) %>
+  crypted_password: <%= User::password_digest("collections$ovdlt",salt) %>
+
+guest:
+  id: 4
+  login: guest
+  email: guest.ovdlt@gmail.com
+  name: Guest
+  state: active
+  salt: <%= salt = User::make_token %>
+  crypted_password: <%= User::password_digest("guest$ovdlt",salt) %>
+

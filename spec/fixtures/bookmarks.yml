@@ -1,96 +1,96 @@
 c1v1:
   id: 1
-  collection_id: 1  
-  video_id: 2
+  collection_id: 1
+  video_id: 5
   priority: -1
 
-c1v2:
+c2v1:
   id: 2
   video_id: 1
-  collection_id: 1  
+  collection_id: 2
   priority: 0
 
-c1v3:
+c2v2:
   id: 3
-  video_id: 3
-  collection_id: 1  
+  video_id: 2
+  collection_id: 2
   priority: -2
 
-c1v4:
+c2v3:
   id: 4
-  video_id: 4
-  collection_id: 1  
+  video_id: 3
+  collection_id: 2
   priority: -3
 
-c1v5:
+c3v1:
   id: 5
-  video_id: 5
-  collection_id: 1  
+  video_id: 1
+  collection_id: 3
   priority: -4
 
-c1v6:
+c3v2:
   id: 6
-  video_id: 6
-  collection_id: 1  
+  video_id: 2
+  collection_id: 3
   priority: -5
 
-c1v7:
+c3v3:
   id: 7
-  video_id: 7
-  collection_id: 1  
+  video_id: 3
+  collection_id: 3
   priority: -6
 
-c2v1:
+c3v4:
   id: 8
-  collection_id: 2  
-  video_id: 1
+  video_id: 5
+  collection_id: 3
   priority: -7
 
-c2v2:
+c4v1:
   id: 9
-  video_id: 2
-  collection_id: 2  
+  video_id: 5
+  collection_id: 4
   priority: -8
 
-c2v3:
+c4v2:
   id: 10
-  video_id: 3
-  collection_id: 2  
+  video_id: 4
+  collection_id: 4
   priority: -9
 
-c2v4:
+c4v3:
   id: 11
-  video_id: 4
-  collection_id: 2  
+  video_id: 3
+  collection_id: 4
   priority: -10
 
-c2v5:
+c4v4:
   id: 12
-  video_id: 5
-  collection_id: 2  
+  video_id: 1
+  collection_id: 4
   priority: -11
 
-c2v6:
+c5v1:
   id: 13
-  video_id: 6
-  collection_id: 2  
+  video_id: 3
+  collection_id: 5
   priority: -12
 
-c2v7:
+c5v2:
   id: 14
-  video_id: 7
-  collection_id: 2  
+  video_id: 4
+  collection_id: 5
   priority: -13
 
-c3v1:
+c5v3:
   id: 15
-  collection_id: 3
   video_id: 1
+  collection_id: 5
   priority: -14
 
-c3v2:
+c5v4:
   id: 16
   video_id: 2
-  collection_id: 3  
+  collection_id: 5
   priority: -15
 
