@@ -44,4 +44,4 @@ cp_r "spec/fixtures/assets", "public"
 cp_r "spec/fixtures/surrogates", "public"
 system "rake spec:db:fixtures:load"
 
-system "rake db:populate"
+# system "rake db:populate"
