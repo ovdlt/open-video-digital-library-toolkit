@@ -100,7 +100,7 @@ color:
   text: Color
   priority: -16
 
-blank_and_white:
+black_and_white:
   id: 18
   property_type_id: 40
   text: Black and White

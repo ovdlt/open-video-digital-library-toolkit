@@ -2,114 +2,41 @@
 
 id_1:
   id: 1
-  user_id: 10
-  title: Real Videos
-  description: A collection of real (non-synthetic) videos
+  user_id: 3
+  title: Spanish-Language Videos
+  description: This collection includes some of our most popular videos in Spanish. Most of the videos were specifically created for children from first to fifth grades. The videos cover topics such as computing, biology, and the universe.
   public: true
   featured: true
-  featured_priority: 1
+  featured_priority: 3
 
 id_2:
   id: 2
-  user_id: 6
-  title: I like real videos
-  description: "The only videos I like because the rest aren't real"
+  user_id: 4
+  title: My Favorite Vintage Videos
+  description: These are some favorite videos featuring older advertisements and documentaries.
   public: true
   featured: true
   featured_priority: 2
 
 id_3:
   id: 3
-  user_id: 6
-  title: I like real videos but I hide them
-  description: "The only videos I like because the rest aren't real"
-  public: false
+  user_id: 4
+  title:  <%= Faker::Lorem.words(5).map(&:capitalize).join(" ") %>
+  description: <%= Faker::Lorem.sentences(4).join(" ") %>
+  public: true
   featured: true
-  featured_priority: 3
+  featured_priority: 1
 
 id_4:
   id: 4
-  user_id: 10
-  title:  <%= Faker::Lorem.words(8).map(&:capitalize).join(" ") %>
-  description: <%= Faker::Lorem.sentences(3).join(" ") %>
+  user_id: 3
+  title:  <%= Faker::Lorem.words(5).map(&:capitalize).join(" ") %>
+  description: <%= Faker::Lorem.sentences(5).join(" ") %>
   public: true
-  featured: true
-  featured_priority: 4
 
 id_5:
   id: 5
-  user_id: 10
-  title:  <%= Faker::Lorem.words(8).map(&:capitalize).join(" ") %>
+  user_id: 3
+  title:  <%= Faker::Lorem.words(6).map(&:capitalize).join(" ") %>
   description: <%= Faker::Lorem.sentences(3).join(" ") %>
   public: true
-
-id_6:
-  id: 6
-  user_id: 10
-  title:  <%= Faker::Lorem.words(8).map(&:capitalize).join(" ") %>
-  description: <%= Faker::Lorem.sentences(3).join(" ") %>
-  public: true
-
-id_7:
-  id: 7
-  user_id: 10
-  title:  <%= Faker::Lorem.words(8).map(&:capitalize).join(" ") %>
-  description: <%= Faker::Lorem.sentences(3).join(" ") %>
-  public: true
-
-id_8:
-  id: 8
-  user_id: 10
-  title:  <%= Faker::Lorem.words(8).map(&:capitalize).join(" ") %>
-  description: <%= Faker::Lorem.sentences(3).join(" ") %>
-  public: true
-
-id_9:
-  id: 9
-  user_id: 10
-  title:  <%= Faker::Lorem.words(8).map(&:capitalize).join(" ") %>
-  description: <%= Faker::Lorem.sentences(3).join(" ") %>
-  public: true
-
-id_10:
-  id: 10
-  user_id: 10
-  title:  <%= Faker::Lorem.words(8).map(&:capitalize).join(" ") %>
-  description: <%= Faker::Lorem.sentences(3).join(" ") %>
-  public: true
-
-id_11:
-  id: 11
-  user_id: 10
-  title:  <%= Faker::Lorem.words(8).map(&:capitalize).join(" ") %>
-  description: <%= Faker::Lorem.sentences(3).join(" ") %>
-  public: true
-
-id_12:
-  id: 12
-  user_id: 10
-  title:  <%= Faker::Lorem.words(8).map(&:capitalize).join(" ") %>
-  description: <%= Faker::Lorem.sentences(3).join(" ") %>
-  public: true
-
-id_13:
-  id: 13
-  user_id: 10
-  title:  <%= Faker::Lorem.words(8).map(&:capitalize).join(" ") %>
-  description: <%= Faker::Lorem.sentences(3).join(" ") %>
-  public: true
-
-id_14:
-  id: 14
-  user_id: 10
-  title:  <%= Faker::Lorem.words(8).map(&:capitalize).join(" ") %>
-  description: <%= Faker::Lorem.sentences(3).join(" ") %>
-  public: true
-
-id_15:
-  id: 15
-  user_id: 10
-  title:  <%= Faker::Lorem.words(8).map(&:capitalize).join(" ") %>
-  description: <%= Faker::Lorem.sentences(3).join(" ") %>
-  public: true
-

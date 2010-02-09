@@ -1,42 +1,30 @@
 asset1:
   id: 1
-  uri: file:///1200_I.mov
-  size: 3586705
+  uri: file:///Breakfas1939_512kb.mp4
+  size: 5851037
   video_id: 1
 
 asset2:
   id: 2
-  uri: file:///1461.0003_I.mov
-  size: 2030844
+  uri: file:///RoadstoR1950_512kb.mp4
+  size: 13124971
   video_id: 2
 
 asset3:
   id: 3
-  uri: file:///1488.0020_C.mov
-  size: 1389899
+  uri: file:///1191.1228.05_H.mov
+  size: 1681844
   video_id: 3
 
-4:
+asset4:
   id: 4
-  uri: file:///1442.0001SEG_4_C.mov
-  size: 3228181
+  uri: file:///NASASOF-ForcesOfFlight.mp4
+  size: 25389349
   video_id: 4
 
-5:
+asset5:
   id: 5
-  uri: file:///hcil2000_19.mpg
-  size: 524288
+  uri: file:///NASAKSN-VirusDeComputadora.mpg
+  size: 10283700
   video_id: 5
-
-6:
-  id: 6
-  uri: file:///NASAAATC-HurricanesAndComputerSimulation.mpg
-  size: 366592
-  video_id: 6
-
-7:
-  id: 7
-  uri: file:///UGS05_004.mpg
-  size: 374784
-  video_id: 7
 
