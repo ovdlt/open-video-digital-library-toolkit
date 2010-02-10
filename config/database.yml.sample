@@ -3,6 +3,8 @@ development: &defaults
   database: ovdlt-development
   encoding: utf8
   timeout: 5000
+  username: db_user
+  password: db_password
 
 test:
   database: ovdlt-test
