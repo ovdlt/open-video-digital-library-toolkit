@@ -22,7 +22,7 @@
               .image{ :style => "background-color:#333" }
                 %a{:href => video_path( video.id )}
                   -if poster_path = video.poster_path
-                    %img{:src=>poster_path,:alt => "video #{video.id}", :width => "100"}
+                    %img{:src=>poster_path,:alt => "video #{video.id}", :width => "100", :height => "75"}
               .details
                 %h5.title
                   = link_to h(video.title), video_path( video.id )
@@ -50,7 +50,7 @@
               .image{ :style => "background-color:#333" }
                 %a{:href => video_path( video.id )}
                   -if poster_path = video.poster_path
-                    %img{:src=>poster_path,:alt => "video #{video.id}", :width => "100"}
+                    %img{:src=>poster_path,:alt => "video #{video.id}", :width => "100", :height => "75"}
               .details
                 %h5.title
                   = link_to h(video.title), video_path( video.id )
@@ -108,7 +108,7 @@
               .image{ :style => "background-color:#333" }
                 %a{:href => collection_path( playlist.id )}
                   -if poster_path = playlist.poster_path(public_only?)
-                    %img{:src=>poster_path,:alt => "playlist #{playlist.id}", :width => "100"}
+                    %img{:src=>poster_path,:alt => "playlist #{playlist.id}", :width => "100", :height => "75"}
               .details
                 %h5.title
                   = link_to h(playlist.title), collection_path( playlist.id )
