@@ -28,7 +28,7 @@ end
 task :release do
   rm_rf "pkg"
   mkdir_p "pkg/ovdlt"
-  system "cp -r . pkg/ovdlt"
+  system "rsync -ar . pkg/ovdlt/."
 
   rm_f "pkg/ovdlt/config/initializers/site_keys.rb"
   rm_f "pkg/ovdlt/config/database.yml"
