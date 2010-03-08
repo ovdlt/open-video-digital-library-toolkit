@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe Permission do
   before(:each) do
     @valid_attributes = {
-      :user_id => 1,
+      :user_id => 5,
       :role_id => 1
     }
   end

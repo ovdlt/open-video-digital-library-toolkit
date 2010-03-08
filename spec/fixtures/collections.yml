@@ -7,7 +7,7 @@ id_1:
   description: This collection includes some of our most popular videos in Spanish. Most of the videos were specifically created for children from first to fifth grades. The videos cover topics such as computing, biology, and the universe.
   public: true
   featured: true
-  featured_priority: 3
+  featured_priority: 1
 
 id_2:
   id: 2
@@ -25,7 +25,7 @@ id_3:
   description: <%= Faker::Lorem.sentences(4).join(" ") %>
   public: true
   featured: true
-  featured_priority: 1
+  featured_priority: 3
 
 id_4:
   id: 4
@@ -33,6 +33,8 @@ id_4:
   title:  <%= Faker::Lorem.words(5).map(&:capitalize).join(" ") %>
   description: <%= Faker::Lorem.sentences(5).join(" ") %>
   public: true
+  featured: true
+  featured_priority: 4
 
 id_5:
   id: 5

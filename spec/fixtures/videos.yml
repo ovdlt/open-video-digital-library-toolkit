@@ -11,7 +11,7 @@ video1:
    Sponsored by Kellogg (W.K.) Company
   public: true
   featured: true
-  featured_priority: 4
+  featured_priority: 1
   views: 8
   downloads: 5
   last_viewed: <%=(Time.now + 2.minutes).utc.to_s(:db)%>
@@ -33,7 +33,7 @@ video2:
    Sponsor: Chevrolet Division, General Motors Corp.
   public: true
   featured: true
-  featured_priority: 3
+  featured_priority: 2
   views: 6
   downloads: 4
   last_viewed: <%=(Time.now + 2.minutes).utc.to_s(:db)%>
@@ -54,7 +54,7 @@ video3:
   public: true
   duration: 46
   featured: true
-  featured_priority: 2
+  featured_priority: 3
   views: 4
   downloads: 2
   last_viewed: <%=(Time.now + 2.minutes).utc.to_s(:db)%>
@@ -72,7 +72,7 @@ video4:
   series_title: NASA Connect - SOF
   public: true
   featured: true
-  featured_priority: 1
+  featured_priority: 4
   views: 4
   downloads: 1
   last_viewed: <%=(Time.now + 2.minutes).utc.to_s(:db)%>
