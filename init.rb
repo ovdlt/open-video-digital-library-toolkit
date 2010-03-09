@@ -4,7 +4,7 @@ require 'fileutils'
 
 tarfile = ARGV.shift
 dir = ARGV.shift
-db_user = ARGV.shift ||
+db_user = ARGV.shift
 db_pw = ARGV.shift
 
 if !tarfile || !dir
