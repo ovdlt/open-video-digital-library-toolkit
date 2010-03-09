@@ -23,7 +23,7 @@ system "sed -e s/ovdlt/#{dir}/g -e s/-development//g -e s/-test//g -e s/-product
 text = (1..16).collect { (i = Kernel.rand(62); i += ((i < 10) ? 48 : ((i < 36) ? 55 : 61 ))).chr }.join
 system "test -e config/initializers/site_keys.rb || sed -e 's/CHANGE THIS!!!!!!!!/#{text}/' config/initializers/site_keys.rb.example > config/initializers/site_keys.rb"
 
-cmd = "grep relative_url_root config/environment.rb || sed -i -e 's/:user_observer/:user_observer\\n\\nconfig.action_controller.relative_url_root = \"\\/#{dir}\"/' config/environment.rb"
+cmd = "grep relative_url_root config/environment.rb || perl -pi -e 's/:user_observer/:user_observer\\n\\nconfig.action_controller.relative_url_root = \"\\/#{dir}\"/' config/environment.rb"
 puts cmd
 system cmd
 
