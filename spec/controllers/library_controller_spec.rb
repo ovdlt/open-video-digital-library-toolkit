@@ -177,25 +177,25 @@ describe LibraryController do
         PropertyClass.find_by_id(@pc_id).should be_nil
       end
 
-      it "should should validate pc range" do
+      it "should should validate pc range_type" do
 
-        [ "rights_detail", "string" ].each do |range|
+        [ "rights_detail", "string" ].each do |range_type|
 
-          @pc["range"] = range
+          @pc["range_type"] = range_type
 
           post :update, @params
           response.should redirect_to(library_path)
       
-          PropertyClass.find(@pc_id).range.should == range
+          PropertyClass.find(@pc_id).range_type.should == range_type
         end
 
-        @pc["range"] = "xyzzy"
+        @pc["range_type"] = "xyzzy"
 
         post :update, @params
 
         assigns[:property_classes][@pc_id].errors.should_not be_nil
 
-        PropertyClass.find(@pc_id).range.should == "string"
+        PropertyClass.find(@pc_id).range_type.should == "string"
       end
 
     end
@@ -574,47 +574,47 @@ describe LibraryController do
           1 => { "name" => "Date Types",
                  "multivalued" => true,
                  "optional" => true,
-                 "range" => "date" },
+                 "range_type" => "date" },
 
           2 => { "name" => "Roles",
                  "multivalued" => true,
                  "optional" => true,
-                 "range" => "string" },
+                 "range_type" => "string" },
 
           4 => { "name" => "Optional Multivalued Descriptor",
                  "multivalued"=>true,
                  "optional"=>true,
-                 "range"=>"descriptor_value" },
+                 "range_type"=>"descriptor_value" },
 
           5 => { "name"=>"Digital Files",
                  "multivalued"=>true,
                  "optional"=>true,
-                 "range"=>"string" },
+                 "range_type"=>"string" },
 
           6 => {"name"=>"Rights Statements",
                  "multivalued"=>false,
                  "optional"=>false,
-                 "range"=>"rights_detail"},
+                 "range_type"=>"rights_detail"},
 
           7 => {"name"=>"Mandatory Multivalued Descriptor",
                  "multivalued"=>true,
                  "optional"=>false,
-                 "range"=>"descriptor_value"},
+                 "range_type"=>"descriptor_value"},
 
           8 => {"name"=>"Optional Singular Descriptor",
                  "multivalued"=>false,
                  "optional"=>true,
-                 "range"=>"descriptor_value"},
+                 "range_type"=>"descriptor_value"},
           
           9 => {"name"=>"Mandatory Singular Descriptor",
                  "multivalued"=>false,
                  "optional"=>false,
-                 "range"=>"descriptor_value"},
+                 "range_type"=>"descriptor_value"},
 
           10 => {"name"=>"Format Types",
                  "multivalued"=>true,
                  "optional"=>true,
-                 "range"=>"string"}
+                 "range_type"=>"string"}
         },
 
 

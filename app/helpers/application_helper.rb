@@ -164,7 +164,7 @@ EOS
   end
 
   def descriptor_types
-    pcs = @property_classes.select { |pc| pc.range == "descriptor_value" }.map( &:id )
+    pcs = @property_classes.select { |pc| pc.range_type == "descriptor_value" }.map( &:id )
     @property_types.select { |pt| pcs.include? pt.property_class_id }
   end
   

@@ -30,18 +30,18 @@ class PropertyClass < ActiveRecord::Base
 
   validates_presence_of :name
   validates_inclusion_of :multivalued, :optional, :in => [ true, false ]
-  validates_inclusion_of :range, :in => ( RANGE_MAP.keys +
-                                          RANGE_MAP.keys.map( &:to_sym ) )
+  validates_inclusion_of :range_type, :in => ( RANGE_MAP.keys +
+                                               RANGE_MAP.keys.map( &:to_sym ) )
 
   before_save { |pc|
-    Symbol === pc.range and pc.range = pc.range.to_s
+    Symbol === pc.range_type and pc.range_type = pc.range_type.to_s
     true
   }
 
   class NoRangeClass < StandardError; end
 
   def self.simple
-    find :all, :conditions => "range in ( 'string', 'date' )"
+    find :all, :conditions => "range_type in ( 'string', 'date' )"
   end
 
   def tableize
@@ -50,13 +50,13 @@ class PropertyClass < ActiveRecord::Base
   end
 
   def field
-    lambdas = RANGE_MAP[range.to_s]
+    lambdas = RANGE_MAP[range_type.to_s]
     lambdas and lambdas[:field]
   end
 
   def values type, options = nil
-    lambdas = RANGE_MAP[range.to_s]
-    raise NoRangeClass.new( range ) if not lambdas
+    lambdas = RANGE_MAP[range_type.to_s]
+    raise NoRangeClass.new( range_type ) if not lambdas
     if lambdas[:values]
       lambdas[:values].call( type, options )
     else
@@ -65,26 +65,26 @@ class PropertyClass < ActiveRecord::Base
   end
 
   def validate_value property
-    lambdas = RANGE_MAP[range.to_s]
-    raise NoRangeClass.new( range ) if not lambdas
+    lambdas = RANGE_MAP[range_type.to_s]
+    raise NoRangeClass.new( range_type ) if not lambdas
     lambdas[:validate] ? lambdas[:validate].call( property ) : true
   end
 
   def translate_value property
-    lambdas = RANGE_MAP[range.to_s]
-    raise NoRangeClass.new( range ) if not lambdas
+    lambdas = RANGE_MAP[range_type.to_s]
+    raise NoRangeClass.new( range_type ) if not lambdas
     lambdas[:translate] ? lambdas[:translate].call( property ) : true
   end
 
   def retrieve_value property
-    lambdas = RANGE_MAP[range.to_s]
-    raise NoRangeClass.new( range ) if not lambdas
+    lambdas = RANGE_MAP[range_type.to_s]
+    raise NoRangeClass.new( range_type ) if not lambdas
     lambdas[:retrieve].call( property )
   end
 
   def retrieve_priority property
-    lambdas = RANGE_MAP[range.to_s]
-    raise NoRangeClass.new( range ) if not lambdas
+    lambdas = RANGE_MAP[range_type.to_s]
+    raise NoRangeClass.new( range_type ) if not lambdas
     ( l = lambdas[:priority] ) ? l.call( property ) : 0
   end
 
