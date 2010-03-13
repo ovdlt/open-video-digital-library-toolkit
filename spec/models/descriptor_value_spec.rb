@@ -35,12 +35,12 @@ describe DescriptorValue do
 
   it "should return properties" do
     dv = DescriptorValue.find_by_text "Documentary"
-    dv.properties.map(&:video_id).should == [ 1 ]
+    dv.properties.map(&:video_id).should == [ 5, 2, 3, 4]
   end
 
   it "should return videos" do
     dv = DescriptorValue.find_by_text "Documentary"
-    dv.videos(true).map(&:id).should == [ 1 ]
+    dv.videos(true).map(&:id).should == [ 2, 3, 4, 5 ]
   end
 
   describe "order" do
@@ -58,7 +58,7 @@ describe DescriptorValue do
     it "should reorder aribtrarilty collection" do
       PropertyType.find(38).values.map(&:id).should == [2, 1, 3, 4, 5]
       DescriptorValue.browse_order = [ 4, 1 ]
-      PropertyType.find(38).values.map(&:id).should == [2, 4, 3, 1, 5] 
+      PropertyType.find(38).values.map(&:id).should == [2, 4, 3, 1, 5]
     end
 
   end

@@ -13,9 +13,9 @@ Spec::Runner.configure do |config|
   config.use_transactional_fixtures = true
   config.use_instantiated_fixtures  = false
   config.fixture_path = RAILS_ROOT + '/spec/fixtures/'
-  
+
   config.global_fixtures = :all
-  
+
   config.after(:suite) { delete_temp_assets }
 end
 
@@ -31,12 +31,12 @@ def login_as_user
   end
 end
 
-def login_as_10
-  self.current_user = User.find( 10 )
+def login_as_3
+  self.current_user = User.find( 3 )
 end
 
 def login_as_other_user
-  
+
   self.current_user = User.find( :all ).detect do
     |u| !u.has_role?( [:admin, :cataloger] ) and
          u.id != current_user.id

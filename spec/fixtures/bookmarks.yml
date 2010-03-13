@@ -1,95 +1,120 @@
 c1v1:
   id: 1
   collection_id: 1
-  video_id: 5
+  video_id: 2
   priority: -1
 
-c2v1:
+c1v2:
   id: 2
+  collection_id: 1
+  video_id: 1
+  priority: 0
+
+c1v3:
+  id: 3
+  collection_id: 1
+  video_id: 3
+  priority: -2
+
+c1v4:
+  id: 4
+  collection_id: 1
+  video_id: 4
+  priority: -3
+
+c1v5:
+  id: 5
+  collection_id: 1
+  video_id: 5
+  priority: -4
+
+
+c2v1:
+  id: 6
   video_id: 1
   collection_id: 2
   priority: 0
 
 c2v2:
-  id: 3
+  id: 7
   video_id: 2
   collection_id: 2
   priority: -2
 
 c2v3:
-  id: 4
+  id: 8
   video_id: 3
   collection_id: 2
   priority: -3
 
 c3v1:
-  id: 5
+  id: 9
   video_id: 1
   collection_id: 3
   priority: -4
 
 c3v2:
-  id: 6
+  id: 10
   video_id: 2
   collection_id: 3
   priority: -5
 
 c3v3:
-  id: 7
+  id: 11
   video_id: 3
   collection_id: 3
   priority: -6
 
 c3v4:
-  id: 8
+  id: 12
   video_id: 5
   collection_id: 3
   priority: -7
 
 c4v1:
-  id: 9
+  id: 13
   video_id: 5
   collection_id: 4
   priority: -8
 
 c4v2:
-  id: 10
+  id: 14
   video_id: 4
   collection_id: 4
   priority: -9
 
 c4v3:
-  id: 11
+  id: 15
   video_id: 3
   collection_id: 4
   priority: -10
 
 c4v4:
-  id: 12
+  id: 16
   video_id: 1
   collection_id: 4
   priority: -11
 
 c5v1:
-  id: 13
+  id: 17
   video_id: 3
   collection_id: 5
   priority: -12
 
 c5v2:
-  id: 14
+  id: 18
   video_id: 4
   collection_id: 5
   priority: -13
 
 c5v3:
-  id: 15
+  id: 19
   video_id: 1
   collection_id: 5
   priority: -14
 
 c5v4:
-  id: 16
+  id: 20
   video_id: 2
   collection_id: 5
   priority: -15

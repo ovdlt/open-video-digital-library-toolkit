@@ -87,8 +87,8 @@ Rails::Initializer.run do |config|
 
 end
 
-ExceptionNotifier.exception_recipients = %w(smparkes@smparkes.net)
-ExceptionNotifier.sender_address = %("OVDLT Error" <ovdlt@ovdlt.org>)
+ExceptionNotifier.exception_recipients = %w(geisg@ils.unc.edu)
+ExceptionNotifier.sender_address = %("OVDLT Error" <ovdlt@open-video-toolkit.org>)
 ExceptionNotifier.email_prefix = "[OVDLT] "
 
 ActionView::Helpers::AssetTagHelper.

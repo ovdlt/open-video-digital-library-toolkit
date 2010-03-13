@@ -14,7 +14,7 @@ describe PropertyType do
   end
 
   it "should require a name" do
-    @valid_attributes.delete :name 
+    @valid_attributes.delete :name
     lambda { PropertyType.create!(@valid_attributes) }.
       should raise_error( ActiveRecord::RecordInvalid )
   end
@@ -121,9 +121,9 @@ describe PropertyType do
 
     it "should return the props for a type" do
       pt = PropertyType.find_by_name "Genre"
-      pt.properties.map(&:video_id).should == [1,2]
+      pt.properties.map(&:video_id).should == [ 1, 5, 2, 3, 4]
     end
-    
+
   end
 
   describe ".descriptor_types" do
@@ -175,8 +175,8 @@ describe PropertyType do
 
     it "should reorder the whole collection" do
       PropertyType.browse.map(&:id).should == [ 38, 39, 42, 40 ]
-      PropertyType.browse_order = [ 39, 42, 40, 38 ] 
-      PropertyType.browse.map(&:id).should == [ 39, 42, 40, 38 ] 
+      PropertyType.browse_order = [ 39, 42, 40, 38 ]
+      PropertyType.browse.map(&:id).should == [ 39, 42, 40, 38 ]
     end
 
     it "should reorder the beginning of the collection" do

@@ -88,11 +88,6 @@
   property_type_id: 37
   integer_value: 2
 
-3g:
-  video_id: 3
-  property_type_id: 38
-  integer_value: 3
-
 4:
   video_id: 4
   property_type_id: 38
