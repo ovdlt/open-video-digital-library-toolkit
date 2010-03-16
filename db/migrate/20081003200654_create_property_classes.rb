@@ -4,7 +4,7 @@ class CreatePropertyClasses < ActiveRecord::Migration
       t.string :name, :null => false
       t.boolean :multivalued, :null => false
       t.boolean :optional, :null => false
-      t.string :range, :null => false
+      t.string :range_type, :null => false
       t.timestamps
     end
   end

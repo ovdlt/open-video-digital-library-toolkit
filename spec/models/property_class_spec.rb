@@ -7,7 +7,7 @@ describe PropertyClass do
       :name => "some property name",
       :multivalued => true,
       :optional => false,
-      :range => "string",
+      :range_type => "string",
     }
   end
 
@@ -33,8 +33,8 @@ describe PropertyClass do
       should raise_error( ActiveRecord::RecordInvalid )
   end
 
-  it "should require a resonable range" do
-    @valid_attributes[:range] = "nothing_good"
+  it "should require a resonable range_type" do
+    @valid_attributes[:range_type] = "nothing_good"
     lambda { PropertyClass.create!(@valid_attributes) }.
       should raise_error( ActiveRecord::RecordInvalid )
   end
@@ -71,7 +71,7 @@ describe PropertyClass do
 
   describe "#validate_value" do
     it "should validate a good date" do
-      @valid_attributes[:range] = "date"
+      @valid_attributes[:range_type] = "date"
       property_class = PropertyClass.create!(@valid_attributes)
       property = mock "property"
       property.stub!(:value).and_return("12/25/2005")
@@ -79,7 +79,7 @@ describe PropertyClass do
     end
 
     it "should not validate a bad date" do
-      @valid_attributes[:range] = "date"
+      @valid_attributes[:range_type] = "date"
       property_class = PropertyClass.create!(@valid_attributes)
       property = mock "property"
       property.stub!(:value).and_return("12/52/2005")
@@ -94,7 +94,7 @@ describe PropertyClass do
   describe "#translate_value" do
 
     it "should return a date for a date" do
-      @valid_attributes[:range] = "date"
+      @valid_attributes[:range_type] = "date"
       property_class = PropertyClass.create!(@valid_attributes)
       property = mock "property"
       property.should_receive(:value).and_return("12/25/2005")
@@ -107,7 +107,7 @@ describe PropertyClass do
   describe "#retrieve_value" do
 
     it "should return a string for a string" do
-      @valid_attributes[:range] = "string"
+      @valid_attributes[:range_type] = "string"
       property_class = PropertyClass.create!(@valid_attributes)
       property = mock "property"
       property.stub!(:string_value).and_return("a result")
@@ -116,7 +116,7 @@ describe PropertyClass do
     end
 
     it "should return a date for a date" do
-      @valid_attributes[:range] = "date"
+      @valid_attributes[:range_type] = "date"
       property_class = PropertyClass.create!(@valid_attributes)
       property = mock "property"
       property.stub!(:date_value).and_return(Date.parse("12/25/2005"))

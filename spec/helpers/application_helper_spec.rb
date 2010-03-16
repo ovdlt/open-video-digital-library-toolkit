@@ -77,7 +77,7 @@ describe ApplicationHelper do
       
       assigns[:descriptor_values] = @descriptor_values = DescriptorValue.find( :all )
 
-      dt = @property_types.find { |pt| pt.property_class.range == "descriptor_value" }
+      dt = @property_types.find { |pt| pt.property_class.range_type == "descriptor_value" }
 
       @descriptor_values << ( dv = DescriptorValue.new( :property_type_id => dt.id ) )
 

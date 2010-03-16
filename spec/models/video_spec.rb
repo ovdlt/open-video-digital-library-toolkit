@@ -152,7 +152,7 @@ describe Video do
       pc = PropertyClass.create! :name => "myclass",
       :multivalued => false,
       :optional => false,
-      :range => :string
+      :range_type => :string
       pt = PropertyType.create! :property_class_id => pc.id,
       :name =>  "mytype"
 
@@ -170,7 +170,7 @@ describe Video do
       pc = PropertyClass.create! :name => "myclass",
       :multivalued => false,
       :optional => false,
-      :range => :string
+      :range_type => :string
 
       pt = PropertyType.create! :property_class_id => pc.id,
       :name =>  "mytype"

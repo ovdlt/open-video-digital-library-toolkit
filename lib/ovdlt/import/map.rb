@@ -116,33 +116,33 @@ module Import
                   when Hash
                     if header.size == 1
                       key = header.keys.first
-                      range = header.values.first
+                      range_type = header.values.first
                       if key =~ /^[a-z]/
-                        case range
+                        case range_type
                         when String
-                          set video, key, Object.const_get(range).map(value)
+                          set video, key, Object.const_get(range_type).map(value)
                         when Hash
-                          if range.has_key? value
-                            set video, key, range[value]
+                          if range_type.has_key? value
+                            set video, key, range_type[value]
                           else
                             raise "can't map #{value} for #{key}"
                           end
                         when Proc;
-                          set video, key, range.call( value )
+                          set video, key, range_type.call( value )
                         else
-                          raise "cannot map range #{range.class} #{range}"
+                          raise "cannot map range_type #{range_type.class} #{range_type}"
                         end
                       elsif key =~ /^[A-Z]/
                         value.split(/[\s;]+/).each do |v|
-                          case range
+                          case range_type
                           when String;
                           when Hash;
-                            if range.has_key? v
-                              v = range[v]
+                            if range_type.has_key? v
+                              v = range_type[v]
                             else
                               raise "can't map #{v} for #{key}"
                             end
-                          else raise "bad range: #{range} (for #{key})"
+                          else raise "bad range_type: #{range_type} (for #{key})"
                           end
                           video.properties << (p = Property.build( key, v ))
                         end

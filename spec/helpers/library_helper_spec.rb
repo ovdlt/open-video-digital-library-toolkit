@@ -24,18 +24,18 @@ describe LibraryHelper do
     
     it "should return all the current descriptor types" do
       assigns[:property_types] = @property_types =
-        PropertyType.find( :all ).select { |pt| pt.property_class.range == "descriptor_value" }
+        PropertyType.find( :all ).select { |pt| pt.property_class.range_type == "descriptor_value" }
 
       @property_types << ( pt = PropertyType.new( :property_class =>
                                                     PropertyClass.find( :first,
 :conditions =>
-                                                                          "range = 'descriptor_value'"
+                                                                          "range_type = 'descriptor_value'"
                                                                         )
                                                   ) )
 
       sort_ar( helper.descriptor_types ).
                should == sort_ar( [ pt ] +( PropertyType.find( :all ).
-                                            select { |pt| pt.property_class.range ==
+                                            select { |pt| pt.property_class.range_type ==
                                                         "descriptor_value" } ) )
     end
 
@@ -45,7 +45,7 @@ describe LibraryHelper do
 
     it "should return a descriptor class type" do
       dcs = PropertyClass.find :all,
-                                 :conditions => "range = 'descriptor_value'"
+                                 :conditions => "range_type = 'descriptor_value'"
       dcs.include?( helper.default_descriptor_class ).should be_true
     end
     

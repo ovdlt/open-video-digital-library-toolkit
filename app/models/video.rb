@@ -145,12 +145,12 @@ class Video < ActiveRecord::Base
   end
 
   def descriptors
-    ids = PropertyClass.find_all_by_range "descriptor_value"
+    ids = PropertyClass.find_all_by_range_type "descriptor_value"
     (properties.find_all_by_property_class_id ids).freeze
   end
 
   def descriptors= descriptors
-    ids = PropertyClass.find_all_by_range "descriptor_value"
+    ids = PropertyClass.find_all_by_range_type "descriptor_value"
     (properties.find_all_by_property_class_id ids).each {|p| p.destroy}
     descriptors.each { |d| properties << d }
   end

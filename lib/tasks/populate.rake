@@ -36,7 +36,7 @@ namespace :db do
 
     years = (1850..2008).to_a
 
-    collections = Collection.find_all_by_user_id 10
+    collections = Collection.find_all_by_user_id 3
 
     # generate videos
 

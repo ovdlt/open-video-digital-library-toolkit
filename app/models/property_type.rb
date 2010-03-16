@@ -40,14 +40,14 @@ class PropertyType < ActiveRecord::Base
                :select => "pts.*",
                :joins => "pts, property_classes pcs",
                :conditions => "property_class_id = pcs.id and " +
-                              "range = 'descriptor_value'"
+                              "range_type = 'descriptor_value'"
   end
 
   def descriptor_values
     # This is allowed because it's called from the destructor
     # Could make the destructor more explicit (and the dvs not dependent)
     # but the extra safety doesn't seem a big deal now?
-    if property_class.range == "descriptor_value"
+    if property_class.range_type == "descriptor_value"
       property_class.values self
     else
       # raise NotDescriptorType.new( property_class_id ) unless 

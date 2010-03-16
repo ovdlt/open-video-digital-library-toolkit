@@ -116,15 +116,15 @@ module VideosHelper
   private
 
   def render_partial_by_class class_name, title
-    range = PropertyClass.find_by_name( class_name ).range
-    render :partial => "show_properties_#{range}",
+    range_type = PropertyClass.find_by_name( class_name ).range_type
+    render :partial => "show_properties_#{range_type}",
            :locals => { :property_class => class_name,
                         :title => title }
   end
 
   def render_partial_edit_by_class class_name
-    range = PropertyClass.find_by_name( class_name ).range
-    render :partial => "edit_properties_#{range}",
+    range_type = PropertyClass.find_by_name( class_name ).range_type
+    render :partial => "edit_properties_#{range_type}",
            :locals => { :property_class => class_name }
   end
 

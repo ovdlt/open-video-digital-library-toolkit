@@ -1,69 +1,69 @@
 date:
   id: 1
   name: Date Types
-  range: date
+  range_type: date
   optional: true
   multivalued: true
 
 role:
   id: 2
   name: Roles
-  range: string
+  range_type: string
   optional: true
   multivalued: true
 
 # collection:
 #   id: 3
 #   name: Collections
-#   range: string
+#   range_type: string
 #   optional: true
 #   multivalued: true
 
 4:
   id: 4
   name: Optional Multivalued Descriptor
-  range: descriptor_value
+  range_type: descriptor_value
   optional: true
   multivalued: true
 
 digital_file:
   id: 5
   name: Digital Files
-  range: string
+  range_type: string
   optional: true
   multivalued: true
 
 rights_statements:
   id: 6
   name: Rights Statements
-  range: rights_detail
+  range_type: rights_detail
   optional: false
   multivalued: false
 
 7:
   id: 7
   name: Mandatory Multivalued Descriptor
-  range: descriptor_value
+  range_type: descriptor_value
   optional: false
   multivalued: true
 
 8:
   id: 8
   name: Optional Singular Descriptor
-  range: descriptor_value
+  range_type: descriptor_value
   optional: true
   multivalued: false
 
 9:
   id: 9
   name: Mandatory Singular Descriptor
-  range: descriptor_value
+  range_type: descriptor_value
   optional: false
   multivalued: false
 
 10:
   id: 10
   name: Format Types
-  range: string
+  range_type: string
   optional: true
   multivalued: true
