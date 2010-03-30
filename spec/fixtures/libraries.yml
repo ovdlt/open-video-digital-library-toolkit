@@ -3,11 +3,11 @@ dmc:
   title: Your Video Collection
   subtitle: this is a subtitle placeholder for you to replace
   logo_url: http://www.example.com/logo.jpg
-  my: My DMC
+  my: My Collection
   collections_login: collections
   collections_title: Your Special Collections
   playlists_title: Your Public Playlists
-  copyright: '&copy; Your name here. All Rights Reserved.'
+  copyright: '&copy; ["Your name here":http://www.example.com/]. All Rights Reserved.'
   org_link: '"Your Name Here":http://www.example.com/'
   emails: "librarian@foo.bar"
   theme: "default"
