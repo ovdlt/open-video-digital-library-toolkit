@@ -7,7 +7,7 @@ describe Video do
     before :each do
       @video = Factory(:video)
     end
-    
+
     after :each do
       File.unlink @video.assets[0].absolute_path
     end
@@ -17,13 +17,13 @@ describe Video do
       @video.title = nil
       @video.should_not be_valid
     end
-    
+
     it "should require the presence of a sentence" do
       @video.should be_valid
       @video.sentence = nil
       @video.should_not be_valid
     end
-    
+
   end
 
   describe ".recent" do
@@ -362,7 +362,7 @@ describe Video do
       @ps = @dvs.map { |dv| Property.new :value => dv }
 
       @ps.each { |p| @video.properties << p }
-      
+
       pp @video, @video.properties if !@video.save
 
       @video.save!
@@ -375,7 +375,7 @@ describe Video do
     it "should return all the types for a video in pri order" do
       @video.descriptor_types.should == [ @pts[1], @pts[0], @pts[3] ]
     end
-    
+
     it "should return all the propertys for a video in pri order" do
       @video.properties_by_type( @pts[0] ).
         should == [ @ps[1], @ps[0], @ps[2] ]
@@ -383,7 +383,7 @@ describe Video do
       @video.properties_by_type( @pts[2] ).should == []
       @video.properties_by_type( @pts[3] ).should == [ @ps[4] ]
     end
-    
+
   end
 
   describe "rights" do
@@ -398,43 +398,43 @@ describe Video do
       v.rights.should_not be_nil
       (RightsDetail === v.rights).should be_true
     end
-    
+
   end
-  
+
   describe "featured" do
 
     it "should return the videos" do
-      Video.featured.map(&:id).should == [ 4, 3, 2, 1 ]
-    end
-
-    it "should reorder the whole video" do
-      Video.featured.map(&:id).should == [ 4, 3, 2, 1 ]
-      Video.featured_order =  [ 1, 2, 3, 4 ]
       Video.featured.map(&:id).should == [ 1, 2, 3, 4 ]
     end
 
+    it "should reorder the whole video" do
+      Video.featured.map(&:id).should == [ 1, 2, 3, 4  ]
+      Video.featured_order =  [ 4, 3, 2, 1 ]
+      Video.featured.map(&:id).should == [ 4, 3, 2, 1]
+    end
+
     it "should reorder the beginning of the video" do
-      Video.featured.map(&:id).should == [ 4, 3, 2, 1 ]
-      Video.featured_order = [ 3, 4 ]
-      Video.featured.map(&:id).should ==  [ 3, 4, 2, 1 ]
+      Video.featured.map(&:id).should == [ 1, 2, 3, 4  ]
+      Video.featured_order = [ 2, 1 ]
+      Video.featured.map(&:id).should ==  [ 2, 1, 3, 4 ]
     end
 
     it "should reorder the end of the video" do
-      Video.featured.map(&:id).should == [ 4, 3, 2, 1 ]
-      Video.featured_order = [ 1, 2 ]
-      Video.featured.map(&:id).should == [ 4, 3, 1, 2 ]
+      Video.featured.map(&:id).should == [1, 2, 3, 4  ]
+      Video.featured_order = [ 4, 3 ]
+      Video.featured.map(&:id).should == [ 1, 2, 4, 3 ]
     end
 
     it "should reorder the middle of the video" do
-      Video.featured.map(&:id).should == [ 4, 3, 2, 1 ]
-      Video.featured_order = [ 2, 3 ]
-      Video.featured.map(&:id).should == [ 4, 2, 3, 1 ]
+      Video.featured.map(&:id).should == [ 1, 2, 3, 4  ]
+      Video.featured_order = [ 3, 2 ]
+      Video.featured.map(&:id).should == [ 1, 3, 2, 4 ]
     end
 
     it "should reorder aribtrarilty video" do
-      Video.featured.map(&:id).should == [ 4, 3, 2, 1 ]
-      Video.featured_order =  [ 1, 4 ]
-      Video.featured.map(&:id).should == [ 1, 3, 2, 4 ]
+      Video.featured.map(&:id).should == [ 1, 2, 3, 4 ]
+      Video.featured_order =  [ 4, 1 ]
+      Video.featured.map(&:id).should == [4, 2, 3, 1 ]
     end
 
   end
