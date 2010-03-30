@@ -1,14 +1,14 @@
 dmc:
   id: 1
-  title: DMC Course Collection
+  title: Your Video Collection
   subtitle: this is a subtitle placeholder for you to replace
-  logo_url: http://www.oldfilm.org/themes/oldfilm/images/nhflogo.jpg
+  logo_url: http://www.example.com/logo.jpg
   my: My DMC
   collections_login: collections
-  collections_title: DMC Special Collections
-  playlists_title: DMC Public Playlists
+  collections_title: Your Special Collections
+  playlists_title: Your Public Playlists
   copyright: '&copy; Your name here. All Rights Reserved.'
-  org_link: '"UT iSchool INF 385U":http://courses.ischool.utexas.edu/feinberg/2010/spring/INF385U/'
+  org_link: '"Your Name Here":http://www.example.com/'
   emails: "librarian@foo.bar"
   theme: "default"
   about: |
