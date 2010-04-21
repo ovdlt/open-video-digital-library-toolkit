@@ -81,8 +81,8 @@ class VideoConverter
       cmd = "#{RAILS_ROOT}/lib/ovsurgen " + string
       print cmd
       result = system cmd
-      if result != 0
-        $stderr.print "conversion failed: exit status: #{$?}\n"
+      if result != true
+        $stderr.print "conversion failed (#{result.inspect}): exit status: #{$?}\n"
       end
     end
 
