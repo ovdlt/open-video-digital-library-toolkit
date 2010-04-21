@@ -3,6 +3,16 @@ class VideoConverter
   class << self
 
     def run directory = nil
+      if !File.exist? "tmp/vc.lock"
+        system "touch tmp/vc.lock"
+      end
+      f = File.open "tmp/vc.lock"
+      result = f.flock File::LOCK_EX | File::LOCK_NB
+      if !result
+        $stderr.print "lock already taken: exiting\n"
+        exit
+      end
+
       directories = nil
       if !directory.blank?
         # FIX for windows if we keep this

@@ -13,6 +13,7 @@
 /vendor/gems/*/ext/*/*.so
 /vendor/gems/*/lib/*.so
 /vendor/gems/*/ext/redcloth_scan/*.o
-/lib/KFQuilt
+/lib/ovsurgen
 /ovdlt.tgz
 /pkg
+/tmp/vc.lock
