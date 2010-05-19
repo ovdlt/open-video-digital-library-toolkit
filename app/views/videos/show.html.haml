@@ -264,8 +264,9 @@
           TAGS
         %dd
           .tags
-            - if current_user and @library.user_tagging_enabled?
+            %div
               = tags_html( video.tags )
+            - if current_user and @library.user_tagging_enabled?
               - form_tag url_for( :controller => :tagging, :action => :create ) do
                 = text_field_tag :tags
                 = hidden_field_tag :video_id, video.id
