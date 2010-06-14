@@ -1,38 +1,23 @@
 Open Video Digital Library Toolkit
 ==================================
+The Open Video Digital Library Toolkit (OVDLT) project is intended to provide museums, libraries and other institutions holding moving image collections tools to more easily create Web-based digital video libraries. Funded by the Institute of Museum and Library Services and now released as an open source product under the MIT License, the OVDLT project provides a no cost solution for libraries, archives, museums, and other institutions who want to make available their digital video resources through their own Web-based digital library.
 
-Information about the project, etc.
+OVDLT runs on Linux or Mac OS X 10.5 and 10.6 based on a Ruby on Rails (version 2) framework with MySQL as the database management system.
 
-Coding Standard
-===============
-
-Generally the project coding standard follows [Ruby Garden](http://www.rubygarden.org/Ruby/page/show/RubyStyleGuide) (the below is pretty much a copy/paste from there)
-
-Naming Conventions
+License
 ------------------
+The base OVDLT code is open source and available under the MIT License. The OVSurGen video preview surrogate generator software uses code of [FFmpeg](http://ffmpeg.org) licensed under the [LGPLv2.1](http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html).
 
-* `CONSTANTS_USE_UPPER_CASE` -- for example: `Math::PI`, `Curses::KEY_DOWN`, `OptionParser::REQUIRED_ARGUMENT`
-* `ClassesUsePascalCase` -- join words of class names by capitalizing the first letter of each word. The same goes for `ModuleNames` as well.
-* methods use underscores, as do `local_variables`, `@instance_variables`, and `@@class_variables` -- join words with underscores (aka `snake_case`) 
-* Keep acronyms in class names capitalized. `MyXMLClass`, not `MyXmlClass`. Variables should use all lower-case. 
+Requirements
+------------------
+The base OVDLT product requires a basic Ruby on Rails with MySQL installation. Specifically, the following software should be installed on the server:
 
-There is no place in Ruby where camelCase is ever used.
+* Ruby 1.8.4 or higher
+* RubyGems
+* Ruby on Rails 2.3.5+
+* Apache or Nginx Web server. Deploying OVDLT with [Phusion Passenger](http://www.modrails.com/) is strongly recommended.
+* MySQL 5.0.x or higher
 
-Formatting Conventions
-----------------------
+If you don't have the software above currently installed, you might want to follow the documentation at the official [Ruby on Rails site](http://rubyonrails.org/download) to install and get a first Rails application up and running. It's pretty easy.
 
-Method Parameters:
-
-* put parentheses around non-trivial parameter lists
-* don't put spaces between a method name and its parameter list 
-
-Whitespace Conventions
-----------------------
-
-* Use two spaces for indentation
-  - Tabs versus spaces is a matter of personal preference when editing, but the community generally agrees that two-spaces is how you should release all your code. Space indentation outnumbers tab indentation more than 10:1 in the source code. 
-
-{ ... } blocks versus do ... end blocks
----------------------------------------
-Use curly braces for one-line blocks, use do...end for multi-line blocks
-
+See the [OVDLT support site](http://ovdlt.tenderapp.com/faqs/installation/) for more on requirements, installation, and configuration.
