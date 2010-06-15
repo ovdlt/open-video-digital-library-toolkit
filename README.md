@@ -6,7 +6,9 @@ OVDLT runs on Linux or Mac OS X 10.5 and 10.6 based on a Ruby on Rails (version 
 
 License
 ------------------
-The base OVDLT code is open source and available under the [MIT License](http://www.opensource.org/licenses/mit-license.php). The OVSurGen video preview surrogate generator software uses code of [FFmpeg](http://ffmpeg.org) licensed under the [LGPLv2.1](http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html).
+The base OVDLT code is open source and available under the [MIT License](http://www.opensource.org/licenses/mit-license.php).
+
+The OVSurGen video preview surrogate generator software requires the installation of  [FFmpeg](http://ffmpeg.org) licensed under the [LGPLv2.1](http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html) and dynamically links to the FFmpeg library.
 
 Requirements
 ------------------
