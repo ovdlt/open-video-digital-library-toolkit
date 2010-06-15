@@ -44,7 +44,7 @@ module ApplicationHelper
     end
     number_to_human_size(file.stat.size) if File.file?(file)
   end
-  
+
   def search_path search
     videos_path search.add_to_params( {}, :search )
   end
@@ -73,7 +73,7 @@ module ApplicationHelper
   def partial
     params[:action].singularize
   end
-  
+
   def mailto collection
     by = User.find_by_id(collection.user_id).login
     subject = url_encode( h( "Playlist entitled #{collection.title} by #{by}" ))
@@ -113,9 +113,9 @@ EOS
       if c.send(video_ids_method).include? video.id
         disabled = ' disabled="disabled"'
       end
-      "<option value=\"#{c.id}\"#{disabled}>#{h c.title}</option>"
+      "<option value=\"#{c.id}\"#{disabled}>#{h truncate(c.title, 33)}</option>"
     end
-    
+
     options.join("")
   end
 
@@ -167,7 +167,7 @@ EOS
     pcs = @property_classes.select { |pc| pc.range_type == "descriptor_value" }.map( &:id )
     @property_types.select { |pt| pcs.include? pt.property_class_id }
   end
-  
+
   def descriptor_values pt
     @descriptor_values.select do |dv|
       dv.property_type == pt or type_id( dv.property_type ) == type_id(pt)
@@ -282,7 +282,7 @@ EOS
   end
 
   def collections_flag
-    if CollectionsController === controller 
+    if CollectionsController === controller
       if params[:action] == "collections"
         "on"
       elsif params[:id]
@@ -295,7 +295,7 @@ EOS
   end
 
   def playlists_flag
-    if CollectionsController === controller 
+    if CollectionsController === controller
       collections_flag == "off" ? "on" : "off"
     else
       "off"

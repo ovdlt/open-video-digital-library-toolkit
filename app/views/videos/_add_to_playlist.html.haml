@@ -6,6 +6,7 @@
   .bookmark.hidden
     %br
     = select_tag "bookmark_into_id", bookmark_options(video), :id => nil
+    %p
     %label.button
       Add
       = submit_tag "Add", :class => "inline hidden"
