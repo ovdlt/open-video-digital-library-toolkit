@@ -35,7 +35,7 @@ cmd = "grep :location config/environment.rb || echo 'ActionMailer::Base.sendmail
 puts cmd
 system cmd
 
-system "rake gems:build"
+system "rake gems:build:force"
 ENV["RAILS_ENV"] = "production"
 system "rake db:create"
 system "rake db:migrate"
