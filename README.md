@@ -22,4 +22,4 @@ The base OVDLT product requires a basic Ruby on Rails with MySQL installation. S
 
 If you don't have the software above currently installed, you might want to follow the documentation at the official [Ruby on Rails site](http://rubyonrails.org/download) to install and get a first Rails application up and running. It's pretty easy.
 
-See the [OVDLT support site](http://ovdlt.tenderapp.com/faqs/installation/) for more on requirements, installation, and configuration.
+
